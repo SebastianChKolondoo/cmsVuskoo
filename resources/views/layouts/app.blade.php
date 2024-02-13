@@ -26,7 +26,6 @@
 </head>
 
 <body>
-
     <div id="wrapper">
         @if (auth()->user())
         @include('layouts.menu')
