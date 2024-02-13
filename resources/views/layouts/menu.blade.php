@@ -4,7 +4,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
         <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i>
+            <i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Nombre</div>
     </a>
@@ -13,6 +13,11 @@
         <a class="nav-link" href="/">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="/usuarios">
+            <i class="fa fa-address-book" aria-hidden="true"></i>
+            <span>Usuarios</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
