@@ -6,15 +6,15 @@
         <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h2>Registrar nuevo usuario</h2>
+                    <h2>Editar usuario</h2>
                 </div>
-                <div class="card-body">
+             <div class="card-body">
                     @if (session('info'))
                         <div class="alert alert-success">
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'user.store']) !!}
+                    {!! Form::model($user, ['route' => ['user.update', $user], 'method' => 'put']) !!}
                     <div class="form-group">
                         {!! Form::label('numberDocument', 'Número de documento', ['class' => 'form-label']) !!}
                         {!! Form::text('numberDocument', null, [
@@ -51,7 +51,7 @@
                             </label>
                         </div>
                     @endforeach
-                    {!! Form::submit('Registrar', ['class' => 'btn btn-primary mt-3']) !!}
+                    {!! Form::submit('Guardar', ['class' => 'btn btn-primary mt-3']) !!}
                     {!! Form::close() !!}
                 </div>
             </div>

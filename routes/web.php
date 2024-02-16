@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PermisosController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +20,11 @@ use App\Http\Controllers\UserController;
 
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [UserController::class, 'index'])->middleware(['auth']);
 
-Route::resource('usuarios',UserController::class)->middleware(['auth']);
+Route::resource('usuarios', UserController::class)->names('user')->middleware(['auth']);
+
+Route::resource('permisos', PermisosController::class)->names('permisos');
+
+Route::resource('roles', RolesController::class)->names('roles');
+
