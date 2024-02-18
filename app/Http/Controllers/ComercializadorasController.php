@@ -14,7 +14,7 @@ class ComercializadorasController extends Controller
     public function index()
     {
         $comercializadoras = Comercializadoras::all();
-        return view('comercializadoras.index', compact('comercializadoras'));
+        return view('clientes.comercializadoras.index', compact('comercializadoras'));
     }
 
     /**
@@ -22,7 +22,7 @@ class ComercializadorasController extends Controller
      */
     public function create()
     {
-        //
+        return view('clientes.comercializadoras.create');
     }
 
     /**
@@ -30,7 +30,20 @@ class ComercializadorasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $permisos = Comercializadoras::create([
+            'nombre' => ($request->name),
+            'tipo_conversion' => '',
+            'color' => '',
+            'color_texto' => '',
+            'logo' => ($request->logo),
+            'logo_negativo' => ($request->negativo),
+            'isotipo' => '',
+            'politica_privacidad' => ($request->politica),
+            'operadora_activa' => ($request->state),
+            'fecha_registro' => now(),
+        ]);
+
+        return redirect()->route('comercializadoras.index')->with('info', 'Comercializadora creado correctamente.');
     }
 
     /**
@@ -48,7 +61,7 @@ class ComercializadorasController extends Controller
     {
         $comercializadora = Comercializadoras::find($id);
         $estados = States::all();
-        return view('comercializadoras.edit', compact('comercializadora','estados'));
+        return view('clientes.comercializadoras.edit', compact('comercializadora','estados'));
     }
 
     /**

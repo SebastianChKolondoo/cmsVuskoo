@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    @can('comercializadoras.view.btn-create')
+    @can('clientes.operadoras.view.btn-create')
         <div class="row justify-content-center my-4">
             <div class="col-12">
-                <a href="{{ route('comercializadoras.create') }}" class="btn btn-primary">Nuevo comercializadora</a>
+                <a href="{{ route('operadoras.create') }}" class="btn btn-primary">Nueva operadora</a>
             </div>
         </div>
     @endcan
@@ -17,26 +17,26 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    <h4>Listado de comercializadoras</h4>
-                    <table id="comercializadorasTable" class="table table-striped" style="width:100%">
+                    <h4>Listado de operadoras</h4>
+                    <table id="operadorasTable" class="table table-striped" style="width:100%">
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th>id</th>
                                 <th>Nombre</th>
                                 <th>Estado</th>
-                                @can('comercializadoras.view.btn-edit')
-                                <th></th>
+                                @can('clientes.view.operadoras.btn-edit')
+                                    <th></th>
                                 @endcan
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($comercializadoras as $comercializadora)
-                                <td class="align-middle">{{ $comercializadora->id }}</td>
-                                <td class="align-middle">{{ $comercializadora->nombre }}</td>
-                                <td class="align-middle">{{ $comercializadora->state->name }}</td>
-                                @can('comercializadoras.view.btn-edit')
+                            @foreach ($operadoras as $operadora)
+                                <td class="align-middle">{{ $operadora->id }}</td>
+                                <td class="align-middle">{{ $operadora->nombre }}</td>
+                                <td class="align-middle">{{ $operadora->state->name }}</td>
+                                @can('clientes.view.operadoras.btn-edit')
                                     <td>
-                                        <a href="{{ route('comercializadoras.edit', $comercializadora) }}" class="btn btn-primary">Editar</a>
+                                        <a href="{{ route('operadoras.edit', $operadora) }}" class="btn btn-primary">Editar</a>
                                     </td>
                                 @endcan
                                 </tr>

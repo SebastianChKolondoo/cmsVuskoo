@@ -14,7 +14,7 @@ class OperadorasController extends Controller
     public function index()
     {
         $operadoras = Operadoras::all();
-        return view('operadoras.index', compact('operadoras'));
+        return view('clientes.operadoras.index', compact('operadoras'));
     }
 
     /**
@@ -22,7 +22,7 @@ class OperadorasController extends Controller
      */
     public function create()
     {
-        //
+        return view('clientes.operadoras.create');
     }
 
     /**
@@ -30,7 +30,20 @@ class OperadorasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $permisos = Operadoras::create([
+            'nombre' => ($request->name),
+            'tipo_conversion' => '',
+            'color' => '',
+            'color_texto' => '',
+            'logo' => ($request->logo),
+            'logo_negativo' => ($request->negativo),
+            'isotipo' => '',
+            'politica_privacidad' => ($request->politica),
+            'operadora_activa' => ($request->state),
+            'fecha_registro' => now(),
+        ]);
+
+        return redirect()->route('operadoras.index')->with('info', 'Operadora creado correctamente.');
     }
 
     /**
@@ -48,7 +61,7 @@ class OperadorasController extends Controller
     {
         $operadora = Operadoras::find($id);
         $estados = States::all();
-        return view('operadoras.edit', compact('operadora', 'estados'));
+        return view('clientes.operadoras.edit', compact('operadora', 'estados'));
     }
 
     /**
