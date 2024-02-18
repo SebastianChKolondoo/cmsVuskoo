@@ -41,9 +41,27 @@
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <div class="sidebar-heading">
+        Clientes
+    </div>
+    @can('clientes.view.operadoras')
+        <li class="nav-item active">
+            <a class="nav-link" href="/operadoras">
+                <i class="fa fa-address-book" aria-hidden="true"></i>
+                <span>Operadoras</span></a>
+        </li>
+    @endcan
+    @can('clientes.view.comercializadoras')
+        <li class="nav-item active">
+            <a class="nav-link" href="/comercializadoras">
+                <i class="fa fa-address-book" aria-hidden="true"></i>
+                <span>Comercializadoras</span></a>
+        </li>
+    @endcan
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    <div class="sidebar-heading">
         Parillas
     </div>
-    <hr class="sidebar-divider d-none d-md-block">
     @can('parrilas.view.telefonia')
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTelefonia"

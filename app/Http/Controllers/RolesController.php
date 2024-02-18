@@ -37,7 +37,7 @@ class RolesController extends Controller
 
         $roles->permissions()->sync($request->permisos);
 
-        //return redirect()->route('permisos.index', $roles)->with('info', 'Permiso creado correctamente.');
+        return redirect()->route('roles.index')->with('info', 'Rol creado correctamente.');
     }
 
     /**
@@ -65,8 +65,8 @@ class RolesController extends Controller
     {
         $roles = Role::find($rol);
         $roles->update($request->all());
-        $roles->permissions()->sync($request->permisos);
-        return redirect()->route('roles.index', $roles)->with('info','Rol editado correctamente.');
+        $roles->syncPermissions($request->permisos);
+        return redirect()->route('roles.index')->with('info', 'Rol editado correctamente.');
     }
 
     /**

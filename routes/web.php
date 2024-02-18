@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ComercializadorasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OperadorasController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
@@ -27,4 +29,8 @@ Route::resource('usuarios', UserController::class)->names('user')->middleware(['
 Route::resource('permisos', PermisosController::class)->names('permisos');
 
 Route::resource('roles', RolesController::class)->names('roles');
+
+Route::resource('comercializadoras', ComercializadorasController::class)->names('comercializadoras');
+
+Route::resource('operadoras', OperadorasController::class)->names('operadoras');
 

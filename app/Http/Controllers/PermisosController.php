@@ -36,7 +36,7 @@ class PermisosController extends Controller
         ]);
         
         $permisos->roles()->sync($request->roles);
-        return redirect()->route('permisos.index', $permisos)->with('info','Permiso creado correctamente.');
+        return redirect()->route('permisos.index')->with('info','Permiso creado correctamente.');
     }
 
     /**
@@ -65,7 +65,7 @@ class PermisosController extends Controller
         $permiso = Permission::find($permiso);
         $permiso->update($request->all());
         $permiso->roles()->sync($request->roles);
-        return redirect()->route('permisos.edit', $permiso)->with('info','Permiso editado correctamente.');
+        return redirect()->route('permisos.edit')->with('info','Permiso editado correctamente.');
     }
 
     /**

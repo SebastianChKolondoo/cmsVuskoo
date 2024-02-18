@@ -2,7 +2,7 @@
 @section('content')
     <div class="row justify-content-center my-4">
         <div class="col-12 mb-3">
-            <h2>Editar de rol</h2>
+            <h2>Editar operadora</h2>
         </div>
         <div class="col-12 col-md-6">
             <div class="card">
@@ -12,21 +12,21 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::model($rol, ['route' => ['roles.update', $rol], 'method' => 'put']) !!}
+                    {!! Form::model($operadora, ['route' => ['operadoras.update', $operadora], 'method' => 'put']) !!}
                     <div class="form-group">
-                        {!! Form::label('name', 'Rol', ['class' => 'form-label']) !!}
-                        {!! Form::text('name', null, [
+                        {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
+                        {!! Form::text('nombre', null, [
                             'class' => 'form-control',
-                            'placeholder' => 'Rol',
+                            'placeholder' => 'Nombre operadora',
                             'required' => 'required',
                         ]) !!}
                     </div>
                     <div class="form-group">
-                        {{ Form::label('permisos', 'Permisos asignados') }}
-                        @foreach ($permisos as $permiso)
+                        {{ Form::label('estado', 'Estado') }}
+                        @foreach ($estados as $estado)
                             <div class="form-check">
-                                {{ Form::checkbox('permisos[]', $permiso->name, $rol->hasPermissionTo($permiso), ['class' => 'form-check-input']) }}
-                                {{ Form::label($permiso->name, $permiso->name, ['class' => 'form-check-label']) }}
+                                {{ Form::radio('operadora_activa', $estado->id, $estado->id == $operadora->operadora_activa, ['class' => 'form-check-input']) }}
+                                {{ Form::label($estado->id, $estado->name, ['class' => 'form-check-label']) }}
                             </div>
                         @endforeach
                     </div>
@@ -39,7 +39,7 @@
     </div>
     <div class="row justify-content-center mb-4">
         <div class="col-12 col-md-6">
-            <a href="{{ route('roles.index') }}" class="btn btn-light">Volver</a>
+            <a href="{{ route('operadoras.index') }}" class="btn btn-light">Volver</a>
         </div>
     </div>
 @endsection
