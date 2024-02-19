@@ -10,7 +10,6 @@ class Comercializadoras extends Model
     use HasFactory;
     protected $table = '1_comercializadoras';
     protected $fillable = [
-        'id',
         'nombre',
         'tipo_conversion',
         'color',

@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ParrillaMovil;
+use App\Models\ParillaFibraMovil;
 use Illuminate\Http\Request;
 
-class ParrillaMovilController extends Controller
+class ParillaFibraMovilController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $parrilla = ParrillaMovil::all();
-        return view('parrilas.movil.index', compact('parrilla'));
+        //
     }
 
     /**
@@ -35,7 +34,7 @@ class ParrillaMovilController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ParrillaMovil $parrillaMovil)
+    public function show(ParillaFibraMovil $parillaFibraMovil)
     {
         //
     }
@@ -43,7 +42,7 @@ class ParrillaMovilController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ParrillaMovil $parrillaMovil)
+    public function edit(ParillaFibraMovil $parillaFibraMovil)
     {
         //
     }
@@ -51,7 +50,7 @@ class ParrillaMovilController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ParrillaMovil $parrillaMovil)
+    public function update(Request $request, ParillaFibraMovil $parillaFibraMovil)
     {
         //
     }
@@ -59,7 +58,7 @@ class ParrillaMovilController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ParrillaMovil $parrillaMovil)
+    public function destroy(ParillaFibraMovil $parillaFibraMovil)
     {
         //
     }

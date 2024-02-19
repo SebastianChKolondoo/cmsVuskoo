@@ -62,7 +62,7 @@
     <div class="sidebar-heading">
         Parillas
     </div>
-    @can('parrilas.view.telefonia')
+    @can('parrillas.view.telefonia')
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTelefonia"
                 aria-expanded="true" aria-controls="collapseTelefonia">
@@ -71,23 +71,23 @@
             </a>
             <div id="collapseTelefonia" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    @can('parrilas.view.telefonia.view-fibra')
+                    @can('parrillas.view.telefonia.view-fibra')
                         <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Fibra</a>
                     @endcan
-                    @can('parrilas.view.telefonia.view-movil')
-                        <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Móvil</a>
+                    @can('parrillas.view.telefonia.view-movil')
+                        <a class="collapse-item" href="{{route('parrillaMovil.index')}}">Móvil</a>
                     @endcan
-                    @can('parrilas.view.telefonia.view-fibramovil')
+                    @can('parrillas.view.telefonia.view-fibramovil')
                         <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Fibra y móvil</a>
                     @endcan
-                    @can('parrilas.view.telefonia.view-fibramoviltv')
+                    @can('parrillas.view.telefonia.view-fibramoviltv')
                         <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Fibra, móvil y tv</a>
                     @endcan
                 </div>
             </div>
         </li>
     @endcan
-    @can('parrilas.view.energia')
+    @can('parrillas.view.energia')
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                 aria-expanded="true" aria-controls="collapsePages">
@@ -96,13 +96,13 @@
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    @can('parrilas.view.energia.view-luz')
+                    @can('parrillas.view.energia.view-luz')
                         <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Luz</a>
                     @endcan
-                    @can('parrilas.view.energia.view-gas')
+                    @can('parrillas.view.energia.view-gas')
                         <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Gas</a>
                     @endcan
-                    @can('parrilas.view.energia.view-luzygas')
+                    @can('parrillas.view.energia.view-luzygas')
                         <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Luz y gas</a>
                     @endcan
                 </div>

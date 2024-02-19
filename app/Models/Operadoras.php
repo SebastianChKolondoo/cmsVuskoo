@@ -10,7 +10,6 @@ class Operadoras extends Model
     use HasFactory;
     protected $table = '1_operadoras';
     protected $fillable = [
-        'id',
         'nombre',
         'operadora_activa',
         'tipo_conversion',
