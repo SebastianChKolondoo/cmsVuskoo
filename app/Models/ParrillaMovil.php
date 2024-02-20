@@ -14,7 +14,7 @@ class ParrillaMovil extends Model
         'id',
         'id_producto',
         'operadora',
-        'tarifa_activa',
+        'estado',
         'landing_link',
         'permanencia',
         'funcion',
@@ -47,4 +47,14 @@ class ParrillaMovil extends Model
         'slug_tarifa',
         'pais'
     ];
+
+    public function state()
+    {
+        return $this->belongsTo(States::class, 'estado', 'id');
+    }
+
+    public function operadora()
+    {
+        return $this->belongsTo(Operadoras::class, 'operadora', 'id');
+    }
 }

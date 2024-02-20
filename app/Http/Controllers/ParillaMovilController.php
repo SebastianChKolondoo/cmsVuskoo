@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Operadoras;
 use App\Models\ParillaMovil;
 use App\Models\ParrillaMovil;
 use Illuminate\Http\Request;

@@ -22,6 +22,7 @@
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th>id</th>
+                                <th>Estado</th>
                                 <th>Operadora</th>
                                 <th>Nombre</th>
                                 <th>Parrilla 1</th>
@@ -33,12 +34,14 @@
                                 @can('parrillaMovil.view.btn-edit')
                                     <th></th>
                                 @endcan
+                                <th>Editar</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($tarifas as $tarifa)
                                 <td class="align-middle">{{ $tarifa->id }}</td>
                                 <td class="align-middle">{{ $tarifa->operadora }}</td>
+                                <td class="align-middle">{{ $tarifa->state->name }}</td>
                                 <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
                                 <td class="align-middle">{{ $tarifa->parrilla_bloque_1 }}</td>
                                 <td class="align-middle">{{ $tarifa->parrilla_bloque_2 }}</td>
@@ -51,6 +54,9 @@
                                         <a href="{{ route('parrillaMovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     </td>
                                 @endcan
+                                <td>
+                                    <a href="{{ route('parrillaMovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -11,8 +11,42 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('parrilla_movils', function (Blueprint $table) {
+        Schema::create('WEB_3_TARIFAS_TELCO_MOVIL', function (Blueprint $table) {
             $table->id();
+            $table->string('id_producto');
+            $table->string('operadora');
+            $table->string('estado');
+            $table->string('landing_link');
+            $table->string('permanencia');
+            $table->string('funcion');
+            $table->string('nombre_tarifa');
+            $table->string('parrilla_bloque_1');
+            $table->string('parrilla_bloque_2');
+            $table->string('parrilla_bloque_3');
+            $table->string('parrilla_bloque_4');
+            $table->string('meses_permanencia');
+            $table->string('precio');
+            $table->string('precio_final');
+            $table->string('num_meses_promo');
+            $table->string('porcentaje_descuento');
+            $table->string('imagen_promo');
+            $table->string('promocion');
+            $table->string('texto_alternativo_promo');
+            $table->string('GB');
+            $table->string('llamadas_ilimitadas');
+            $table->string('coste_llamadas_minuto');
+            $table->string('coste_establecimiento_llamada');
+            $table->string('num_minutos_gratis');
+            $table->string('nombre_terminal_regalo');
+            $table->string('orden_parrilla_general');
+            $table->string('orden_parrilla_operadora');
+            $table->string('fecha_publicacion');
+            $table->string('fecha_expiracion');
+            $table->string('fecha_registro');
+            $table->string('moneda');
+            $table->string('landingLead');
+            $table->string('slug_tarifa');
+            $table->string('pais');
             $table->timestamps();
         });
     }

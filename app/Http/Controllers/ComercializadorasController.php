@@ -22,7 +22,8 @@ class ComercializadorasController extends Controller
      */
     public function create()
     {
-        return view('clientes.comercializadoras.create');
+        $estados = States::all();
+        return view('clientes.comercializadoras.create', compact('estados'));
     }
 
     /**
@@ -39,7 +40,7 @@ class ComercializadorasController extends Controller
             'logo_negativo' => ($request->negativo),
             'isotipo' => '',
             'politica_privacidad' => ($request->politica),
-            'operadora_activa' => ($request->state),
+            'estado' => ($request->state),
             'fecha_registro' => now(),
         ]);
 

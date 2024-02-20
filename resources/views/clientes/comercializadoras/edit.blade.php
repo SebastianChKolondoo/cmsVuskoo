@@ -25,7 +25,7 @@
                         {{ Form::label('estado', 'Estado') }}
                         @foreach ($estados as $estado)
                             <div class="form-check">
-                                {{ Form::radio('comercializadora_activa', $estado->id, $estado->id == $comercializadora->comercializadora_activa, ['class' => 'form-check-input']) }}
+                                {{ Form::radio('estado', $estado->id, $estado->id == $comercializadora->estado, ['class' => 'form-check-input']) }}
                                 {{ Form::label($estado->id, $estado->name, ['class' => 'form-check-label']) }}
                             </div>
                         @endforeach

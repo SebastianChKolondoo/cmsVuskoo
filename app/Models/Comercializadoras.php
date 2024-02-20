@@ -18,12 +18,12 @@ class Comercializadoras extends Model
         'logo_negativo',
         'isotipo',
         'politica_privacidad',
-        'comercializadora_activa',
+        'estado',
         'fecha_registro',
     ];
 
     public function state()
     {
-        return $this->belongsTo(States::class, 'comercializadora_activa', 'id');
+        return $this->belongsTo(States::class, 'estado', 'id');
     }
 }

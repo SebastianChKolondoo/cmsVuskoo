@@ -11,7 +11,6 @@ class Operadoras extends Model
     protected $table = '1_operadoras';
     protected $fillable = [
         'nombre',
-        'operadora_activa',
         'tipo_conversion',
         'color',
         'color_texto',
@@ -19,11 +18,12 @@ class Operadoras extends Model
         'logo_negativo',
         'isotipo',
         'politica_privacidad',
+        'estado',
         'fecha_registro',
     ];
 
     public function state()
     {
-        return $this->belongsTo(States::class, 'operadora_activa', 'id');
+        return $this->belongsTo(States::class, 'estado', 'id');
     }
 }
