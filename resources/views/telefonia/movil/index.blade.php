@@ -34,7 +34,6 @@
                                 @can('parrillaMovil.view.btn-edit')
                                     <th></th>
                                 @endcan
-                                <th>Editar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,9 +53,6 @@
                                         <a href="{{ route('parrillaMovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     </td>
                                 @endcan
-                                <td>
-                                    <a href="{{ route('parrillaMovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
-                                </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -24,6 +24,7 @@ use Spatie\Permission\Models\Role;
 Auth::routes();
 
 Route::get('/', [UserController::class, 'index'])->middleware(['auth']);
+Route::get('/home', [UserController::class, 'index'])->middleware(['auth']);
 Route::resource('usuarios', UserController::class)->names('user')->middleware(['auth']);
 Route::resource('permisos', PermisosController::class)->names('permisos')->middleware(['auth']);
 Route::resource('roles', RolesController::class)->names('roles')->middleware(['auth']);
