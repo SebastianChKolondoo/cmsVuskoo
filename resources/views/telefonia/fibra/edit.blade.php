@@ -14,7 +14,7 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::model($tarifa, ['route' => ['parrillaMovil.update', $tarifa], 'method' => 'put']) !!}
+                    {!! Form::model($tarifa, ['route' => ['parrillafibra.update', $tarifa], 'method' => 'put']) !!}
                     <div class="form-group">
                         {!! Form::label('operadora', 'Operadora', ['class' => 'form-label']) !!}
                         {!! Form::select('operadora', $operadoras->pluck('nombre', 'id'), null, [
@@ -26,7 +26,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('estado', $state->id, null, ['class' => 'my-1', 'required' => 'required']) !!}
+                                    {!! Form::radio('estado', $state->id, 1, ['class' => 'my-1', 'required' => 'required']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -45,7 +45,6 @@
                         {!! Form::textarea('parrilla_bloque_1', null, [
                             'class' => 'form-control',
                             'placeholder' => 'característica #1',
-                            'required' => 'required',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -54,7 +53,6 @@
                         {!! Form::textarea('parrilla_bloque_2', null, [
                             'class' => 'form-control',
                             'placeholder' => 'característica #2',
-                            'required' => 'required',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -63,7 +61,6 @@
                         {!! Form::textarea('parrilla_bloque_3', null, [
                             'class' => 'form-control',
                             'placeholder' => 'característica #3',
-                            'required' => 'required',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -72,7 +69,6 @@
                         {!! Form::textarea('parrilla_bloque_4', null, [
                             'class' => 'form-control',
                             'placeholder' => 'característica #4',
-                            'required' => 'required',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -85,14 +81,13 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('precio', ' Precio', ['class' => 'form-label']) !!}
-                        {!! Form::text('precio', null, ['class' => 'form-control', 'placeholder' => 'precio', 'required' => 'required']) !!}
+                        {!! Form::text('precio', null, ['class' => 'form-control', 'placeholder' => 'precio']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('precio_final', 'Precio final', ['class' => 'form-label']) !!}
                         {!! Form::text('precio_final', null, [
                             'class' => 'form-control',
                             'placeholder' => 'precio_final',
-                            'required' => 'required',
                         ]) !!}
                     </div>
                     <div class="form-group">
@@ -109,40 +104,26 @@
                         ]) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label(' GB', 'GB', ['class' => 'form-label']) !!}
-                        {!! Form::number('GB', null, ['class' => 'form-control', 'placeholder' => 'GB oferta']) !!}
+                        {!! Form::label('MB_subida', 'Megas subida', ['class' => 'form-label']) !!}
+                        {!! Form::number('MB_subida', null, ['class' => 'form-control', 'placeholder' => 'Megas subida']) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('llamadas_ilimitadas', 'llamadas ilimitadas', ['class' => 'form-label']) !!}
+                        {!! Form::label('MB_bajada', 'Megas descarga', ['class' => 'form-label']) !!}
+                        {!! Form::text('MB_bajada', null, [
+                            'class' => 'form-control',
+                            'placeholder' => 'Megas descarga',
+                        ]) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('tlf_fijo', 'Teléfono fijo', ['class' => 'form-label']) !!}
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('llamadas_ilimitadas', $state->id, null, ['class' => 'my-1']) !!}
+                                    {!! Form::radio('tlf_fijo', $state->id, 2, ['class' => 'my-1']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
                         @endforeach
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('coste_llamadas_minuto', 'Coste llamadas minuto', ['class' => 'form-label']) !!}
-                        {!! Form::text('coste_llamadas_minuto', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Coste llamadas minuto',
-                        ]) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('coste_establecimiento_llamada', 'Coste establecimiento llamada', ['class' => 'form-label']) !!}
-                        {!! Form::text('coste_establecimiento_llamada', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Coste establecimiento llamada',
-                        ]) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('num_minutos_gratis', 'Minutos gratis', ['class' => 'form-label']) !!}
-                        {!! Form::number('num_minutos_gratis', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Minutos gratis',
-                        ]) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('fecha_expiracion', 'Fecha expiración', ['class' => 'form-label']) !!}
@@ -162,10 +143,9 @@
                             'es',
                             [
                                 'class' => 'form-control',
-                                'required' => 'required',
                             ],
                         ) !!}
-                        {!! Form::submit('Registrar', ['class' => 'btn btn-primary mt-3']) !!}
+                        {!! Form::submit('Actualizar', ['class' => 'btn btn-primary mt-3']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Operadoras;
 use App\Models\ParillaMovil;
-use App\Models\ParrillaMovil;
+use App\Models\parrillamovil;
 use App\Models\States;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,7 @@ class ParillaMovilController extends Controller
      */
     public function index()
     {
-        $tarifas = ParrillaMovil::all();
+        $tarifas = parrillamovil::all();
         return view('telefonia.movil.index', compact('tarifas'));
     }
 
@@ -39,7 +39,7 @@ class ParillaMovilController extends Controller
         $moneda = ['es' => '€', 'co' => '$'];
         $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
         $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
-        $tarifa = ParrillaMovil::create([
+        $tarifa = parrillamovil::create([
             'operadora' => $request->operadora,
             'estado' => $request->estado,
             'nombre_tarifa' => $request->nombre_tarifa,
@@ -62,13 +62,13 @@ class ParillaMovilController extends Controller
             'pais' => $request->pais
         ]);
 
-        return redirect()->route('parrillaMovil.index')->with('info', 'Tarifa creada correctamente.');
+        return redirect()->route('parrillamovil.index')->with('info', 'Tarifa creada correctamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ParrillaMovil $parillaMovil)
+    public function show(parrillamovil $parillaMovil)
     {
         //
     }
@@ -78,9 +78,9 @@ class ParillaMovilController extends Controller
      */
     public function edit($parillaMovil)
     {
-        $tarifa = ParrillaMovil::find($parillaMovil);
+        $tarifa = parrillamovil::find($parillaMovil);
         $states = States::all();
-        $operadoras = Operadoras::where('estado', '1')->get();
+        $operadoras = Operadoras::all();
         return view('telefonia.movil.edit', compact('tarifa', 'states', 'operadoras'));
     }
 
@@ -89,15 +89,23 @@ class ParillaMovilController extends Controller
      */
     public function update(Request $request, $parillaMovil)
     {
-        $tarifa = ParrillaMovil::find($parillaMovil);
+        $moneda = ['es' => '€', 'co' => '$'];
+        $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
+        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
+        $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
+        $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
+        $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
+        $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
+        $request['slug_tarifa'] = $slug;
+        $tarifa = parrillamovil::find($parillaMovil);
         $tarifa->update($request->all());
-        return redirect()->route('parrillaMovil.index')->with('info', 'Tarifa editada correctamente.');
+        return redirect()->route('parrillamovil.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ParrillaMovil $parillaMovil)
+    public function destroy(parrillamovil $parillaMovil)
     {
         //
     }

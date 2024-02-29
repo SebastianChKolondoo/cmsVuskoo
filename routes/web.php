@@ -9,6 +9,7 @@ use App\Http\Controllers\ParillaMovilController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
+use App\Models\ParillaFibraMovil;
 use Spatie\Permission\Models\Role;
 
 /*
@@ -31,6 +32,7 @@ Route::resource('permisos', PermisosController::class)->names('permisos')->middl
 Route::resource('roles', RolesController::class)->names('roles')->middleware(['auth']);
 Route::resource('comercializadoras', ComercializadorasController::class)->names('comercializadoras')->middleware(['auth']);
 Route::resource('operadoras', OperadorasController::class)->names('operadoras')->middleware(['auth']);
-Route::resource('ParrillaMovil', ParillaMovilController::class)->names('parrillaMovil')->middleware(['auth']);
-Route::resource('ParrillaFibra', ParillaFibraController::class)->names('parrillaFibra')->middleware(['auth']);
+Route::resource('parrillamovil', ParillaMovilController::class)->names('parrillamovil')->middleware(['auth']);
+Route::resource('parrillafibra', ParillaFibraController::class)->names('parrillafibra')->middleware(['auth']);
+//Route::resource('parrillafibraMovil', ParillaFibraMovil::class)->names('parrillafibra')->middleware(['auth']);
 

@@ -6,7 +6,7 @@
         <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h2>Registrar oferta movil</h2>
+                    <h2>Registrar oferta móvil</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))
@@ -14,7 +14,7 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'parrillaMovil.store']) !!}
+                    {!! Form::open(['route' => 'parrillamovil.store']) !!}
                     <div class="form-group">
                         {!! Form::label('operadora', 'Operadora', ['class' => 'form-label']) !!}
                         {!! Form::select('operadora', $operadoras->pluck('nombre', 'id'), null, [

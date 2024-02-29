@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    @can('parrillas.parrillaMovil.view.btn-create')
+    @can('parrillas.parrillafibra.view.btn-create')
         <div class="row justify-content-center my-4">
             <div class="col-12">
-                <a href="{{ route('parrillaMovil.create') }}" class="btn btn-primary">Nueva oferta</a>
+                <a href="{{ route('parrillafibra.create') }}" class="btn btn-primary">Nueva oferta</a>
             </div>
         </div>
     @endcan
@@ -18,7 +18,7 @@
                         </div>
                     @endif
                     <h4>Listado de parrilla Fibra</h4>
-                    <table id="parrillaMovilTable" class="table table-striped" style="width:100%">
+                    <table id="parrillafibraTable" class="table table-striped" style="width:100%">
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th>id</th>
@@ -31,7 +31,7 @@
                                 <th>Parrilla 4</th> --}}
                                 <th>Precio</th>
                                 <th>Visible en</th>
-                                @can('parrillas.parrillaMovil.view.btn-edit')
+                                @can('parrillas.parrillafibra.view.btn-edit')
                                     <th></th>
                                 @endcan
                             </tr>
@@ -48,9 +48,9 @@
                                 <td class="align-middle">{{ $tarifa->parrilla_bloque_4 }}</td> --}}
                                 <td class="align-middle">{{ $tarifa->precio }}</td>
                                 <td class="align-middle">{{ $tarifa->pais }}</td>
-                                @can('parrillas.parrillaMovil.view.btn-edit')
+                                @can('parrillas.parrillafibra.view.btn-edit')
                                     <td>
-                                        <a href="{{ route('parrillaFibra.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                        <a href="{{ route('parrillafibra.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     </td>
                                 @endcan
                                 </tr>

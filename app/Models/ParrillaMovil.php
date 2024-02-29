@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ParrillaMovil extends Model
+class parrillamovil extends Model
 {
     use HasFactory;
     protected $table = 'WEB_3_TARIFAS_TELCO_MOVIL';

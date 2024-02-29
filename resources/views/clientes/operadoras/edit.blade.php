@@ -31,7 +31,7 @@
                         @endforeach
                     </div>
 
-                    {{ Form::submit('Guardar Cambios', ['class' => 'btn btn-primary']) }}
+                    {{ Form::submit('Actualizar', ['class' => 'btn btn-primary']) }}
                     {{ Form::close() }}
                 </div>
             </div>

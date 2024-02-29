@@ -6,7 +6,7 @@
         <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h2>Editar oferta movil</h2>
+                    <h2>Editar oferta móvil</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))
@@ -14,7 +14,7 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::model($tarifa, ['route' => ['parrillaMovil.update', $tarifa], 'method' => 'put']) !!}
+                    {!! Form::model($tarifa, ['route' => ['parrillamovil.update', $tarifa], 'method' => 'put']) !!}
                     <div class="form-group">
                         {!! Form::label('operadora', 'Operadora', ['class' => 'form-label']) !!}
                         {!! Form::select('operadora', $operadoras->pluck('nombre', 'id'), null, [
@@ -45,7 +45,6 @@
                         {!! Form::textarea('parrilla_bloque_1', null, [
                             'class' => 'form-control',
                             'placeholder' => 'característica #1',
-                            'required' => 'required',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -54,7 +53,6 @@
                         {!! Form::textarea('parrilla_bloque_2', null, [
                             'class' => 'form-control',
                             'placeholder' => 'característica #2',
-                            'required' => 'required',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -63,7 +61,6 @@
                         {!! Form::textarea('parrilla_bloque_3', null, [
                             'class' => 'form-control',
                             'placeholder' => 'característica #3',
-                            'required' => 'required',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -72,7 +69,6 @@
                         {!! Form::textarea('parrilla_bloque_4', null, [
                             'class' => 'form-control',
                             'placeholder' => 'característica #4',
-                            'required' => 'required',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -92,7 +88,6 @@
                         {!! Form::text('precio_final', null, [
                             'class' => 'form-control',
                             'placeholder' => 'precio_final',
-                            'required' => 'required',
                         ]) !!}
                     </div>
                     <div class="form-group">
@@ -165,7 +160,7 @@
                                 'required' => 'required',
                             ],
                         ) !!}
-                        {!! Form::submit('Registrar', ['class' => 'btn btn-primary mt-3']) !!}
+                        {!! Form::submit('Actualizar', ['class' => 'btn btn-primary mt-3']) !!}
                         {!! Form::close() !!}
                     </div>
                 </div>
