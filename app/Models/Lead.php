@@ -22,8 +22,19 @@ class Lead extends Model
         'tipo_conversion',
         'tarifa',
         'tipo_formulario',
-        'acepta_politica_privacidad_kolondoo',
+        'acepta_politica_privacidad',
         'acepta_cesion_datos_a_proveedor',
-        'acepta_comunicaciones_comerciales_kolondoo'
+        'acepta_comunicaciones_comerciales',
+        'fecha_aceptacion_comunicaciones_comerciales',
+        'ip',
+        'ip_type',
+        'ip_nombre_continente',
+        'ip_codigo_pais',
+        'ip_nombre_pais',
+        'ip_region',
+        'ip_ciudad',
+        'ip_codigo_postal',
+        'ip_latitud',
+        'ip_longitud',
     ];
 }

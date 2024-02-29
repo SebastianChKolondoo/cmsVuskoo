@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Operadoras;
 use App\Models\ParillaMovil;
 use App\Models\ParrillaMovil;
+use App\Models\States;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Calculation\TextData\Replace;
 
 class ParillaMovilController extends Controller
 {
@@ -23,7 +26,9 @@ class ParillaMovilController extends Controller
      */
     public function create()
     {
-        //
+        $states = States::all();
+        $operadoras = Operadoras::where('estado', '1')->get();
+        return view('telefonia.movil.create', compact('states', 'operadoras'));
     }
 
     /**
@@ -31,13 +36,39 @@ class ParillaMovilController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $moneda = ['es' => '€', 'co' => '$'];
+        $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
+        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
+        $tarifa = ParrillaMovil::create([
+            'operadora' => $request->operadora,
+            'estado' => $request->estado,
+            'nombre_tarifa' => $request->nombre_tarifa,
+            'parrilla_bloque_1' => trim(str_replace('  ', ' ', $request->parrilla_bloque_1)),
+            'parrilla_bloque_2' => trim(str_replace('  ', ' ', $request->parrilla_bloque_2)),
+            'parrilla_bloque_3' => trim(str_replace('  ', ' ', $request->parrilla_bloque_3)),
+            'parrilla_bloque_4' => trim(str_replace('  ', ' ', $request->parrilla_bloque_4)),
+            'meses_permanencia' => $request->meses_permanencia,
+            'precio' => $request->precio,
+            'precio_final' => $request->precio_final,
+            'num_meses_promo' => $request->num_meses_promo,
+            'promocion' => $request->promocion,
+            'GB' => $request->GB,
+            'coste_llamadas_minuto' => $request->coste_llamadas_minuto,
+            'coste_establecimiento_llamada' => $request->coste_establecimiento_llamada,
+            'num_minutos_gratis' => $request->num_minutos_gratis,
+            'fecha_expiracion' => $request->fecha_expiracion,
+            'moneda' => $moneda[$request->pais],
+            'slug_tarifa' => $slug,
+            'pais' => $request->pais
+        ]);
+
+        return redirect()->route('parrillaMovil.index')->with('info', 'Tarifa creada correctamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ParillaMovil $parillaMovil)
+    public function show(ParrillaMovil $parillaMovil)
     {
         //
     }
@@ -45,23 +76,28 @@ class ParillaMovilController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ParillaMovil $parillaMovil)
+    public function edit($parillaMovil)
     {
-        //
+        $tarifa = ParrillaMovil::find($parillaMovil);
+        $states = States::all();
+        $operadoras = Operadoras::where('estado', '1')->get();
+        return view('telefonia.movil.edit', compact('tarifa', 'states', 'operadoras'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ParillaMovil $parillaMovil)
+    public function update(Request $request, $parillaMovil)
     {
-        //
+        $tarifa = ParrillaMovil::find($parillaMovil);
+        $tarifa->update($request->all());
+        return redirect()->route('parrillaMovil.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ParillaMovil $parillaMovil)
+    public function destroy(ParrillaMovil $parillaMovil)
     {
         //
     }

@@ -32,7 +32,7 @@
                     @foreach ($estados as $estado)
                         <div>
                             <label>
-                                {!! Form::radio('state', $estado->id, null, ['class' => 'my-1', 'required'=> 'required']) !!}
+                                {!! Form::radio('estado', $estado->id, null, ['class' => 'my-1', 'required'=> 'required']) !!}
                                 {{ $estado->name }}
                             </label>
                         </div>

@@ -22,7 +22,7 @@ class LeadController extends Controller
     public function __construct(UtilsController $utilsController)
     {
         $this->utilsController = $utilsController;
-        $this->visitorIp = $this->utilsController->obtencionIpRealVisitante();
+        $this->visitorIp = $this->utilsController->$this->visitorIp;
     }
 
     public function LeadRegisterInfo(Request $request)
@@ -167,7 +167,7 @@ class LeadController extends Controller
     // API CPL Lowi
     public function apiLowi($lead, $idLead)
     {
-        //$this->visitorIp = $this->utilsController->obtencionIpRealVisitante();
+        //$this->visitorIp = $this->utilsController->$this->visitorIp;
         try {
             $base_api_url = "https://ws.walmeric.com/provision/wsclient/client_addlead.html";
 
@@ -218,7 +218,7 @@ class LeadController extends Controller
 
     public function apiMasMovil($lead, $idLead)
     {
-        //$this->visitorIp = $this->utilsController->obtencionIpRealVisitante();
+        //$this->visitorIp = $this->utilsController->$this->visitorIp;
         $apiUrl = 'https://api.byside.com/1.0/call/createCall';
         $authHeader = 'Basic Qzk4NTdFNkIxOTpUZU9ZR0l6eUxVdXlOYW8wRm5wZUlWN0ow';
 
@@ -281,7 +281,7 @@ class LeadController extends Controller
 
     public function apiButik($lead, $idLead)
     {
-        //$this->visitorIp = $this->utilsController->obtencionIpRealVisitante();
+        //$this->visitorIp = $this->utilsController->$this->visitorIp;
         try {
             $response = null;
             //$customer_name = (empty($request->dataToSend['nombre_usuario']) || ($request->dataToSend['nombre_usuario'] === "n/d")) ? "N/A" : $request->dataToSend['nombre_usuario'];
@@ -353,7 +353,7 @@ class LeadController extends Controller
 
     public function apiPlenitude($lead, $idLead)
     {
-        //$this->visitorIp = $this->utilsController->obtencionIpRealVisitante();
+        //$this->visitorIp = $this->utilsController->$this->visitorIp;
         try {
             $response = null;
             $base_api_url = "https://hooks.zapier.com/hooks/catch/13049102/bpkbypb/";
@@ -417,7 +417,7 @@ class LeadController extends Controller
 
         /* Banneo de números de teléfono presentes en la lista negra. *
         if (isset($lead['phone']) && isBannedPhone($this->formatTelephone($lead['phone']))) {
-            registroDeErrores(4, 'Número «banneado»en función ajaxApiPepephone()', 'Número: *' . $this->formatTelephone($lead['phone']) . "*", null, decideCountry());
+           $this->utilsController->registroDeErrores(4, 'Número «banneado»en función ajaxApiPepephone()', 'Número: *' . $this->formatTelephone($lead['phone']) . "*", null, decideCountry());
             return response()->json(array('call_response' => "ko", 'lead_id' => null), 200);
         } */
 
@@ -440,7 +440,7 @@ class LeadController extends Controller
                 /* case "energia":
                 $auth_user = "kolondoo_EN";
                 $auth_password = "En871WjKp@876#";
-                $functionSaveLead = "leadRecordEnergy";
+                $functionSaveLead = "$this->leadRegister";
                 $market = "Energia";
                 break; *
         } */

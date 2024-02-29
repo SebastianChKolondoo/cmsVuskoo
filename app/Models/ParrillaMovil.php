@@ -53,7 +53,7 @@ class ParrillaMovil extends Model
         return $this->belongsTo(States::class, 'estado', 'id');
     }
 
-    public function operadora()
+    public function operadoras()
     {
         return $this->belongsTo(Operadoras::class, 'operadora', 'id');
     }

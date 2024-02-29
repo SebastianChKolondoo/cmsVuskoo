@@ -3,7 +3,7 @@
     @can('parrillas.parrillaMovil.view.btn-create')
         <div class="row justify-content-center my-4">
             <div class="col-12">
-                <a href="{{ route('parrillaMovil.create') }}" class="btn btn-primary">Nuevo trifa</a>
+                <a href="{{ route('parrillaMovil.create') }}" class="btn btn-primary">Nueva oferta</a>
             </div>
         </div>
     @endcan
@@ -24,14 +24,14 @@
                                 <th>id</th>
                                 <th>Estado</th>
                                 <th>Operadora</th>
-                                <th>Nombre</th>
-                                <th>Parrilla 1</th>
+                                <th>Oferta</th>
+                                {{-- <th>Parrilla 1</th>
                                 <th>Parrilla 2</th>
                                 <th>Parrilla 3</th>
-                                <th>Parrilla 4</th>
+                                <th>Parrilla 4</th> --}}
                                 <th>Precio</th>
                                 <th>Visible en</th>
-                                @can('parrillaMovil.view.btn-edit')
+                                @can('parrillas.parrillaMovil.view.btn-edit')
                                     <th></th>
                                 @endcan
                             </tr>
@@ -39,16 +39,16 @@
                         <tbody>
                             @foreach ($tarifas as $tarifa)
                                 <td class="align-middle">{{ $tarifa->id }}</td>
-                                <td class="align-middle">{{ $tarifa->operadora }}</td>
                                 <td class="align-middle">{{ $tarifa->state->name }}</td>
+                                <td class="align-middle">{{ $tarifa->operadoras->nombre }}</td>
                                 <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                                <td class="align-middle">{{ $tarifa->parrilla_bloque_1 }}</td>
+                                {{-- <td class="align-middle">{{ $tarifa->parrilla_bloque_1 }}</td>
                                 <td class="align-middle">{{ $tarifa->parrilla_bloque_2 }}</td>
                                 <td class="align-middle">{{ $tarifa->parrilla_bloque_3 }}</td>
-                                <td class="align-middle">{{ $tarifa->parrilla_bloque_4 }}</td>
+                                <td class="align-middle">{{ $tarifa->parrilla_bloque_4 }}</td> --}}
                                 <td class="align-middle">{{ $tarifa->precio }}</td>
                                 <td class="align-middle">{{ $tarifa->pais }}</td>
-                                @can('parrillaMovil.view.btn-edit')
+                                @can('parrillas.parrillaMovil.view.btn-edit')
                                     <td>
                                         <a href="{{ route('parrillaMovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     </td>

@@ -88,3 +88,4 @@ Route::post('NewsletterRegister', [LeadController::class, 'FormNewsletterRegiste
 /* Zapier */
 Route::post('facebookZapierCpl', [ZapierController::class, 'facebookZapierCpl']);
 Route::post('redesSocialesZapier', [ZapierController::class, 'redesSocialesZapier']);
+Route::post('redesSocialesEnergyZapier', [ZapierController::class, 'redesSocialesEnergyZapier']);
