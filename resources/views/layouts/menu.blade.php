@@ -72,7 +72,7 @@
             <div id="collapseTelefonia" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     @can('parrillas.view.telefonia.view-fibra')
-                        <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Fibra</a>
+                        <a class="collapse-item" href="{{route('parrillaFibra.index')}}">Fibra</a>
                     @endcan
                     @can('parrillas.view.telefonia.view-movil')
                         <a class="collapse-item" href="{{route('parrillaMovil.index')}}">Móvil</a>

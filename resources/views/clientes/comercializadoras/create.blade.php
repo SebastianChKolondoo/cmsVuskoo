@@ -4,7 +4,7 @@
         <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h2>Registrar nueva comercializadora</h2>
+                    <h2>Registrar comercializadora</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))

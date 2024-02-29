@@ -6,7 +6,7 @@
         <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h2>Registrar nuevo oferta movil</h2>
+                    <h2>Editar oferta movil</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))

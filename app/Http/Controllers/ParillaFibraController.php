@@ -15,7 +15,7 @@ class ParillaFibraController extends Controller
     public function index()
     {
         $tarifas = ParillaFibra::all();
-        return view('telefonia.movil.index', compact('tarifas'));
+        return view('telefonia.fibra.index', compact('tarifas'));
     }
 
     /**
@@ -25,7 +25,7 @@ class ParillaFibraController extends Controller
     {
         $states = States::all();
         $operadoras = Operadoras::where('estado', '1')->get();
-        return view('telefonia.movil.create', compact('states', 'operadoras'));
+        return view('telefonia.fibra.create', compact('states', 'operadoras'));
     }
 
     /**
@@ -65,7 +65,7 @@ class ParillaFibraController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ParillaFibra $parillaMovil)
+    public function show(ParillaFibra $parillaFibra)
     {
         //
     }
@@ -73,20 +73,20 @@ class ParillaFibraController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($parillaMovil)
+    public function edit($parillaFibra)
     {
-        $tarifa = ParillaFibra::find($parillaMovil);
+        $tarifa = ParillaFibra::find($parillaFibra);
         $states = States::all();
         $operadoras = Operadoras::where('estado', '1')->get();
-        return view('telefonia.movil.edit', compact('tarifa', 'states', 'operadoras'));
+        return view('telefonia.fibra.edit', compact('tarifa', 'states', 'operadoras'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $parillaMovil)
+    public function update(Request $request, $parillaFibra)
     {
-        $tarifa = ParillaFibra::find($parillaMovil);
+        $tarifa = ParillaFibra::find($parillaFibra);
         $tarifa->update($request->all());
         return redirect()->route('ParillaFibra.index')->with('info', 'Tarifa editada correctamente.');
     }
@@ -94,7 +94,7 @@ class ParillaFibraController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ParillaFibra $parillaMovil)
+    public function destroy(ParillaFibra $parillaFibra)
     {
         //
     }

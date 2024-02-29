@@ -39,8 +39,8 @@
                         <tbody>
                             @foreach ($tarifas as $tarifa)
                                 <td class="align-middle">{{ $tarifa->id }}</td>
-                                <td class="align-middle">{{ $tarifa->state->name }}</td>
-                                <td class="align-middle">{{ $tarifa->operadoras->nombre }}</td>
+                                <td class="align-middle">{{ $tarifa?->state->name ?? 'Not Available' }}</td>
+                                <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
                                 <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
                                 {{-- <td class="align-middle">{{ $tarifa->parrilla_bloque_1 }}</td>
                                 <td class="align-middle">{{ $tarifa->parrilla_bloque_2 }}</td>
