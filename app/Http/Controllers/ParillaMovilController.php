@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Operadoras;
 use App\Models\ParillaMovil;
-use App\Models\parrillamovil;
 use App\Models\States;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +16,7 @@ class ParillaMovilController extends Controller
      */
     public function index()
     {
-        $tarifas = parrillamovil::all();
+        $tarifas = ParillaMovil::all();
         return view('telefonia.movil.index', compact('tarifas'));
     }
 
@@ -39,7 +38,7 @@ class ParillaMovilController extends Controller
         $moneda = ['es' => '€', 'co' => '$'];
         $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
         $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
-        $tarifa = parrillamovil::create([
+        $tarifa = ParillaMovil::create([
             'operadora' => $request->operadora,
             'estado' => $request->estado,
             'nombre_tarifa' => $request->nombre_tarifa,
@@ -68,7 +67,7 @@ class ParillaMovilController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(parrillamovil $parillaMovil)
+    public function show(ParillaMovil $parillaMovil)
     {
         //
     }
@@ -78,7 +77,7 @@ class ParillaMovilController extends Controller
      */
     public function edit($parillaMovil)
     {
-        $tarifa = parrillamovil::find($parillaMovil);
+        $tarifa = ParillaMovil::find($parillaMovil);
         $states = States::all();
         $operadoras = Operadoras::all();
         return view('telefonia.movil.edit', compact('tarifa', 'states', 'operadoras'));
@@ -97,7 +96,7 @@ class ParillaMovilController extends Controller
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
-        $tarifa = parrillamovil::find($parillaMovil);
+        $tarifa = ParillaMovil::find($parillaMovil);
         $tarifa->update($request->all());
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa editada correctamente.');
     }
@@ -105,7 +104,7 @@ class ParillaMovilController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(parrillamovil $parillaMovil)
+    public function destroy($parillaMovil)
     {
         //
     }

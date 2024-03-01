@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OperadorasController;
 use App\Http\Controllers\ParillaFibraController;
+use App\Http\Controllers\ParillaFibraMovilController;
+use App\Http\Controllers\ParillaFibraMovilTvController;
 use App\Http\Controllers\ParillaMovilController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\RolesController;
@@ -34,5 +36,6 @@ Route::resource('comercializadoras', ComercializadorasController::class)->names(
 Route::resource('operadoras', OperadorasController::class)->names('operadoras')->middleware(['auth']);
 Route::resource('parrillamovil', ParillaMovilController::class)->names('parrillamovil')->middleware(['auth']);
 Route::resource('parrillafibra', ParillaFibraController::class)->names('parrillafibra')->middleware(['auth']);
-//Route::resource('parrillafibraMovil', ParillaFibraMovil::class)->names('parrillafibra')->middleware(['auth']);
+Route::resource('parrillafibramovil', ParillaFibraMovilController::class)->names('parrillafibramovil')->middleware(['auth']);
+Route::resource('parrillafibramoviltv', ParillaFibraMovilTvController::class)->names('parrillafibramoviltv')->middleware(['auth']);
 

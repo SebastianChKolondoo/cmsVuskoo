@@ -78,10 +78,10 @@
                         <a class="collapse-item" href="{{route('parrillamovil.index')}}">Móvil</a>
                     @endcan
                     @can('parrillas.view.telefonia.view-fibramovil')
-                        <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Fibra y móvil</a>
+                        <a class="collapse-item" href="{{route('parrillafibramovil.index')}}">Fibra y móvil</a>
                     @endcan
                     @can('parrillas.view.telefonia.view-fibramoviltv')
-                        <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Fibra, móvil y tv</a>
+                        <a class="collapse-item" href="{{route('parrillafibramoviltv.index')}}">Fibra, móvil y tv</a>
                     @endcan
                 </div>
             </div>
