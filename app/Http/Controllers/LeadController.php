@@ -227,7 +227,7 @@ class LeadController extends Controller
             'schedule_datetime' => 'NOW',
             'channel' => 'proveedores',
             'branch_id' => '26970',
-            'lang' => 'es',
+            'lang' => null,
             'uuid' => 84125734612783612387162,
             'is_uid_authenticated' => false,
             'user_ip' => $this->visitorIp,

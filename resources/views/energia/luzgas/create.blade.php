@@ -6,7 +6,7 @@
         <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h2>Registrar oferta fibra y movil</h2>
+                    <h2>Registrar oferta luz y gas</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))
@@ -14,10 +14,10 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'parrillafibramovil.store']) !!}
+                    {!! Form::open(['route' => 'parrillaluzgas.store']) !!}
                     <div class="form-group">
-                        {!! Form::label('operadora', 'Operadora', ['class' => 'form-label']) !!}
-                        {!! Form::select('operadora', $operadoras->pluck('nombre', 'id'), null, [
+                        {!! Form::label('comercializadora', 'Comercializadora', ['class' => 'form-label']) !!}
+                        {!! Form::select('comercializadora', $comercializadoras->pluck('nombre', 'id'), null, [
                             'class' => 'form-control',
                         ]) !!}
                     </div>
@@ -36,7 +36,6 @@
                         {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
                         {!! Form::text('nombre_tarifa', null, [
                             'class' => 'form-control',
-                            'placeholder' => 'nombre de la tarifa',
                             'required' => 'required',
                         ]) !!}
                     </div>
@@ -44,7 +43,6 @@
                         {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                         {!! Form::textarea('parrilla_bloque_1', null, [
                             'class' => 'form-control',
-                            'placeholder' => 'característica #1',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -52,7 +50,6 @@
                         {!! Form::label('parrilla_bloque_2', 'característica #2', ['class' => 'form-label']) !!}
                         {!! Form::textarea('parrilla_bloque_2', null, [
                             'class' => 'form-control',
-                            'placeholder' => 'característica #2',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -60,7 +57,6 @@
                         {!! Form::label('parrilla_bloque_3', 'característica #3', ['class' => 'form-label']) !!}
                         {!! Form::textarea('parrilla_bloque_3', null, [
                             'class' => 'form-control',
-                            'placeholder' => 'característica #3',
                             'rows' => 2,
                         ]) !!}
                     </div>
@@ -68,9 +64,28 @@
                         {!! Form::label('parrilla_bloque_4', 'característica #4', ['class' => 'form-label']) !!}
                         {!! Form::textarea('parrilla_bloque_4', null, [
                             'class' => 'form-control',
-                            'placeholder' => 'característica #4',
                             'rows' => 2,
                         ]) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('landing_dato_adicional', 'Landing dato adicional', ['class' => 'form-label']) !!}
+                        {!! Form::text('landing_dato_adicional', null, [
+                            'class' => 'form-control',
+                        ]) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('luz_discriminacion_horaria', 'Discriminación horaria', ['class' => 'form-label']) !!}
+                        @foreach ($states as $state)
+                            <div>
+                                <label>
+                                    {!! Form::radio('luz_discriminacion_horaria', $state->id, 1, [
+                                        'class' => 'my-1 d-flex',
+                                        'required' => 'required',
+                                    ]) !!}
+                                    {{ $state->name }}
+                                </label>
+                            </div>
+                        @endforeach
                     </div>
                     <div class="form-group">
                         {!! Form::label('meses_permanencia', 'Meses permanencia', ['class' => 'form-label']) !!}
@@ -81,17 +96,63 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('precio', ' Precio', ['class' => 'form-label']) !!}
-                        {!! Form::text('precio', null, ['class' => 'form-control', 'placeholder' => 'precio']) !!}
+                        {!! Form::text('precio', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('precio_final', 'Precio final', ['class' => 'form-label']) !!}
                         {!! Form::text('precio_final', null, [
                             'class' => 'form-control',
-                            'placeholder' => 'precio_final',
                         ]) !!}
                     </div>
                     <div class="form-group">
-                        {!! Form::label('num_meses_promo', 'meses de promoción', ['class' => 'form-label']) !!}
+                        {!! Form::label('luz_precio_potencia_punta', 'Precio potencia punta', ['class' => 'form-label']) !!}
+                        {!! Form::number('luz_precio_potencia_punta', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('luz_precio_potencia_valle', 'Precio potencia valle', ['class' => 'form-label']) !!}
+                        {!! Form::number('luz_precio_potencia_valle', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('luz_precio_energia_punta', 'Precio energía punta', ['class' => 'form-label']) !!}
+                        {!! Form::number('luz_precio_energia_punta', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('luz_precio_energia_llano', 'Precio energía llano', ['class' => 'form-label']) !!}
+                        {!! Form::number('luz_precio_energia_llano', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('luz_precio_energia_valle', 'Precio energía valle', ['class' => 'form-label']) !!}
+                        {!! Form::number('luz_precio_energia_valle', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('luz_precio_energia_24h', 'Precio energía 24h', ['class' => 'form-label']) !!}
+                        {!! Form::number('luz_precio_energia_24h', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('energia_verde', 'Energía verde', ['class' => 'form-label']) !!}
+                        @foreach ($states as $state)
+                            <div>
+                                <label>
+                                    {!! Form::radio('energia_verde', $state->id, 1, ['class' => 'my-1 d-flex', 'required' => 'required']) !!}
+                                    {{ $state->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('gas_tipo_precio', 'Tipo precio', ['class' => 'form-label']) !!}
+                        {!! Form::text('gas_tipo_precio', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('gas_precio_termino_fijo', 'Precio gas termino fijo', ['class' => 'form-label']) !!}
+                        {!! Form::number('gas_precio_termino_fijo', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('gas_precio_energia', 'Precio gas energía', ['class' => 'form-label']) !!}
+                        {!! Form::number('gas_precio_energia', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('num_meses_promo', 'Meses de promoción', ['class' => 'form-label']) !!}
                         {!! Form::selectRange('num_meses_promo', 0, 12, null, [
                             'class' => 'form-control',
                         ]) !!}
@@ -100,94 +161,21 @@
                         {!! Form::label('promocion', 'Promoción', ['class' => 'form-label']) !!}
                         {!! Form::text('promocion', null, [
                             'class' => 'form-control',
-                            'placeholder' => 'promocion',
-                        ]) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label(' GB', 'GB', ['class' => 'form-label']) !!}
-                        {!! Form::number('GB', null, ['class' => 'form-control', 'placeholder' => 'GB oferta']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('MB_subida', 'Megas subida', ['class' => 'form-label']) !!}
-                        {!! Form::number('MB_subida', null, ['class' => 'form-control', 'placeholder' => 'Megas subida']) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('MB_bajada', 'Megas descarga', ['class' => 'form-label']) !!}
-                        {!! Form::text('MB_bajada', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Megas descarga',
-                        ]) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('tlf_fijo', 'Teléfono fijo', ['class' => 'form-label']) !!}
-                        @foreach ($states as $state)
-                            <div>
-                                <label>
-                                    {!! Form::radio('tlf_fijo', $state->id, 2, ['class' => 'my-1 d-flex']) !!}
-                                    {{ $state->name }}
-                                </label>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('llamadas_ilimitadas', 'llamadas ilimitadas', ['class' => 'form-label']) !!}
-                        @foreach ($states as $state)
-                            <div>
-                                <label>
-                                    {!! Form::radio('llamadas_ilimitadas', $state->id, null, ['class' => 'my-1 d-flex']) !!}
-                                    {{ $state->name }}
-                                </label>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('coste_llamadas_minuto', 'Coste llamadas minuto', ['class' => 'form-label']) !!}
-                        {!! Form::text('coste_llamadas_minuto', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Coste llamadas minuto',
-                        ]) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('coste_establecimiento_llamada', 'Coste establecimiento llamada', ['class' => 'form-label']) !!}
-                        {!! Form::text('coste_establecimiento_llamada', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Coste establecimiento llamada',
-                        ]) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('num_minutos_gratis', 'Minutos gratis', ['class' => 'form-label']) !!}
-                        {!! Form::number('num_minutos_gratis', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Minutos gratis',
-                        ]) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('num_lineas_adicionales', 'Lineas adicionales', ['class' => 'form-label']) !!}
-                        {!! Form::number('num_lineas_adicionales', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Minutos gratis',
-                        ]) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('GB_linea_adicional', 'GB lineas adicional', ['class' => 'form-label']) !!}
-                        {!! Form::number('GB_linea_adicional', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Minutos gratis',
-                        ]) !!}
-                    </div>
-                    <div class="form-group">
-                        {!! Form::label('tipo_conexion_internet', 'tipo de conexión internet', ['class' => 'form-label']) !!}
-                        {!! Form::number('tipo_conexion_internet', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Minutos gratis',
                         ]) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('fecha_expiracion', 'Fecha expiración', ['class' => 'form-label']) !!}
                         {!! Form::date('fecha_expiracion', \Carbon\Carbon::now(), [
                             'class' => 'form-control',
-                            'placeholder' => 'fecha de expiración',
                         ]) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('coste_mantenimiento', 'Coste mantenimiento', ['class' => 'form-label']) !!}
+                        {!! Form::number('coste_mantenimiento', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('coste_de_gestion', 'Coste de gestión', ['class' => 'form-label']) !!}
+                        {!! Form::number('coste_de_gestion', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}

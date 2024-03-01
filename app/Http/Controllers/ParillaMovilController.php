@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Operadoras;
+use App\Models\Paises;
 use App\Models\ParillaMovil;
 use App\Models\States;
 use Illuminate\Http\Request;
@@ -26,8 +27,9 @@ class ParillaMovilController extends Controller
     public function create()
     {
         $states = States::all();
+        $paises = Paises::all();
         $operadoras = Operadoras::where('estado', '1')->get();
-        return view('telefonia.movil.create', compact('states', 'operadoras'));
+        return view('telefonia.movil.create', compact('states', 'operadoras','paises'));
     }
 
     /**
@@ -35,7 +37,7 @@ class ParillaMovilController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = ['es' => '€', 'co' => '$'];
+        $moneda = Paises::where('codigo',$request->pais)->pluck('moneda')->first();
         $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
         $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
         $tarifa = ParillaMovil::create([
@@ -56,7 +58,7 @@ class ParillaMovilController extends Controller
             'coste_establecimiento_llamada' => $request->coste_establecimiento_llamada,
             'num_minutos_gratis' => $request->num_minutos_gratis,
             'fecha_expiracion' => $request->fecha_expiracion,
-            'moneda' => $moneda[$request->pais],
+            'moneda' => $moneda,
             'slug_tarifa' => $slug,
             'pais' => $request->pais
         ]);
@@ -79,8 +81,9 @@ class ParillaMovilController extends Controller
     {
         $tarifa = ParillaMovil::find($parillaMovil);
         $states = States::all();
+        $paises = Paises::all();
         $operadoras = Operadoras::all();
-        return view('telefonia.movil.edit', compact('tarifa', 'states', 'operadoras'));
+        return view('telefonia.movil.edit', compact('tarifa', 'states', 'operadoras','paises'));
     }
 
     /**
@@ -88,7 +91,7 @@ class ParillaMovilController extends Controller
      */
     public function update(Request $request, $parillaMovil)
     {
-        $moneda = ['es' => '€', 'co' => '$'];
+        $moneda = Paises::where('codigo',$request->pais)->pluck('moneda')->first();
         $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
         $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
@@ -96,6 +99,7 @@ class ParillaMovilController extends Controller
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
+$request['moneda'] = $moneda;
         $tarifa = ParillaMovil::find($parillaMovil);
         $tarifa->update($request->all());
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa editada correctamente.');

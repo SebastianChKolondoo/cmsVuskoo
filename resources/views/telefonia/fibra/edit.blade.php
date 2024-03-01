@@ -26,7 +26,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('estado', $state->id, 1, ['class' => 'my-1', 'required' => 'required']) !!}
+                                    {!! Form::radio('estado', $state->id, null, ['class' => 'my-1 d-flex', 'required' => 'required']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -119,7 +119,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('tlf_fijo', $state->id, 2, ['class' => 'my-1']) !!}
+                                    {!! Form::radio('tlf_fijo', $state->id, 2, ['class' => 'my-1 d-flex']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -134,17 +134,9 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
-                        {!! Form::select(
-                            'pais',
-                            [
-                                'es' => 'España',
-                                'co' => 'Colombia',
-                            ],
-                            'es',
-                            [
-                                'class' => 'form-control',
-                            ],
-                        ) !!}
+                        {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
+                            'class' => 'form-control',
+                        ]) !!}
                         {!! Form::submit('Actualizar', ['class' => 'btn btn-primary mt-3']) !!}
                         {!! Form::close() !!}
                     </div>

@@ -9,7 +9,6 @@ class ParillaMovil extends Model
 {
     use HasFactory;
     protected $table = 'WEB_3_TARIFAS_TELCO_MOVIL';
-
     protected $fillable = [
         'id_producto',
         'operadora',

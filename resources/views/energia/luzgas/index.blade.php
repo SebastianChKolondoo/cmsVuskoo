@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    @can('parrillas.parrillafibramovil.view.btn-create')
+    @can('parrillas.parrillaluzgas.view.btn-create')
         <div class="row justify-content-center my-4">
             <div class="col-12">
-                <a href="{{ route('parrillafibramovil.create') }}" class="btn btn-primary">Nueva oferta</a>
+                <a href="{{ route('parrillaluzgas.create') }}" class="btn btn-primary">Nueva oferta</a>
             </div>
         </div>
     @endcan
@@ -17,18 +17,17 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    <h4>Listado de parrilla Fibra y movil</h4>
-                    <table id="parrillafibramovilTable" class="table table-striped" style="width:100%">
+                    <h4>Listado de parrilla luz y gas</h4>
+                    <table id="parrillaluzgasTable" class="table table-striped" style="width:100%">
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th>id</th>
                                 <th>Estado</th>
-                                <th>Operadora</th>
+                                <th>comercializadora</th>
                                 <th>Oferta</th>
-                                
                                 <th>Precio</th>
                                 <th>Visible en</th>
-                                @can('parrillas.parrillafibramovil.view.btn-edit')
+                                @can('parrillas.parrillaluzgas.view.btn-edit')
                                     <th></th>
                                 @endcan
                             </tr>
@@ -37,14 +36,13 @@
                             @foreach ($tarifas as $tarifa)
                                 <td class="align-middle">{{ $tarifa->id }}</td>
                                 <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
-                                <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
-                                <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                                
+                                <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}</td>
+                                <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>                                
                                 <td class="align-middle">{{ $tarifa->precio }}</td>
                                 <td class="align-middle">{{ $tarifa->pais }}</td>
-                                @can('parrillas.parrillafibramovil.view.btn-edit')
+                                @can('parrillas.parrillaluzgas.view.btn-edit')
                                     <td>
-                                        <a href="{{ route('parrillafibramovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                        <a href="{{ route('parrillaluzgas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     </td>
                                 @endcan
                                 </tr>

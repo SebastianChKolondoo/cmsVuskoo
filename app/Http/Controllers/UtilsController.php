@@ -109,7 +109,7 @@ class UtilsController extends Controller
                     $ipapi_url,
                     [
                         'access_key' => $ipapi_key,
-                        'language' => 'es',
+                        'language' => null,
                         'output' => 'json',
                     ]
                 );
@@ -140,7 +140,7 @@ class UtilsController extends Controller
                 return null;
             }
         } else {
-            $message = "Fallo de IpAPI objeto vacío - Objeto response: " . json_encode($response) . ", Objeto enviado: " . json_encode(['access_key' => $ipapi_key, 'language' => 'es', 'output' => 'json', 'fields' => 'ip,type,continent_code,continent_name,country_code,country_name,region_name,city,zip,latitude,longitude']);
+            $message = "Fallo de IpAPI objeto vacío - Objeto response: " . json_encode($response) . ", Objeto enviado: " . json_encode(['access_key' => $ipapi_key, 'language' => null, 'output' => 'json', 'fields' => 'ip,type,continent_code,continent_name,country_code,country_name,region_name,city,zip,latitude,longitude']);
             //$this->registroDeErrores(6, 'IpAPI', $message);
             return null;
         }

@@ -23,7 +23,7 @@
                 @foreach ($roles as $rol)
                     <div>
                         <label>
-                            {!! Form::checkbox('roles[]', $rol->id, null, ['class' => 'my-1']) !!}
+                            {!! Form::checkbox('roles[]', $rol->id, null, ['class' => 'my-1 d-flex']) !!}
                             {{ $rol->name }}
                         </label>
                     </div>

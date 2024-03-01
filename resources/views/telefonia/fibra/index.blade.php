@@ -25,10 +25,7 @@
                                 <th>Estado</th>
                                 <th>Operadora</th>
                                 <th>Oferta</th>
-                                {{-- <th>Parrilla 1</th>
-                                <th>Parrilla 2</th>
-                                <th>Parrilla 3</th>
-                                <th>Parrilla 4</th> --}}
+                                
                                 <th>Precio</th>
                                 <th>Visible en</th>
                                 @can('parrillas.parrillafibra.view.btn-edit')
@@ -39,13 +36,10 @@
                         <tbody>
                             @foreach ($tarifas as $tarifa)
                                 <td class="align-middle">{{ $tarifa->id }}</td>
-                                <td class="align-middle">{{ $tarifa?->state->name ?? 'Not Available' }}</td>
+                                <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
                                 <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
                                 <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                                {{-- <td class="align-middle">{{ $tarifa->parrilla_bloque_1 }}</td>
-                                <td class="align-middle">{{ $tarifa->parrilla_bloque_2 }}</td>
-                                <td class="align-middle">{{ $tarifa->parrilla_bloque_3 }}</td>
-                                <td class="align-middle">{{ $tarifa->parrilla_bloque_4 }}</td> --}}
+                                
                                 <td class="align-middle">{{ $tarifa->precio }}</td>
                                 <td class="align-middle">{{ $tarifa->pais }}</td>
                                 @can('parrillas.parrillafibra.view.btn-edit')

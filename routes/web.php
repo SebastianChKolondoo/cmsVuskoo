@@ -7,6 +7,9 @@ use App\Http\Controllers\OperadorasController;
 use App\Http\Controllers\ParillaFibraController;
 use App\Http\Controllers\ParillaFibraMovilController;
 use App\Http\Controllers\ParillaFibraMovilTvController;
+use App\Http\Controllers\ParillaGasController;
+use App\Http\Controllers\ParillaLuzController;
+use App\Http\Controllers\ParillaLuzGasController;
 use App\Http\Controllers\ParillaMovilController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\RolesController;
@@ -34,8 +37,13 @@ Route::resource('permisos', PermisosController::class)->names('permisos')->middl
 Route::resource('roles', RolesController::class)->names('roles')->middleware(['auth']);
 Route::resource('comercializadoras', ComercializadorasController::class)->names('comercializadoras')->middleware(['auth']);
 Route::resource('operadoras', OperadorasController::class)->names('operadoras')->middleware(['auth']);
+/* Telefonia */
 Route::resource('parrillamovil', ParillaMovilController::class)->names('parrillamovil')->middleware(['auth']);
 Route::resource('parrillafibra', ParillaFibraController::class)->names('parrillafibra')->middleware(['auth']);
 Route::resource('parrillafibramovil', ParillaFibraMovilController::class)->names('parrillafibramovil')->middleware(['auth']);
 Route::resource('parrillafibramoviltv', ParillaFibraMovilTvController::class)->names('parrillafibramoviltv')->middleware(['auth']);
+/* energia */
+Route::resource('parrillaluz', ParillaLuzController::class)->names('parrillaluz')->middleware(['auth']);
+Route::resource('parrillagas', ParillaGasController::class)->names('parrillagas')->middleware(['auth']);
+Route::resource('parrillaluzgas', ParillaLuzGasController::class)->names('parrillaluzgas')->middleware(['auth']);
 

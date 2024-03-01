@@ -97,13 +97,13 @@
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     @can('parrillas.view.energia.view-luz')
-                        <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Luz</a>
+                        <a class="collapse-item" href="{{route('parrillaluz.index')}}">Luz</a>
                     @endcan
                     @can('parrillas.view.energia.view-gas')
-                        <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Gas</a>
+                        <a class="collapse-item" href="{{route('parrillagas.index')}}">Gas</a>
                     @endcan
                     @can('parrillas.view.energia.view-luzygas')
-                        <a class="collapse-item" {{-- href="{{route('/parillas')}}" --}}>Luz y gas</a>
+                        <a class="collapse-item" href="{{route('parrillaluzgas.index')}}">Luz y gas</a>
                     @endcan
                 </div>
             </div>
