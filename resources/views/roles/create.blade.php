@@ -20,7 +20,7 @@
                     @foreach ($permisos as $permiso)
                         <div>
                             <label>
-                                {!! Form::checkbox('permisos[]', $permiso->id, null, ['class' => 'my-1 d-flex']) !!}
+                                {!! Form::checkbox('permisos[]', $permiso->id, null, ['class' => 'my-1']) !!}
                                 {{ $permiso->name }}
                             </label>
                         </div>

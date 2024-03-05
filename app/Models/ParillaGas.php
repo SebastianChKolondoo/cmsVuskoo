@@ -45,4 +45,14 @@ class ParillaGas extends Model
         'slug_tarifa',
         'pais',
     ];
+
+    public function state()
+    {
+        return $this->belongsTo(States::class, 'estado', 'id');
+    }
+
+    public function comercializadoras()
+    {
+        return $this->belongsTo(Comercializadoras::class, 'comercializadora', 'id');
+    }
 }

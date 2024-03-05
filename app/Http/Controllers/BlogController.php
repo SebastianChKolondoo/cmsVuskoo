@@ -149,6 +149,7 @@ class BlogController extends Controller
             ->where('wp_term_taxonomy.taxonomy', '=', 'category')
             ->where('wp_posts.post_status', '=', 'publish')
             ->where('wp_yoast_indexable.post_status', '=', 'publish')
+            ->where('wp_terms.slug', '!=', 'destacado')
             ->orderBy('wp_posts.ID', 'desc')
             ->limit(3)->get();
         

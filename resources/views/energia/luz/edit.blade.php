@@ -26,7 +26,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('estado', $state->id, null, ['class' => 'my-1 d-flex', 'required' => 'required']) !!}
+                                    {!! Form::radio('estado', $state->id, null, ['class' => 'my-1', 'required' => 'required']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -79,7 +79,7 @@
                             <div>
                                 <label>
                                     {!! Form::radio('luz_discriminacion_horaria', $state->id, 1, [
-                                        'class' => 'my-1 d-flex',
+                                        'class' => 'my-1',
                                         'required' => 'required',
                                     ]) !!}
                                     {{ $state->name }}
@@ -133,7 +133,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('energia_verde', $state->id, 1, ['class' => 'my-1 d-flex', 'required' => 'required']) !!}
+                                    {!! Form::radio('energia_verde', $state->id, 1, ['class' => 'my-1', 'required' => 'required']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>

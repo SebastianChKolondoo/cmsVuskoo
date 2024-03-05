@@ -26,7 +26,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('estado', $state->id, null, ['class' => 'my-1 d-flex', 'required' => 'required']) !!}
+                                    {!! Form::radio('estado', $state->id, null, ['class' => 'my-1', 'required' => 'required']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -123,7 +123,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('tlf_fijo', $state->id, 2, ['class' => 'my-1 d-flex']) !!}
+                                    {!! Form::radio('tlf_fijo', $state->id, 2, ['class' => 'my-1']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -134,7 +134,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('llamadas_ilimitadas', $state->id, null, ['class' => 'my-1 d-flex']) !!}
+                                    {!! Form::radio('llamadas_ilimitadas', $state->id, null, ['class' => 'my-1']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -187,7 +187,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('TV', $state->id, 1, ['class' => 'my-1 d-flex', 'required' => 'required']) !!}
+                                    {!! Form::radio('TV', $state->id, 1, ['class' => 'my-1', 'required' => 'required']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -198,7 +198,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('Netflix', $state->id, 1, ['class' => 'my-1 d-flex']) !!}
+                                    {!! Form::radio('Netflix', $state->id, 1, ['class' => 'my-1']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -209,7 +209,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('HBO', $state->id, 1, ['class' => 'my-1 d-flex']) !!}
+                                    {!! Form::radio('HBO', $state->id, 1, ['class' => 'my-1']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -220,7 +220,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('AmazonPrime', $state->id, 1, ['class' => 'my-1 d-flex']) !!}
+                                    {!! Form::radio('AmazonPrime', $state->id, 1, ['class' => 'my-1']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -231,7 +231,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('Filmin', $state->id, 1, ['class' => 'my-1 d-flex']) !!}
+                                    {!! Form::radio('Filmin', $state->id, 1, ['class' => 'my-1']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -242,7 +242,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('DAZN', $state->id, 1, ['class' => 'my-1 d-flex']) !!}
+                                    {!! Form::radio('DAZN', $state->id, 1, ['class' => 'my-1']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -253,7 +253,7 @@
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('otros_canales_TV', $state->id, 1, ['class' => 'my-1 d-flex']) !!}
+                                    {!! Form::radio('otros_canales_TV', $state->id, 1, ['class' => 'my-1']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
