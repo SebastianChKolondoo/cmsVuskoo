@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ParillaGas extends Model
 {
     use HasFactory;
-    protected $table = 'WEB_3_TARIFAS_TELCO_FIBRA_MOVIL_TV';
+    protected $table = 'WEB_3_TARIFAS_ENERGIA_GAS';
 
     protected $fillable = [
         'id_producto',

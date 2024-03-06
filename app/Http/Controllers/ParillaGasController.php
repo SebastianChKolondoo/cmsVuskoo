@@ -16,7 +16,7 @@ class ParillaGasController extends Controller
     public function index()
     {
         $tarifas = ParillaGas::all();
-        return view('energia.luz.index', compact('tarifas'));
+        return view('energia.gas.index', compact('tarifas'));
     }
 
     /**
@@ -27,7 +27,7 @@ class ParillaGasController extends Controller
         $states = States::all();
         $paises = Paises::all();
         $comercializadoras = Comercializadoras::where('estado', '1')->get();
-        return view('energia.luz.create', compact('states', 'comercializadoras', 'paises'));
+        return view('energia.gas.create', compact('states', 'comercializadoras', 'paises'));
     }
 
     /**
@@ -69,7 +69,7 @@ class ParillaGasController extends Controller
             'pais' => $request->pais
         ]);
 
-        return redirect()->route('parrillaluz.index')->with('info', 'Tarifa creada correctamente.');
+        return redirect()->route('parrillagas.index')->with('info', 'Tarifa creada correctamente.');
     }
 
     /**
@@ -89,7 +89,7 @@ class ParillaGasController extends Controller
         $states = States::all();
         $paises = Paises::all();
         $comercializadoras = Comercializadoras::all();
-        return view('energia.luz.edit', compact('tarifa', 'states', 'comercializadoras', 'paises'));
+        return view('energia.gas.edit', compact('tarifa', 'states', 'comercializadoras', 'paises'));
     }
 
     /**
@@ -108,7 +108,7 @@ class ParillaGasController extends Controller
         $request['moneda'] = $moneda;
         $tarifa = ParillaGas::find($parillaGas);
         $tarifa->update($request->all());
-        return redirect()->route('parrillaluz.index')->with('info', 'Tarifa editada correctamente.');
+        return redirect()->route('parrillagas.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     /**

@@ -77,7 +77,7 @@ class ParillaLuzGasController extends Controller
             'pais' => $request->pais
         ]);
 
-        return redirect()->route('parrillaluz.index')->with('info', 'Tarifa creada correctamente.');
+        return redirect()->route('parrillaluzgas.index')->with('info', 'Tarifa creada correctamente.');
     }
 
     /**
@@ -116,7 +116,7 @@ class ParillaLuzGasController extends Controller
 $request['moneda'] = $moneda;
         $tarifa = ParillaLuzGas::find($parillaLuzGas);
         $tarifa->update($request->all());
-        return redirect()->route('parrillaluz.index')->with('info', 'Tarifa editada correctamente.');
+        return redirect()->route('parrillaluzgas.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     /**
