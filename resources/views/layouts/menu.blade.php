@@ -39,30 +39,32 @@
         </li>
     @endcan
     <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-    <div class="sidebar-heading">
-        Clientes
-    </div>
-    @can('clientes.view.operadoras')
-        <li class="nav-item active">
-            <a class="nav-link" href="/operadoras">
-                <i class="fa fa-address-book" aria-hidden="true"></i>
-                <span>Operadoras</span></a>
-        </li>
-    @endcan
-    @can('clientes.view.comercializadoras')
-        <li class="nav-item active">
-            <a class="nav-link" href="/comercializadoras">
-                <i class="fa fa-address-book" aria-hidden="true"></i>
-                <span>Comercializadoras</span></a>
-        </li>
+    @can('clientes.view')
+        <hr class="sidebar-divider d-none d-md-block">
+        <div class="sidebar-heading">
+            Clientes
+        </div>
+        @can('operadoras.view')
+            <li class="nav-item active">
+                <a class="nav-link" href="/operadoras">
+                    <i class="fa fa-address-book" aria-hidden="true"></i>
+                    <span>Operadoras</span></a>
+            </li>
+        @endcan
+        @can('comercializadoras.view')
+            <li class="nav-item active">
+                <a class="nav-link" href="/comercializadoras">
+                    <i class="fa fa-address-book" aria-hidden="true"></i>
+                    <span>Comercializadoras</span></a>
+            </li>
+        @endcan
     @endcan
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <div class="sidebar-heading">
         Parillas
     </div>
-    @can('parrillas.view.telefonia')
+    @can('telefonia.view')
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTelefonia"
                 aria-expanded="true" aria-controls="collapseTelefonia">
@@ -71,23 +73,23 @@
             </a>
             <div id="collapseTelefonia" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    @can('parrillas.view.telefonia.view-fibra')
-                        <a class="collapse-item" href="{{route('parrillafibra.index')}}">Fibra</a>
+                    @can('fibra.view')
+                        <a class="collapse-item" href="{{ route('parrillafibra.index') }}">Fibra</a>
                     @endcan
-                    @can('parrillas.view.telefonia.view-movil')
-                        <a class="collapse-item" href="{{route('parrillamovil.index')}}">Móvil</a>
+                    @can('movil.view')
+                        <a class="collapse-item" href="{{ route('parrillamovil.index') }}">Móvil</a>
                     @endcan
-                    @can('parrillas.view.telefonia.view-fibramovil')
-                        <a class="collapse-item" href="{{route('parrillafibramovil.index')}}">Fibra y móvil</a>
+                    @can('fibramovil.view')
+                        <a class="collapse-item" href="{{ route('parrillafibramovil.index') }}">Fibra y móvil</a>
                     @endcan
-                    @can('parrillas.view.telefonia.view-fibramoviltv')
-                        <a class="collapse-item" href="{{route('parrillafibramoviltv.index')}}">Fibra, móvil y tv</a>
+                    @can('fibramoviltv.view')
+                        <a class="collapse-item" href="{{ route('parrillafibramoviltv.index') }}">Fibra, móvil y tv</a>
                     @endcan
                 </div>
             </div>
         </li>
     @endcan
-    @can('parrillas.view.energia')
+    @can('energia.view')
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                 aria-expanded="true" aria-controls="collapsePages">
@@ -96,14 +98,14 @@
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    @can('parrillas.view.energia.view-luz')
-                        <a class="collapse-item" href="{{route('parrillaluz.index')}}">Luz</a>
+                    @can('luz.view')
+                        <a class="collapse-item" href="{{ route('parrillaluz.index') }}">Luz</a>
                     @endcan
-                    @can('parrillas.view.energia.view-gas')
-                        <a class="collapse-item" href="{{route('parrillagas.index')}}">Gas</a>
+                    @can('gas.view')
+                        <a class="collapse-item" href="{{ route('parrillagas.index') }}">Gas</a>
                     @endcan
-                    @can('parrillas.view.energia.view-luzygas')
-                        <a class="collapse-item" href="{{route('parrillaluzgas.index')}}">Luz y gas</a>
+                    @can('luzygas.view')
+                        <a class="collapse-item" href="{{ route('parrillaluzgas.index') }}">Luz y gas</a>
                     @endcan
                 </div>
             </div>

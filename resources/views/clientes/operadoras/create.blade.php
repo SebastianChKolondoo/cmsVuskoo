@@ -45,7 +45,7 @@
     </div>
     <div class="row justify-content-center mb-4">
         <div class="col-12 col-md-6">
-            <a href="{{ route('operadoras.index') }}" class="btn btn-light">Volver</a>
+            <a href="{{ route('operadoras.index') }}" class="btn btn-dark">Volver</a>
         </div>
     </div>
 @endsection

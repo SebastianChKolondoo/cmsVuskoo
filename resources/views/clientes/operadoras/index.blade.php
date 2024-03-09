@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @can('clientes.operadoras.view.btn-create')
+    @can('operadoras.view.btn-create')
         <div class="row justify-content-center my-4">
             <div class="col-12">
                 <a href="{{ route('operadoras.create') }}" class="btn btn-primary">Nueva operadora</a>
@@ -24,7 +24,7 @@
                                 <th>id</th>
                                 <th>Nombre</th>
                                 <th>Estado</th>
-                                @can('clientes.view.operadoras.btn-edit')
+                                @can('operadoras.view.btn-edit')
                                     <th></th>
                                 @endcan
                             </tr>
@@ -34,7 +34,7 @@
                                 <td class="align-middle">{{ $operadora->id }}</td>
                                 <td class="align-middle">{{ $operadora->nombre }}</td>
                                 <td class="align-middle">{{ $operadora->state->name }}</td>
-                                @can('clientes.view.operadoras.btn-edit')
+                                @can('operadoras.view.btn-edit')
                                     <td>
                                         <a href="{{ route('operadoras.edit', $operadora) }}" class="btn btn-primary">Editar</a>
                                     </td>

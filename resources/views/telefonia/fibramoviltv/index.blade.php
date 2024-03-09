@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @can('parrillas.parrillafibramoviltv.view.btn-create')
+    @can('fibramoviltv.view.btn-create')
         <div class="row justify-content-center my-4">
             <div class="col-12">
                 <a href="{{ route('parrillafibramoviltv.create') }}" class="btn btn-primary">Nueva oferta</a>
@@ -28,7 +28,7 @@
                                 
                                 <th>Precio</th>
                                 <th>Visible en</th>
-                                @can('parrillas.parrillafibramoviltv.view.btn-edit')
+                                @can('fibramoviltv.view.btn-edit')
                                     <th></th>
                                 @endcan
                             </tr>
@@ -42,7 +42,7 @@
                                 
                                 <td class="align-middle">{{ $tarifa->precio }}</td>
                                 <td class="align-middle">{{ $tarifa->pais }}</td>
-                                @can('parrillas.parrillafibramoviltv.view.btn-edit')
+                                @can('fibramoviltv.view.btn-edit')
                                     <td>
                                         <a href="{{ route('parrillafibramoviltv.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     </td>

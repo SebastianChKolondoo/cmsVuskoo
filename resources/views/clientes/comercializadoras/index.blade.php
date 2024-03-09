@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @can('clientes.comercializadoras.view.btn-create')
+    @can('comercializadoras.view.btn-create')
         <div class="row justify-content-center my-4">
             <div class="col-12">
                 <a href="{{ route('comercializadoras.create') }}" class="btn btn-primary">Nuevo comercializadora</a>
@@ -24,7 +24,7 @@
                                 <th>id</th>
                                 <th>Nombre</th>
                                 <th>Estado</th>
-                                @can('clientes.view.comercializadoras.btn-edit')
+                                @can('comercializadoras.view.btn-edit')
                                 <th></th>
                                 @endcan
                             </tr>
@@ -34,7 +34,7 @@
                                 <td class="align-middle">{{ $comercializadora->id }}</td>
                                 <td class="align-middle">{{ $comercializadora->nombre }}</td>
                                 <td class="align-middle">{{ $comercializadora->state->name }}</td>
-                                @can('clientes.view.comercializadoras.btn-edit')
+                                @can('comercializadoras.view.btn-edit')
                                     <td>
                                         <a href="{{ route('comercializadoras.edit', $comercializadora) }}" class="btn btn-primary">Editar</a>
                                     </td>

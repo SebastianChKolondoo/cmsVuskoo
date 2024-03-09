@@ -34,6 +34,6 @@
         </div>
     </div>
     <div class="col-12">
-        <a href="{{ route('permisos.index', $permiso) }}" class="btn btn-light">Volver</a>
+        <a href="{{ route('permisos.index', $permiso) }}" class="btn btn-dark">Volver</a>
     </div>
 @endsection

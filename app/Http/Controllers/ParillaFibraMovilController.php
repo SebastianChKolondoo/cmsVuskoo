@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class ParillaFibraMovilController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:fibra.view')->only('index');
+        $this->middleware('can:fibra.view.btn-create')->only('create','store');
+        $this->middleware('can:fibra.view.btn-edit')->only('edit','update');
+    }
     /**
      * Display a listing of the resource.
      */

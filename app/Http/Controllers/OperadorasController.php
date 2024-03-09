@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class OperadorasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:operadoras.view')->only('index');
+        $this->middleware('can:operadoras.view.btn-create')->only('create','store');
+        $this->middleware('can:operadoras.view.btn-edit')->only('edit','update');
+    }
     /**
      * Display a listing of the resource.
      */

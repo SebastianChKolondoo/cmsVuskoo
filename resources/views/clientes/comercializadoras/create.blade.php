@@ -15,7 +15,11 @@
                     {!! Form::open(['route' => 'comercializadoras.store']) !!}
                     <div class="form-group">
                         {!! Form::label('name', 'Nombre comercializadora', ['class' => 'form-label']) !!}
-                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombre comercializadora', 'required' => 'required']) !!}
+                        {!! Form::text('name', null, [
+                            'class' => 'form-control',
+                            'placeholder' => 'Nombre comercializadora',
+                            'required' => 'required',
+                        ]) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('logo', 'Logo', ['class' => 'form-label']) !!}
@@ -27,12 +31,15 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('politica', 'Nombre comercializadora', ['class' => 'form-label']) !!}
-                        {!! Form::text('politica', null, ['class' => 'form-control', 'placeholder' => 'Enlace externo a politica de privacidad']) !!}
+                        {!! Form::text('politica', null, [
+                            'class' => 'form-control',
+                            'placeholder' => 'Enlace externo a politica de privacidad',
+                        ]) !!}
                     </div>
                     @foreach ($estados as $estado)
                         <div>
                             <label>
-                                {!! Form::radio('estado', $estado->id, null, ['class' => 'my-1', 'required'=> 'required']) !!}
+                                {!! Form::radio('estado', $estado->id, null, ['class' => 'my-1', 'required' => 'required']) !!}
                                 {{ $estado->name }}
                             </label>
                         </div>
@@ -45,7 +52,7 @@
     </div>
     <div class="row justify-content-center mb-4">
         <div class="col-12 col-md-6">
-            <a href="{{ route('comercializadoras.index') }}" class="btn btn-light">Volver</a>
+            <a href="{{ route('comercializadoras.index') }}" class="btn btn-dark">Volver</a>
         </div>
     </div>
 @endsection
