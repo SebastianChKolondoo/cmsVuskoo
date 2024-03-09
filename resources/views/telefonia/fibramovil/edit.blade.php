@@ -41,6 +41,12 @@
                         ]) !!}
                     </div>
                     <div class="form-group">
+                        {!! Form::label('landing_link', 'Landing link', ['class' => 'form-label']) !!}
+                        {!! Form::text('landing_link', null, [
+                            'class' => 'form-control',
+                        ]) !!}
+                    </div>
+                    <div class="form-group">
                         {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                         {!! Form::textarea('parrilla_bloque_1', null, [
                             'class' => 'form-control',
@@ -105,11 +111,11 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label(' GB', 'GB', ['class' => 'form-label']) !!}
-                        {!! Form::number('GB', null, ['class' => 'form-control', 'placeholder' => 'GB oferta']) !!}
+                        {!! Form::text('GB', null, ['class' => 'form-control', 'placeholder' => 'GB oferta']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('MB_subida', 'Megas subida', ['class' => 'form-label']) !!}
-                        {!! Form::number('MB_subida', null, ['class' => 'form-control', 'placeholder' => 'Megas subida']) !!}
+                        {!! Form::text('MB_subida', null, ['class' => 'form-control', 'placeholder' => 'Megas subida']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('MB_bajada', 'Megas descarga', ['class' => 'form-label']) !!}
@@ -156,28 +162,28 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('num_minutos_gratis', 'Minutos gratis', ['class' => 'form-label']) !!}
-                        {!! Form::number('num_minutos_gratis', null, [
+                        {!! Form::text('num_minutos_gratis', null, [
                             'class' => 'form-control',
                             'placeholder' => 'Minutos gratis',
                         ]) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('num_lineas_adicionales', 'Lineas adicionales', ['class' => 'form-label']) !!}
-                        {!! Form::number('num_lineas_adicionales', null, [
+                        {!! Form::text('num_lineas_adicionales', null, [
                             'class' => 'form-control',
                             'placeholder' => 'Minutos gratis',
                         ]) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('GB_linea_adicional', 'GB lineas adicional', ['class' => 'form-label']) !!}
-                        {!! Form::number('GB_linea_adicional', null, [
+                        {!! Form::text('GB_linea_adicional', null, [
                             'class' => 'form-control',
                             'placeholder' => 'Minutos gratis',
                         ]) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('tipo_conexion_internet', 'tipo de conexión internet', ['class' => 'form-label']) !!}
-                        {!! Form::number('tipo_conexion_internet', null, [
+                        {!! Form::text('tipo_conexion_internet', null, [
                             'class' => 'form-control',
                             'placeholder' => 'Minutos gratis',
                         ]) !!}

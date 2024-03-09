@@ -40,6 +40,12 @@
                         ]) !!}
                     </div>
                     <div class="form-group">
+                        {!! Form::label('landing_link', 'Landing link', ['class' => 'form-label']) !!}
+                        {!! Form::text('landing_link', null, [
+                            'class' => 'form-control',
+                        ]) !!}
+                    </div>
+                    <div class="form-group">
                         {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                         {!! Form::textarea('parrilla_bloque_1', null, [
                             'class' => 'form-control',
@@ -95,45 +101,43 @@
 
                     </div>
                     <div class="form-group">
-                        {!! Form::label('precio', ' Precio', ['class' => 'form-label']) !!}
-                        {!! Form::text('precio', null, ['class' => 'form-control']) !!}
+                        {!! Form::label('precio', 'Precio', ['class' => 'form-label']) !!}
+                        {!! Form::text('precio', null, ['class' => 'form-control', 'step' => '0.01']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('precio_final', 'Precio final', ['class' => 'form-label']) !!}
-                        {!! Form::text('precio_final', null, [
-                            'class' => 'form-control',
-                        ]) !!}
+                        {!! Form::text('precio_final', null, ['class' => 'form-control', 'step' => '0.01']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('luz_precio_potencia_punta', 'Precio potencia punta', ['class' => 'form-label']) !!}
-                        {!! Form::number('luz_precio_potencia_punta', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('luz_precio_potencia_punta', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('luz_precio_potencia_valle', 'Precio potencia valle', ['class' => 'form-label']) !!}
-                        {!! Form::number('luz_precio_potencia_valle', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('luz_precio_potencia_valle', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('luz_precio_energia_punta', 'Precio energía punta', ['class' => 'form-label']) !!}
-                        {!! Form::number('luz_precio_energia_punta', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('luz_precio_energia_punta', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('luz_precio_energia_llano', 'Precio energía llano', ['class' => 'form-label']) !!}
-                        {!! Form::number('luz_precio_energia_llano', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('luz_precio_energia_llano', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('luz_precio_energia_valle', 'Precio energía valle', ['class' => 'form-label']) !!}
-                        {!! Form::number('luz_precio_energia_valle', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('luz_precio_energia_valle', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('luz_precio_energia_24h', 'Precio energía 24h', ['class' => 'form-label']) !!}
-                        {!! Form::number('luz_precio_energia_24h', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('luz_precio_energia_24h', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('energia_verde', 'Energía verde', ['class' => 'form-label']) !!}
                         @foreach ($states as $state)
                             <div>
                                 <label>
-                                    {!! Form::radio('energia_verde', $state->id, 1, ['class' => 'my-1', 'required' => 'required']) !!}
+                                    {!! Form::radio('energia_verde', $state->id, 1, ['class' => 'my-1']) !!}
                                     {{ $state->name }}
                                 </label>
                             </div>
@@ -159,11 +163,11 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('coste_mantenimiento', 'Coste mantenimiento', ['class' => 'form-label']) !!}
-                        {!! Form::number('coste_mantenimiento', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('coste_mantenimiento', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('coste_de_gestion', 'Coste de gestión', ['class' => 'form-label']) !!}
-                        {!! Form::number('coste_de_gestion', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('coste_de_gestion', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}

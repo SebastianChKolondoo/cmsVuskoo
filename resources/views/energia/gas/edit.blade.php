@@ -40,6 +40,12 @@
                         ]) !!}
                     </div>
                     <div class="form-group">
+                        {!! Form::label('landing_link', 'Landing link', ['class' => 'form-label']) !!}
+                        {!! Form::text('landing_link', null, [
+                            'class' => 'form-control',
+                        ]) !!}
+                    </div>
+                    <div class="form-group">
                         {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                         {!! Form::textarea('parrilla_bloque_1', null, [
                             'class' => 'form-control',
@@ -109,11 +115,11 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('coste_mantenimiento', 'Coste mantenimiento', ['class' => 'form-label']) !!}
-                        {!! Form::number('coste_mantenimiento', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('coste_mantenimiento', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('coste_de_gestion', 'Coste de gestión', ['class' => 'form-label']) !!}
-                        {!! Form::number('coste_de_gestion', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('coste_de_gestion', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('gas_tipo_precio', 'Tipo precio', ['class' => 'form-label']) !!}
@@ -121,15 +127,15 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('gas_precio_termino_fijo', 'Precio gas termino fijo', ['class' => 'form-label']) !!}
-                        {!! Form::number('gas_precio_termino_fijo', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('gas_precio_termino_fijo', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('gas_precio_termino_variable', 'Precio gas termino variable', ['class' => 'form-label']) !!}
-                        {!! Form::number('gas_precio_termino_variable', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('gas_precio_termino_variable', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('gas_precio_energia', 'Precio gas energía', ['class' => 'form-label']) !!}
-                        {!! Form::number('gas_precio_energia', null, ['class' => 'form-control']) !!}
+                        {!! Form::text('gas_precio_energia', null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}

@@ -15,6 +15,7 @@ use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use App\Models\ParillaFibraMovil;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 /*

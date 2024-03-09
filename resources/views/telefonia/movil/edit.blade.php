@@ -37,7 +37,6 @@
                         {!! Form::text('nombre_tarifa', null, [
                             'class' => 'form-control',
                             'placeholder' => 'nombre de la tarifa',
-                            'required' => 'required',
                         ]) !!}
                     </div>
                     <div class="form-group">
@@ -105,7 +104,7 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label(' GB', 'GB', ['class' => 'form-label']) !!}
-                        {!! Form::number('GB', null, ['class' => 'form-control', 'placeholder' => 'GB oferta']) !!}
+                        {!! Form::text('GB', null, ['class' => 'form-control', 'placeholder' => 'GB oferta']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('llamadas_ilimitadas', 'llamadas ilimitadas', ['class' => 'form-label']) !!}
@@ -134,7 +133,7 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('num_minutos_gratis', 'Minutos gratis', ['class' => 'form-label']) !!}
-                        {!! Form::number('num_minutos_gratis', null, [
+                        {!! Form::text('num_minutos_gratis', null, [
                             'class' => 'form-control',
                             'placeholder' => 'Minutos gratis',
                         ]) !!}

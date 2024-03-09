@@ -42,6 +42,7 @@ class ParillaFibraController extends Controller
             'operadora' => $request->operadora,
             'estado' => $request->estado,
             'nombre_tarifa' => $request->nombre_tarifa,
+            'landing_link' => $request->landing_link,
             'parrilla_bloque_1' => trim(str_replace('  ', ' ', $request->parrilla_bloque_1)),
             'parrilla_bloque_2' => trim(str_replace('  ', ' ', $request->parrilla_bloque_2)),
             'parrilla_bloque_3' => trim(str_replace('  ', ' ', $request->parrilla_bloque_3)),

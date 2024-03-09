@@ -41,6 +41,12 @@
                         ]) !!}
                     </div>
                     <div class="form-group">
+                        {!! Form::label('landing_link', 'Landing link', ['class' => 'form-label']) !!}
+                        {!! Form::text('landing_link', null, [
+                            'class' => 'form-control',
+                        ]) !!}
+                    </div>
+                    <div class="form-group">
                         {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                         {!! Form::textarea('parrilla_bloque_1', null, [
                             'class' => 'form-control',
@@ -105,7 +111,7 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('MB_subida', 'Megas subida', ['class' => 'form-label']) !!}
-                        {!! Form::number('MB_subida', null, ['class' => 'form-control', 'placeholder' => 'Megas subida']) !!}
+                        {!! Form::text('MB_subida', null, ['class' => 'form-control', 'placeholder' => 'Megas subida']) !!}
                     </div>
                     <div class="form-group">
                         {!! Form::label('MB_bajada', 'Megas descarga', ['class' => 'form-label']) !!}
