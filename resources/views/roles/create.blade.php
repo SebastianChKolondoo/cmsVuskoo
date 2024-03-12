@@ -15,7 +15,11 @@
                     {!! Form::open(['route' => 'roles.store']) !!}
                     <div class="form-group">
                         {!! Form::label('name', 'Nombre rol', ['class' => 'form-label']) !!}
-                        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombre del rol', 'required' => 'required']) !!}
+                        {!! Form::text('name', null, [
+                            'class' => 'form-control',
+                            'placeholder' => 'Nombre del rol',
+                            'required' => 'required',
+                        ]) !!}
                     </div>
                     @foreach ($permisos as $permiso)
                         <div>
@@ -29,11 +33,6 @@
                     {!! Form::close() !!}
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row justify-content-center mb-4">
-        <div class="col-12 col-md-6">
-            <a href="{{ route('roles.index') }}" class="btn btn-dark">Volver</a>
         </div>
     </div>
 @endsection

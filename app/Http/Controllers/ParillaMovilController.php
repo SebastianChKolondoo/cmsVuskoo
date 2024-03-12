@@ -109,7 +109,7 @@ $request['moneda'] = $moneda;
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($parillaMovil)
+    public function duplicateOffer($id)
     {
         //
     }

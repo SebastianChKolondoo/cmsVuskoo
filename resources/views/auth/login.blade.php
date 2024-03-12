@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="row vh-100 justify-content-center align-items-center">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6 col-xl-4">
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-0">
                     <div class="row">
@@ -12,12 +12,12 @@
                                 </div>
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
-                                    <div class="form-group">
+                                    <div class="form-group col-12">
                                         <input id="exampleInputEmail" type="email"
                                             class="form-control p-4  @error('email') is-invalid @enderror" name="email"
                                             value="{{ old('email') }}" required autocomplete="email" autofocus>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group col-12">
                                         <input id="exampleInputPassword" type="password" class="form-control p-4 "
                                             name="password" required autocomplete="email" autofocus>
                                     </div>

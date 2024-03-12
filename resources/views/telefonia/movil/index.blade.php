@@ -45,6 +45,7 @@
                                 @can('movil.view.btn-edit')
                                     <td>
                                         <a href="{{ route('parrillamovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                        {{-- <a href="{{ route('parrillamovilDuplicate', $tarifa) }}" class="btn btn-primary">Duplicar</a> --}}
                                     </td>
                                 @endcan
                                 </tr>
