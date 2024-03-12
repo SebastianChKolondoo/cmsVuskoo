@@ -116,11 +116,12 @@ $request['moneda'] = $moneda;
         return redirect()->route('parrillafibra.index')->with('info', 'Tarifa editada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ParillaFibra $parillaFibra)
+    public function duplicateOffer($id)
     {
-        //
+        $tarifaBase = ParillaFibra::find($id);
+        $duplica = $tarifaBase->replicate();
+        $duplica->save();
+        $tarifa = ParillaFibra::find($duplica->id);
+        return redirect()->route('parrillafibra.edit', ['parrillafibra' => $duplica->id]);
     }
 }

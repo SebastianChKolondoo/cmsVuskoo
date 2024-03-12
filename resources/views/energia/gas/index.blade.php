@@ -34,17 +34,24 @@
                         </thead>
                         <tbody>
                             @foreach ($tarifas as $tarifa)
-                                <td class="align-middle">{{ $tarifa->id }}</td>
-                                <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
-                                <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}</td>
-                                <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>                                
-                                <td class="align-middle">{{ $tarifa->precio }}</td>
-                                <td class="align-middle">{{ $tarifa->pais }}</td>
-                                @can('gas.view.btn-edit')
-                                    <td>
-                                        <a href="{{ route('parrillagas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                <tr>
+                                    <td class="align-middle">{{ $tarifa->id }}</td>
+                                    <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
+                                    <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}
                                     </td>
-                                @endcan
+                                    <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
+                                    <td class="align-middle">{{ $tarifa->precio }}</td>
+                                    <td class="align-middle">{{ $tarifa->pais }}</td>
+                                    <td>
+                                        @can('gas.view.btn-edit')
+                                            <a href="{{ route('parrillagas.edit', $tarifa) }}"
+                                                class="btn btn-primary">Editar</a>
+                                        @endcan
+                                        @can('gas.view.btn-duplicate')
+                                            <a href="{{ route('parrillagasDuplicate', $tarifa) }}"
+                                                class="btn btn-primary">Duplicar</a>
+                                        @endcan
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -115,8 +115,12 @@ class ParillaGasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($parillaGas)
+    public function duplicateOffer($id)
     {
-        //
+        $tarifaBase = ParillaGas::find($id);
+        $duplica = $tarifaBase->replicate();
+        $duplica->save();
+        $tarifa = ParillaGas::find($duplica->id);
+        return redirect()->route('parrillagas.edit', ['parrillaga' => $duplica->id]);
     }
 }

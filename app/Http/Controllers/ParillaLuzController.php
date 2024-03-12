@@ -114,11 +114,12 @@ $request['moneda'] = $moneda;
         return redirect()->route('parrillaluz.index')->with('info', 'Tarifa editada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($parillaLuz)
+    public function duplicateOffer($id)
     {
-        //
+        $tarifaBase = ParillaLuz::find($id);
+        $duplica = $tarifaBase->replicate();
+        $duplica->save();
+        $tarifa = ParillaLuz::find($duplica->id);
+        return redirect()->route('parrillaluz.edit', ['parrillaluz' => $duplica->id]);
     }
 }

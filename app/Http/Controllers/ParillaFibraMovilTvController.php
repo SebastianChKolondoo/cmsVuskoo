@@ -27,7 +27,7 @@ class ParillaFibraMovilTvController extends Controller
         $paises = Paises::all();
         $states = States::all();
         $operadoras = Operadoras::where('estado', '1')->get();
-        return view('telefonia.fibramoviltv.create', compact('states', 'operadoras','paises'));
+        return view('telefonia.fibramoviltv.create', compact('states', 'operadoras', 'paises'));
     }
 
     /**
@@ -35,7 +35,7 @@ class ParillaFibraMovilTvController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('codigo',$request->pais)->pluck('moneda')->first();
+        $moneda = Paises::where('codigo', $request->pais)->pluck('moneda')->first();
         $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
         $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
         $tarifa = ParillaFibraMovilTv::create([
@@ -82,7 +82,7 @@ class ParillaFibraMovilTvController extends Controller
         $states = States::all();
         $paises = Paises::all();
         $operadoras = Operadoras::all();
-        return view('telefonia.fibramoviltv.edit', compact('tarifa', 'states', 'operadoras','paises'));
+        return view('telefonia.fibramoviltv.edit', compact('tarifa', 'states', 'operadoras', 'paises'));
     }
 
     /**
@@ -90,7 +90,7 @@ class ParillaFibraMovilTvController extends Controller
      */
     public function update(Request $request, $parillaMoviltv)
     {
-        $moneda = Paises::where('codigo',$request->pais)->pluck('moneda')->first();
+        $moneda = Paises::where('codigo', $request->pais)->pluck('moneda')->first();
         $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
         $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
@@ -98,17 +98,18 @@ class ParillaFibraMovilTvController extends Controller
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
-$request['moneda'] = $moneda;
+        $request['moneda'] = $moneda;
         $tarifa = ParillaFibraMovilTv::find($parillaMoviltv);
         $tarifa->update($request->all());
         return redirect()->route('parrillafibramoviltv.index')->with('info', 'Tarifa editada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ParillaFibraMovilTv $parillaMoviltv)
+    public function duplicateOffer($id)
     {
-        //
+        $tarifaBase = ParillaFibraMovilTv::find($id);
+        $duplica = $tarifaBase->replicate();
+        $duplica->save();
+        $tarifa = ParillaFibraMovilTv::find($duplica->id);
+        return redirect()->route('parrillafibramoviltv.edit', ['parrillafibramoviltv' => $duplica->id]);
     }
 }

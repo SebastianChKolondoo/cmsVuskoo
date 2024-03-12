@@ -29,7 +29,7 @@ class ParillaMovilController extends Controller
         $states = States::all();
         $paises = Paises::all();
         $operadoras = Operadoras::where('estado', '1')->get();
-        return view('telefonia.movil.create', compact('states', 'operadoras','paises'));
+        return view('telefonia.movil.create', compact('states', 'operadoras', 'paises'));
     }
 
     /**
@@ -37,7 +37,7 @@ class ParillaMovilController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('codigo',$request->pais)->pluck('moneda')->first();
+        $moneda = Paises::where('codigo', $request->pais)->pluck('moneda')->first();
         $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
         $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
         $tarifa = ParillaMovil::create([
@@ -84,7 +84,7 @@ class ParillaMovilController extends Controller
         $states = States::all();
         $paises = Paises::all();
         $operadoras = Operadoras::all();
-        return view('telefonia.movil.edit', compact('tarifa', 'states', 'operadoras','paises'));
+        return view('telefonia.movil.edit', compact('tarifa', 'states', 'operadoras', 'paises'));
     }
 
     /**
@@ -92,7 +92,7 @@ class ParillaMovilController extends Controller
      */
     public function update(Request $request, $parillaMovil)
     {
-        $moneda = Paises::where('codigo',$request->pais)->pluck('moneda')->first();
+        $moneda = Paises::where('codigo', $request->pais)->pluck('moneda')->first();
         $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
         $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
@@ -100,7 +100,7 @@ class ParillaMovilController extends Controller
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
-$request['moneda'] = $moneda;
+        $request['moneda'] = $moneda;
         $tarifa = ParillaMovil::find($parillaMovil);
         $tarifa->update($request->all());
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa editada correctamente.');
@@ -111,6 +111,10 @@ $request['moneda'] = $moneda;
      */
     public function duplicateOffer($id)
     {
-        //
+        $tarifaBase = ParillaMovil::find($id);
+        $duplica = $tarifaBase->replicate();
+        $duplica->save();
+        $tarifa = ParillaMovil::find($duplica->id);
+        return redirect()->route('parrillamovil.edit', ['parrillamovil' => $duplica->id]);
     }
 }

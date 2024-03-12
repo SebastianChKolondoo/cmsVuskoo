@@ -25,7 +25,7 @@
                                 <th>Estado</th>
                                 <th>Operadora</th>
                                 <th>Oferta</th>
-                                
+
                                 <th>Precio</th>
                                 <th>Visible en</th>
                                 @can('fibramovil.view.btn-edit')
@@ -35,18 +35,24 @@
                         </thead>
                         <tbody>
                             @foreach ($tarifas as $tarifa)
-                                <td class="align-middle">{{ $tarifa->id }}</td>
-                                <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
-                                <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
-                                <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                                
-                                <td class="align-middle">{{ $tarifa->precio }}</td>
-                                <td class="align-middle">{{ $tarifa->pais }}</td>
-                                @can('fibramovil.view.btn-edit')
+                                <tr>
+                                    <td class="align-middle">{{ $tarifa->id }}</td>
+                                    <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
+                                    <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
+                                    <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
+
+                                    <td class="align-middle">{{ $tarifa->precio }}</td>
+                                    <td class="align-middle">{{ $tarifa->pais }}</td>
                                     <td>
-                                        <a href="{{ route('parrillafibramovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                        @can('fibramovil.view.btn-edit')
+                                            <a href="{{ route('parrillafibramovil.edit', $tarifa) }}"
+                                                class="btn btn-primary">Editar</a>
+                                        @endcan
+                                        @can('fibramovil.view.btn-duplicate')
+                                            <a href="{{ route('parrillafibramovilDuplicate', $tarifa) }}"
+                                                class="btn btn-primary">Duplicar</a>
+                                        @endcan
                                     </td>
-                                @endcan
                                 </tr>
                             @endforeach
                         </tbody>

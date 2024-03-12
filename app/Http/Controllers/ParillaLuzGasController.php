@@ -35,7 +35,7 @@ class ParillaLuzGasController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('codigo',$request->pais)->pluck('moneda')->first();
+        $moneda = Paises::where('codigo', $request->pais)->pluck('moneda')->first();
         $empresa = Comercializadoras::find($request->comercializadora)->pluck('nombre')->first();
         $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
         $tarifa = ParillaLuzGas::create([
@@ -106,7 +106,7 @@ class ParillaLuzGasController extends Controller
      */
     public function update(Request $request, $parillaLuzGas)
     {
-        $moneda = Paises::where('codigo',$request->pais)->pluck('moneda')->first();
+        $moneda = Paises::where('codigo', $request->pais)->pluck('moneda')->first();
         $empresa = Comercializadoras::find($request->comercializadora)->pluck('nombre')->first();
         $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
@@ -114,17 +114,18 @@ class ParillaLuzGasController extends Controller
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
-$request['moneda'] = $moneda;
+        $request['moneda'] = $moneda;
         $tarifa = ParillaLuzGas::find($parillaLuzGas);
         $tarifa->update($request->all());
         return redirect()->route('parrillaluzgas.index')->with('info', 'Tarifa editada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($parillaLuzGas)
+    public function duplicateOffer($id)
     {
-        //
+        $tarifaBase = ParillaLuzGas::find($id);
+        $duplica = $tarifaBase->replicate();
+        $duplica->save();
+        $tarifa = ParillaLuzGas::find($duplica->id);
+        return redirect()->route('parrillaluzgas.edit', ['parrillaluzga' => $duplica->id]);
     }
 }
