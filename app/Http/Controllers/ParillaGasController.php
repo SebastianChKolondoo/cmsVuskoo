@@ -61,7 +61,7 @@ class ParillaGasController extends Controller
             'gas_precio_termino_fijo' => $request->gas_precio_termino_fijo,
             'gas_precio_termino_variable' => $request->gas_precio_termino_variable,
             'gas_precio_energia' => $request->gas_precio_energia,
-            'orden_parrilla_general' => $request->orden_parrilla_general,
+            'destacada' => $request->destacada,
             'fecha_publicacion' => $request->fecha_publicacion,
             'fecha_expiracion' => $request->fecha_expiracion,
             'fecha_registro' => $request->fecha_registro,

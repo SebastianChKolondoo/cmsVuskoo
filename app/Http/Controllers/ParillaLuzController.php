@@ -63,7 +63,7 @@ class ParillaLuzController extends Controller
             'num_meses_promo' => $request->num_meses_promo,
             'texto_alternativo_promo' => $request->texto_alternativo_promo,
             'coste_de_gestion' => $request->coste_de_gestion,
-            'orden_parrilla_general' => $request->orden_parrilla_general,
+            'destacada' => $request->destacada,
             'fecha_publicacion' => $request->fecha_publicacion,
             'fecha_expiracion' => $request->fecha_expiracion,
             'fecha_registro' => $request->fecha_registro,

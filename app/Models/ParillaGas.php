@@ -34,7 +34,7 @@ class ParillaGas extends Model
         'gas_precio_termino_fijo',
         'gas_precio_termino_variable',
         'gas_precio_energia',
-        'orden_parrilla_general',
+        'destacada',
         'orden_parrilla_comercializadora',
         'estado',
         'fecha_publicacion',

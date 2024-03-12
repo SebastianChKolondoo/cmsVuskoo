@@ -33,7 +33,7 @@ class ParillaFibra extends Model
         'imagen_promo',
         'promocion',
         'texto_alternativo_promo',
-        'orden_parrilla_general',
+        'destacada',
         'orden_parrilla_operadora',
         'fecha_publicacion',
         'fecha_expiracion',

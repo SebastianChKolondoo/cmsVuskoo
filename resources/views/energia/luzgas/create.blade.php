@@ -27,6 +27,12 @@
                         ]) !!}
                         </div>
                         <div class="form-group col-4">
+                            {!! Form::label('destacada', 'Destacada', ['class' => 'form-label']) !!}
+                            {!! Form::select('destacada', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-4">
                             {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre_tarifa', null, [
                                 'class' => 'form-control',

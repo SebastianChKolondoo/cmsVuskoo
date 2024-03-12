@@ -68,7 +68,7 @@ class ParillaLuzGasController extends Controller
             'gas_tipo_precio' => $request->gas_tipo_precio,
             'gas_precio_termino_fijo' => $request->gas_precio_termino_fijo,
             'gas_precio_energia' => $request->gas_precio_energia,
-            'orden_parrilla_general' => $request->orden_parrilla_general,
+            'destacada' => $request->destacada,
             'orden_parrilla_comercializadora' => $request->orden_parrilla_comercializadora,
             'fecha_publicacion' => $request->fecha_publicacion,
             'fecha_expiracion' => $request->fecha_expiracion,

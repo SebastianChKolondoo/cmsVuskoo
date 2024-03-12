@@ -40,7 +40,7 @@ class ParillaFibraMovil extends Model
         'GB_linea_adicional',
         'tipo_conexion_internet',
         'nombre_terminal_regalo',
-        'orden_parrilla_general',
+        'destacada',
         'orden_parrilla_operadora',
         'estado',
         'fecha_publicacion',

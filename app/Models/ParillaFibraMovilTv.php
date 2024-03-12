@@ -47,7 +47,7 @@ class ParillaFibraMovilTv extends Model
         'DAZN',
         'otros_canales_TV',
         'nombre_terminal_regalo',
-        'orden_parrilla_general',
+        'destacada',
         'estado',
         'orden_parrilla_operadora',
         'fecha_publicacion',

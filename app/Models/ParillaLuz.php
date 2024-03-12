@@ -38,7 +38,7 @@ class ParillaLuz extends Model
         'texto_alternativo_promo',
         'coste_de_gestion',
         'coste_mantenimiento',
-        'orden_parrilla_general',
+        'destacada',
         'orden_parrilla_comercializadora',
         'fecha_publicacion',
         'fecha_expiracion',

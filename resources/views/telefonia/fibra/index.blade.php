@@ -50,7 +50,7 @@
                                         @endcan
                                         @can('fibra.view.btn-duplicate')
                                             <a href="{{ route('parrillafibraDuplicate', $tarifa) }}"
-                                                class="btn btn-primary">Duplicar</a>
+                                                class="btn btn-warning">Duplicar</a>
                                         @endcan
                                     </td>
                                 </tr>

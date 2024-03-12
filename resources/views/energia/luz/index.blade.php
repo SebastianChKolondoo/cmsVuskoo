@@ -49,7 +49,7 @@
                                         @endcan
                                         @can('luz.view.btn-duplicate')
                                             <a href="{{ route('parrillaluzDuplicate', $tarifa) }}"
-                                                class="btn btn-primary">Duplicar</a>
+                                                class="btn btn-warning">Duplicar</a>
                                         @endcan
                                     </td>
                                 </tr>

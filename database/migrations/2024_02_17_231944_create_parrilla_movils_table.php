@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('coste_establecimiento_llamada');
             $table->string('num_minutos_gratis');
             $table->string('nombre_terminal_regalo');
-            $table->string('orden_parrilla_general');
+            $table->string('destacada');
             $table->string('orden_parrilla_operadora');
             $table->string('fecha_publicacion');
             $table->string('fecha_expiracion');

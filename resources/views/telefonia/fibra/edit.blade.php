@@ -22,7 +22,13 @@
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
-                            {!! Form::select('operadora', $states->pluck('name', 'id'), null, [
+                            {!! Form::select('estado', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-4">
+                            {!! Form::label('destacada', 'Destacada', ['class' => 'form-label']) !!}
+                            {!! Form::select('destacada', $states->pluck('name', 'id'), null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>

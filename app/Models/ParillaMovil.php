@@ -35,7 +35,7 @@ class ParillaMovil extends Model
         'coste_establecimiento_llamada',
         'num_minutos_gratis',
         'nombre_terminal_regalo',
-        'orden_parrilla_general',
+        'destacada',
         'orden_parrilla_operadora',
         'fecha_publicacion',
         'fecha_expiracion',
