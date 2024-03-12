@@ -22,20 +22,14 @@
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
-                            @foreach ($states as $state)
-                                <div>
-                                    <label>
-                                        {!! Form::radio('estado', $state->id, null, ['class' => 'my-1', 'required' => 'required']) !!}
-                                        {{ $state->name }}
-                                    </label>
-                                </div>
-                            @endforeach
+                            {!! Form::select('estado', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre_tarifa', null, [
                                 'class' => 'form-control',
-                                'required' => 'required',
                             ]) !!}
                         </div>
                         <div class="form-group col-4">
@@ -135,14 +129,9 @@
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('energia_verde', 'Energía verde', ['class' => 'form-label']) !!}
-                            @foreach ($states as $state)
-                                <div>
-                                    <label>
-                                        {!! Form::radio('energia_verde', $state->id, 1, ['class' => 'my-1', 'required' => 'required']) !!}
-                                        {{ $state->name }}
-                                    </label>
-                                </div>
-                            @endforeach
+                            {!! Form::select('energia_verde', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('num_meses_promo', 'Meses de promoción', ['class' => 'form-label']) !!}

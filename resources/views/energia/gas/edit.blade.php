@@ -21,14 +21,9 @@
                     </div>
                     <div class="form-group col-4">
                         {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
-                        @foreach ($states as $state)
-                            <div>
-                                <label>
-                                    {!! Form::radio('estado', $state->id, null, ['class' => 'my-1', 'required' => 'required']) !!}
-                                    {{ $state->name }}
-                                </label>
-                            </div>
-                        @endforeach
+                        {!! Form::select('estado', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
                     </div>
                     <div class="form-group col-4">
                         {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
@@ -141,10 +136,10 @@
                             'class' => 'form-control',
                         ]) !!}
                     </div>
-                    <div class="col-6">
+                    <div class="col-12">
                         {!! Form::submit('Actualizar', ['class' => 'btn btn-primary']) !!}
+                        {!! Form::close() !!}
                     </div>
-                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

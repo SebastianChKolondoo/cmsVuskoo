@@ -22,14 +22,9 @@
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
-                            @foreach ($states as $state)
-                                <div>
-                                    <label>
-                                        {!! Form::radio('estado', $state->id, null, ['class' => 'my-1', 'required' => 'required']) !!}
-                                        {{ $state->name }}
-                                    </label>
-                                </div>
-                            @endforeach
+                            {!! Form::select('estado', $states->pluck('name', 'id'), null, [
+                            'class' => 'form-control',
+                        ]) !!}
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
@@ -80,17 +75,9 @@
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('luz_discriminacion_horaria', 'Discriminación horaria', ['class' => 'form-label']) !!}
-                            @foreach ($states as $state)
-                                <div>
-                                    <label>
-                                        {!! Form::radio('luz_discriminacion_horaria', $state->id, 1, [
-                                            'class' => 'my-1',
-                                            'required' => 'required',
-                                        ]) !!}
-                                        {{ $state->name }}
-                                    </label>
-                                </div>
-                            @endforeach
+                            {!! Form::select('luz_discriminacion_horaria', $states->pluck('name', 'id'), null, [
+                            'class' => 'form-control',
+                        ]) !!}
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('meses_permanencia', 'Meses permanencia', ['class' => 'form-label']) !!}
@@ -135,14 +122,9 @@
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('energia_verde', 'Energía verde', ['class' => 'form-label']) !!}
-                            @foreach ($states as $state)
-                                <div>
-                                    <label>
-                                        {!! Form::radio('energia_verde', $state->id, 1, ['class' => 'my-1', 'required' => 'required']) !!}
-                                        {{ $state->name }}
-                                    </label>
-                                </div>
-                            @endforeach
+                            {!! Form::select('energia_verde', $states->pluck('name', 'id'), null, [
+                            'class' => 'form-control',
+                        ]) !!}
                         </div>
                         <div class="form-group col-4">
                             {!! Form::label('gas_tipo_precio', 'Tipo precio', ['class' => 'form-label']) !!}
@@ -188,7 +170,7 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="col-6">
+                        <div class="col-12">
                             {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}
                             {!! Form::close() !!}
                         </div>

@@ -32,7 +32,6 @@
                             {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre_tarifa', null, [
                                 'class' => 'form-control',
-                                'required' => 'required',
                             ]) !!}
                         </div>
                         <div class="form-group col-4">
@@ -158,8 +157,8 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="col-6">
-                            {!! Form::submit('Actualizar', ['class' => 'btn btn-primary']) !!}
+                        <div class="col-12">
+                            {!! Form::submit('Guardar cambios', ['class' => 'btn btn-primary']) !!}
                             {!! Form::close() !!}
                         </div>
                     </div>
