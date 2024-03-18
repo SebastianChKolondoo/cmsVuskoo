@@ -35,6 +35,76 @@ class ApiController extends Controller
         return view('swagger');
     }
 
+    public function getMenuList(){
+        // Crear el array de objetos
+        return $data = [
+            [
+                "title" => "Internet y Telefonía",
+                "titleUrl" => "/internet-telefonia",
+                "children" => [
+                    [
+                        "name" => "Fibra",
+                        "url" => "/internet-telefonia/comparador-fibra"
+                    ],
+                    [
+                        "name" => "Móvil",
+                        "url" => "/internet-telefonia/comparador-movil"
+                    ],
+                    [
+                        "name" => "Fibra y móvil",
+                        "url" => "/internet-telefonia/comparador-tarifas-fibra-y-movil"
+                    ],
+                    [
+                        "name" => "Fibra móvil y TV",
+                        "url" => "/internet-telefonia/comparador-fibra-movil-tv"
+                    ]
+                ]
+            ],
+            [
+                "title" => "TV y streaming",
+                "titleUrl" => "/television-streaming",
+                "children" => [
+                    [
+                        "name" => "Plataformas de streaming",
+                        "url" => "/television-streaming/comparador-plataformas-streaming"
+                    ]
+                ]
+            ],
+            [
+                "title" => "Energía",
+                "titleUrl" => "/energia",
+                "children" => [
+                    [
+                        "name" => "Luz",
+                        "url" => "/energia/comparador-tarifas-luz"
+                    ],
+                    [
+                        "name" => "Gas",
+                        "url" => "/energia/comparador-tarifas-gas"
+                    ],
+                    [
+                        "name" => "Luz y gas",
+                        "url" => "/energia/comparador-tarifas-luz-y-gas"
+                    ]
+                ]
+            ],
+            [
+                "title" => "Herramientas",
+                "titleUrl" => "/herramientas",
+                "children" => [
+                    [
+                        "name" => "Precio de la luz hoy",
+                        "url" => "/herramientas/precio-de-la-luz-hoy"
+                    ],
+                    [
+                        "name" => "Test de velocidad",
+                        "url" => "/herramientas/test-de-velocidad"
+                    ]
+                ]
+            ]
+        ];
+    }
+
     /* funciones para consultar las ofertas comerciales */
     public function getComercializadorasLuzList()
     {

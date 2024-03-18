@@ -2,7 +2,7 @@
 <footer class="sticky-footer bg-white">
 	<div class="container my-auto">
 		<div class="copyright text-center my-auto">
-			<span>Footer<sup>©</sup> 2024</span>
+			<span>CMS for Vuskoo<sup>©</sup> 2024</span>
 		</div>
 	</div>
 </footer>
