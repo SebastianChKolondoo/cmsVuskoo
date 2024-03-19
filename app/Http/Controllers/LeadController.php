@@ -22,7 +22,7 @@ class LeadController extends Controller
     public function __construct(UtilsController $utilsController)
     {
         $this->utilsController = $utilsController;
-        $this->visitorIp = $this->utilsController->$this->visitorIp;
+        $this->visitorIp = $this->utilsController->obtencionIpRealVisitante();
     }
 
     public function LeadRegisterInfo(Request $request)
@@ -43,6 +43,7 @@ class LeadController extends Controller
             'landing' => $request->input('landing'),
             'urlOffer' => $request->input('urlOffer'),
             'company' => $request->input('company'),
+            'ip' => $this->visitorIp,
         ]);
 
         // Guardar el nuevo registro en la base de datos
@@ -141,7 +142,6 @@ class LeadController extends Controller
             case 20:    /*Butik*/
                 return $this->apiButik($lead, $idLead);
                 break;
-            case 10:    /*Másmóvil*/
             case 22:    /*Másmóvil*/
                 return $this->apiMasMovil($lead, $idLead);
                 break;
@@ -156,8 +156,11 @@ class LeadController extends Controller
             case 20:    /*Butik*/
                 return $this->apiButik($lead, $idLead);
                 break;
-            case 11:    /*Lowi*/
+            case 27:    /*Lowi*/
                 return $this->apiLowi($lead, $idLead);
+                break;
+            case 22:    /*Lowi*/
+                return $this->apiMasMovil($lead, $idLead);
                 break;
             default:
                 break;
