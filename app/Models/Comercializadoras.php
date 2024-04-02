@@ -11,6 +11,7 @@ class Comercializadoras extends Model
     protected $table = '1_comercializadoras';
     protected $fillable = [
         'nombre',
+        'nombre_slug',
         'tipo_conversion',
         'color',
         'color_texto',

@@ -38,6 +38,7 @@ $(document).ready(function () {
 	$('#btnItem').click(function () {
 		openAllTabs();
 	});
+	
 });
 
 let collapseContainers = false;

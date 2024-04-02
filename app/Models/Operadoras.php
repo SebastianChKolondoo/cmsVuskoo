@@ -11,6 +11,7 @@ class Operadoras extends Model
     protected $table = '1_operadoras';
     protected $fillable = [
         'nombre',
+        'nombre_slug',
         'tipo_conversion',
         'color',
         'color_texto',

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ComercializadorasController;
+use App\Http\Controllers\ContenidoMarcaController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OperadorasController;
@@ -14,8 +16,10 @@ use App\Http\Controllers\ParillaMovilController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UtilsController;
 use App\Models\ParillaFibraMovil;
 use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use Spatie\Permission\Models\Role;
 
 /*
@@ -31,8 +35,8 @@ use Spatie\Permission\Models\Role;
 
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->middleware(['auth']);
-Route::get('/home', [HomeController::class, 'index'])->middleware(['auth']);
+Route::get('/', [DashboardController::class, 'contadorServicio'])->middleware(['auth']);
+Route::get('/home', [DashboardController::class, 'contadorServicio'])->middleware(['auth']);
 Route::resource('usuarios', UserController::class)->middleware(['auth'])->names('user');
 Route::resource('permisos', PermisosController::class)->names('permisos')->middleware(['auth']);
 Route::resource('roles', RolesController::class)->names('roles')->middleware(['auth']);
@@ -58,3 +62,9 @@ Route::get('parrillaluzDuplicate/{id}', [ParillaLuzController::class, 'duplicate
 Route::resource('parrillaluzgas', ParillaLuzGasController::class)->names('parrillaluzgas')->middleware(['auth']);
 Route::get('parrillaluzgasDuplicate/{id}', [ParillaLuzGasController::class, 'duplicateOffer'])->name('parrillaluzgasDuplicate')->middleware(['auth']);
 
+Route::resource('Contenidomarca', ContenidoMarcaController::class)->names('contenidomarca')->middleware(['auth']);
+Route::get('Contenidomarcacreatecomercializadora/{id}', [ContenidoMarcaController::class, 'createContent'])->name('Contenidomarcacreatecomercializadora')->middleware(['auth']);
+Route::get('Contenidomarcacreateoperadora/{id}', [ContenidoMarcaController::class, 'createContent'])->name('Contenidomarcacreateoperadora')->middleware(['auth']);
+
+Route::get('contadorservicio/{serivicio}', [DashboardController::class, 'contadorServicio'])->middleware(['auth']);
+Route::get('contadorservicio', [DashboardController::class, 'contadorServicio'])->middleware(['auth']);

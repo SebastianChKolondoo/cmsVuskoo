@@ -155,4 +155,5 @@ class UtilsController extends Controller
     {
         return DB::connection('common_event_log')->table('banned_phones')->where('phone', preg_replace('/\s+/', '', $phone))->exists();
     }
+
 }

@@ -35,9 +35,9 @@ class ParillaLuzGasController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('codigo', $request->pais)->pluck('moneda')->first();
-        $empresa = Comercializadoras::find($request->comercializadora)->pluck('nombre')->first();
-        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
+        $moneda = Paises::where('id', $request->pais)->select('moneda')->get();
+        $empresa = Comercializadoras::find('id',$request->comercializadora)->select('nombre_slug')->get();
+        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
         $tarifa = ParillaLuzGas::create([
             'comercializadora' => $request->comercializadora,
             'estado' => $request->estado,
@@ -106,9 +106,9 @@ class ParillaLuzGasController extends Controller
      */
     public function update(Request $request, $parillaLuzGas)
     {
-        $moneda = Paises::where('codigo', $request->pais)->pluck('moneda')->first();
-        $empresa = Comercializadoras::find($request->comercializadora)->pluck('nombre')->first();
-        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
+        $moneda = Paises::where('id', $request->pais)->select('moneda')->get();
+        $empresa = Comercializadoras::find('id',$request->comercializadora)->select('nombre_slug')->get();
+        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));

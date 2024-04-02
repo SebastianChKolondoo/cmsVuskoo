@@ -170,7 +170,8 @@ class ZapierController extends Controller
     public function leadRegister($request)
     {
         $IP_data = $this->visitorIp;
-        $lead = new Lead([
+        $country_code = !empty($IP_data->country_code) ? $IP_data->country_code : null;
+        $lead = Lead::create([
             'landing' => 'Facebook',
             'urlOffer' => 'Facebook',
             'company' => $request->dataToSend['company'],
@@ -186,8 +187,10 @@ class ZapierController extends Controller
             'acepta_politica_privacidad' => $request->dataToSend['acepta_politica_privacidad'],
             'acepta_cesion_datos_a_proveedor' => $request->dataToSend['acepta_cesion_datos_a_proveedor'],
             'acepta_comunicaciones_comerciales' => $request->dataToSend['acepta_comunicaciones_comerciales'],
+            
         ]);
-        $lead->save();
+
+        //echo $lead->save();
         return $lead->id;
     }
 
@@ -224,11 +227,13 @@ class ZapierController extends Controller
                 );
 
                 $response = $this->$instance_zapier($request);
+                print_r($response);
                 if (json_decode($response->content())->call_response === "ok") {
                     // DADO DE BAJA 
                     //$this->audienceTalkingOfflineLeadCommunication('fblead', 'c2c', $tlf_movil, 'TELCO', $this->formatCloseLeadsValues('atkey', $instance->nombre), 'facebook','social');
                     return response()->json(array('status' => "ok"), 200);
                 } else {
+                    echo 'hola f';
                     return response()->json(array('status' => "ko"), 200);
                 }
             } else {
@@ -253,7 +258,6 @@ class ZapierController extends Controller
         $auth_password = "Mr171WjKp#913@";
         $customer_name = ($request->dataToSend['nombre_usuario'] === "n/d") || empty($request->dataToSend['nombre_usuario']) ? "nombre no facilitado" : $request->dataToSend['nombre_usuario'];
         $phone = $this->utilsController->formatTelephone($request->dataToSend['tel_usuario']);
-
         try {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
@@ -282,7 +286,7 @@ class ZapierController extends Controller
                 //$this->utilsController->registroDeErrores(10, 'ApiPepephoneZapierCpl', "Fallo de API ajaxApiPepephoneZapierCpl responde KO: " . $response->body());
             } elseif ($return == "ok") {
                 //Registramos en BBDD el lead
-                $this->$this->leadRegister($request);
+                $this->leadRegister($request);
                 return response()->json(array('call_response' => 'ok', 'lead_id' => $lead_id), 200);
             }
         } else {
@@ -351,7 +355,7 @@ class ZapierController extends Controller
                 ->get($api_url, $sending_info);
         } catch (ConnectionException $e) {
             $message = "Fallo de API ajaxApiVodafoneZapierCpl no responde - ERROR: " . $e->getMessage();
-           // $this->utilsController->registroDeErrores(9, 'ajaxApiVodafoneZapierCpl', $message);
+            // $this->utilsController->registroDeErrores(9, 'ajaxApiVodafoneZapierCpl', $message);
         }
         //Control respuesta API
         if (!empty($response) && !empty($response->body())) {
@@ -360,10 +364,10 @@ class ZapierController extends Controller
             if ($response->successful()) {
                 $lead_id = $this->leadRegister($request);
             } else {
-               // $this->utilsController->registroDeErrores(10, 'ajaxApiVodafoneZapierCpl', "Fallo de IpAPI ajaxApiVodafoneZapierCpl responde: " . $result->message);
+                // $this->utilsController->registroDeErrores(10, 'ajaxApiVodafoneZapierCpl', "Fallo de IpAPI ajaxApiVodafoneZapierCpl responde: " . $result->message);
             }
         } else {
-           // $this->utilsController->registroDeErrores(10, 'ajaxApiVodafoneZapierCpl', "Fallo de IpAPI ajaxApiVodafoneZapierCpl objeto HTTP response vacío");
+            // $this->utilsController->registroDeErrores(10, 'ajaxApiVodafoneZapierCpl', "Fallo de IpAPI ajaxApiVodafoneZapierCpl objeto HTTP response vacío");
         }
 
         return response()->json(array('call_response' => $return, 'lead_id' => $lead_id), 200);
@@ -540,7 +544,7 @@ class ZapierController extends Controller
             $response = $response->original;
         } else {
             $response = array('call_response' => 'ko', 'message' => "Sin respuesta del WS destino de la compañía: {" . $company . "}");
-           // $this->utilsController->registroDeErrores(13, 'redesSocialesEnergyZapier', "WS de la compañía: {" . $company . "}, no devolvió respuesta. Llamada recibida:  " . json_encode($request->post()));
+            // $this->utilsController->registroDeErrores(13, 'redesSocialesEnergyZapier', "WS de la compañía: {" . $company . "}, no devolvió respuesta. Llamada recibida:  " . json_encode($request->post()));
         }
 
         return response()->json($response, 200);
@@ -643,7 +647,7 @@ class ZapierController extends Controller
                             ->post($api_url, array('Authorization' => $dataToSend));
                     } catch (ConnectionException $e) {
                         $message = "Fallo en ajaxApiEnergiaCPA no responde - ERROR: " . $e->getMessage();
-                       // $this->utilsController->registroDeErrores(9, 'ajaxApiEnergiaCPA', $message);
+                        // $this->utilsController->registroDeErrores(9, 'ajaxApiEnergiaCPA', $message);
                     }
                 }
 
@@ -668,11 +672,11 @@ class ZapierController extends Controller
                     if (!$acepta_politica_proveedor_kolondoo) {
                         $error = "Política de privacidad NO ACEPTADA ha llegado a la función, valor recibido en el «field acepta_politica_privacidad»: " . (empty($request->dataToSend['acepta_politica_privacidad']) ? '*null*' : "*" . $request->dataToSend['acepta_politica_privacidad'] . "*");
                     }
-                   // $this->utilsController->registroDeErrores(10, 'ajaxApiEnergiaCPA', "Fallo de IpAPI ajaxApiEnergiaCPA responde KO - ERROR: " . $error);
+                    // $this->utilsController->registroDeErrores(10, 'ajaxApiEnergiaCPA', "Fallo de IpAPI ajaxApiEnergiaCPA responde KO - ERROR: " . $error);
                     $return = "ko";
                 }
             } else {
-               // $this->utilsController->registroDeErrores(10, 'Fallo ajaxApiEnergiaCPA', 'id_lead no es como se espera (esperado: energia_*lead_id numérico*), recibido: ' . $lead_id);
+                // $this->utilsController->registroDeErrores(10, 'Fallo ajaxApiEnergiaCPA', 'id_lead no es como se espera (esperado: energia_*lead_id numérico*), recibido: ' . $lead_id);
             }
         } else {
             /*
@@ -680,7 +684,7 @@ class ZapierController extends Controller
                 ya que esta ruta está condicionada por el «middleware InstanceMiddleware» y se decide por el prefijo de ruta (no se llama a IPAPI).
                 El valor «null» enviado en// $this->utilsController->registroDeErrores() correspondería al país de origen de llamada, mandamos null para evitar llamar a IPAPI  en ataques por fuerza bruta que consumirían stock IpAPI.
             */
-           // $this->utilsController->registroDeErrores(4, 'Llamada Ajax no permitida', 'Llamada a funcion ajaxApiEnergiaCPA con origen no ajax. Se bloquea acceso', null, decideCountry());
+            // $this->utilsController->registroDeErrores(4, 'Llamada Ajax no permitida', 'Llamada a funcion ajaxApiEnergiaCPA con origen no ajax. Se bloquea acceso', null, decideCountry());
         }
 
         sleep(2);
@@ -764,7 +768,7 @@ class ZapierController extends Controller
             if ($response->successful()) {
                 $return = "ok";
             } else {
-               $this->utilsController->registroDeErrores(10, 'ajaxApiRepsol', "Fallo de API ajaxApiRepsol responde KO, se borra «lead» id: *" . $lead_id . "*, respuesta de WS: " . $response->body());
+                $this->utilsController->registroDeErrores(10, 'ajaxApiRepsol', "Fallo de API ajaxApiRepsol responde KO, se borra «lead» id: *" . $lead_id . "*, respuesta de WS: " . $response->body());
                 $return = "ko";
                 //Llamamos a BBDD para borrar el lead falso
                 if (isset($lead_id_repsol) && is_numeric($lead_id_repsol)) {
@@ -774,7 +778,7 @@ class ZapierController extends Controller
                 }
             }
         } else {
-           $this->utilsController->registroDeErrores(10, 'ajaxApiRepsol', "Fallo de API ajaxApiRepsol objeto HTTP response vacío o cuerpo de la respuesta no contiene nada.");
+            $this->utilsController->registroDeErrores(10, 'ajaxApiRepsol', "Fallo de API ajaxApiRepsol objeto HTTP response vacío o cuerpo de la respuesta no contiene nada.");
         }
 
         sleep(2);
@@ -790,7 +794,7 @@ class ZapierController extends Controller
 
         /* Banneo de números de teléfono presentes en la lista negra. */
         if (isset($request->dataToSend['tel_usuario']) && isBannedPhone($this->formatTelephone($request->dataToSend['tel_usuario']))) {
-           // $this->utilsController->registroDeErrores(4, 'Número «banneado»en función ajaxApiAlternaEnergy()', 'Número: *' . $this->formatTelephone($request->dataToSend['tel_usuario']) . "*", null, decideCountry());
+            // $this->utilsController->registroDeErrores(4, 'Número «banneado»en función ajaxApiAlternaEnergy()', 'Número: *' . $this->formatTelephone($request->dataToSend['tel_usuario']) . "*", null, decideCountry());
             return response()->json(array('call_response' => "ko", 'lead_id' => null), 200);
         }
 
@@ -845,7 +849,7 @@ class ZapierController extends Controller
                 } else {
                     $call_response = "ko";
                     $message = "Fallo de API ajaxApiAlternaEnergy responde KO. Enviado a la API: " . json_encode($obj) . ", Respuesta del WS ajaxApiAlternaEnergy: " . $response;
-                   // $this->utilsController->registroDeErrores(10, 'ajaxApiAlternaEnergy', $message);
+                    // $this->utilsController->registroDeErrores(10, 'ajaxApiAlternaEnergy', $message);
                 }
             } catch (ConnectionException $e) {
                 $fallo_envio_lead = true;
@@ -866,7 +870,7 @@ class ZapierController extends Controller
 
         /* Banneo de números de teléfono presentes en la lista negra. */
         if (isset($request->dataToSend['tel_usuario']) && isBannedPhone($this->formatTelephone($request->dataToSend['tel_usuario']))) {
-           // $this->utilsController->registroDeErrores(4, 'Número «banneado»en función ajaxApiHolaluz()', 'Número: *' . $this->formatTelephone($request->dataToSend['tel_usuario']) . "*", null, decideCountry());
+            // $this->utilsController->registroDeErrores(4, 'Número «banneado»en función ajaxApiHolaluz()', 'Número: *' . $this->formatTelephone($request->dataToSend['tel_usuario']) . "*", null, decideCountry());
             return response()->json(array('call_response' => "ko", 'lead_id' => null), 200);
         }
 
@@ -904,20 +908,20 @@ class ZapierController extends Controller
                             } else {
                                 $return = "ko";
                                 $message = "Fallo de API ajaxApiHolaluz responde KO. Enviado a la API: " . json_encode($object) . ", Respuesta del WS HolaLuz: " . $response->body();
-                               // $this->utilsController->registroDeErrores(10, 'ajaxApiHolaluz', $message);
+                                // $this->utilsController->registroDeErrores(10, 'ajaxApiHolaluz', $message);
                             }
                         }
                     } else {
                         $message = "Fallo de API ajaxApiHolaluz responde KO. Objeto de respuesta id null o no existe respuesta. Enviado a la API: " . json_encode($object);
-                       // $this->utilsController->registroDeErrores(10, 'ajaxApiHolaluz', $message);
+                        // $this->utilsController->registroDeErrores(10, 'ajaxApiHolaluz', $message);
                     }
                 } catch (ConnectionException $e) {
                     $message = "Fallo de API ajaxApiHolaluz no responde - ERROR: " . $e->getMessage();
-                   // $this->utilsController->registroDeErrores(9, 'ajaxApiHolaluz', $message);
+                    // $this->utilsController->registroDeErrores(9, 'ajaxApiHolaluz', $message);
                 }
             }
         } else {
-           // $this->utilsController->registroDeErrores(10, 'ajaxApiHolaluz', "Fallo de API ajaxApiHolaluz objeto HTTP response vacío o cuerpo de la respuesta no contiene nada.");
+            // $this->utilsController->registroDeErrores(10, 'ajaxApiHolaluz', "Fallo de API ajaxApiHolaluz objeto HTTP response vacío o cuerpo de la respuesta no contiene nada.");
         }
 
         sleep(2);
@@ -939,7 +943,7 @@ class ZapierController extends Controller
 
         /* Banneo de números de teléfono presentes en la lista negra. */
         if (isset($request->dataToSend['tel_usuario']) && isBannedPhone($this->formatTelephone($request->dataToSend['tel_usuario']))) {
-           // $this->utilsController->registroDeErrores(4, 'Número «banneado»en función ajaxApiPepephone()', 'Número: *' . $this->formatTelephone($request->dataToSend['tel_usuario']) . "*", null, decideCountry());
+            // $this->utilsController->registroDeErrores(4, 'Número «banneado»en función ajaxApiPepephone()', 'Número: *' . $this->formatTelephone($request->dataToSend['tel_usuario']) . "*", null, decideCountry());
             return response()->json(array('call_response' => "ko", 'lead_id' => null), 200);
         }
 
@@ -992,7 +996,7 @@ class ZapierController extends Controller
                     );
             } catch (ConnectionException $e) {
                 $message = "Fallo de API Pepephone (" . $market . ") no responde - ERROR: " . $e->getMessage();
-               // $this->utilsController->registroDeErrores(9, 'ApiPepephone', $message);
+                // $this->utilsController->registroDeErrores(9, 'ApiPepephone', $message);
             }
         }
 
@@ -1000,14 +1004,14 @@ class ZapierController extends Controller
         if (!empty($response) && $response->successful() && empty($response->body()->Resultado)) {
             $return = Str::lower(json_decode($response->body())->Resultado);
             if ($return === "ko") {
-               // $this->utilsController->registroDeErrores(10, 'ApiPepephone', "Fallo de API Pepephone (" . $market . ") responde KO: " . $response->body());
+                // $this->utilsController->registroDeErrores(10, 'ApiPepephone', "Fallo de API Pepephone (" . $market . ") responde KO: " . $response->body());
             } elseif ($return === "ok") {
                 //Registramos en BBDD el lead
                 $lead_id = $functionSaveLead($request);
                 //createFileLog('local', 'pepe', $response->body());
             }
         } else {
-           // $this->utilsController->registroDeErrores(10, 'ajaxApiPepephone', "Fallo de API Pepephone (" . $market . ") objeto HTTP response vacío");
+            // $this->utilsController->registroDeErrores(10, 'ajaxApiPepephone', "Fallo de API Pepephone (" . $market . ") objeto HTTP response vacío");
         }
 
         return response()->json(array('call_response' => $return, 'lead_id' => $lead_id), 200);
@@ -1022,7 +1026,7 @@ class ZapierController extends Controller
 
         /* Banneo de números de teléfono presentes en la lista negra. */
         if (isset($request->dataToSend['tel_usuario']) && isBannedPhone($this->formatTelephone($request->dataToSend['tel_usuario']))) {
-           // $this->utilsController->registroDeErrores(4, 'Número «banneado»en función ajaxApiNaturgyByHorizon()', 'Número: *' . $this->formatTelephone($request->dataToSend['tel_usuario']) . "*", null, decideCountry());
+            // $this->utilsController->registroDeErrores(4, 'Número «banneado»en función ajaxApiNaturgyByHorizon()', 'Número: *' . $this->formatTelephone($request->dataToSend['tel_usuario']) . "*", null, decideCountry());
             return response()->json(array('call_response' => "ko", 'lead_id' => null), 200);
         }
 
@@ -1053,23 +1057,23 @@ class ZapierController extends Controller
 
                         if (isset($body_decoded->status) && $body_decoded->status) {
                             $return = "ok";
-                           // $this->utilsController->registroDeErrores(1, 'ajaxApiNaturgyByHorizon', $response->body());
+                            // $this->utilsController->registroDeErrores(1, 'ajaxApiNaturgyByHorizon', $response->body());
                         } else {
                             $return = "ko";
                             $message = "Fallo de API ajaxApiNaturgyByHorizon responde KO. Enviado a la API: " . json_encode($object) . ", Respuesta del WS Horizon: " . $response->body();
-                           // $this->utilsController->registroDeErrores(10, 'ajaxApiNaturgyByHorizon', $message);
+                            // $this->utilsController->registroDeErrores(10, 'ajaxApiNaturgyByHorizon', $message);
                         }
                     } else {
                         $message = "Fallo de API ajaxApiNaturgyByHorizon responde KO. Objeto de respuesta id null o no existe respuesta. Enviado a la API: " . json_encode($object);
-                       // $this->utilsController->registroDeErrores(10, 'ajaxApiNaturgyByHorizon', $message);
+                        // $this->utilsController->registroDeErrores(10, 'ajaxApiNaturgyByHorizon', $message);
                     }
                 } catch (ConnectionException $e) {
                     $message = "Fallo de API ajaxApiNaturgyByHorizon catch capturado - ERROR: " . $e->getMessage() . ", LINE: " . $e->getLine();
-                   // $this->utilsController->registroDeErrores(3, 'ajaxApiNaturgyByHorizon', $message);
+                    // $this->utilsController->registroDeErrores(3, 'ajaxApiNaturgyByHorizon', $message);
                 }
             }
         } else {
-           // $this->utilsController->registroDeErrores(4, 'ajaxApiNaturgyByHorizon', "Fallo de API ajaxApiNaturgyByHorizon llamada NO Ajax. Se bloquea el acceso.");
+            // $this->utilsController->registroDeErrores(4, 'ajaxApiNaturgyByHorizon', "Fallo de API ajaxApiNaturgyByHorizon llamada NO Ajax. Se bloquea el acceso.");
         }
 
         return response()->json(array('call_response' => $return, 'lead_id' => $lead_id), 200);
@@ -1107,16 +1111,16 @@ class ZapierController extends Controller
                 $responseObj = json_decode($response);
                 if (isset($responseObj->status) && $responseObj->status === "success") {
                     $call_response = "ok";
-                   // $this->utilsController->registroDeErrores(1, 'ajaxApiV3', $response . "[****]" . json_encode($obj));
+                    // $this->utilsController->registroDeErrores(1, 'ajaxApiV3', $response . "[****]" . json_encode($obj));
                 } else {
                     $call_response = "ko";
                     $message = "Fallo de API ajaxApiV3 responde KO. Enviado a la API: " . json_encode($obj) . ", Respuesta del WS ajaxApiV3: " . $response;
-                   // $this->utilsController->registroDeErrores(10, 'ajaxApiV3', $message);
+                    // $this->utilsController->registroDeErrores(10, 'ajaxApiV3', $message);
                 }
             } catch (ConnectionException $e) {
                 $fallo_envio_lead = true;
                 $message = "Fallo de IpAPI ajaxApiV3 falla al enviar el «lead» desde IP: " . $visitorIp . ' -> ERROR: ' . $e->getMessage();
-               // $this->utilsController->registroDeErrores(10, 'ajaxApiV3', $message);
+                // $this->utilsController->registroDeErrores(10, 'ajaxApiV3', $message);
             }
         }
 
@@ -1153,17 +1157,17 @@ class ZapierController extends Controller
                 ->get($full_api_url);
         } catch (ConnectionException $e) {
             $message = "Fallo de IpAPI ajaxApiLowiZapierCpl no responde - ERROR: " . $e->getMessage();
-           // $this->utilsController->registroDeErrores(9, 'ApiLowiZapierCpl', $message);
+            // $this->utilsController->registroDeErrores(9, 'ApiLowiZapierCpl', $message);
         }
 
         $responseObj = json_decode($response);
         if ($responseObj->result === "OK") {
             $call_response = "ok";
-           // $this->utilsController->registroDeErrores(1, 'ajaxApiLowiZapierCpl', $response . "[****]" . json_encode($obj));
+            // $this->utilsController->registroDeErrores(1, 'ajaxApiLowiZapierCpl', $response . "[****]" . json_encode($obj));
         } else {
             $call_response = "ko";
             $message = "Fallo de API ajaxApiLowiZapierCpl responde KO. Enviado a la API: " . json_encode($obj) . ", URL Enviada: " . $full_api_url . ", Respuesta del WS ajaxApiLowi: " . $response;
-           // $this->utilsController->registroDeErrores(10, 'ajaxApiLowi', $message);
+            // $this->utilsController->registroDeErrores(10, 'ajaxApiLowi', $message);
         }
 
         return response()->json(array('call_response' => $return, 'lead_id' => $lead_id), 200);
@@ -1227,7 +1231,7 @@ class ZapierController extends Controller
             } else {
                 $call_response = "ko";
                 $message = "Fallo de API Whatconverts responde KO. Enviado a la API: " . json_encode($obj) . ", Respuesta del WS ajaxApiAlternaTelcoZapierCpl: " . $response;
-               // $this->utilsController->registroDeErrores(10, 'ajaxApiAlternaTelcoZapierCpl', $message);
+                // $this->utilsController->registroDeErrores(10, 'ajaxApiAlternaTelcoZapierCpl', $message);
             }
         } catch (ConnectionException $e) {
             $fallo_envio_lead = true;

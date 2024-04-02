@@ -37,9 +37,9 @@ class ParillaMovilController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('codigo', $request->pais)->pluck('moneda')->first();
-        $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
-        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
+        $moneda = Paises::where('id', $request->pais)->select('moneda')->get();
+        $empresa = Operadoras::find($request->operadora);
+        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
         $tarifa = ParillaMovil::create([
             'operadora' => $request->operadora,
             'estado' => $request->estado,
@@ -92,9 +92,9 @@ class ParillaMovilController extends Controller
      */
     public function update(Request $request, $parillaMovil)
     {
-        $moneda = Paises::where('codigo', $request->pais)->pluck('moneda')->first();
-        $empresa = Operadoras::find($request->operadora)->pluck('nombre')->first();
-        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa));
+        $moneda = Paises::where('id', $request->pais)->select('moneda')->get();
+        $empresa = Operadoras::find($request->operadora);
+        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
