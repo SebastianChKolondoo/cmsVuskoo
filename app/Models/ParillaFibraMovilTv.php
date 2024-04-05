@@ -13,6 +13,7 @@ class ParillaFibraMovilTv extends Model
     protected $fillable = [
         'id_producto',
         'operadora',
+        'destacada',
         'landing_link',
         'funcion',
         'nombre_tarifa',
@@ -67,5 +68,10 @@ class ParillaFibraMovilTv extends Model
     public function operadoras()
     {
         return $this->belongsTo(Operadoras::class, 'operadora', 'id');
+    }
+
+    public function paises()
+    {
+        return $this->belongsTo(Paises::class, 'pais', 'id');
     }
 }

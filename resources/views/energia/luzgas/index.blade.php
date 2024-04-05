@@ -53,7 +53,7 @@
                     </td>
                     <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
                     <td class="align-middle">{{ $tarifa->precio }}</td>
-                    <td class="align-middle">{{ $tarifa->pais }}</td>
+                    <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                     <td>
                         @can('luzgas.view.btn-edit')
                         <a href="{{ route('parrillaluzgas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
@@ -88,7 +88,7 @@
                     <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}
                     </td>
                     <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                    <td class="align-middle">{{ $tarifa->pais }}</td>
+                    <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                     <td>
                         @can('luzgas.view.btn-edit')
                         <a href="{{ route('parrillaluzgas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
@@ -124,7 +124,7 @@
                     <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}
                     </td>
                     <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                    <td class="align-middle">{{ $tarifa->pais }}</td>
+                    <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                     <td>
                         @can('luzgas.view.btn-edit')
                         <a href="{{ route('parrillaluzgas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>

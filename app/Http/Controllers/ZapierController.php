@@ -187,7 +187,7 @@ class ZapierController extends Controller
             'acepta_politica_privacidad' => $request->dataToSend['acepta_politica_privacidad'],
             'acepta_cesion_datos_a_proveedor' => $request->dataToSend['acepta_cesion_datos_a_proveedor'],
             'acepta_comunicaciones_comerciales' => $request->dataToSend['acepta_comunicaciones_comerciales'],
-            
+
         ]);
 
         //echo $lead->save();
@@ -227,17 +227,15 @@ class ZapierController extends Controller
                 );
 
                 $response = $this->$instance_zapier($request);
-                print_r($response);
-                if (json_decode($response->content())->call_response === "ok") {
+                if (json_decode($response->content())->call_response == "ok") {
                     // DADO DE BAJA 
                     //$this->audienceTalkingOfflineLeadCommunication('fblead', 'c2c', $tlf_movil, 'TELCO', $this->formatCloseLeadsValues('atkey', $instance->nombre), 'facebook','social');
                     return response()->json(array('status' => "ok"), 200);
                 } else {
-                    echo 'hola f';
                     return response()->json(array('status' => "ko"), 200);
                 }
             } else {
-                //$this->utilsController->registroDeErrores(4, 'facebookZapierCpl', "Se intenta acceder a la función sin identificador de compañía válido o a función no permitida. id de compañía solicitada: *".$company."*. Datos recibidos del formulario: ".json_encode(array('tlf_movil' => $tlf_movil,'email' => $email,'nombre' => $nombre,'company' => $company)), JSON_UNESCAPED_UNICODE);
+                //$this->utilsController->registroDeErrores(4, 'facebookZapierCpl', "Se intenta acceder a la función sin identificador de compañía válido o a función no permitida. id de compañía solicitada: *".$company."*. Datos recibidos del formulario: ".json_encode(array('tlf_movil' => $tlf_movil,'email' => $email,'nombre' => $nombre,'company' => $company)), JSON_UNESCAPED_UNICODE)
                 return response()->json(array('status' => "ko"), 500);
             }
         } catch (ConnectionException | \PDOException | \Exception $e) {
@@ -1077,6 +1075,84 @@ class ZapierController extends Controller
         }
 
         return response()->json(array('call_response' => $return, 'lead_id' => $lead_id), 200);
+    }
+
+    public function ajaxApiMasMovilZapierCpl(Request $request)
+    {
+        $lead_id = $this->leadRegister($request);
+
+
+
+        $apiUrl = 'https://api.byside.com/1.0/call/createCall';
+        $authHeader = 'Basic Qzk4NTdFNkIxOTpUZU9ZR0l6eUxVdXlOYW8wRm5wZUlWN0ow';
+        $auth_user = "C9857E6B19";
+        $auth_password = "TeOYGIzyLUuyNao0FnpeIV7J0";
+        $base64Credentials = base64_encode("$auth_user:$auth_password");
+        $uuid = time() + rand();
+        $phone = $this->utilsController->formatTelephone($request->dataToSend['tel_usuario']);
+
+        $requestData = [
+            'phone' => '34' . $phone,
+            'schedule_datetime' => 'NOW',
+            'channel' => 'proveedores',
+            'branch_id' => '26970',
+            'lang' => 'es',
+            'uuid' => $uuid,
+            'is_uid_authenticated' => false,
+            'user_ip' => $this->visitorIp,
+            'url' => $request->dataToSend['producto'],
+            'info' => [
+                'mm_external_campaign_900' => '900696243',
+                'proveedor_id' => 'HMG',
+            ],
+        ];
+
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'charset' => 'utf-8',
+            'Authorization' => $authHeader,
+        ])->post($apiUrl, $requestData);
+
+        $data = $response->json();
+
+        print_r($data);
+
+
+        if (isset($data['message']['id'])) {
+            $message = "ok: Registrado el numero " . $requestData['phone'] . " con id = " . $data['message']['id'] . ", «lead» de *mas movil - " . ($request->dataToSend['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+            $this->utilsController->registroDeErrores(16, 'Lead saved mas movil', $message, $request->dataToSend['urlOffer'], $this->visitorIp);
+            $codigo = 201;
+
+            $leadValidation = Lead::where('id', $lead_id);
+            print_r($leadValidation);
+            $lead = Lead::find($lead_id);
+            
+            if ($lead) {
+                $lead->idResponse = $data['message']['id'];
+                $lead->save();
+            }
+
+        } else {
+            switch (isset($data['message']['status'])) {
+                case '-5':
+                case '-4':
+                case '-2':
+                case '-3':
+                    $message = $data['message']['status'] . ": Fallo al registrar el numero " . $requestData['phone'] . ", «lead» de *mas movil - " . ($request->dataToSend['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $data['message']['status_msg'] . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+                    $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $request->dataToSend['urlOffer'], $this->visitorIp);
+                    $codigo = 502;
+                    break;
+            }
+        }
+
+        return response()->json([
+            'content' => 'ok',
+            'call_response' => 'ok',
+            'message' => isset($data['message']['status_msg']) ? $data['message']['status_msg'] : $data['message']['id'],
+            'status' => $codigo
+        ], 200);
     }
 
     public function ajaxApiV3(Request $request)

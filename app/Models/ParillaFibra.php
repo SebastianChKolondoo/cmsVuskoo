@@ -13,6 +13,7 @@ class ParillaFibra extends Model
     protected $fillable = [
         'id_producto',
         'estado',
+        'destacada',
         'operadora',
         'landing_link',
         'funcion',
@@ -51,5 +52,10 @@ class ParillaFibra extends Model
     public function operadoras()
     {
         return $this->belongsTo(Operadoras::class, 'operadora', 'id');
+    }
+
+    public function paises()
+    {
+        return $this->belongsTo(Paises::class, 'pais', 'id');
     }
 }

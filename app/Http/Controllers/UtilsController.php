@@ -156,4 +156,11 @@ class UtilsController extends Controller
         return DB::connection('common_event_log')->table('banned_phones')->where('phone', preg_replace('/\s+/', '', $phone))->exists();
     }
 
+    function quitarTildes($cadena) {
+        $buscar = array('Á', 'É', 'Í', 'Ó', 'Ú', 'á', 'é', 'í', 'ó', 'ú');
+        $reemplazar = array('A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u');
+        $resultado = str_replace($buscar, $reemplazar, $cadena);
+        return $resultado;
+    }
+
 }

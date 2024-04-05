@@ -12,6 +12,7 @@ class ParillaLuzGas extends Model
     protected $fillable = [
         'id_producto',
         'estado',
+        'destacada',
         'comercializadora',
         'landing_link',
         'funcion',
@@ -61,5 +62,10 @@ class ParillaLuzGas extends Model
     public function comercializadoras()
     {
         return $this->belongsTo(Comercializadoras::class, 'comercializadora', 'id');
+    }
+
+    public function paises()
+    {
+        return $this->belongsTo(Paises::class, 'pais', 'id');
     }
 }

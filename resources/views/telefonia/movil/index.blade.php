@@ -50,7 +50,7 @@
                     <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
                     <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
                     <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                    <td class="align-middle">{{ $tarifa->pais }}</td>
+                    <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                     <td>
                         @can('movil.view.btn-edit')
                         <a href="{{ route('parrillamovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
@@ -84,7 +84,7 @@
                     <td class="align-middle">{{ $tarifa->id }}</td>
                     <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
                     <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                    <td class="align-middle">{{ $tarifa->pais }}</td>
+                    <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                     <td>
                         @can('movil.view.btn-edit')
                         <a href="{{ route('parrillamovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
@@ -119,7 +119,7 @@
                     <td class="align-middle">{{ $tarifa->id }}</td>
                     <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
                     <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                    <td class="align-middle">{{ $tarifa->pais }}</td>
+                    <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                     <td>
                         @can('movil.view.btn-edit')
                         <a href="{{ route('parrillamovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>

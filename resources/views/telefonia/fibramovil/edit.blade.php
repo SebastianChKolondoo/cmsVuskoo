@@ -12,7 +12,7 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::model($tarifa, ['route' => ['parrillafibramovil.update', $tarifa], 'method' => 'put']) !!}
+                    {!! Form::model($tarifa, ['route' => ['parrillafibramovil.update', $tarifa], 'method' => 'put', 'accept-charset' => 'UTF-8']) !!}
                     <div class="row">
                         <div class="form-group col-4">
                             {!! Form::label('operadora', 'Operadora', ['class' => 'form-label']) !!}

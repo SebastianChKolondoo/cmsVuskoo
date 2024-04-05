@@ -10,6 +10,16 @@ use Illuminate\Http\Request;
 
 class ParillaLuzGasController extends Controller
 {
+    protected $utilsController;
+    protected $quitarTildes;
+
+    public function __construct(UtilsController $utilsController)
+    {
+        $this->utilsController = $utilsController;
+        //$this->middleware('can:fibra.view')->only('index');
+        //$this->middleware('can:fibra.view.btn-create')->only('create', 'store');
+        //$this->middleware('can:fibra.view.btn-edit')->only('edit', 'update');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -35,9 +45,10 @@ class ParillaLuzGasController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->get();
-        $empresa = Comercializadoras::find('id',$request->comercializadora)->select('nombre_slug')->get();
-        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
+        $empresa = Comercializadoras::find($request->comercializadora);
+        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaLuzGas::create([
             'comercializadora' => $request->comercializadora,
             'estado' => $request->estado,
@@ -73,7 +84,7 @@ class ParillaLuzGasController extends Controller
             'fecha_publicacion' => $request->fecha_publicacion,
             'fecha_expiracion' => $request->fecha_expiracion,
             'fecha_registro' => $request->fecha_registro,
-            'moneda' => $moneda,
+            'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
             'pais' => $request->pais
         ]);
@@ -106,15 +117,16 @@ class ParillaLuzGasController extends Controller
      */
     public function update(Request $request, $parillaLuzGas)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->get();
-        $empresa = Comercializadoras::find('id',$request->comercializadora)->select('nombre_slug')->get();
-        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
+        $empresa = Comercializadoras::find($request->comercializadora);
+        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
-        $request['moneda'] = $moneda;
+        $request['moneda'] = $moneda->moneda;
         $tarifa = ParillaLuzGas::find($parillaLuzGas);
         $tarifa->update($request->all());
         return redirect()->route('parrillaluzgas.index')->with('info', 'Tarifa editada correctamente.');

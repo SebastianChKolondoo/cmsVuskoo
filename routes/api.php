@@ -48,7 +48,7 @@ Route::get('getDetailOffercomparadorfibra/{id}', [TarifasController::class, 'get
 /* Fibra y Movil */
 Route::get('getTarifasFibraMovil', [TarifasController::class, 'getTarifasFibraMovilList']);
 Route::get('filterMovilFibra', [FilterController::class, 'getValuesFilterFibraMovilList']);
-Route::get('getExtraOffermovilyfibra', [ExtraOfferController::class, 'getExtraOfferFibraMovilList']);
+Route::get('getExtraOffercomparadortarifasfibraymovil', [ExtraOfferController::class, 'getExtraOfferFibraMovilList']);
 Route::get('getDetailOffercomparadortarifasfibraymovil/{id}', [TarifasController::class, 'getDetailOfferFibraMovilList']);
 /* Fibra, Movil y TV */
 Route::get('getTarifasFibraMovilTv', [TarifasController::class, 'getTarifasFibraMovilTvList']);

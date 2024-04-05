@@ -136,7 +136,7 @@ class LeadController extends Controller
     public function leadFibraMovil($lead, $idLead)
     {
         switch ($lead['company']) {
-            case 11:    /*Lowi*/
+            case 27:    /*Lowi*/
                 return $this->apiLowi($lead, $idLead);
                 break;
             case 20:    /*Butik*/
@@ -221,7 +221,6 @@ class LeadController extends Controller
 
     public function apiMasMovil($lead, $idLead)
     {
-        //$this->visitorIp = $this->utilsController->$this->visitorIp;
         $apiUrl = 'https://api.byside.com/1.0/call/createCall';
         $authHeader = 'Basic Qzk4NTdFNkIxOTpUZU9ZR0l6eUxVdXlOYW8wRm5wZUlWN0ow';
 

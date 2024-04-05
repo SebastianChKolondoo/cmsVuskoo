@@ -13,6 +13,7 @@ class ParillaGas extends Model
     protected $fillable = [
         'id_producto',
         'comercializadora',
+        'destacada',
         'landing_link',
         'funcion',
         'nombre_tarifa',
@@ -54,5 +55,10 @@ class ParillaGas extends Model
     public function comercializadoras()
     {
         return $this->belongsTo(Comercializadoras::class, 'comercializadora', 'id');
+    }
+
+    public function paises()
+    {
+        return $this->belongsTo(Paises::class, 'pais', 'id');
     }
 }

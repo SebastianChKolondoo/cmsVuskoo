@@ -10,11 +10,15 @@ use Illuminate\Http\Request;
 
 class ParillaFibraMovilController extends Controller
 {
-    public function __construct()
+    protected $utilsController;
+    protected $quitarTildes;
+
+    public function __construct(UtilsController $utilsController)
     {
+        $this->utilsController = $utilsController;
         $this->middleware('can:fibra.view')->only('index');
-        $this->middleware('can:fibra.view.btn-create')->only('create','store');
-        $this->middleware('can:fibra.view.btn-edit')->only('edit','update');
+        $this->middleware('can:fibra.view.btn-create')->only('create', 'store');
+        $this->middleware('can:fibra.view.btn-edit')->only('edit', 'update');
     }
     /**
      * Display a listing of the resource.
@@ -33,7 +37,7 @@ class ParillaFibraMovilController extends Controller
         $states = States::all();
         $operadoras = Operadoras::where('estado', '1')->get();
         $paises = Paises::all();
-        return view('telefonia.fibramovil.create', compact('states', 'operadoras','paises'));
+        return view('telefonia.fibramovil.create', compact('states', 'operadoras', 'paises'));
     }
 
     /**
@@ -41,9 +45,10 @@ class ParillaFibraMovilController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->get();
+        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Operadoras::find($request->operadora);
-        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaFibraMovil::create([
             'operadora' => $request->operadora,
             'estado' => $request->estado,
@@ -63,7 +68,7 @@ class ParillaFibraMovilController extends Controller
             'coste_establecimiento_llamada' => $request->coste_establecimiento_llamada,
             'num_minutos_gratis' => $request->num_minutos_gratis,
             'fecha_expiracion' => $request->fecha_expiracion,
-            'moneda' => $moneda,
+            'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
             'pais' => $request->pais
         ]);
@@ -88,7 +93,7 @@ class ParillaFibraMovilController extends Controller
         $paises = Paises::all();
         $states = States::all();
         $operadoras = Operadoras::all();
-        return view('telefonia.fibramovil.edit', compact('tarifa', 'states', 'operadoras','paises'));
+        return view('telefonia.fibramovil.edit', compact('tarifa', 'states', 'operadoras', 'paises'));
     }
 
     /**
@@ -96,16 +101,18 @@ class ParillaFibraMovilController extends Controller
      */
     public function update(Request $request, $parillaMovil)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->get();
+        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Operadoras::find($request->operadora);
-        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
-$request['moneda'] = $moneda;
+        $request['moneda'] = $moneda->moneda;
         $tarifa = ParillaFibraMovil::find($parillaMovil);
+        $request->all();
         $tarifa->update($request->all());
         return redirect()->route('parrillafibramovil.index')->with('info', 'Tarifa editada correctamente.');
     }

@@ -10,6 +10,16 @@ use Illuminate\Http\Request;
 
 class ParillaFibraMovilTvController extends Controller
 {
+    protected $utilsController;
+    protected $quitarTildes;
+
+    public function __construct(UtilsController $utilsController)
+    {
+        $this->utilsController = $utilsController;
+        //$this->middleware('can:fibra.view')->only('index');
+        //$this->middleware('can:fibra.view.btn-create')->only('create', 'store');
+        //$this->middleware('can:fibra.view.btn-edit')->only('edit', 'update');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -35,9 +45,10 @@ class ParillaFibraMovilTvController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->get();
+        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Operadoras::find($request->operadora);
-        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaFibraMovilTv::create([
             'operadora' => $request->operadora,
             'estado' => $request->estado,
@@ -57,7 +68,7 @@ class ParillaFibraMovilTvController extends Controller
             'coste_establecimiento_llamada' => $request->coste_establecimiento_llamada,
             'num_minutos_gratis' => $request->num_minutos_gratis,
             'fecha_expiracion' => $request->fecha_expiracion,
-            'moneda' => $moneda,
+            'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
             'pais' => $request->pais
         ]);
@@ -90,15 +101,16 @@ class ParillaFibraMovilTvController extends Controller
      */
     public function update(Request $request, $parillaMoviltv)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->get();
+        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Operadoras::find($request->operadora);
-        $slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
-        $request['moneda'] = $moneda;
+        $request['moneda'] = $moneda->moneda;
         $tarifa = ParillaFibraMovilTv::find($parillaMoviltv);
         $tarifa->update($request->all());
         return redirect()->route('parrillafibramoviltv.index')->with('info', 'Tarifa editada correctamente.');

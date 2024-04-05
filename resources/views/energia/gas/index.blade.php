@@ -56,7 +56,7 @@
                             </td>
                             <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
                             <td class="align-middle">{{ $tarifa->precio }}</td>
-                            <td class="align-middle">{{ $tarifa->pais }}</td>
+                            <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                             <td>
                                 @can('gas.view.btn-edit')
                                     <a href="{{ route('parrillagas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
@@ -93,7 +93,7 @@
                             </td>
                             <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
                             <td class="align-middle">{{ $tarifa->precio }}</td>
-                            <td class="align-middle">{{ $tarifa->pais }}</td>
+                            <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                             <td>
                                 @can('gas.view.btn-edit')
                                     <a href="{{ route('parrillagas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
@@ -131,7 +131,7 @@
                             </td>
                             <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
                             <td class="align-middle">{{ $tarifa->precio }}</td>
-                            <td class="align-middle">{{ $tarifa->pais }}</td>
+                            <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                             <td>
                                 @can('gas.view.btn-edit')
                                     <a href="{{ route('parrillagas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
