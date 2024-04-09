@@ -109,14 +109,12 @@ class TarifasController extends Controller
 
     public function getTarifasStreamingList($id = null)
     {
-        $query = DB::table($this->tabla_movil_fibra_tv)
-            ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
-            ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo')
-            ->orderBy('destacada', 'asc')
-            ->orderBy('precio', 'asc');
+        return $query = DB::table($this->tabla_streaming)
+            ->select('*')
+            ->orderBy('destacada', 'asc');
 
         if (!empty($id)) {
-            $query->where($this->tabla_movil_fibra_tv . '.id', '=', $id);
+            $query->where($this->tabla_streaming . '.id', '=', $id);
         }
 
         return $query->get();

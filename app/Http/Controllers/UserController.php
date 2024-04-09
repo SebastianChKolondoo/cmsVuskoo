@@ -13,8 +13,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('can:usuarios.view')->only('index');
-        $this->middleware('can:usuarios.view.btn-create')->only('create','store');
-        $this->middleware('can:usuarios.view.btn-edit')->only('edit','update');
+        $this->middleware('can:usuarios.view.btn-create')->only('create', 'store');
+        $this->middleware('can:usuarios.view.btn-edit')->only('edit', 'update');
     }
 
     /**
@@ -22,7 +22,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::all();
+        $usuarios = User::select(
+            'users.*',
+            'roles.name as rol_usuario'
+        )
+            ->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->get();
+
+
         return view('usuarios.index', compact('usuarios'));
     }
 

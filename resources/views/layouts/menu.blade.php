@@ -111,6 +111,13 @@
             </div>
         </li>
     @endcan
+    @can('streaming.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/streaming">
+                <i class="fas fa-tv"></i>
+                <span>Streaming</span></a>
+        </li>
+    @endcan
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline mt-5">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

@@ -38,7 +38,7 @@
                                     ******{{ substr($user->numberDocument, strlen($user->numberDocument) - 4) }}</td>
                                 <td class="align-middle">{{ $user->name }} {{ $user->lastname }}</td>
                                 <td class="align-middle">{{ $user->email }}</td>
-                                <td class="align-middle"></td>
+                                <td class="align-middle">{{ $user->rol_usuario }}</td>
                                 @can('usuarios.view.btn-edit')
                                     <td><a href="{{ route('user.edit', $user) }}" class="btn btn-primary">Editar</a></td>
                                 @endcan
