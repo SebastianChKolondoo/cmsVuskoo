@@ -18,7 +18,7 @@ use Mockery\Exception;
 
 class BlogController extends Controller
 {
-    public function getMenuBlogList()
+    public function getMenuBlogList($lang = null)
     {
         return DB::connection('mysql_second')->table('wp_term_taxonomy')->select('wp_terms.name', 'wp_terms.slug')->join('wp_terms', 'wp_terms.term_id', '=', 'wp_term_taxonomy.term_id')->where('taxonomy', "category")->get();
     }

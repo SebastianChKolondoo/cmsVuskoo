@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Lead;
+use Psy\Readline\Hoa\Console;
 
 class ApiController extends Controller
 {
@@ -35,74 +36,117 @@ class ApiController extends Controller
         return view('swagger');
     }
 
-    public function getMenuList(){
-        // Crear el array de objetos
-        return $data = [
-            [
-                "title" => "Internet y Telefonía",
-                "titleUrl" => "/internet-telefonia",
-                "children" => [
+    public function getMenuList($lang = 'es')
+    {
+        $data = [];
+        switch ($lang) {
+            case 'es':
+                $data = [
                     [
-                        "name" => "Fibra",
-                        "url" => "/internet-telefonia/comparador-fibra"
+                        "title" => "Internet y Telefonía",
+                        "titleUrl" => "/internet-telefonia",
+                        "children" => [
+                            [
+                                "name" => "Fibra",
+                                "url" => "/internet-telefonia/comparador-fibra"
+                            ],
+                            [
+                                "name" => "Móvil",
+                                "url" => "/internet-telefonia/comparador-movil"
+                            ],
+                            [
+                                "name" => "Fibra y móvil",
+                                "url" => "/internet-telefonia/comparador-tarifas-fibra-y-movil"
+                            ],
+                            [
+                                "name" => "Fibra móvil y TV",
+                                "url" => "/internet-telefonia/comparador-fibra-movil-tv"
+                            ]
+                        ]
                     ],
                     [
-                        "name" => "Móvil",
-                        "url" => "/internet-telefonia/comparador-movil"
+                        "title" => "TV y streaming",
+                        "titleUrl" => "/television-streaming",
+                        "children" => [
+                            [
+                                "name" => "Plataformas de streaming",
+                                "url" => "/television-streaming/comparador-plataformas-streaming"
+                            ]
+                        ]
                     ],
                     [
-                        "name" => "Fibra y móvil",
-                        "url" => "/internet-telefonia/comparador-tarifas-fibra-y-movil"
+                        "title" => "Energía",
+                        "titleUrl" => "/energia",
+                        "children" => [
+                            [
+                                "name" => "Luz",
+                                "url" => "/energia/comparador-tarifas-luz"
+                            ],
+                            [
+                                "name" => "Gas",
+                                "url" => "/energia/comparador-tarifas-gas"
+                            ],
+                            [
+                                "name" => "Luz y gas",
+                                "url" => "/energia/comparador-tarifas-luz-y-gas"
+                            ]
+                        ]
                     ],
                     [
-                        "name" => "Fibra móvil y TV",
-                        "url" => "/internet-telefonia/comparador-fibra-movil-tv"
+                        "title" => "Herramientas",
+                        "titleUrl" => "/herramientas",
+                        "children" => [
+                            [
+                                "name" => "Precio de la luz hoy",
+                                "url" => "/herramientas/precio-de-la-luz-hoy"
+                            ],
+                            [
+                                "name" => "Test de velocidad",
+                                "url" => "/herramientas/test-de-velocidad"
+                            ]
+                        ]
                     ]
-                ]
-            ],
-            [
-                "title" => "TV y streaming",
-                "titleUrl" => "/television-streaming",
-                "children" => [
+                ];
+                break;
+            case 'mx':
+                $data = [
                     [
-                        "name" => "Plataformas de streaming",
-                        "url" => "/television-streaming/comparador-plataformas-streaming"
-                    ]
-                ]
-            ],
-            [
-                "title" => "Energía",
-                "titleUrl" => "/energia",
-                "children" => [
-                    [
-                        "name" => "Luz",
-                        "url" => "/energia/comparador-tarifas-luz"
+                        "title" => "Planes celulares, telefonía, internet y TV",
+                        "titleUrl" => "/planes-celulares-telefonia-internet-y-tv",
+                        "children" => [
+                            [
+                                "name" => "Planes Celular",
+                                "url" => "/planes-celulares-telefonia-internet-y-tv/comparador-planes-celular"
+                            ],
+                            [
+                                "name" => "Planes Telefonía e Internet",
+                                "url" => "/planes-celulares-telefonia-internet-y-tv/comparador-movil"
+                            ],
+                            [
+                                "name" => "Planes Telefonía, Internet y TV",
+                                "url" => "/planes-celulares-telefonia-internet-y-tv/comparador-tarifas-fibra-y-movil"
+                            ],
+                            [
+                                "name" => "Planes Internet y TV",
+                                "url" => "/planes-celulares-telefonia-internet-y-tv/comparador-fibra-movil-tv"
+                            ]
+                        ]
                     ],
                     [
-                        "name" => "Gas",
-                        "url" => "/energia/comparador-tarifas-gas"
+                        "title" => "Servicios",
+                        "titleUrl" => "/mx",
+                        "children" => [
+                            [
+                                "name" => "Vehiculos",
+                                "url" => "/servicios/vehiculos"
+                            ]
+                        ]
                     ],
-                    [
-                        "name" => "Luz y gas",
-                        "url" => "/energia/comparador-tarifas-luz-y-gas"
-                    ]
-                ]
-            ],
-            [
-                "title" => "Herramientas",
-                "titleUrl" => "/herramientas",
-                "children" => [
-                    [
-                        "name" => "Precio de la luz hoy",
-                        "url" => "/herramientas/precio-de-la-luz-hoy"
-                    ],
-                    [
-                        "name" => "Test de velocidad",
-                        "url" => "/herramientas/test-de-velocidad"
-                    ]
-                ]
-            ]
-        ];
+                ];
+                break;
+        }
+
+        return $data;
     }
 
     /* funciones para consultar las ofertas comerciales */
@@ -111,8 +155,9 @@ class ApiController extends Controller
         return DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
             ->select('1_comercializadoras.id', '1_comercializadoras.nombre', '1_comercializadoras.logo')
-            ->where('1_comercializadoras.estado','=','1')
-            ->where($this->tabla_luz.'.estado','=','1')
+            ->where('1_comercializadoras.estado', '=', '1')
+            ->where('1_comercializadoras.pais', '=', '1')
+            ->where($this->tabla_luz . '.estado', '=', '1')
             ->groupBy($this->tabla_luz . '.comercializadora')
             ->get();
     }
@@ -122,8 +167,9 @@ class ApiController extends Controller
         return DB::table($this->tabla_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
             ->select('1_comercializadoras.id', '1_comercializadoras.nombre', '1_comercializadoras.logo')
-            ->where('1_comercializadoras.estado','=','1')
-            ->where($this->tabla_gas.'.estado','=','1')
+            ->where('1_comercializadoras.estado', '=', '1')
+            ->where('1_comercializadoras.pais', '=', '1')
+            ->where($this->tabla_gas . '.estado', '=', '1')
             ->groupBy($this->tabla_gas . '.comercializadora')
             ->get();
     }
@@ -133,8 +179,9 @@ class ApiController extends Controller
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where('1_operadoras.estado','=','1')
-            ->where($this->tabla_movil.'.estado','=','1')
+            ->where('1_operadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
+            ->where($this->tabla_movil . '.estado', '=', '1')
             ->groupBy('operadora')
             ->get();
     }
@@ -144,8 +191,9 @@ class ApiController extends Controller
         return DB::table($this->tabla_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where('1_operadoras.estado','=','1')
-            ->where($this->tabla_fibra.'.estado','=','1')
+            ->where('1_operadoras.estado', '=', '1')
+            ->where($this->tabla_fibra . '.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
             ->groupBy('operadora')
             ->get();
     }
@@ -155,8 +203,9 @@ class ApiController extends Controller
         return DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->select('1_comercializadoras.id', '1_comercializadoras.nombre', '1_comercializadoras.logo')
-            ->where('1_comercializadoras.estado','=','1')
-            ->where($this->tabla_luz_gas.'.estado','=','1')
+            ->where('1_comercializadoras.estado', '=', '1')
+            ->where('1_comercializadoras.pais', '=', '1')
+            ->where($this->tabla_luz_gas . '.estado', '=', '1')
             ->groupBy('comercializadora')
             ->get();
     }
@@ -166,8 +215,9 @@ class ApiController extends Controller
         return DB::table($this->tabla_movil_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where('1_operadoras.estado','=','1')
-            ->where($this->tabla_movil_fibra.'.estado','=','1')
+            ->where('1_operadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
+            ->where($this->tabla_movil_fibra . '.estado', '=', '1')
             ->groupBy('operadora')
             ->get();
     }
@@ -177,8 +227,23 @@ class ApiController extends Controller
         return DB::table($this->tabla_movil_fibra_tv)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where('1_operadoras.estado','=','1')
-            ->where($this->tabla_movil_fibra_tv.'.estado','=','1')
+            ->where('1_operadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
+            ->where($this->tabla_movil_fibra_tv . '.estado', '=', '1')
+            ->groupBy('operadora')
+            ->get();
+    }
+
+    /* MX */
+
+    public function getOperadorasPlanCelularList()
+    {
+        return DB::table($this->tabla_movil)
+            ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
+            ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
+            ->where('1_operadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '3')
+            ->where($this->tabla_movil . '.estado', '=', '1')
             ->groupBy('operadora')
             ->get();
     }

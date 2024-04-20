@@ -20,6 +20,7 @@ Route::get('getOperadoras', [ApiController::class, 'getOperadorasMovilList']);
 Route::get('getComercializadorasLuz', [ApiController::class, 'getComercializadorasLuzList']);
 Route::get('getComercializadorasGas', [ApiController::class, 'getComercializadorasGasList']);
 Route::get('getOperadorasFibra', [ApiController::class, 'getOperadorasFibraList']);
+Route::get('getOperadorasPlanCelular', [ApiController::class, 'getOperadorasPlanCelularList']);
 Route::get('getComercializadorasLuzGas', [ApiController::class, 'getComercializadorasLuzGasList']);
 Route::get('getOperadorasFibraMovil', [ApiController::class, 'getOperadorasFibraMovilList']);
 Route::get('getOperadorasFibraMovilTv', [ApiController::class, 'getOperadorasFibraMovilTvList']);
@@ -62,7 +63,7 @@ Route::get('getBlog', [BlogController::class, 'getBlogList']);
 Route::get('getBlogPreview/{id}', [BlogController::class, 'getBlogPreviewList']);
 Route::get('getBlogHome', [BlogController::class, 'getBlogHomeList']);
 Route::get('getBlog/{categoria}/{id?}', [BlogController::class, 'getBlogList']);
-Route::get('getMenuBlog', [BlogController::class, 'getMenuBlogList']);
+Route::get('getMenuBlog/{lang?}', [BlogController::class, 'getMenuBlogList']);
 /* Suministros */
 Route::get('getSuministros', [BlogController::class, 'getSuministrosList']);
 Route::get('getSuministrosById/{id}', [BlogController::class, 'getSuministrosList']);
@@ -91,4 +92,10 @@ Route::post('redesSocialesZapier', [ZapierController::class, 'redesSocialesZapie
 Route::post('redesSocialesEnergyZapier', [ZapierController::class, 'redesSocialesEnergyZapier']);
 
 /* Menu */
-Route::get('getMenu', [ApiController::class, 'getMenuList']);
+Route::get('getMenu/{lang?}', [ApiController::class, 'getMenuList']);
+
+/* Mexico */
+Route::get('getTarifasPlanCelular', [TarifasController::class, 'getTarifasPlanCelularList']);
+Route::get('filterPlanCelular', [FilterController::class, 'getValuesFilterPlanCelularList']);
+Route::get('getExtraOffercomparadorPlanCelular', [ExtraOfferController::class, 'getExtraOfferPlanCelularList']);
+Route::get('getDetailOffercomparadorPlanCelular/{id}', [TarifasController::class, 'getDetailOfferPlanCelularList']);

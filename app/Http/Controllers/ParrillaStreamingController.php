@@ -46,35 +46,35 @@ class ParrillaStreamingController extends Controller
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $tarifa = ParrillaStreaming::create([
-            'permanencia' => $request->permanencia,
-            'nombre_tarifa' => $request->nombre_tarifa,
-            'detalles_tarifa' => $request->detalles_tarifa,
-            'categoria' => $request->categoria,
-            'recomendaciones' => $request->recomendaciones,
-            'titulo_relativo_1' => $request->titulo_relativo_1,
-            'precio_relativo_1' => $request->precio_relativo_1,
-            'titulo_relativo_2' => $request->titulo_relativo_2,
-            'precio_relativo_2' => $request->precio_relativo_2,
-            'titulo_relativo_3' => $request->titulo_relativo_3,
-            'precio_relativo_3' => $request->precio_relativo_3,
-            'parrilla_bloque_1' => $request->parrilla_bloque_1,
-            'precio_parrilla_bloque_1' => $request->precio_parrilla_bloque_1,
-            'parrilla_bloque_2' => $request->parrilla_bloque_2,
-            'precio_parrilla_bloque_2' => $request->precio_parrilla_bloque_2,
-            'parrilla_bloque_3' => $request->parrilla_bloque_3,
-            'precio_parrilla_bloque_3' => $request->precio_parrilla_bloque_3,
-            'parrilla_bloque_4' => $request->parrilla_bloque_4,
-            'precio_parrilla_bloque_4' => $request->precio_parrilla_bloque_4,
-            'num_meses_promo' => $request->num_meses_promo,
-            'porcentaje_descuento' => $request->porcentaje_descuento,
-            'logo' => $request->logo,
-            'promocion' => $request->promocion,
-            'destacada' => $request->destacada,
-            'fecha_publicacion' => $request->fecha_publicacion,
-            'fecha_expiracion' => $request->fecha_expiracion,
-            'fecha_registro' => $request->fecha_registro,
-            'moneda' => $request->moneda,
-            'landingLead' => $request->landingLead,
+            'permanencia' => trim($request->permanencia),
+            'nombre_tarifa' => trim($request->nombre_tarifa),
+            'detalles_tarifa' => trim($request->detalles_tarifa),
+            'categoria' => trim($request->categoria),
+            'recomendaciones' => trim($request->recomendaciones),
+            'titulo_relativo_1' => trim($request->titulo_relativo_1),
+            'precio_relativo_1' => trim($request->precio_relativo_1),
+            'titulo_relativo_2' => trim($request->titulo_relativo_2),
+            'precio_relativo_2' => trim($request->precio_relativo_2),
+            'titulo_relativo_3' => trim($request->titulo_relativo_3),
+            'precio_relativo_3' => trim($request->precio_relativo_3),
+            'parrilla_bloque_1' => trim($request->parrilla_bloque_1),
+            'precio_parrilla_bloque_1' => trim($request->precio_parrilla_bloque_1),
+            'parrilla_bloque_2' => trim($request->parrilla_bloque_2),
+            'precio_parrilla_bloque_2' => trim($request->precio_parrilla_bloque_2),
+            'parrilla_bloque_3' => trim($request->parrilla_bloque_3),
+            'precio_parrilla_bloque_3' => trim($request->precio_parrilla_bloque_3),
+            'parrilla_bloque_4' => trim($request->parrilla_bloque_4),
+            'precio_parrilla_bloque_4' => trim($request->precio_parrilla_bloque_4),
+            'num_meses_promo' => trim($request->num_meses_promo),
+            'porcentaje_descuento' => trim($request->porcentaje_descuento),
+            'logo' => trim($request->logo),
+            'promocion' => trim($request->promocion),
+            'destacada' => trim($request->destacada),
+            'fecha_publicacion' => trim($request->fecha_publicacion),
+            'fecha_expiracion' => trim($request->fecha_expiracion),
+            'fecha_registro' => trim($request->fecha_registro),
+            'moneda' => trim($request->moneda),
+            'landingLead' => trim($request->landingLead),
             'slug_tarifa' => str_replace(' ', '_', $request->nombre_tarifa),
         ]);
 
@@ -116,10 +116,10 @@ class ParrillaStreamingController extends Controller
      */
     public function duplicateOffer($id)
     {
-        $tarifaBase = ParillaMovil::find($id);
+        $tarifaBase = ParrillaStreaming::find($id);
         $duplica = $tarifaBase->replicate();
         $duplica->save();
-        $tarifa = ParillaMovil::find($duplica->id);
-        return redirect()->route('parrillamovil.edit', ['parrillamovil' => $duplica->id]);
+        $tarifa = ParrillaStreaming::find($duplica->id);
+        return redirect()->route('streaming.edit', ['streaming' => $duplica->id]);
     }
 }

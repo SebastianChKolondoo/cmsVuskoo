@@ -20,28 +20,40 @@ class FilterController extends Controller
     public function getValuesFilterMovilList()
     {
         return DB::table($this->tabla_movil)
-            ->selectRaw('ROUND(MAX(GB)+5) as max_gb, ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(GB)-5) as min_gb, ROUND(MIN(precio)-5) as min_precio')
+            ->selectRaw('ROUND(MAX(GB)+5) as max_gb, ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(GB)-5) as min_gb, ROUND(MIN(precio)-5) as min_precio, moneda')
+            ->where('pais',1)
             ->get();
     }
 
     public function getValuesFilterFibraMovilList()
     {
         return DB::table($this->tabla_movil_fibra)
-            ->selectRaw('ROUND(MAX(GB)+5) as max_gb, ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(GB)-5) as min_gb, ROUND(MIN(precio)-5) as min_precio')
+            ->selectRaw('ROUND(MAX(GB)+5) as max_gb, ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(GB)-5) as min_gb, ROUND(MIN(precio)-5) as min_precio, moneda')
+            ->where('pais',1)
             ->get();
     }
 
     public function getValuesFilterFibraMovilTvList()
     {
         return DB::table($this->tabla_movil_fibra_tv)
-            ->selectRaw('ROUND(MAX(GB)+5) as max_gb, ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(GB)-5) as min_gb, ROUND(MIN(precio)-5) as min_precio')
+            ->selectRaw('ROUND(MAX(GB)+5) as max_gb, ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(GB)-5) as min_gb, ROUND(MIN(precio)-5) as min_precio, moneda')
+            ->where('pais',1)
             ->get();
     }
 
     public function getValuesFilterFibraList()
     {
         return DB::table($this->tabla_fibra)
-            ->selectRaw('ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(precio)-5) as min_precio')
+            ->selectRaw('ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(precio)-5) as min_precio, moneda')
+            ->where('pais',1)
+            ->get();
+    }
+    
+    public function getValuesFilterPlanCelularList()
+    {
+        return DB::table($this->tabla_movil)
+            ->selectRaw('ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(precio)-5) as min_precio, moneda')
+            ->where('pais',3)
             ->get();
     }
     /* fin funciones para filtros */

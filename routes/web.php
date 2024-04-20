@@ -66,7 +66,6 @@ Route::get('parrillaluzgasDuplicate/{id}', [ParillaLuzGasController::class, 'dup
 Route::resource('streaming', ParrillaStreamingController::class)->names('streaming')->middleware(['auth']);
 Route::get('parrillagasDuplicate/{id}', [ParillaGasController::class, 'duplicateOffer'])->name('parrillagasDuplicate')->middleware(['auth']);
 
-Route::resource('Contenidomarca', ContenidoMarcaController::class)->names('contenidomarca')->middleware(['auth']);
 Route::get('Contenidomarcacreatecomercializadora/{id}', [ContenidoMarcaController::class, 'createContent'])->name('Contenidomarcacreatecomercializadora')->middleware(['auth']);
 Route::get('Contenidomarcacreateoperadora/{id}', [ContenidoMarcaController::class, 'createContent'])->name('Contenidomarcacreateoperadora')->middleware(['auth']);
 

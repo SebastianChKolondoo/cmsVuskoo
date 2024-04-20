@@ -24,6 +24,7 @@ class TarifasController extends Controller
             ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
@@ -36,6 +37,7 @@ class TarifasController extends Controller
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
             ->where($this->tabla_fibra . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
             ->orderBy('destacada', 'desc')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
@@ -49,6 +51,7 @@ class TarifasController extends Controller
             ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
             ->where($this->tabla_luz . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
@@ -61,6 +64,7 @@ class TarifasController extends Controller
             ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
             ->where($this->tabla_gas . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
@@ -73,6 +77,7 @@ class TarifasController extends Controller
             ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
             ->where($this->tabla_luz_gas . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
@@ -85,6 +90,7 @@ class TarifasController extends Controller
             ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil_fibra . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
@@ -97,6 +103,7 @@ class TarifasController extends Controller
             ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil_fibra_tv . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc');
 
@@ -109,8 +116,9 @@ class TarifasController extends Controller
 
     public function getTarifasStreamingList($id = null)
     {
-        return $query = DB::table($this->tabla_streaming)
+        $query = DB::table($this->tabla_streaming)
             ->select('*')
+            ->where('estado',1)
             ->orderBy('destacada', 'asc');
 
         if (!empty($id)) {
@@ -180,6 +188,29 @@ class TarifasController extends Controller
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
             ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil_fibra_tv . '.id', '=', $id)
+            ->get();
+    }
+
+    /* Mexico */
+    public function getTarifasPlanCelularList()
+    {
+        return DB::table($this->tabla_movil)
+            ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
+            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo')
+            ->where($this->tabla_movil . '.estado', '=', '1')
+            ->where('1_operadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '3')
+            ->orderBy('destacada', 'asc')
+            ->orderBy('precio', 'asc')
+            ->get();
+    }
+
+    public function getDetailOfferPlanCelularList($id)
+    {
+        return DB::table($this->tabla_movil)
+            ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
+            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo')
+            ->where($this->tabla_movil . '.id', '=', $id)
             ->get();
     }
 }
