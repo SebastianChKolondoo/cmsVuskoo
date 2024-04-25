@@ -21,6 +21,7 @@ Route::get('getComercializadorasLuz', [ApiController::class, 'getComercializador
 Route::get('getComercializadorasGas', [ApiController::class, 'getComercializadorasGasList']);
 Route::get('getOperadorasFibra', [ApiController::class, 'getOperadorasFibraList']);
 Route::get('getOperadorasPlanCelular', [ApiController::class, 'getOperadorasPlanCelularList']);
+Route::get('getMarcasVehiculos', [ApiController::class, 'getMarcasVehiculosList']);
 Route::get('getComercializadorasLuzGas', [ApiController::class, 'getComercializadorasLuzGasList']);
 Route::get('getOperadorasFibraMovil', [ApiController::class, 'getOperadorasFibraMovilList']);
 Route::get('getOperadorasFibraMovilTv', [ApiController::class, 'getOperadorasFibraMovilTvList']);
@@ -99,3 +100,10 @@ Route::get('getTarifasPlanCelular', [TarifasController::class, 'getTarifasPlanCe
 Route::get('filterPlanCelular', [FilterController::class, 'getValuesFilterPlanCelularList']);
 Route::get('getExtraOffercomparadorPlanCelular', [ExtraOfferController::class, 'getExtraOfferPlanCelularList']);
 Route::get('getDetailOffercomparadorPlanCelular/{id}', [TarifasController::class, 'getDetailOfferPlanCelularList']);
+
+/* Vehiculos */
+Route::get('getTarifasVehiculos', [TarifasController::class, 'getTarifasVehiculosList']);
+Route::get('filterVehiculos', [FilterController::class, 'getValuesFilterVehiculosList']);
+Route::get('getValuesFilterVehiculosChassis', [FilterController::class, 'getValuesFilterVehiculosChassisList']);
+Route::get('getExtraOffercomparadorVehiculos', [ExtraOfferController::class, 'getExtraOfferVehiculosList']);
+Route::get('getDetailOffervehiculos/{id}', [TarifasController::class, 'getDetailOfferVehiculosList']);

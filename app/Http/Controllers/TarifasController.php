@@ -16,6 +16,8 @@ class TarifasController extends Controller
     protected $tabla_movil_fibra = 'WEB_3_TARIFAS_TELCO_FIBRA_MOVIL';
     protected $tabla_movil_fibra_tv = 'WEB_3_TARIFAS_TELCO_FIBRA_MOVIL_TV';
     protected $tabla_streaming = 'WEB_3_TARIFAS_TELCO_STREAMING';
+    protected $tabla_vehiculo = 'WEB_3_VEHICULOS';
+    protected $tabla_vehiculos = '1_vehiculos';
 
     public function getTarifasMovilList()
     {
@@ -51,7 +53,7 @@ class TarifasController extends Controller
             ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
             ->where($this->tabla_luz . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
-            ->where('1_operadoras.pais', '=', '1')
+            ->where('1_comercializadoras.pais', '=', '1')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
@@ -64,7 +66,7 @@ class TarifasController extends Controller
             ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
             ->where($this->tabla_gas . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
-            ->where('1_operadoras.pais', '=', '1')
+            ->where('1_comercializadoras.pais', '=', '1')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
@@ -77,7 +79,7 @@ class TarifasController extends Controller
             ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
             ->where($this->tabla_luz_gas . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
-            ->where('1_operadoras.pais', '=', '1')
+            ->where('1_comercializadoras.pais', '=', '1')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
@@ -113,6 +115,23 @@ class TarifasController extends Controller
 
         return $query->get();
     }
+    
+    public function getTarifasVehiculosList()
+    {
+        $query = DB::table($this->tabla_vehiculo)
+            ->join('1_vehiculos', '1_vehiculos.id', '=', $this->tabla_vehiculo . '.vehiculo')
+            ->select($this->tabla_vehiculo . '.*', '1_vehiculos.nombre', '1_vehiculos.logo')
+            ->where($this->tabla_vehiculo . '.estado', '=', '1')
+            ->where('1_vehiculos.estado', '=', '1')
+            ->where('1_vehiculos.pais', '=', '3')
+            ->orderBy('price', 'desc');
+
+        if (!empty($id)) {
+            $query->where($this->tabla_movil_fibra_tv . '.id', '=', $id);
+        }
+
+        return $query->get();
+    }
 
     public function getTarifasStreamingList($id = null)
     {
@@ -134,7 +153,7 @@ class TarifasController extends Controller
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil . '.id', '=', $id)
-            ->get();
+            ->first();
     }
 
     public function getDetailOfferLuzList($id)
@@ -143,7 +162,7 @@ class TarifasController extends Controller
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
             ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz . '.comercializadora as operadora')
             ->where($this->tabla_luz . '.id', '=', $id)
-            ->get();
+            ->first();
     }
 
     public function getDetailOfferGasList($id)
@@ -152,7 +171,7 @@ class TarifasController extends Controller
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
             ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_gas . '.comercializadora as operadora')
             ->where($this->tabla_gas . '.id', '=', $id)
-            ->get();
+            ->first();
     }
 
     public function getDetailOfferGasLuzList($id)
@@ -161,7 +180,7 @@ class TarifasController extends Controller
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora')
             ->where($this->tabla_luz_gas . '.id', '=', $id)
-            ->get();
+            ->first();
     }
 
     public function getDetailOfferFibraList($id)
@@ -170,7 +189,7 @@ class TarifasController extends Controller
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
             ->select($this->tabla_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', '1_operadoras.politica_privacidad')
             ->where($this->tabla_fibra . '.id', '=', $id)
-            ->get();
+            ->first();
     }
 
     public function getDetailOfferFibraMovilList($id)
@@ -179,7 +198,7 @@ class TarifasController extends Controller
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
             ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil_fibra . '.id', '=', $id)
-            ->get();
+            ->first();
     }
 
     public function getDetailOfferFibraMovilTvList($id)
@@ -188,7 +207,7 @@ class TarifasController extends Controller
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
             ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil_fibra_tv . '.id', '=', $id)
-            ->get();
+            ->first();
     }
 
     /* Mexico */
@@ -211,6 +230,15 @@ class TarifasController extends Controller
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil . '.id', '=', $id)
-            ->get();
+            ->first();
+    }
+    
+    public function getDetailOfferVehiculosList($id)
+    {
+        return DB::table($this->tabla_vehiculo)
+            ->join('1_vehiculos', '1_vehiculos.id', '=', $this->tabla_vehiculo . '.vehiculo')
+            ->select($this->tabla_vehiculo . '.*', '1_vehiculos.nombre', '1_vehiculos.logo')
+            ->where($this->tabla_vehiculo . '.id', '=', $id)
+            ->first();
     }
 }

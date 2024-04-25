@@ -17,6 +17,8 @@ class ApiController extends Controller
     protected $tabla_tv;
     protected $tabla_movil_fibra;
     protected $tabla_movil_fibra_tv;
+    protected $tabla_vehiculos;
+    protected $tabla_vehiculo;
 
     public function __construct()
     {
@@ -29,6 +31,9 @@ class ApiController extends Controller
         $this->tabla_tv = 'WEB_3_TARIFAS_TELCO_TV';
         $this->tabla_movil_fibra = 'WEB_3_TARIFAS_TELCO_FIBRA_MOVIL';
         $this->tabla_movil_fibra_tv = 'WEB_3_TARIFAS_TELCO_FIBRA_MOVIL_TV';
+        
+        $this->tabla_vehiculo = 'WEB_3_VEHICULOS';
+        $this->tabla_vehiculos = '1_vehiculos';
     }
 
     public function index()
@@ -179,7 +184,6 @@ class ApiController extends Controller
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where('1_operadoras.estado', '=', '1')
             ->where('1_operadoras.pais', '=', '1')
             ->where($this->tabla_movil . '.estado', '=', '1')
             ->groupBy('operadora')
@@ -191,7 +195,6 @@ class ApiController extends Controller
         return DB::table($this->tabla_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where('1_operadoras.estado', '=', '1')
             ->where($this->tabla_fibra . '.estado', '=', '1')
             ->where('1_operadoras.pais', '=', '1')
             ->groupBy('operadora')
@@ -203,7 +206,6 @@ class ApiController extends Controller
         return DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->select('1_comercializadoras.id', '1_comercializadoras.nombre', '1_comercializadoras.logo')
-            ->where('1_comercializadoras.estado', '=', '1')
             ->where('1_comercializadoras.pais', '=', '1')
             ->where($this->tabla_luz_gas . '.estado', '=', '1')
             ->groupBy('comercializadora')
@@ -215,7 +217,6 @@ class ApiController extends Controller
         return DB::table($this->tabla_movil_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where('1_operadoras.estado', '=', '1')
             ->where('1_operadoras.pais', '=', '1')
             ->where($this->tabla_movil_fibra . '.estado', '=', '1')
             ->groupBy('operadora')
@@ -227,7 +228,6 @@ class ApiController extends Controller
         return DB::table($this->tabla_movil_fibra_tv)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where('1_operadoras.estado', '=', '1')
             ->where('1_operadoras.pais', '=', '1')
             ->where($this->tabla_movil_fibra_tv . '.estado', '=', '1')
             ->groupBy('operadora')
@@ -241,10 +241,17 @@ class ApiController extends Controller
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where('1_operadoras.estado', '=', '1')
             ->where('1_operadoras.pais', '=', '3')
             ->where($this->tabla_movil . '.estado', '=', '1')
             ->groupBy('operadora')
+            ->get();
+    }
+    
+    public function getMarcasVehiculosList()
+    {
+        return DB::table($this->tabla_vehiculos)
+            ->where('1_vehiculos.pais', '=', '3')
+            ->where($this->tabla_vehiculos . '.estado', '=', '1')
             ->get();
     }
 }
