@@ -226,6 +226,10 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                        <div class="form-group col-4">
+                            {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
+                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control','rows' => 2]) !!}
+                        </div>
                         <div class="col-12">
                             {!! Form::close() !!}
                             {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}

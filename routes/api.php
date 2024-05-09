@@ -99,7 +99,7 @@ Route::get('getMenu/{lang?}', [ApiController::class, 'getMenuList']);
 Route::get('getTarifasPlanCelular', [TarifasController::class, 'getTarifasPlanCelularList']);
 Route::get('filterPlanCelular', [FilterController::class, 'getValuesFilterPlanCelularList']);
 Route::get('getExtraOffercomparadorPlanCelular', [ExtraOfferController::class, 'getExtraOfferPlanCelularList']);
-Route::get('getDetailOffercomparadorPlanCelular/{id}', [TarifasController::class, 'getDetailOfferPlanCelularList']);
+Route::get('getDetailOffercomparadorplanescelular/{id}', [TarifasController::class, 'getDetailOfferPlanCelularList']);
 
 /* Vehiculos */
 Route::get('getTarifasVehiculos', [TarifasController::class, 'getTarifasVehiculosList']);

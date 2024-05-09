@@ -252,6 +252,7 @@ class ApiController extends Controller
         return DB::table($this->tabla_vehiculos)
             ->where('1_vehiculos.pais', '=', '3')
             ->where($this->tabla_vehiculos . '.estado', '=', '1')
+            ->orderBy('nombre','asc')
             ->get();
     }
 }

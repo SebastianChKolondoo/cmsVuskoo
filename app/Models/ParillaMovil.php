@@ -45,6 +45,7 @@ class ParillaMovil extends Model
         'landingLead',
         'slug_tarifa',
         'pais',
+        'textoAdicional'
     ];
 
     public function state()

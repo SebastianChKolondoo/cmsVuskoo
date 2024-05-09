@@ -42,6 +42,7 @@ class ParillaFibra extends Model
         'moneda',
         'landingLead',
         'pais',
+        'textoAdicional'
     ];
 
     public function state()

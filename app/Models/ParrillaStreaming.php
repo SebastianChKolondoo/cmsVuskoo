@@ -44,7 +44,7 @@ class ParrillaStreaming extends Model
         'fecha_registro',
         'moneda',
         'landingLead',
-        'slug_tarifa',
+        'slug_tarifa'
     ];
     public function state()
     {

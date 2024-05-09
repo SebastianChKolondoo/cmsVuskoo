@@ -115,12 +115,12 @@ class TarifasController extends Controller
 
         return $query->get();
     }
-    
+
     public function getTarifasVehiculosList()
     {
         $query = DB::table($this->tabla_vehiculo)
             ->join('1_vehiculos', '1_vehiculos.id', '=', $this->tabla_vehiculo . '.vehiculo')
-            ->select($this->tabla_vehiculo . '.*', '1_vehiculos.nombre', '1_vehiculos.logo')
+            ->select($this->tabla_vehiculo . '.id', $this->tabla_vehiculo . '.transmission', $this->tabla_vehiculo . '.hp', $this->tabla_vehiculo . '.price', $this->tabla_vehiculo . '.year', $this->tabla_vehiculo . '.chassis', $this->tabla_vehiculo . '.make', $this->tabla_vehiculo . '.model', $this->tabla_vehiculo . '.landingLead', $this->tabla_vehiculo . '.slug_tarifa', $this->tabla_vehiculo . '.fuelType', $this->tabla_vehiculo . '.images', '1_vehiculos.nombre', '1_vehiculos.logo')
             ->where($this->tabla_vehiculo . '.estado', '=', '1')
             ->where('1_vehiculos.estado', '=', '1')
             ->where('1_vehiculos.pais', '=', '3')
@@ -137,7 +137,7 @@ class TarifasController extends Controller
     {
         $query = DB::table($this->tabla_streaming)
             ->select('*')
-            ->where('estado',1)
+            ->where('estado', 1)
             ->orderBy('destacada', 'asc');
 
         if (!empty($id)) {
@@ -232,7 +232,7 @@ class TarifasController extends Controller
             ->where($this->tabla_movil . '.id', '=', $id)
             ->first();
     }
-    
+
     public function getDetailOfferVehiculosList($id)
     {
         return DB::table($this->tabla_vehiculo)

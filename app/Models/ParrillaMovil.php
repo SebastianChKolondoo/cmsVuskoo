@@ -46,7 +46,8 @@ class parrillamovil extends Model
         'moneda',
         'landingLead',
         'slug_tarifa',
-        'pais'
+        'pais',
+        'textoAdicional'
     ];
 
     public function state()
