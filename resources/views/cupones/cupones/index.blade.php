@@ -7,14 +7,14 @@
                     {{ session('info') }}
                 </div>
             @endif
-            @can('operadoras.view.btn-create')
-                <a href="{{ route('parrillagas.create') }}" class="btn btn-primary">Nueva Oferta</a>
+            @can('cupones.view.btn-create')
+                <a href="{{ route('cupones.create') }}" class="btn btn-primary">Nuevo cupón</a>
             @endcan
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <h4>Listado de gas</h4>
+            <h4>Listado de cupones</h4>
         </div>
     </div>
     <ul class="nav nav-tabs" id="myTabs" role="tablist">
@@ -38,9 +38,9 @@
                     <tr>
                         <th>id</th>
                         <th>Estado</th>
-                        <th>comercializadora</th>
-                        <th>Oferta</th>
-                        <th>Precio</th>
+                        <th>Comercio</th>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
                         <th>Visible en</th>
                         @can('gas.view.btn-edit')
                             <th></th>
@@ -52,17 +52,16 @@
                         <tr>
                             <td class="align-middle">{{ $tarifa->id }}</td>
                             <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
-                            <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}
-                            </td>
+                            <td class="align-middle">{{ $tarifa->comercios->nombre ?? 'Not Available' }}</td>
                             <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                            <td class="align-middle">{{ $tarifa->precio }}</td>
+                            <td class="align-middle">{{ optional($tarifa->categorias)->nombre }}</td>
                             <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                             <td>
                                 @can('gas.view.btn-edit')
-                                    <a href="{{ route('parrillagas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                    <a href="{{ route('cupones.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                 @endcan
                                 @can('gas.view.btn-duplicate')
-                                    <a href="{{ route('parrillagasDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
+                                    <a href="{{ route('cuponesDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
                                 @endcan
                             </td>
                         </tr>
@@ -75,9 +74,9 @@
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
-                        <th>comercializadora</th>
-                        <th>Oferta</th>
-                        <th>Precio</th>
+                        <th>Comercio</th>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
                         <th>Visible en</th>
                         @can('gas.view.btn-edit')
                             <th></th>
@@ -89,18 +88,16 @@
                         @if ($tarifa->estado == 1)
                             <tr>
                                 <td class="align-middle">{{ $tarifa->id }}</td>
-                                <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}
-                                </td>
+                                <td class="align-middle">{{ $tarifa->comercios->nombre ?? 'Not Available' }}</td>
                                 <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                                <td class="align-middle">{{ $tarifa->precio }}</td>
+                                <td class="align-middle">{{ optional($tarifa->categorias)->nombre }}</td>
                                 <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                                 <td>
                                     @can('gas.view.btn-edit')
-                                        <a href="{{ route('parrillagas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                        <a href="{{ route('cupones.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     @endcan
                                     @can('gas.view.btn-duplicate')
-                                        <a href="{{ route('parrillagasDuplicate', $tarifa) }}"
-                                            class="btn btn-warning">Duplicar</a>
+                                        <a href="{{ route('cuponesDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
                                     @endcan
                                 </td>
                             </tr>
@@ -114,9 +111,9 @@
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
-                        <th>comercializadora</th>
-                        <th>Oferta</th>
-                        <th>Precio</th>
+                        <th>Comercio</th>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
                         <th>Visible en</th>
                         @can('gas.view.btn-edit')
                             <th></th>
@@ -128,18 +125,16 @@
                         @if ($tarifa->estado == 2)
                             <tr>
                                 <td class="align-middle">{{ $tarifa->id }}</td>
-                                <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}
-                                </td>
+                                <td class="align-middle">{{ $tarifa->comercios->nombre ?? 'Not Available' }}</td>
                                 <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                                <td class="align-middle">{{ $tarifa->precio }}</td>
+                                <td class="align-middle">{{ optional($tarifa->categorias)->nombre }}</td>
                                 <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                                 <td>
                                     @can('gas.view.btn-edit')
-                                        <a href="{{ route('parrillagas.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                        <a href="{{ route('cupones.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     @endcan
                                     @can('gas.view.btn-duplicate')
-                                        <a href="{{ route('parrillagasDuplicate', $tarifa) }}"
-                                            class="btn btn-warning">Duplicar</a>
+                                        <a href="{{ route('cuponesDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
                                     @endcan
                                 </td>
                             </tr>

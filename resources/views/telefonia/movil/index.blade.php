@@ -1,139 +1,144 @@
 @extends('layouts.app')
 @section('content')
-@can('operadoras.view.btn-create')
-<div class="row justify-content-center my-4">
-    <div class="col-12">
-        @if (session('info'))
-        <div class="alert alert-success">
-            {{ session('info') }}
+    <div class="row justify-content-center my-4">
+        <div class="col-12">
+            @if (session('info'))
+                <div class="alert alert-success">
+                    {{ session('info') }}
+                </div>
+            @endif
+            @can('operadoras.view.btn-create')
+                <a href="{{ route('parrillamovil.create') }}" class="btn btn-primary">Nueva Oferta</a>
+            @endcan
         </div>
-        @endif
-        <a href="{{ route('parrillamovil.create') }}" class="btn btn-primary">Nueva Oferta</a>
     </div>
-</div>
-@endcan
-<div class="row">
-    <div class="col-12">
-        <h4>Listado de móvil</h4>
+    <div class="row">
+        <div class="col-12">
+            <h4>Listado de móvil</h4>
+        </div>
     </div>
-</div>
-<ul class="nav nav-tabs" id="myTabs" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Todas</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Activas</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Inactivas</a>
-    </li>
-</ul>
-<div class="tab-content p-3 bg-white">
-    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-        <table id="TodasTable" class="table table-striped" style="width:100%">
-            <thead class="bg-primary text-white">
-                <tr>
-                    <th>id</th>
-                    <th>Estado</th>
-                    <th>Operadora</th>
-                    <th>Oferta</th>
-                    <th>Visible en</th>
-                    @can('movil.view.btn-edit')
-                    <th></th>
-                    @endcan
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($tarifas as $tarifa)
-                <tr>
-                    <td class="align-middle">{{ $tarifa->id }}</td>
-                    <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
-                    <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
-                    <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                    <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
-                    <td>
+    <ul class="nav nav-tabs" id="myTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
+                aria-selected="true">Todas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+                aria-selected="false">Activas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#tab3" role="tab" aria-controls="tab3"
+                aria-selected="false">Inactivas</a>
+        </li>
+    </ul>
+    <div class="tab-content p-3 bg-white">
+        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+            <table id="TodasTable" class="table table-striped" style="width:100%">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>id</th>
+                        <th>Estado</th>
+                        <th>Operadora</th>
+                        <th>Oferta</th>
+                        <th>Visible en</th>
                         @can('movil.view.btn-edit')
-                        <a href="{{ route('parrillamovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                            <th></th>
                         @endcan
-                        @can('movil.view.btn-duplicate')
-                        <a href="{{ route('parrillamovilDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
-                        @endcan
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-        <table id="parrillamovilTable" class="table table-striped" style="width:100%">
-            <thead class="bg-primary text-white">
-                <tr>
-                    <th>id</th>
-                    <th>Operadora</th>
-                    <th>Oferta</th>
-                    <th>Visible en</th>
-                    @can('movil.view.btn-edit')
-                    <th></th>
-                    @endcan
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($tarifas as $tarifa)
-                @if($tarifa->estado == 1)
-                <tr>
-                    <td class="align-middle">{{ $tarifa->id }}</td>
-                    <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
-                    <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                    <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
-                    <td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tarifas as $tarifa)
+                        <tr>
+                            <td class="align-middle">{{ $tarifa->id }}</td>
+                            <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
+                            <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
+                            <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
+                            <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
+                            <td>
+                                @can('movil.view.btn-edit')
+                                    <a href="{{ route('parrillamovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                @endcan
+                                @can('movil.view.btn-duplicate')
+                                    <a href="{{ route('parrillamovilDuplicate', $tarifa) }}"
+                                        class="btn btn-warning">Duplicar</a>
+                                @endcan
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+            <table id="parrillamovilTable" class="table table-striped" style="width:100%">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>id</th>
+                        <th>Operadora</th>
+                        <th>Oferta</th>
+                        <th>Visible en</th>
                         @can('movil.view.btn-edit')
-                        <a href="{{ route('parrillamovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                            <th></th>
                         @endcan
-                        @can('movil.view.btn-duplicate')
-                        <a href="{{ route('parrillamovilDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
-                        @endcan
-                    </td>
-                </tr>
-                @endif
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-        <table id="parrillamovilTable" class="table table-striped" style="width:100%">
-            <thead class="bg-primary text-white">
-                <tr>
-                    <th>id</th>
-                    <th>Operadora</th>
-                    <th>Oferta</th>
-                    <th>Visible en</th>
-                    @can('movil.view.btn-edit')
-                    <th></th>
-                    @endcan
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($tarifas as $tarifa)
-                @if($tarifa->estado == 2)
-                <tr>
-                    <td class="align-middle">{{ $tarifa->id }}</td>
-                    <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
-                    <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
-                    <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
-                    <td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tarifas as $tarifa)
+                        @if ($tarifa->estado == 1)
+                            <tr>
+                                <td class="align-middle">{{ $tarifa->id }}</td>
+                                <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
+                                <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
+                                <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
+                                <td>
+                                    @can('movil.view.btn-edit')
+                                        <a href="{{ route('parrillamovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                    @endcan
+                                    @can('movil.view.btn-duplicate')
+                                        <a href="{{ route('parrillamovilDuplicate', $tarifa) }}"
+                                            class="btn btn-warning">Duplicar</a>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+            <table id="parrillamovilTable" class="table table-striped" style="width:100%">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>id</th>
+                        <th>Operadora</th>
+                        <th>Oferta</th>
+                        <th>Visible en</th>
                         @can('movil.view.btn-edit')
-                        <a href="{{ route('parrillamovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                            <th></th>
                         @endcan
-                        @can('movil.view.btn-duplicate')
-                        <a href="{{ route('parrillamovilDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
-                        @endcan
-                    </td>
-                </tr>
-                @endif
-                @endforeach
-            </tbody>
-        </table>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tarifas as $tarifa)
+                        @if ($tarifa->estado == 2)
+                            <tr>
+                                <td class="align-middle">{{ $tarifa->id }}</td>
+                                <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
+                                <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
+                                <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
+                                <td>
+                                    @can('movil.view.btn-edit')
+                                        <a href="{{ route('parrillamovil.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                    @endcan
+                                    @can('movil.view.btn-duplicate')
+                                        <a href="{{ route('parrillamovilDuplicate', $tarifa) }}"
+                                            class="btn btn-warning">Duplicar</a>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-
 @endsection

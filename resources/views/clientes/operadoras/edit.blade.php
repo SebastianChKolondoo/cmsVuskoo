@@ -13,22 +13,27 @@
                         </div>
                     @endif
                     {!! Form::model($operadora, ['route' => ['operadoras.update', $operadora], 'method' => 'put']) !!}
-                    <div class="form-group col-12 col-md-4">
-                        {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
-                        {!! Form::text('nombre', null, [
-                            'class' => 'form-control',
-                            'placeholder' => 'Nombre operadora',
-                            'required' => 'required',
-                        ]) !!}
-                    </div>
-                    <div class="form-group col-12 col-md-4">
-                        {{ Form::label('estado', 'Estado') }}
-                        @foreach ($estados as $estado)
-                            <div class="form-check">
-                                {{ Form::radio('estado', $estado->id, $estado->id == $operadora->estado, ['class' => 'form-check-input']) }}
-                                {{ Form::label($estado->id, $estado->name, ['class' => 'form-check-label']) }}
-                            </div>
-                        @endforeach
+                    <div class="row">
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
+                            {!! Form::text('nombre', null, [
+                                'class' => 'form-control',
+                                'placeholder' => 'Nombre operadora',
+                                'required' => 'required',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
+                            {!! Form::select('estado', $estados->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
+                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
                     </div>
 
                     {{ Form::submit('Actualizar', ['class' => 'btn btn-primary']) }}

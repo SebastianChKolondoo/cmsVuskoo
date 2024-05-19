@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comercializadoras;
+use App\Models\Paises;
 use App\Models\States;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,8 @@ class ComercializadorasController extends Controller
     public function create()
     {
         $estados = States::all();
-        return view('clientes.comercializadoras.create', compact('estados'));
+        $paises = Paises::all();
+        return view('clientes.comercializadoras.create', compact('estados', 'paises'));
     }
 
     /**
@@ -62,7 +64,8 @@ class ComercializadorasController extends Controller
     {
         $comercializadora = Comercializadoras::find($id);
         $estados = States::all();
-        return view('clientes.comercializadoras.edit', compact('comercializadora','estados'));
+        $paises = Paises::all();
+        return view('clientes.comercializadoras.edit', compact('comercializadora', 'estados', 'paises'));
     }
 
     /**

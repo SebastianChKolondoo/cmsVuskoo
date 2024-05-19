@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @can('operadoras.view.btn-create')
+    @can('comercios.view.btn-create')
         <div class="row justify-content-center my-4">
             <div class="col-12">
                 @if (session('info'))
@@ -8,13 +8,13 @@
                         {{ session('info') }}
                     </div>
                 @endif
-                <a href="{{ route('operadoras.create') }}" class="btn btn-primary">Nueva operadora</a>
+                <a href="{{ route('comercios.create') }}" class="btn btn-primary">Nueva comercio</a>
             </div>
         </div>
     @endcan
     <div class="row">
         <div class="col-12">
-            <h4>Listado de operadoras</h4>
+            <h4>Listado de comercios</h4>
         </div>
     </div>
     <ul class="nav nav-tabs" id="myTabs" role="tablist">
@@ -34,27 +34,27 @@
     <!-- Tab panes -->
     <div class="tab-content p-3 bg-white">
         <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-            <table id="operadorasTodasTable" class="table table-striped" style="width:100%">
+            <table id="comerciosTodasTable" class="table table-striped" style="width:100%">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
                         <th>Estado</th>
                         <th>Nombre</th>
                         <th>Pais</th>
-                        @can('operadoras.view.btn-edit')
-                            <th></th>
+                        @can('comercios.view.btn-edit')
+                        <th></th>
                         @endcan
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($operadoras as $operadora)
-                        <td class="align-middle">{{ $operadora->id }}</td>
-                        <td class="align-middle">{{ $operadora->state->name }}</td>
-                        <td class="align-middle">{{ $operadora->nombre }}</td>
-                        <td class="align-middle">{{ $operadora->paises->nombre }}</td>
-                        @can('operadoras.view.btn-edit')
+                    @foreach ($comercios as $comercio)
+                        <td class="align-middle">{{ $comercio->id }}</td>
+                        <td class="align-middle">{{ $comercio->state->name }}</td>
+                        <td class="align-middle">{{ $comercio->nombre }}</td>
+                        <td class="align-middle">{{ $comercio->paises->nombre }}</td>
+                        @can('comercios.view.btn-edit')
                             <td>
-                                <a href="{{ route('operadoras.edit', $operadora) }}" class="btn btn-primary">Editar</a>
+                                <a href="{{ route('comercios.edit', $comercio) }}" class="btn btn-primary">Editar</a>
                             </td>
                         @endcan
                         </tr>
@@ -63,26 +63,26 @@
             </table>
         </div>
         <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-            <table id="operadorasActivasTable" class="table table-striped" style="width:100%">
+            <table id="comerciosActivasTable" class="table table-striped" style="width:100%">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
                         <th>Nombre</th>
                         <th>Pais</th>
-                        @can('operadoras.view.btn-edit')
+                        @can('comercios.view.btn-edit')
                             <th></th>
                         @endcan
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($operadoras as $operadora)
-                        @if ($operadora->estado == 1)
-                            <td class="align-middle">{{ $operadora->id }}</td>
-                            <td class="align-middle">{{ $operadora->nombre }}</td>
-                            <td class="align-middle">{{ $operadora->paises->nombre }}</td>
-                            @can('operadoras.view.btn-edit')
+                    @foreach ($comercios as $comercio)
+                        @if ($comercio->estado == 1)
+                            <td class="align-middle">{{ $comercio->id }}</td>
+                            <td class="align-middle">{{ $comercio->nombre }}</td>
+                            <td class="align-middle">{{ $comercio->paises->nombre }}</td>
+                            @can('comercios.view.btn-edit')
                                 <td>
-                                    <a href="{{ route('operadoras.edit', $operadora) }}" class="btn btn-primary">Editar</a>
+                                    <a href="{{ route('comercios.edit', $comercio) }}" class="btn btn-primary">Editar</a>
                                 </td>
                             @endcan
                             </tr>
@@ -92,26 +92,26 @@
             </table>
         </div>
         <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-            <table id="operadorasInactivasTable" class="table table-striped" style="width:100%">
+            <table id="comerciosInactivasTable" class="table table-striped" style="width:100%">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
                         <th>Nombre</th>
                         <th>Pais</th>
-                        @can('operadoras.view.btn-edit')
+                        @can('comercios.view.btn-edit')
                             <th></th>
                         @endcan
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($operadoras as $operadora)
-                        @if ($operadora->estado == 2)
-                            <td class="align-middle">{{ $operadora->id }}</td>
-                            <td class="align-middle">{{ $operadora->nombre }}</td>
-                            <td class="align-middle">{{ $operadora->paises->nombre }}</td>
-                            @can('operadoras.view.btn-edit')
+                    @foreach ($comercios as $comercio)
+                        @if ($comercio->estado == 2)
+                            <td class="align-middle">{{ $comercio->id }}</td>
+                            <td class="align-middle">{{ $comercio->nombre }}</td>
+                            <td class="align-middle">{{ $comercio->paises->nombre }}</td>
+                            @can('comercios.view.btn-edit')
                                 <td>
-                                    <a href="{{ route('operadoras.edit', $operadora) }}" class="btn btn-primary">Editar</a>
+                                    <a href="{{ route('comercios.edit', $comercio) }}" class="btn btn-primary">Editar</a>
                                 </td>
                             @endcan
                             </tr>

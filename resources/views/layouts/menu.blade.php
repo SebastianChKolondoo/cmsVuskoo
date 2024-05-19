@@ -58,6 +58,13 @@
                     <span>Comercializadoras</span></a>
             </li>
         @endcan
+        @can('comercios.view')
+            <li class="nav-item active">
+                <a class="nav-link" href="/comercios">
+                    <i class="fa fa-address-book" aria-hidden="true"></i>
+                    <span>Comercios</span></a>
+            </li>
+        @endcan
     @endcan
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
@@ -91,12 +98,12 @@
     @endcan
     @can('energia.view')
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                aria-expanded="true" aria-controls="collapsePages">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEnergia"
+                aria-expanded="true" aria-controls="collapseEnergia">
                 <i class="fa fa-bolt" aria-hidden="true"></i>
                 <span>Energia</span>
             </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="collapseEnergia" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     @can('luz.view')
                         <a class="collapse-item" href="{{ route('parrillaluz.index') }}">Luz</a>
@@ -107,6 +114,20 @@
                     @can('luzygas.view')
                         <a class="collapse-item" href="{{ route('parrillaluzgas.index') }}">Luz y gas</a>
                     @endcan
+                </div>
+            </div>
+        </li>
+    @endcan
+    @can('cupones.view')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCupones"
+                aria-expanded="true" aria-controls="collapseCupones">
+                <i class="fa fa-ticket" aria-hidden="true"></i>
+                <span>Cupones</span>
+            </a>
+            <div id="collapseCupones" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('cupones.index') }}">Cupones</a>
                 </div>
             </div>
         </li>

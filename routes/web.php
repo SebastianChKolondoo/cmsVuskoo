@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ComercializadorasController;
+use App\Http\Controllers\ComerciosController;
 use App\Http\Controllers\ContenidoMarcaController;
+use App\Http\Controllers\CuponesController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -18,6 +20,7 @@ use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilsController;
+use App\Models\Comercios;
 use App\Models\ParillaFibraMovil;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -43,7 +46,7 @@ Route::resource('permisos', PermisosController::class)->names('permisos')->middl
 Route::resource('roles', RolesController::class)->names('roles')->middleware(['auth']);
 Route::resource('comercializadoras', ComercializadorasController::class)->names('comercializadoras')->middleware(['auth']);
 Route::resource('operadoras', OperadorasController::class)->names('operadoras')->middleware(['auth']);
-Route::resource('comercios', OperadorasController::class)->names('operadoras')->middleware(['auth']);
+Route::resource('comercios', ComerciosController::class)->names('comercios')->middleware(['auth']);
 /* Telefonia */
 Route::resource('parrillamovil', ParillaMovilController::class)->names('parrillamovil')->middleware(['auth']);
 Route::get('parrillamovilDuplicate/{id}', [ParillaMovilController::class, 'duplicateOffer'])->name('parrillamovilDuplicate')->middleware(['auth']);
@@ -72,3 +75,7 @@ Route::get('Contenidomarcacreateoperadora/{id}', [ContenidoMarcaController::clas
 
 Route::get('contadorservicio/{serivicio}', [DashboardController::class, 'contadorServicio'])->middleware(['auth']);
 Route::get('contadorservicio', [DashboardController::class, 'contadorServicio'])->middleware(['auth']);
+
+/* cupones */
+Route::resource('cupones', CuponesController::class)->names('cupones')->middleware(['auth']);
+Route::get('cuponesDuplicate/{id}', [CuponesController::class, 'duplicateOffer'])->name('cuponesDuplicate')->middleware(['auth']);

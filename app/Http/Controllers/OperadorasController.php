@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Operadoras;
+use App\Models\Paises;
 use App\Models\States;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,8 @@ class OperadorasController extends Controller
     public function create()
     {
         $estados =  States::all();
-        return view('clientes.operadoras.create', compact('estados'));
+        $paises = Paises::all();
+        return view('clientes.operadoras.create', compact('estados','paises'));
     }
 
     /**
@@ -68,7 +70,9 @@ class OperadorasController extends Controller
     {
         $operadora = Operadoras::find($id);
         $estados = States::all();
-        return view('clientes.operadoras.edit', compact('operadora', 'estados'));
+        $paises = Paises::all();
+        
+        return view('clientes.operadoras.edit', compact('operadora', 'estados', 'paises'));
     }
 
     /**

@@ -40,6 +40,7 @@
                         <th>id</th>
                         <th>Estado</th>
                         <th>Nombre</th>
+                        <th>Pais</th>
                         @can('comercializadoras.view.btn-edit')
                             <th></th>
                         @endcan
@@ -50,6 +51,7 @@
                         <td class="align-middle">{{ $comercializadora->id }}</td>
                         <td class="align-middle">{{ $comercializadora->state->name }}</td>
                         <td class="align-middle">{{ $comercializadora->nombre }}</td>
+                        <td class="align-middle">{{ $comercializadora->paises->nombre }}</td>
                         @can('comercializadoras.view.btn-edit')
                             <td>
                                 <a href="{{ route('comercializadoras.edit', $comercializadora) }}" class="btn btn-primary">Editar</a>
@@ -66,6 +68,7 @@
                     <tr>
                         <th>id</th>
                         <th>Nombre</th>
+                        <th>Pais</th>
                         @can('comercializadoras.view.btn-edit')
                             <th></th>
                         @endcan
@@ -76,6 +79,7 @@
                         @if ($comercializadora->estado == 1)
                             <td class="align-middle">{{ $comercializadora->id }}</td>
                             <td class="align-middle">{{ $comercializadora->nombre }}</td>
+                            <td class="align-middle">{{ $comercializadora->paises->nombre }}</td>
                             @can('comercializadoras.view.btn-edit')
                                 <td>
                                     <a href="{{ route('comercializadoras.edit', $comercializadora) }}" class="btn btn-primary">Editar</a>
@@ -93,6 +97,7 @@
                     <tr>
                         <th>id</th>
                         <th>Nombre</th>
+                        <th>Pais</th>
                         @can('comercializadoras.view.btn-edit')
                             <th></th>
                         @endcan
@@ -103,6 +108,7 @@
                         @if ($comercializadora->estado == 2)
                             <td class="align-middle">{{ $comercializadora->id }}</td>
                             <td class="align-middle">{{ $comercializadora->nombre }}</td>
+                            <td class="align-middle">{{ $comercializadora->paises->nombre }}</td>
                             @can('comercializadoras.view.btn-edit')
                                 <td>
                                     <a href="{{ route('comercializadoras.edit', $comercializadora) }}" class="btn btn-primary">Editar</a>

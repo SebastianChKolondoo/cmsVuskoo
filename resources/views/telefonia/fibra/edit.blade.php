@@ -38,12 +38,12 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        {{-- <div class="form-group col-12 col-md-4">
                             {!! Form::label('landing_link', 'Landing link', ['class' => 'form-label']) !!}
                             {!! Form::text('landing_link', null, [
                                 'class' => 'form-control',
                             ]) !!}
-                        </div>
+                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                             {!! Form::textarea('parrilla_bloque_1', null, [
@@ -119,7 +119,7 @@
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('fecha_expiracion', 'Fecha expiración', ['class' => 'form-label']) !!}
-                            {!! Form::date('fecha_expiracion', \Carbon\Carbon::now(), [
+                            {!! Form::date('fecha_expiracion', \Carbon\Carbon::parse($tarifa->fecha_expiracion)->format('Y-m-d'), [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
@@ -129,7 +129,7 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        <div class="form-group col-12 col-md-12">
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
                             {!! Form::textarea('textoAdicional', null, ['class' => 'form-control','rows' => 2]) !!}
                         </div>

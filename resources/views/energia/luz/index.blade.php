@@ -1,17 +1,17 @@
 @extends('layouts.app')
 @section('content')
-    @can('operadoras.view.btn-create')
-        <div class="row justify-content-center my-4">
-            <div class="col-12">
-                @if (session('info'))
-                    <div class="alert alert-success">
-                        {{ session('info') }}
-                    </div>
-                @endif
+    <div class="row justify-content-center my-4">
+        <div class="col-12">
+            @if (session('info'))
+                <div class="alert alert-success">
+                    {{ session('info') }}
+                </div>
+            @endif
+            @can('operadoras.view.btn-create')
                 <a href="{{ route('parrillaluz.create') }}" class="btn btn-primary">Nueva Oferta</a>
-            </div>
+            @endcan
         </div>
-    @endcan
+    </div>
     <div class="row">
         <div class="col-12">
             <h4>Listado de luz</h4>
@@ -143,5 +143,4 @@
             </table>
         </div>
     </div>
-
 @endsection
