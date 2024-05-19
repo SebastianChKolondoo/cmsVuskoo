@@ -16,7 +16,7 @@
                     @endif
                     {!! Form::model($user, ['route' => ['user.update', $user], 'method' => 'put']) !!}
                     <div class="row">
-                        <div class="form-group col-4">
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('numberDocument', 'Número de documento', ['class' => 'form-label']) !!}
                             {!! Form::text('numberDocument', null, [
                                 'class' => 'form-control',
@@ -24,11 +24,11 @@
                                 'required' => 'required',
                             ]) !!}
                         </div>
-                        <div class="form-group col-4">
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('name', 'Nombres', ['class' => 'form-label']) !!}
                             {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombres', 'required' => 'required']) !!}
                         </div>
-                        <div class="form-group col-4">
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('lastname', 'Apellido', ['class' => 'form-label']) !!}
                             {!! Form::text('lastname', null, [
                                 'class' => 'form-control',
@@ -36,7 +36,7 @@
                                 'required' => 'required',
                             ]) !!}
                         </div>
-                        <div class="form-group col-4">
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('email', 'Email', ['class' => 'form-label']) !!}
                             {!! Form::email('email', null, [
                                 'class' => 'form-control',
@@ -44,7 +44,7 @@
                                 'required' => 'required',
                             ]) !!}
                         </div>
-                        <div class="form-group col-4">
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('roles', 'Rol', ['class' => 'form-label']) !!}
                             {!! Form::select('roles', $roles->pluck('name', 'id'), null, [
                                 'class' => 'form-control',

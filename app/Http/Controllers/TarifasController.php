@@ -18,6 +18,7 @@ class TarifasController extends Controller
     protected $tabla_streaming = 'WEB_3_TARIFAS_TELCO_STREAMING';
     protected $tabla_vehiculo = 'WEB_3_VEHICULOS';
     protected $tabla_vehiculos = '1_vehiculos';
+    protected $tabla_cupones = 'WEB_3_TARIFAS_CUPONES';
 
     public function getTarifasMovilList()
     {
@@ -120,7 +121,7 @@ class TarifasController extends Controller
     {
         $query = DB::table($this->tabla_vehiculo)
             ->join('1_vehiculos', '1_vehiculos.id', '=', $this->tabla_vehiculo . '.vehiculo')
-            ->select($this->tabla_vehiculo . '.id', $this->tabla_vehiculo . '.transmission', $this->tabla_vehiculo . '.hp', $this->tabla_vehiculo . '.price', $this->tabla_vehiculo . '.year', $this->tabla_vehiculo . '.chassis', $this->tabla_vehiculo . '.make', $this->tabla_vehiculo . '.model', $this->tabla_vehiculo . '.landingLead', $this->tabla_vehiculo . '.slug_tarifa', $this->tabla_vehiculo . '.fuelType', $this->tabla_vehiculo . '.images', '1_vehiculos.nombre', '1_vehiculos.logo')
+            ->select($this->tabla_vehiculo . '.id', $this->tabla_vehiculo . '.vehiculo', $this->tabla_vehiculo . '.transmission', $this->tabla_vehiculo . '.hp', $this->tabla_vehiculo . '.price', $this->tabla_vehiculo . '.year', $this->tabla_vehiculo . '.chassis', $this->tabla_vehiculo . '.make', $this->tabla_vehiculo . '.model', $this->tabla_vehiculo . '.landingLead', $this->tabla_vehiculo . '.slug_tarifa', $this->tabla_vehiculo . '.fuelType', $this->tabla_vehiculo . '.images', '1_vehiculos.nombre', '1_vehiculos.logo')
             ->where($this->tabla_vehiculo . '.estado', '=', '1')
             ->where('1_vehiculos.estado', '=', '1')
             ->where('1_vehiculos.pais', '=', '3')
@@ -128,6 +129,23 @@ class TarifasController extends Controller
 
         if (!empty($id)) {
             $query->where($this->tabla_movil_fibra_tv . '.id', '=', $id);
+        }
+
+        return $query->get();
+    }
+
+    public function getTarifasCuponesList()
+    {
+        $query = DB::table($this->tabla_cupones)
+            ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
+            ->select($this->tabla_cupones . '.*', '1_comercios.nombre', '1_comercios.logo')
+            ->where($this->tabla_cupones . '.estado', '=', '1')
+            ->where('1_comercios.estado', '=', '1')
+            ->where('1_comercios.pais', '=', '1')
+            ->orderBy('destacada', 'asc');
+
+        if (!empty($id)) {
+            $query->where($this->tabla_cupones . '.id', '=', $id);
         }
 
         return $query->get();

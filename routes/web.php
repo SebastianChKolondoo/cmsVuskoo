@@ -43,6 +43,7 @@ Route::resource('permisos', PermisosController::class)->names('permisos')->middl
 Route::resource('roles', RolesController::class)->names('roles')->middleware(['auth']);
 Route::resource('comercializadoras', ComercializadorasController::class)->names('comercializadoras')->middleware(['auth']);
 Route::resource('operadoras', OperadorasController::class)->names('operadoras')->middleware(['auth']);
+Route::resource('comercios', OperadorasController::class)->names('operadoras')->middleware(['auth']);
 /* Telefonia */
 Route::resource('parrillamovil', ParillaMovilController::class)->names('parrillamovil')->middleware(['auth']);
 Route::get('parrillamovilDuplicate/{id}', [ParillaMovilController::class, 'duplicateOffer'])->name('parrillamovilDuplicate')->middleware(['auth']);

@@ -19,6 +19,7 @@ class ApiController extends Controller
     protected $tabla_movil_fibra_tv;
     protected $tabla_vehiculos;
     protected $tabla_vehiculo;
+    protected $tabla_cupones;
 
     public function __construct()
     {
@@ -34,6 +35,8 @@ class ApiController extends Controller
         
         $this->tabla_vehiculo = 'WEB_3_VEHICULOS';
         $this->tabla_vehiculos = '1_vehiculos';
+
+        $this->tabla_cupones = 'WEB_3_TARIFAS_CUPONES';
     }
 
     public function index()
@@ -164,6 +167,18 @@ class ApiController extends Controller
             ->where('1_comercializadoras.pais', '=', '1')
             ->where($this->tabla_luz . '.estado', '=', '1')
             ->groupBy($this->tabla_luz . '.comercializadora')
+            ->get();
+    }
+
+    public function getComerciosCuponesList()
+    {
+        return DB::table($this->tabla_cupones)
+            ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
+            ->select('1_comercios.id', '1_comercios.nombre', '1_comercios.logo')
+            ->where('1_comercios.estado', '=', '1')
+            ->where('1_comercios.pais', '=', '1')
+            ->where($this->tabla_cupones . '.estado', '=', '1')
+            ->groupBy($this->tabla_cupones . '.comercio')
             ->get();
     }
 

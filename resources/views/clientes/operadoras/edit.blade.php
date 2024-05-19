@@ -13,7 +13,7 @@
                         </div>
                     @endif
                     {!! Form::model($operadora, ['route' => ['operadoras.update', $operadora], 'method' => 'put']) !!}
-                    <div class="form-group col-4">
+                    <div class="form-group col-12 col-md-4">
                         {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
                         {!! Form::text('nombre', null, [
                             'class' => 'form-control',
@@ -21,7 +21,7 @@
                             'required' => 'required',
                         ]) !!}
                     </div>
-                    <div class="form-group col-4">
+                    <div class="form-group col-12 col-md-4">
                         {{ Form::label('estado', 'Estado') }}
                         @foreach ($estados as $estado)
                             <div class="form-check">

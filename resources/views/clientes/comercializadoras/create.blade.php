@@ -14,7 +14,7 @@
                     @endif
                     {!! Form::open(['route' => 'comercializadoras.store']) !!}
 <div class="row">
-                    <div class="form-group col-4">
+                    <div class="form-group col-12 col-md-4">
                         {!! Form::label('name', 'Nombre comercializadora', ['class' => 'form-label']) !!}
                         {!! Form::text('name', null, [
                             'class' => 'form-control',
@@ -22,15 +22,15 @@
                             'required' => 'required',
                         ]) !!}
                     </div>
-                    <div class="form-group col-4">
+                    <div class="form-group col-12 col-md-4">
                         {!! Form::label('logo', 'Logo', ['class' => 'form-label']) !!}
                         {!! Form::text('logo', null, ['class' => 'form-control', 'placeholder' => 'Logo']) !!}
                     </div>
-                    <div class="form-group col-4">
+                    <div class="form-group col-12 col-md-4">
                         {!! Form::label('negativo', 'Logo negativo', ['class' => 'form-label']) !!}
                         {!! Form::text('negativo', null, ['class' => 'form-control', 'placeholder' => 'Logo negativo']) !!}
                     </div>
-                    <div class="form-group col-4">
+                    <div class="form-group col-12 col-md-4">
                         {!! Form::label('politica', 'Nombre comercializadora', ['class' => 'form-label']) !!}
                         {!! Form::text('politica', null, [
                             'class' => 'form-control',
