@@ -27,7 +27,8 @@ class Cupones extends Model
         'textoAdicional',
         'created_at',
         'updated_at',
-        'nombre_tarifa'
+        'nombre_tarifa',
+        'promocion'
     ];
 
     public function state()

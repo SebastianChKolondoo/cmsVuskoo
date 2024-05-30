@@ -32,7 +32,7 @@ class ApiController extends Controller
         $this->tabla_tv = 'WEB_3_TARIFAS_TELCO_TV';
         $this->tabla_movil_fibra = 'WEB_3_TARIFAS_TELCO_FIBRA_MOVIL';
         $this->tabla_movil_fibra_tv = 'WEB_3_TARIFAS_TELCO_FIBRA_MOVIL_TV';
-        
+
         $this->tabla_vehiculo = 'WEB_3_VEHICULOS';
         $this->tabla_vehiculos = '1_vehiculos';
 
@@ -69,7 +69,7 @@ class ApiController extends Controller
                             [
                                 "name" => "Fibra móvil y TV",
                                 "url" => "/internet-telefonia/comparador-fibra-movil-tv"
-                            ]
+                            ],
                         ]
                     ],
                     [
@@ -112,6 +112,13 @@ class ApiController extends Controller
                                 "name" => "Test de velocidad",
                                 "url" => "/herramientas/test-de-velocidad"
                             ]
+                        ]
+                    ],
+                    [
+                        "title" => "Cupones",
+                        "titleUrl" => "/cupones",
+                        "children" => [
+                            
                         ]
                     ]
                 ];
@@ -176,9 +183,18 @@ class ApiController extends Controller
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
             ->select('1_comercios.id', '1_comercios.nombre', '1_comercios.logo')
             ->where('1_comercios.estado', '=', '1')
-            ->where('1_comercios.pais', '=', '1')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->groupBy($this->tabla_cupones . '.comercio')
+            ->get();
+    }
+
+    public function getTipoCuponesList()
+    {
+        return DB::table($this->tabla_cupones)
+            ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
+            ->select('TipoCupon.id', 'TipoCupon.nombre')
+            ->where($this->tabla_cupones . '.estado', '=', '1')
+            ->groupBy($this->tabla_cupones . '.tipoCupon')
             ->get();
     }
 
@@ -261,13 +277,13 @@ class ApiController extends Controller
             ->groupBy('operadora')
             ->get();
     }
-    
+
     public function getMarcasVehiculosList()
     {
         return DB::table($this->tabla_vehiculos)
             ->where('1_vehiculos.pais', '=', '3')
             ->where($this->tabla_vehiculos . '.estado', '=', '1')
-            ->orderBy('nombre','asc')
+            ->orderBy('nombre', 'asc')
             ->get();
     }
 }

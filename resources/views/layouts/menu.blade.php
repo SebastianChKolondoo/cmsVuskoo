@@ -20,21 +20,21 @@
     @can('roles.view')
         <li class="nav-item active">
             <a class="nav-link" href="/roles">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <i class="fa fa-users" aria-hidden="true"></i>
                 <span>Roles</span></a>
         </li>
     @endcan
     @can('permisos.view')
         <li class="nav-item active">
             <a class="nav-link" href="/permisos">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <i class="fa fa-key" aria-hidden="true"></i>
                 <span>Permisos</span></a>
         </li>
     @endcan
     @can('usuarios.view')
         <li class="nav-item active">
             <a class="nav-link" href="/usuarios">
-                <i class="fa fa-address-book" aria-hidden="true"></i>
+                <i class="fa fa-user" aria-hidden="true"></i>
                 <span>Usuarios</span></a>
         </li>
     @endcan
@@ -47,22 +47,29 @@
         @can('operadoras.view')
             <li class="nav-item active">
                 <a class="nav-link" href="/operadoras">
-                    <i class="fa fa-address-book" aria-hidden="true"></i>
+                    <i class="fa fa-phone-square" aria-hidden="true"></i>
                     <span>Operadoras</span></a>
             </li>
         @endcan
         @can('comercializadoras.view')
             <li class="nav-item active">
                 <a class="nav-link" href="/comercializadoras">
-                    <i class="fa fa-address-book" aria-hidden="true"></i>
+                    <i class="fa fa-bolt" aria-hidden="true"></i>
                     <span>Comercializadoras</span></a>
             </li>
         @endcan
         @can('comercios.view')
             <li class="nav-item active">
                 <a class="nav-link" href="/comercios">
-                    <i class="fa fa-address-book" aria-hidden="true"></i>
+                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
                     <span>Comercios</span></a>
+            </li>
+        @endcan
+        @can('paises.view')
+            <li class="nav-item active">
+                <a class="nav-link" href="/paises">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                    <span>Paises</span></a>
             </li>
         @endcan
     @endcan
@@ -71,6 +78,23 @@
     <div class="sidebar-heading">
         Parillas
     </div>
+    @can('cupones.view')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCupones"
+                aria-expanded="true" aria-controls="collapseCupones">
+                <i class="fa fa-ticket" aria-hidden="true"></i>
+                <span>Cupones</span>
+            </a>
+            <div id="collapseCupones" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('cupones.index') }}">Cupones</a>
+                    <a class="collapse-item" href="{{ route('categorias.index') }}">Categorias</a>
+                    <a class="collapse-item" href="{{ route('cupones.index') }}">Cupones</a>
+                </div>
+
+            </div>
+        </li>
+    @endcan
     @can('telefonia.view')
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTelefonia"
@@ -118,20 +142,6 @@
             </div>
         </li>
     @endcan
-    @can('cupones.view')
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCupones"
-                aria-expanded="true" aria-controls="collapseCupones">
-                <i class="fa fa-ticket" aria-hidden="true"></i>
-                <span>Cupones</span>
-            </a>
-            <div id="collapseCupones" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="{{ route('cupones.index') }}">Cupones</a>
-                </div>
-            </div>
-        </li>
-    @endcan
     @can('streaming.view')
         <li class="nav-item active">
             <a class="nav-link" href="/streaming">
@@ -139,6 +149,7 @@
                 <span>Streaming</span></a>
         </li>
     @endcan
+
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline mt-5">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

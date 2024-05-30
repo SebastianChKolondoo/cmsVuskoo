@@ -18,6 +18,7 @@
                             {!! Form::label('comercio', 'Comercio', ['class' => 'form-label']) !!}
                             {!! Form::select('comercio', $comercios->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',
+                                'id' => 'comercio'
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
@@ -60,17 +61,13 @@
                         </div>
                         <div class="form-group col-12 col-md-12">
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
-                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control','rows' => 2]) !!}
+                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
                             {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',
                             ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-12">
-                            {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
-                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control','rows' => 2]) !!}
                         </div>
                         <div class="col-12">
                             {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}

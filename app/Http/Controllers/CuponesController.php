@@ -105,6 +105,6 @@ class CuponesController extends Controller
         $duplica = $tarifaBase->replicate();
         $duplica->save();
         $tarifa = Cupones::find($duplica->id);
-        return redirect()->route('cupones.edit', ['cupones' => $duplica->id]);
+        return redirect()->route('cupones.edit', ['cupone' => $tarifa->id]);
     }
 }

@@ -9,6 +9,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- bootstrap -->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/ui/trumbowyg.min.css">
+
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -22,20 +24,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/trumbowyg.min.js" defer></script>
 
-    <script src="https://cdn.tiny.cloud/1/bbqls9h0rgvgq5smpq7vf1xh2c17ytgnnv1mp7e595qsvvv3/tinymce/6/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: '.editor',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject(
-                "See docs to implement AI Assistant")),
-        });
-    </script>
 </head>
 
 <body>
@@ -56,8 +46,15 @@
             @include('layouts.footer')
         </div>
     </div>
+    
     <script>
         $(document).ready(function() {
+            $('.editor').trumbowyg({
+                btns: [
+                    ['strong', 'em'],
+                    ['unorderedList', 'orderedList'],
+                ]
+            });
             $('table').DataTable({
                 "language": {
                     "sProcessing": "Procesando...",

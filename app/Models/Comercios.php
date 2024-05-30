@@ -19,7 +19,7 @@ class Comercios extends Model
         'logo_negativo',
         'politica_privacidad',
         'estado',
-        'pais'
+        'pais',
     ];
 
     public function state()
@@ -27,8 +27,8 @@ class Comercios extends Model
         return $this->belongsTo(States::class, 'estado', 'id');
     }
    
-    public function paises()
+    /* public function paises()
     {
-        return $this->belongsTo(Paises::class, 'pais', 'id');
-    }
+        return $this->belongsToMany(Paises::class, 'pais', 'id');
+    } */
 }

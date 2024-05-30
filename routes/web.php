@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ComercializadorasController;
 use App\Http\Controllers\ComerciosController;
 use App\Http\Controllers\ContenidoMarcaController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OperadorasController;
+use App\Http\Controllers\PaisesController;
 use App\Http\Controllers\ParillaFibraController;
 use App\Http\Controllers\ParillaFibraMovilController;
 use App\Http\Controllers\ParillaFibraMovilTvController;
@@ -47,6 +49,8 @@ Route::resource('roles', RolesController::class)->names('roles')->middleware(['a
 Route::resource('comercializadoras', ComercializadorasController::class)->names('comercializadoras')->middleware(['auth']);
 Route::resource('operadoras', OperadorasController::class)->names('operadoras')->middleware(['auth']);
 Route::resource('comercios', ComerciosController::class)->names('comercios')->middleware(['auth']);
+Route::resource('paises', PaisesController::class)->names('paises')->middleware(['auth']);
+Route::resource('categorias', CategoriasController::class)->names('categorias')->middleware(['auth']);
 /* Telefonia */
 Route::resource('parrillamovil', ParillaMovilController::class)->names('parrillamovil')->middleware(['auth']);
 Route::get('parrillamovilDuplicate/{id}', [ParillaMovilController::class, 'duplicateOffer'])->name('parrillamovilDuplicate')->middleware(['auth']);

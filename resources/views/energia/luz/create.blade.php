@@ -173,7 +173,7 @@
                         </div>
                         <div class="form-group col-12 col-md-12">
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
-                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control','rows' => 2]) !!}
+                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
                         </div>
                         <div class="col-6">
                             {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}

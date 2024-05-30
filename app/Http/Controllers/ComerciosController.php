@@ -69,6 +69,11 @@ class ComerciosController extends Controller
     public function edit($id)
     {
         $comercio = Comercios::find($id);
+        $array = json_decode($comercio->pais, true);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            $array = array_map('intval', $array);
+            $comercio->pais = $array;
+        }
         $paises = Paises::all();
         $estados = States::all();
         return view('clientes.comercios.edit', compact('comercio', 'estados', 'paises'));
@@ -77,7 +82,7 @@ class ComerciosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $comercio)
+    public function update(Request $request, $comercio)
     {
         $comercios = Comercios::find($comercio);
         $comercios->update($request->all());

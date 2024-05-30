@@ -138,10 +138,11 @@ class TarifasController extends Controller
     {
         $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
-            ->select($this->tabla_cupones . '.*', '1_comercios.nombre', '1_comercios.logo')
+            ->select($this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_expiracion, "%d-%m-%Y") as fecha_expiracion'),DB::raw('DATEDIFF(fecha_expiracion, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo','paises.nombre as pais','TipoCupon.nombre as cupon')
+            ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
+            ->join('paises','paises.id',$this->tabla_cupones.'.pais')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
-            ->where('1_comercios.pais', '=', '1')
             ->orderBy('destacada', 'asc');
 
         if (!empty($id)) {
@@ -149,6 +150,21 @@ class TarifasController extends Controller
         }
 
         return $query->get();
+    }
+    
+    public function getTarifaCuponList($id)
+    {
+        $query = DB::table($this->tabla_cupones)
+            ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
+            ->select($this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_expiracion, "%d-%m-%Y") as fecha_expiracion'),DB::raw('DATEDIFF(fecha_expiracion, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo','paises.nombre as pais','TipoCupon.nombre as cupon')
+            ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
+            ->join('paises','paises.id',$this->tabla_cupones.'.pais')
+            ->where($this->tabla_cupones . '.estado', '=', '1')
+            ->where('1_comercios.estado', '=', '1')
+            ->where($this->tabla_cupones.'.id', $id)
+            ->orderBy('destacada', 'asc');
+
+        return $query->first();
     }
 
     public function getTarifasStreamingList($id = null)
