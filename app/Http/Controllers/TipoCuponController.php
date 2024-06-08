@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Paises;
-use App\Models\States;
+use App\Models\TipoCupon;
 use Illuminate\Http\Request;
 
-class PaisesController extends Controller
+class TipoCuponController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $paises = Paises::all();
-        return view('pais.index', compact('paises'));
+        $tipoCupones = TipoCupon::all();
+        return view('tipoCupones.index', compact('tipoCupones'));
     }
 
     /**
@@ -22,7 +21,7 @@ class PaisesController extends Controller
      */
     public function create()
     {
-        return view('pais.create');
+        return view('tipoCupones.create');
     }
 
     /**
@@ -30,18 +29,16 @@ class PaisesController extends Controller
      */
     public function store(Request $request)
     {
-        Paises::create([
-            'codigo' => $request->codigo,
+        TipoCupon::create([
             'nombre' => $request->nombre,
-            'moneda' => $request->moneda
         ]);
-        return redirect()->route('paises.index')->with('info', 'Pais creado correctamente.');
+        return redirect()->route('tipoCupones.index')->with('info', 'Tipo de cupón creado correctamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(TipoCupon $tipoCupon)
     {
         //
     }
@@ -51,9 +48,8 @@ class PaisesController extends Controller
      */
     public function edit($id)
     {
-        $pais = Paises::find($id);
-        $estados = States::all();
-        return view('pais.edit', compact('pais','estados'));
+        $tipoCupon = TipoCupon::find($id);
+        return view('tipoCupones.edit', compact('tipoCupon'));
     }
 
     /**
@@ -61,17 +57,15 @@ class PaisesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $pais = Paises::find($id);
-        $pais->update($request->all());
-        return back()->with('info', 'Información actualizada correctamente.');
-
+        $tipoCupon = TipoCupon::find($id);
+        $tipoCupon->update($request->all());
+        return redirect()->route('tipoCupones.index')->with('info', 'Tipo de cupon editado correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(TipoCupon $tipoCupon)
     {
         //
     }

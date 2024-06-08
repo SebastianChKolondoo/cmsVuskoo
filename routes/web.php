@@ -20,6 +20,7 @@ use App\Http\Controllers\ParillaMovilController;
 use App\Http\Controllers\ParrillaStreamingController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\TipoCuponController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilsController;
 use App\Models\Comercios;
@@ -51,6 +52,7 @@ Route::resource('operadoras', OperadorasController::class)->names('operadoras')-
 Route::resource('comercios', ComerciosController::class)->names('comercios')->middleware(['auth']);
 Route::resource('paises', PaisesController::class)->names('paises')->middleware(['auth']);
 Route::resource('categorias', CategoriasController::class)->names('categorias')->middleware(['auth']);
+Route::resource('tipoCupon', TipoCuponController::class)->names('tipoCupones')->middleware(['auth']);
 /* Telefonia */
 Route::resource('parrillamovil', ParillaMovilController::class)->names('parrillamovil')->middleware(['auth']);
 Route::get('parrillamovilDuplicate/{id}', [ParillaMovilController::class, 'duplicateOffer'])->name('parrillamovilDuplicate')->middleware(['auth']);

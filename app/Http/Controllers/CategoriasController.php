@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorias;
+use App\Models\Paises;
 use Illuminate\Http\Request;
 
 class CategoriasController extends Controller
@@ -21,7 +22,8 @@ class CategoriasController extends Controller
      */
     public function create()
     {
-        return view('categorias.create');
+        $paises = Paises::all();
+        return view('categorias.create', compact('paises'));
     }
 
     /**
@@ -29,9 +31,19 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
-        Categorias::create([
-            'nombre' => $request->nombre
-        ]);
+        $data = $request->except('_token');
+        // Iterar sobre cada elemento del request
+        foreach ($data as $key => $value) {
+            $codigoPais = explode('_', $key)[1];
+            // Guardar la categoría
+            if(!empty($value)){
+                Categorias::create([
+                    'categoria' => $value,
+                    'nombre' => $value,
+                    'pais' => $codigoPais,
+                ]);
+            }
+        }
         return redirect()->route('categorias.index')->with('info', 'Categoria creada correctamente.');
     }
 

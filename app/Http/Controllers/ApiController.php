@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Lead;
+use App\Models\Paises;
 use Psy\Readline\Hoa\Console;
 
 class ApiController extends Controller
@@ -112,13 +113,6 @@ class ApiController extends Controller
                                 "name" => "Test de velocidad",
                                 "url" => "/herramientas/test-de-velocidad"
                             ]
-                        ]
-                    ],
-                    [
-                        "title" => "Cupones",
-                        "titleUrl" => "/cupones",
-                        "children" => [
-                            
                         ]
                     ]
                 ];
@@ -283,6 +277,25 @@ class ApiController extends Controller
         return DB::table($this->tabla_vehiculos)
             ->where('1_vehiculos.pais', '=', '3')
             ->where($this->tabla_vehiculos . '.estado', '=', '1')
+            ->orderBy('nombre', 'asc')
+            ->get();
+    }
+
+    public function cargarPaisesCupones($id)
+    {
+        $data = DB::table('1_comercios')
+            ->select('pais')
+            ->where('1_comercios.id', '=', $id)
+            ->orderBy('nombre', 'asc')
+            ->first();
+
+        return Paises::whereIn('id',json_decode($data->pais))->get();
+    }
+    
+    public function cargarCategoriasPaisesCupones($id)
+    {
+        return DB::table('categorias_comercios')
+            ->where('categorias_comercios.pais', '=', $id)
             ->orderBy('nombre', 'asc')
             ->get();
     }

@@ -14,20 +14,14 @@
                     @endif
                     {!! Form::open(['route' => 'categorias.store']) !!}
                     <div class="row">
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('nombre', 'Nombre categoria', ['class' => 'form-label']) !!}
-                            {!! Form::text('nombre', null, [
-                                'class' => 'form-control',
-                                'placeholder' => 'Nombre',
-                                'required' => 'required',
-                            ]) !!}
-                        </div>
-                        {{-- <div class="form-group col-12 col-md-4">
-                            {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
-                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div> --}}
+                        @foreach ($paises as $pais)
+                            <div class="form-group col-12 col-md-4">
+                                {!! Form::label("nombre_$pais->id", "Nombre categoria en $pais->nombre", ['class' => 'form-label']) !!}
+                                {!! Form::text("nombre_$pais->id", null, [
+                                    'class' => 'form-control',
+                                ]) !!}
+                            </div>
+                        @endforeach
                         <div class="form-group col-12 col-md-12">
                             {!! Form::submit('Registrar', ['class' => 'btn btn-primary mt-3']) !!}
                             {!! Form::close() !!}

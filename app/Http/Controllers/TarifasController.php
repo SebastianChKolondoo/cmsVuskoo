@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Paises;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +20,7 @@ class TarifasController extends Controller
     protected $tabla_vehiculo = 'WEB_3_VEHICULOS';
     protected $tabla_vehiculos = '1_vehiculos';
     protected $tabla_cupones = 'WEB_3_TARIFAS_CUPONES';
+    protected $tabla_prestamos = 'WEB_3_PRESTAMOS';
 
     public function getTarifasMovilList()
     {
@@ -134,15 +136,18 @@ class TarifasController extends Controller
         return $query->get();
     }
 
-    public function getTarifasCuponesList()
+    public function getTarifasCuponesList($lang = 1)
     {
+        $idioma = Paises::where('codigo', $lang)->first();
         $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
-            ->select($this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_expiracion, "%d-%m-%Y") as fecha_expiracion'),DB::raw('DATEDIFF(fecha_expiracion, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo','paises.nombre as pais','TipoCupon.nombre as cupon')
+            ->select($this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_expiracion, "%d-%m-%Y") as fecha_expiracion'), DB::raw('DATEDIFF(fecha_expiracion, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo', 'paises.nombre as pais', 'TipoCupon.nombre as cupon', 'categorias_comercios.nombre as categoria_nombre')
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
-            ->join('paises','paises.id',$this->tabla_cupones.'.pais')
+            ->join('paises', 'paises.id', $this->tabla_cupones . '.pais')
+            ->join('categorias_comercios', 'categorias_comercios.id', $this->tabla_cupones . '.categoria')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
+            ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
             ->orderBy('destacada', 'asc');
 
         if (!empty($id)) {
@@ -151,17 +156,17 @@ class TarifasController extends Controller
 
         return $query->get();
     }
-    
+
     public function getTarifaCuponList($id)
     {
         $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
-            ->select($this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_expiracion, "%d-%m-%Y") as fecha_expiracion'),DB::raw('DATEDIFF(fecha_expiracion, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo','paises.nombre as pais','TipoCupon.nombre as cupon')
+            ->select($this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_expiracion, "%d-%m-%Y") as fecha_expiracion'), DB::raw('DATEDIFF(fecha_expiracion, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo', 'paises.nombre as pais', 'TipoCupon.nombre as cupon')
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
-            ->join('paises','paises.id',$this->tabla_cupones.'.pais')
+            ->join('paises', 'paises.id', $this->tabla_cupones . '.pais')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
-            ->where($this->tabla_cupones.'.id', $id)
+            ->where($this->tabla_cupones . '.id', $id)
             ->orderBy('destacada', 'asc');
 
         return $query->first();
@@ -274,5 +279,20 @@ class TarifasController extends Controller
             ->select($this->tabla_vehiculo . '.*', '1_vehiculos.nombre', '1_vehiculos.logo')
             ->where($this->tabla_vehiculo . '.id', '=', $id)
             ->first();
+    }
+
+    public function getTarifasPrestamosList()
+    {
+        $query = DB::table($this->tabla_prestamos)
+            ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
+            ->select($this->tabla_prestamos . '.*', '1_banca.nombre', '1_banca.logo')
+            ->where($this->tabla_prestamos . '.estado', '=', '1')
+            ->orderBy('destacada', 'asc');
+
+        if (!empty($id)) {
+            $query->where($this->tabla_prestamos . '.id', '=', $id);
+        }
+
+        return $query->get();
     }
 }

@@ -73,7 +73,7 @@ function openChild() {
 function cargarPaisesComercio(data) {
 	$.ajax({
 		url: 'cargarPaises',
-		method: 'POST',
+		method: 'GET',
 		data: { departament: data, _token: $('input[name="_token"]').val() },
 	}).done(function (data) {
 		console.log();

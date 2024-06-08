@@ -1,17 +1,17 @@
 @extends('layouts.app')
 @section('content')
-    @can('paises.view.btn-create')
-        <div class="row justify-content-center my-4">
-            <div class="col-12">
-                @if (session('info'))
-                    <div class="alert alert-success">
-                        {{ session('info') }}
-                    </div>
-                @endif
+    <div class="row justify-content-center my-4">
+        <div class="col-12">
+            @if (session('info'))
+                <div class="alert alert-success">
+                    {{ session('info') }}
+                </div>
+            @endif
+            @can('paises.view.btn-create')
                 <a href="{{ route('paises.create') }}" class="btn btn-primary">Nueva pais</a>
-            </div>
+            @endcan
         </div>
-    @endcan
+    </div>
     <div class="row">
         <div class="col-12">
             <h4>Listado de paises</h4>
@@ -33,8 +33,8 @@
                         <th>Nombre</th>
                         <th>Codigo</th>
                         <th>Moneda</th>
-                        @can('paises.view.btn-edit')
-                        <th></th>
+                        @can('paises.view-btn-edit')
+                            <th>&nbsp;</th>
                         @endcan
                     </tr>
                 </thead>

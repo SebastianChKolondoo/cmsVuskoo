@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2>Registrar comercio</h2>
+                    <h2>Registrar pais</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))
@@ -12,40 +12,30 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'comercios.store']) !!}
+                    {!! Form::open(['route' => 'paises.store']) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('name', 'Nombre comercio', ['class' => 'form-label']) !!}
-                            {!! Form::text('name', null, [
+                            {!! Form::label('codigo', 'Codigo', ['class' => 'form-label']) !!}
+                            {!! Form::text('codigo', null, [
                                 'class' => 'form-control',
-                                'placeholder' => 'Nombre',
                                 'required' => 'required',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('politica_privacidad', 'Politica de privcidad', ['class' => 'form-label']) !!}
-                            {!! Form::text('politica_privacidad', null, [
-                                'class' => 'form-control',
-                                'placeholder' => 'Enlace externo a politica de privacidad',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
-                            {!! Form::select('estado', $estados->pluck('name', 'id'), null, [
+                            {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
+                            {!! Form::text('nombre', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
-                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
+                            {!! Form::label('moneda', 'Moneda', ['class' => 'form-label']) !!}
+                            {!! Form::text('moneda', null, [
                                 'class' => 'form-control',
                             ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-12">
-                            {!! Form::submit('Registrar', ['class' => 'btn btn-primary mt-3']) !!}
-                            {!! Form::close() !!}
                         </div>
                     </div>
+                    {{ Form::submit('Crear', ['class' => 'btn btn-primary']) }}
+                    {{ Form::close() }}
                 </div>
             </div>
         </div>

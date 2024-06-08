@@ -28,7 +28,9 @@ class Cupones extends Model
         'created_at',
         'updated_at',
         'nombre_tarifa',
-        'promocion'
+        'descuento',
+        'landing_link',
+        'tipoCupon'
     ];
 
     public function state()
@@ -49,5 +51,10 @@ class Cupones extends Model
     public function categorias()
     {
         return $this->belongsTo(Categorias::class, 'categoria', 'id');
+    }
+    
+    public function tipoCupones()
+    {
+        return $this->belongsTo(TipoCupon::class, 'tipoCupon', 'id');
     }
 }

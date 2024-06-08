@@ -37,6 +37,10 @@ $(document).ready(function () {
 	$('#comercio').change(function () {
 		cargarPaisesComercio($(this).val());
 	});
+	
+	$('#pais').change(function () {
+		cargarPaisesCategorias($(this).val());
+	});
 
 
 	openChild();
@@ -70,19 +74,46 @@ function openChild() {
 	}
 }
 
-function cargarPaisesComercio(data) {
+function cargarPaisesComercio(id) {
+	$('#pais').html('<option>Cargando...</option>');
+	$('#categoria').html('<option>Cargando...</option>');
+	let url = '/api/cargarPaises';
+	if (id) {
+		url += '/' + id;
+	}
+
 	$.ajax({
-		url: 'cargarPaises',
-		method: 'POST',
-		data: { departament: data, _token: $('input[name="_token"]').val() },
+		url: url,
+		method: 'GET'
 	}).done(function (data) {
-		console.log();
-		lista = '';
-		for (i = 0; i < data.length;) {
-			lista += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
-			i++;
+		let lista = '<option>seleccione...</option>';
+		for (let i = 0; i < data.length; i++) {
+			lista += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
 		}
-		$('#city').html(lista);
+		$('#pais').html(lista);
+	}).fail(function (jqXHR, textStatus, errorThrown) {
+		console.error('Error:', textStatus, errorThrown);
+	});
+}
+
+function cargarPaisesCategorias(id) {
+	$('#categoria').html('<option>Cargando...</option>');
+	let url = '/api/cargarCategoriasPaises';
+	if (id) {
+		url += '/' + id;
+	}
+
+	$.ajax({
+		url: url,
+		method: 'GET'
+	}).done(function (data) {
+		let lista = '<option>seleccione...</option>';
+		for (let i = 0; i < data.length; i++) {
+			lista += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
+		}
+		$('#categoria').html(lista);
+	}).fail(function (jqXHR, textStatus, errorThrown) {
+		console.error('Error:', textStatus, errorThrown);
 	});
 }
 

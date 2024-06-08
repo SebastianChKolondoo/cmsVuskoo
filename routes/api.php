@@ -111,8 +111,14 @@ Route::get('getExtraOffercomparadorVehiculos', [ExtraOfferController::class, 'ge
 Route::get('getDetailOffervehiculos/{id}', [TarifasController::class, 'getDetailOfferVehiculosList']);
 
 /* Cupones */
-Route::get('getTarifasCupones', [TarifasController::class, 'getTarifasCuponesList']);
+Route::get('getTarifasCupones/{lang?}', [TarifasController::class, 'getTarifasCuponesList']);
 Route::get('getTarifaCupon/{id}', [TarifasController::class, 'getTarifaCuponList']);
 Route::get('filterCupones', [FilterController::class, 'getValuesFilterCuponesList']);
 Route::get('getExtraOffercomparadorCupones', [ExtraOfferController::class, 'getExtraOfferCuponesList']);
 Route::get('getDetailOfferCupones/{id}', [TarifasController::class, 'getDetailOfferCuponesList']);
+/*  */
+Route::get('/cargarPaises/{id?}', [ApiController::class, 'cargarPaisesCupones']);
+Route::get('/cargarCategoriasPaises/{id?}', [ApiController::class, 'cargarCategoriasPaisesCupones']);
+
+/* Prestamos */
+Route::get('getTarifasPrestamos/{lang?}', [TarifasController::class, 'getTarifasPrestamosList']);

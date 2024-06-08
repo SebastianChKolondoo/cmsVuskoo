@@ -21,6 +21,18 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
+                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('categoria', 'Categoria', ['class' => 'form-label']) !!}
+                            {!! Form::select('categoria', $categorias->pluck('nombre', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
                             {!! Form::select('estado', $states->pluck('name', 'id'), null, [
                                 'class' => 'form-control',
@@ -33,6 +45,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('tipoCupon', 'Tipo de cupon', ['class' => 'form-label']) !!}
+                            {!! Form::select('tipoCupon', $tipoCupon->pluck('nombre', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre_tarifa', null, [
                                 'class' => 'form-control',
@@ -40,8 +58,21 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('categoria', 'Categorias', ['class' => 'form-label']) !!}
-                            {!! Form::select('categoria', $categorias->pluck('nombre', 'id'), null, [
+                            {!! Form::label('landing_link', 'URL redireccion', ['class' => 'form-label']) !!}
+                            {!! Form::text('landing_link', null, [
+                                'class' => 'form-control',
+                                'required' => 'required',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('descuento', 'Descuento', ['class' => 'form-label']) !!}
+                            {!! Form::text('descuento', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('codigo', 'Codigo', ['class' => 'form-label']) !!}
+                            {!! Form::text('codigo', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
@@ -61,12 +92,6 @@
                         <div class="form-group col-12 col-md-12">
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
                             {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
-                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
                         </div>
                         <div class="col-12">
                             {!! Form::submit('Actualizar', ['class' => 'btn btn-primary']) !!}

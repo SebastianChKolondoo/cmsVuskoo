@@ -7,6 +7,7 @@ use App\Models\Comercios;
 use App\Models\Cupones;
 use App\Models\Paises;
 use App\Models\States;
+use App\Models\TipoCupon;
 use Illuminate\Http\Request;
 
 class CuponesController extends Controller
@@ -34,7 +35,8 @@ class CuponesController extends Controller
         $categorias = Categorias::all();
         $comercios = Comercios::where('estado', '1')->get();
         $paises = Paises::all();
-        return view('cupones.cupones.create', compact('states', 'comercios', 'paises','categorias'));
+        $tipoCupon = TipoCupon::all();
+        return view('cupones.cupones.create', compact('tipoCupon','states', 'comercios', 'paises','categorias'));
     }
 
     /**
@@ -55,7 +57,11 @@ class CuponesController extends Controller
             'fecha_expiracion' => $request->fecha_expiracion,
             'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
-            'pais' => $request->pais
+            'pais' => $request->pais,
+            'codigo' => $request->codigo,
+            'descuento' => $request->descuento,
+            'landing_link' => $request->landing_link
+
         ]);
 
         return redirect()->route('cupones.index')->with('info', 'Tarifa creada correctamente.');
@@ -76,10 +82,11 @@ class CuponesController extends Controller
     {
         $tarifa = Cupones::find($cupon);
         $paises = Paises::all();
-        $categorias = Categorias::all();
+        $categorias = Categorias::where('pais',$tarifa->pais)->get();
         $states = States::all();
         $comercios = Comercios::all();
-        return view('cupones.cupones.edit', compact('tarifa', 'states', 'comercios', 'paises','categorias'));
+        $tipoCupon = TipoCupon::all();
+        return view('cupones.cupones.edit', compact('tipoCupon','tarifa', 'states', 'comercios', 'paises','categorias'));
     }
 
     /**

@@ -88,8 +88,8 @@
             <div id="collapseCupones" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('cupones.index') }}">Cupones</a>
+                    <a class="collapse-item" href="{{ route('tipoCupones.index') }}">Tipo de cupones</a>
                     <a class="collapse-item" href="{{ route('categorias.index') }}">Categorias</a>
-                    <a class="collapse-item" href="{{ route('cupones.index') }}">Cupones</a>
                 </div>
 
             </div>
