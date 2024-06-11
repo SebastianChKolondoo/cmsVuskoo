@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Lead;
 use App\Models\Paises;
+use Mockery\Undefined;
 use Psy\Readline\Hoa\Console;
 
 class ApiController extends Controller
@@ -171,15 +173,34 @@ class ApiController extends Controller
             ->get();
     }
 
-    public function getComerciosCuponesList()
+    public function getComerciosCuponesList($lang = 1, $idCategoria = null)
     {
-        return DB::table($this->tabla_cupones)
+        $idioma = Paises::where('codigo', $lang)->first();
+        $categoria = '';
+        $idCategoriaConsulta = 0;
+        if ($idCategoria != null && $idCategoria != 'null' && $idCategoria != 'undefined') {
+            $categoria = Categorias::where('nombre', $idCategoria)->count();
+            if ($categoria == 0) {
+                return [];
+            } else {
+                $categoria = Categorias::where('nombre', $idCategoria)->first();
+                $idCategoriaConsulta = $categoria->id;
+            }
+        }
+
+        $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
             ->select('1_comercios.id', '1_comercios.nombre', '1_comercios.logo')
             ->where('1_comercios.estado', '=', '1')
             ->where($this->tabla_cupones . '.estado', '=', '1')
-            ->groupBy($this->tabla_cupones . '.comercio')
-            ->get();
+            ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
+            ->groupBy($this->tabla_cupones . '.comercio');
+
+        if ($idCategoriaConsulta != 0) {
+            $query->where('categoria', $idCategoriaConsulta);
+        }
+
+        return $query->get();
     }
 
     public function getTipoCuponesList()
@@ -289,9 +310,9 @@ class ApiController extends Controller
             ->orderBy('nombre', 'asc')
             ->first();
 
-        return Paises::whereIn('id',json_decode($data->pais))->get();
+        return Paises::whereIn('id', json_decode($data->pais))->get();
     }
-    
+
     public function cargarCategoriasPaisesCupones($id)
     {
         return DB::table('categorias_comercios')

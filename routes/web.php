@@ -19,6 +19,7 @@ use App\Http\Controllers\ParillaLuzGasController;
 use App\Http\Controllers\ParillaMovilController;
 use App\Http\Controllers\ParrillaStreamingController;
 use App\Http\Controllers\PermisosController;
+use App\Http\Controllers\PrestamosController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TipoCuponController;
 use App\Http\Controllers\UserController;
@@ -85,3 +86,7 @@ Route::get('contadorservicio', [DashboardController::class, 'contadorServicio'])
 /* cupones */
 Route::resource('cupones', CuponesController::class)->names('cupones')->middleware(['auth']);
 Route::get('cuponesDuplicate/{id}', [CuponesController::class, 'duplicateOffer'])->name('cuponesDuplicate')->middleware(['auth']);
+
+/* prestamos */
+Route::resource('prestamos', PrestamosController::class)->names('prestamos')->middleware(['auth']);
+Route::get('prestamosDuplicate/{id}', [PrestamosController::class, 'duplicateOffer'])->name('prestamosDuplicate')->middleware(['auth']);

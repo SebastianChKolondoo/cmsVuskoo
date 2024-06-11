@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorias;
 use App\Models\Paises;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -136,15 +137,36 @@ class TarifasController extends Controller
         return $query->get();
     }
 
-    public function getTarifasCuponesList($lang = 1)
+    public function getTarifasCuponesList($lang = 1, $idCategoria = null)
     {
+        $idCategoriaConsulta = 0;
         $idioma = Paises::where('codigo', $lang)->first();
+
+        if ($idCategoria != null && $idCategoria != 'null') {
+            $categoria = Categorias::where('nombre', $idCategoria)->count();
+            if ($categoria == 0) {
+                return [];
+            } else {
+                $categoria = Categorias::where('nombre', $idCategoria)->first();
+                $idCategoriaConsulta = $categoria->id;
+            }
+        }
+
         $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
-            ->select($this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_expiracion, "%d-%m-%Y") as fecha_expiracion'), DB::raw('DATEDIFF(fecha_expiracion, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo', 'paises.nombre as pais', 'TipoCupon.nombre as cupon', 'categorias_comercios.nombre as categoria_nombre')
+            ->select(
+                $this->tabla_cupones . '.*',
+                DB::raw('DATE_FORMAT(fecha_expiracion, "%d-%m-%Y") as fecha_expiracion'),
+                DB::raw('DATEDIFF(fecha_expiracion, CURRENT_DATE) AS dias_restantes'),
+                '1_comercios.nombre as nombre_comercio',
+                '1_comercios.logo',
+                'paises.nombre as pais',
+                'TipoCupon.nombre as cupon',
+                'categorias_comercios.nombre as categoria_nombre'
+            )
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
-            ->join('paises', 'paises.id', $this->tabla_cupones . '.pais')
-            ->join('categorias_comercios', 'categorias_comercios.id', $this->tabla_cupones . '.categoria')
+            ->join('paises', 'paises.id', '=', $this->tabla_cupones . '.pais')
+            ->join('categorias_comercios', 'categorias_comercios.id', '=', $this->tabla_cupones . '.categoria')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
@@ -152,6 +174,10 @@ class TarifasController extends Controller
 
         if (!empty($id)) {
             $query->where($this->tabla_cupones . '.id', '=', $id);
+        }
+
+        if ($idCategoriaConsulta != 0) {
+            $query->where('categoria',$idCategoriaConsulta);
         }
 
         return $query->get();
