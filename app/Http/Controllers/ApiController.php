@@ -203,12 +203,26 @@ class ApiController extends Controller
         return $query->get();
     }
 
-    public function getTipoCuponesList()
+    public function getTipoCuponesList($lang = 1, $idCategoria = null)
     {
+        $idioma = Paises::where('codigo', $lang)->first();
+        $categoria = '';
+        $idCategoriaConsulta = 0;
+        if ($idCategoria != null && $idCategoria != 'null' && $idCategoria != 'undefined') {
+            $categoria = Categorias::where('nombre', $idCategoria)->count();
+            if ($categoria == 0) {
+                return [];
+            } else {
+                $categoria = Categorias::where('nombre', $idCategoria)->first();
+                $idCategoriaConsulta = $categoria->id;
+            }
+        }
+
         return DB::table($this->tabla_cupones)
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
             ->select('TipoCupon.id', 'TipoCupon.nombre')
             ->where($this->tabla_cupones . '.estado', '=', '1')
+            ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
             ->groupBy($this->tabla_cupones . '.tipoCupon')
             ->get();
     }

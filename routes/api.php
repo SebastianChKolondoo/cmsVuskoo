@@ -26,7 +26,7 @@ Route::get('getOperadorasFibraMovil', [ApiController::class, 'getOperadorasFibra
 Route::get('getOperadorasFibraMovilTv', [ApiController::class, 'getOperadorasFibraMovilTvList']);
 Route::get('getMarcasVehiculos', [ApiController::class, 'getMarcasVehiculosList']);
 Route::get('getComerciosCupones/{lang?}/{categoria?}', [ApiController::class, 'getComerciosCuponesList']);
-Route::get('getTipoCupones', [ApiController::class, 'getTipoCuponesList']);
+Route::get('getTipoCupones/{lang?}/{categoria?}', [ApiController::class, 'getTipoCuponesList']);
 /* Luz */
 Route::get('getTarifasLuz', [TarifasController::class, 'getTarifasLuzList']);
 Route::get('getExtraOfferluz', [ExtraOfferController::class, 'getExtraOfferLuzList']);
