@@ -170,6 +170,7 @@ class TarifasController extends Controller
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
+            ->where($this->tabla_cupones . '.fecha_expiracion', '>=', DB::raw('CURRENT_DATE'))
             ->orderBy('destacada', 'asc');
 
         if (!empty($id)) {

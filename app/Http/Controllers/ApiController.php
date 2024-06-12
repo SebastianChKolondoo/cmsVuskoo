@@ -208,6 +208,7 @@ class ApiController extends Controller
             ->where('1_comercios.estado', '=', '1')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
+            ->where($this->tabla_cupones . '.fecha_expiracion', '>=', DB::raw('CURRENT_DATE'))
             ->groupBy($this->tabla_cupones . '.comercio');
 
         if ($idCategoriaConsulta != 0) {
@@ -237,6 +238,7 @@ class ApiController extends Controller
             ->select('TipoCupon.id', 'TipoCupon.nombre')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
+            ->where($this->tabla_cupones . '.fecha_expiracion', '>=', DB::raw('CURRENT_DATE'))
             ->groupBy($this->tabla_cupones . '.tipoCupon')
             ->get();
     }
