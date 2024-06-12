@@ -30,7 +30,9 @@ class Cupones extends Model
         'nombre_tarifa',
         'descuento',
         'landing_link',
-        'tipoCupon'
+        'tipoCupon',
+        'TiempoCupon',
+        'CodigoCupon'
     ];
 
     public function state()

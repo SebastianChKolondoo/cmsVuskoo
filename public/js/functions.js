@@ -1,11 +1,42 @@
 $(document).ready(function () {
-	$('.tox-notifications-container').addClass('hidden');	
+
+	const tiempoCupon = document.getElementById('TiempoCupon');
+	const fechaExpiracionField = document.getElementById('field_fecha_expiracion');
+
+	function toggleFechaExpiracion() {
+		if (tiempoCupon.value == '2') {
+			fechaExpiracionField.classList.add('d-none');
+		} else {
+			fechaExpiracionField.classList.remove('d-none');
+		}
+	}
+	// Escucha el cambio en el select
+	tiempoCupon.addEventListener('change', toggleFechaExpiracion);
+
+	// Inicializa el estado correcto cuando la página se carga
+	toggleFechaExpiracion();
+	
+	const tipoCupon = document.getElementById('tipoCupon');
+	const codigoCupon = document.getElementById('field_codigo_cupon');
+
+	function toggleTipoCupon() {
+		if (tipoCupon.value == '3') {
+			codigoCupon.classList.remove('d-none');
+		} else {
+			codigoCupon.classList.add('d-none');
+		}
+	}
+	// Escucha el cambio en el select
+	tiempoCupon.addEventListener('change', toggleTipoCupon);
+
+	// Inicializa el estado correcto cuando la página se carga
+	toggleTipoCupon();
 
 	$('.btn_save_info').on('click', () => {
 		$('#loadInfo').modal({
 			keyboard: false,
 			backdrop: 'static',
-		  })
+		})
 	});
 
 	$("#sidebarToggle, #sidebarToggleTop").on('click', () => {
@@ -33,11 +64,29 @@ $(document).ready(function () {
 	$('#departament').change(function () {
 		showCities($(this).val());
 	});
-	
+
+	$('#TiempoCupon').change(function () {
+		if ($(this).val() == 1) {
+			$('#field_fecha_expiracion').removeClass('d-none');
+		}
+		else {
+			$('#field_fecha_expiracion').addClass('d-none');
+		}
+	});
+
+	$('#tipoCupon').change(function () {
+		if ($(this).val() == 3) {
+			$('#field_codigo_cupon').removeClass('d-none');
+		}
+		else {
+			$('#field_codigo_cupon').addClass('d-none');
+		}
+	});
+
 	$('#comercio').change(function () {
 		cargarPaisesComercio($(this).val());
 	});
-	
+
 	$('#pais').change(function () {
 		cargarPaisesCategorias($(this).val());
 	});
@@ -47,7 +96,7 @@ $(document).ready(function () {
 	$('#btnItem').click(function () {
 		openAllTabs();
 	});
-	
+
 });
 
 let collapseContainers = false;

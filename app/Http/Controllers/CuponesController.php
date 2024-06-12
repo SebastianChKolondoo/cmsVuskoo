@@ -47,6 +47,10 @@ class CuponesController extends Controller
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Comercios::find($request->comercio);
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->nombre_tarifa)) . ' ' . $empresa->nombre_slug)));
+        $fechaExpiracion = $request->fecha_expiracion;
+        if($request['TiempoCupon'] == 2){
+            $fechaExpiracion = '2099-01-01';
+        }
         $tarifa = Cupones::create([
             'comercio' => $request->comercio,
             'estado' => $request->estado,
@@ -54,13 +58,17 @@ class CuponesController extends Controller
             'descripcion' => trim($request->descripcion),
             'categoria' => $request->categoria,
             'destacada' => $request->destacada,
-            'fecha_expiracion' => $request->fecha_expiracion,
+            'fecha_expiracion' => $fechaExpiracion,
             'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
             'pais' => $request->pais,
             'codigo' => $request->codigo,
             'descuento' => $request->descuento,
-            'landing_link' => $request->landing_link
+            'landing_link' => $request->landing_link,
+            'tipoCupon' => $request->tipoCupon,
+            'TiempoCupon' => $request->TiempoCupon,
+            'CodigoCupon' => $request->CodigoCupon,
+            
 
         ]);
 
@@ -100,6 +108,12 @@ class CuponesController extends Controller
         $request['descripcion'] = trim(str_replace('  ', ' ', $request->descripcion));
         $request['slug_tarifa'] = $slug;
         $request['moneda'] = $moneda->moneda;
+        if($request['TiempoCupon'] == 2){
+            $request['fecha_expiracion'] = '2099-01-01';
+        }
+        if($request['tipoCupon'] != 3){
+            $request['CodigoCupon'] = NULL;
+        }
         $tarifa = Cupones::find($cupon);
         $request->all();
         $tarifa->update($request->all());

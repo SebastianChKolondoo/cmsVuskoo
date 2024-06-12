@@ -102,23 +102,23 @@
                             {!! Form::text('precio_final', null, ['class' => 'form-control', 'step' => '0.01']) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('luz_precio_potencia_punta', 'Precio potencia punta', ['class' => 'form-label']) !!}
+                            {!! Form::label('luz_precio_potencia_punta', 'Precio potencia punta (P1)', ['class' => 'form-label']) !!}
                             {!! Form::text('luz_precio_potencia_punta', null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('luz_precio_potencia_valle', 'Precio potencia valle', ['class' => 'form-label']) !!}
+                            {!! Form::label('luz_precio_potencia_valle', 'Precio potencia valle (P2)', ['class' => 'form-label']) !!}
                             {!! Form::text('luz_precio_potencia_valle', null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('luz_precio_energia_punta', 'Precio energía punta', ['class' => 'form-label']) !!}
+                            {!! Form::label('luz_precio_energia_punta', 'Precio energía punta (P1)', ['class' => 'form-label']) !!}
                             {!! Form::text('luz_precio_energia_punta', null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('luz_precio_energia_llano', 'Precio energía llano', ['class' => 'form-label']) !!}
+                            {!! Form::label('luz_precio_energia_llano', 'Precio energía llano (P2)', ['class' => 'form-label']) !!}
                             {!! Form::text('luz_precio_energia_llano', null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('luz_precio_energia_valle', 'Precio energía valle', ['class' => 'form-label']) !!}
+                            {!! Form::label('luz_precio_energia_valle', 'Precio energía valle (P3)', ['class' => 'form-label']) !!}
                             {!! Form::text('luz_precio_energia_valle', null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">

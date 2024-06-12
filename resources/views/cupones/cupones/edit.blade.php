@@ -50,6 +50,12 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                        <div id="field_codigo_cupon" class="form-group col-12 col-md-4">
+                            {!! Form::label('CodigoCupon', 'Código de cupón', ['class' => 'form-label']) !!}
+                            {!! Form::text('CodigoCupon', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre_tarifa', null, [
@@ -77,6 +83,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('TiempoCupon', '¿Tiene expiración?', ['class' => 'form-label']) !!}
+                            {!! Form::select('TiempoCupon', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div id="field_fecha_expiracion" class="form-group col-12 col-md-4">
                             {!! Form::label('fecha_expiracion', 'Fecha expiración', ['class' => 'form-label']) !!}
                             {!! Form::date('fecha_expiracion', \Carbon\Carbon::parse($tarifa->fecha_expiracion)->format('Y-m-d'), [
                                 'class' => 'form-control',
@@ -91,7 +103,7 @@
                         </div>
                         <div class="form-group col-12 col-md-12">
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
-                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
+                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor', 'rows' => 2]) !!}
                         </div>
                         <div class="col-12">
                             {!! Form::submit('Actualizar', ['class' => 'btn btn-primary']) !!}

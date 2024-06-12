@@ -51,6 +51,12 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                        <div id="field_codigo_cupon" class="form-group col-12 col-md-4">
+                            {!! Form::label('CodigoCupon', 'Código de cupón', ['class' => 'form-label']) !!}
+                            {!! Form::text('CodigoCupon', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre_tarifa', null, [
@@ -78,6 +84,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('TiempoCupon', '¿Tiene expiración?', ['class' => 'form-label']) !!}
+                            {!! Form::select('TiempoCupon', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div  id="field_fecha_expiracion" class="form-group col-12 col-md-4">
                             {!! Form::label('fecha_expiracion', 'Fecha expiración', ['class' => 'form-label']) !!}
                             {!! Form::date('fecha_expiracion', \Carbon\Carbon::now(), [
                                 'class' => 'form-control',
