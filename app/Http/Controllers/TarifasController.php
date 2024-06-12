@@ -321,4 +321,19 @@ class TarifasController extends Controller
 
         return $query->get();
     }
+
+    public function getTarifaPrestamoList($id = null)
+    {
+        $query = DB::table($this->tabla_prestamos)
+            ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
+            ->select($this->tabla_prestamos . '.*', '1_banca.nombre', '1_banca.logo')
+            ->where($this->tabla_prestamos . '.estado', '=', '1')
+            ->orderBy('destacada', 'asc');
+
+        if (!empty($id) && $id != null) {
+            $query->where($this->tabla_prestamos . '.id', '=', $id);
+        }
+
+        return $query->first();
+    }
 }

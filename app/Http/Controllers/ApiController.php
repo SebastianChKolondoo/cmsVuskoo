@@ -155,6 +155,20 @@ class ApiController extends Controller
                     ],
                 ];
                 break;
+                case 'co':
+                    $data = [
+                        [
+                            "title" => "Finanzas",
+                            "titleUrl" => "/co",
+                            "children" => [
+                                [
+                                    "name" => "Banca",
+                                    "url" => "/finanzas/banca"
+                                ]
+                            ]
+                        ],
+                    ];
+                    break;
         }
 
         return $data;
