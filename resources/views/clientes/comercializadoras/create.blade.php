@@ -12,8 +12,16 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'comercializadoras.store']) !!}
+                    {!! Form::open(['route' => 'comercializadoras.store', 'enctype' => 'multipart/form-data']) !!}
                     <div class="row">
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo', 'Logo') }}
+                            {{ Form::file('logo', ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo_negativo', 'logo negativo') }}
+                            {{ Form::file('logo_negativo', ['class' => 'form-control']) }}
+                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('name', 'Nombre comercializadora', ['class' => 'form-label']) !!}
                             {!! Form::text('name', null, [

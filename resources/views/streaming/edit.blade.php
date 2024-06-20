@@ -17,12 +17,24 @@
                     {!! Form::model($streaming, ['route' => ['streaming.update', $streaming], 'method' => 'put']) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('nombre_tarifa', 'Nombre plataforma', ['class' => 'form-label']) !!}
+                            {!! Form::text('nombre_tarifa', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo', 'logo') }}
+                            @if (!empty($streaming->logo))
+                                <a href="{{ $streaming->logo }}" target="_blank">ver logo</a>
+                            @endif
+                            {{ Form::file('logo', ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
                             {!! Form::select('estado', $states->pluck('name', 'id'), null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <hr>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('destacada', 'Destacada', ['class' => 'form-label']) !!}
                             {!! Form::select('destacada', $states->pluck('name', 'id'), null, [
@@ -30,8 +42,8 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('nombre_tarifa', 'Nombre plataforma', ['class' => 'form-label']) !!}
-                            {!! Form::text('nombre_tarifa', null, [
+                            {!! Form::label('landingLead', 'Url redirección ', ['class' => 'form-label']) !!}
+                            {!! Form::text('landingLead', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>

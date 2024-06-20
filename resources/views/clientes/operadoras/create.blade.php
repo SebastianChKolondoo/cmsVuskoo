@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="row my-4">
         <div class="col-12">
@@ -12,8 +13,16 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'operadoras.store']) !!}
+                    {!! Form::open(['route' => 'operadoras.store', 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
                     <div class="row">
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo', 'Logo') }}
+                            {{ Form::file('logo', ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo_negativo', 'logo negativo') }}
+                            {{ Form::file('logo_negativo', ['class' => 'form-control']) }}
+                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('name', 'Nombre operadora', ['class' => 'form-label']) !!}
                             {!! Form::text('name', null, [
@@ -23,10 +32,10 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('politica_privacidad', 'Politica de privcidad', ['class' => 'form-label']) !!}
+                            {!! Form::label('politica_privacidad', 'Política de privacidad', ['class' => 'form-label']) !!}
                             {!! Form::text('politica_privacidad', null, [
                                 'class' => 'form-control',
-                                'placeholder' => 'Enlace externo a politica de privacidad',
+                                'placeholder' => 'Enlace externo a política de privacidad',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
@@ -43,9 +52,9 @@
                         </div>
                         <div class="form-group col-12 col-md-12">
                             {!! Form::submit('Registrar', ['class' => 'btn btn-primary mt-3']) !!}
-                            {!! Form::close() !!}
                         </div>
                     </div>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

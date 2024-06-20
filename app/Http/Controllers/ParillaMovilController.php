@@ -50,7 +50,18 @@ class ParillaMovilController extends Controller
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Operadoras::find($request->operadora);
-        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $landingLead = '';
+        switch ($request->pais) {
+            case 1://españa
+                $landingLead = '/internet-telefonia/comparador-movil/';
+                break;
+            case 2://colombia
+                $landingLead = '/planes-celulares-internet-y-tv/comparador-planes-celular/';
+                break;
+            case 3://mexico
+                $landingLead = '/planes-celulares-telefonia-internet-y-tv/comparador-planes-celular/';
+                break;
+        }
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaMovil::create([
             'operadora' => $request->operadora,
@@ -73,7 +84,8 @@ class ParillaMovilController extends Controller
             'fecha_expiracion' => $request->fecha_expiracion,
             'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
-            'pais' => $request->pais
+            'pais' => $request->pais,
+            'landingLead' => $landingLead
         ]);
 
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa creada correctamente.');
@@ -105,8 +117,18 @@ class ParillaMovilController extends Controller
     public function update(Request $request, $parillaMovil)
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
+        switch ($request->pais) {
+            case 1://españa
+                $landingLead = '/internet-telefonia/comparador-movil/';
+                break;
+            case 2://colombia
+                $landingLead = '/planes-celular-internet/comparador-plan-celular/';
+                break;
+            case 3://mexico
+                $landingLead = '/planes-celulares-telefonia-internet-y-tv/comparador-planes-celular/';
+                break;
+        }
         $empresa = Operadoras::find($request->operadora);
-        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
@@ -114,6 +136,7 @@ class ParillaMovilController extends Controller
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
         $request['moneda'] = $moneda->moneda;
+        $request['landingLead'] = $landingLead;
         $tarifa = ParillaMovil::find($parillaMovil);
         $tarifa->update($request->all());
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa editada correctamente.');

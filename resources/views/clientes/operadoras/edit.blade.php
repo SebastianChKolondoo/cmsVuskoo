@@ -12,8 +12,22 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::model($operadora, ['route' => ['operadoras.update', $operadora], 'method' => 'put']) !!}
+                    {!! Form::model($operadora, ['route' => ['operadoras.update', $operadora], 'method' => 'put', 'enctype' => 'multipart/form-data']) !!}
                     <div class="row">
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo', 'Logo') }}
+                            @if (!empty($operadora->logo))
+                                <a href="{{ $operadora->logo }}" target="_blank">ver logo</a>
+                            @endif
+                            {{ Form::file('logo', ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo_negativo', 'logo negativo') }}
+                            @if (!empty($operadora->logo_negativo))
+                                <a href="{{ $operadora->logo_negativo }}" target="_blank">ver logo negativo</a>
+                            @endif
+                            {{ Form::file('logo_negativo', ['class' => 'form-control']) }}
+                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre', null, [

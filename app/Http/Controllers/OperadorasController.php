@@ -6,14 +6,15 @@ use App\Models\Operadoras;
 use App\Models\Paises;
 use App\Models\States;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class OperadorasController extends Controller
 {
     public function __construct()
     {
         $this->middleware('can:operadoras.view')->only('index');
-        $this->middleware('can:operadoras.view.btn-create')->only('create','store');
-        $this->middleware('can:operadoras.view.btn-edit')->only('edit','update');
+        $this->middleware('can:operadoras.view.btn-create')->only('create', 'store');
+        $this->middleware('can:operadoras.view.btn-edit')->only('edit', 'update');
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +32,7 @@ class OperadorasController extends Controller
     {
         $estados =  States::all();
         $paises = Paises::all();
-        return view('clientes.operadoras.create', compact('estados','paises'));
+        return view('clientes.operadoras.create', compact('estados', 'paises'));
     }
 
     /**
@@ -39,17 +40,32 @@ class OperadorasController extends Controller
      */
     public function store(Request $request)
     {
-        $permisos = Operadoras::create([
+        $urlLogo = '';
+        $logo_negativo = '';
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower($request->name) . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
+            $urlLogo = Storage::disk('public')->url($path);
+        }
+        if ($request->hasFile('logo_negativo')) {
+            $file = $request->file('logo_negativo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower($request->name) . '_negativo.' . $extension;
+            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
+            $logo_negativo = Storage::disk('public')->url($path);
+        }
+
+
+        Operadoras::create([
             'nombre' => ($request->name),
-            'tipo_conversion' => '',
-            'color' => '',
-            'color_texto' => '',
-            'logo' => ($request->logo),
-            'logo_negativo' => ($request->negativo),
-            'isotipo' => '',
             'politica_privacidad' => ($request->politica),
-            'estado' => ($request->state),
+            'estado' => ($request->estado),
             'fecha_registro' => now(),
+            'pais' => $request->pais,
+            'logo' => $urlLogo,
+            'logo_negativo' => $logo_negativo,
         ]);
 
         return redirect()->route('operadoras.index')->with('info', 'Operadora creado correctamente.');
@@ -71,18 +87,51 @@ class OperadorasController extends Controller
         $operadora = Operadoras::find($id);
         $estados = States::all();
         $paises = Paises::all();
-        
+
         return view('clientes.operadoras.edit', compact('operadora', 'estados', 'paises'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $operadora)
+    public function update(Request $request, $operadora)
     {
-        $operadoras = Operadoras::find($operadora);
-        $operadoras->update($request->all());
-        return redirect()->route('operadoras.index')->with('info', 'Operadora editado correctamente.');
+        $operadora = Operadoras::find($operadora);
+        $urlLogo = '';
+        $logo_negativo = '';
+
+        $urlLogo = null;
+        $logo_negativo = null;
+
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower($request->nombre) . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $urlLogo = Storage::disk('public')->url($path);
+        }
+
+        if ($request->hasFile('logo_negativo')) {
+            $file = $request->file('logo_negativo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower($request->nombre) . '_negativo.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $logo_negativo = Storage::disk('public')->url($path);
+        }
+
+        // Crear un array de datos a actualizar
+        $data = $request->all();
+        if ($urlLogo) {
+            $data['logo'] = $urlLogo;
+        }
+        if ($logo_negativo) {
+            $data['logo_negativo'] = $logo_negativo;
+        }
+        
+        // Actualizar el modelo
+        $operadora->update($data);
+
+        return redirect()->route('operadoras.index')->with('info', 'Operadora editada correctamente.');
     }
 
     /**

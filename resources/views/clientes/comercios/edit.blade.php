@@ -32,7 +32,8 @@
                             {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
                             {!! Form::select('pais[]', $paises->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',
-                                'multiple' => 'multiple'
+                                'multiple' => 'multiple',
+                                'id' => 'paisChange'
                             ]) !!}
                         </div>
                     </div>

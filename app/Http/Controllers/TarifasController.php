@@ -23,93 +23,128 @@ class TarifasController extends Controller
     protected $tabla_cupones = 'WEB_3_TARIFAS_CUPONES';
     protected $tabla_prestamos = 'WEB_3_PRESTAMOS';
 
-    public function getTarifasMovilList()
+    public function getTarifasMovilList($lang = 'es')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
-            ->where('1_operadoras.pais', '=', '1')
+            ->where('1_operadoras.pais', '=', $idioma->id)
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
     }
 
-    public function getTarifasFibraList($id = null)
+    public function getTarifasFibraList($lang = 'es')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_fibra)
             ->select($this->tabla_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
             ->where($this->tabla_fibra . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
-            ->where('1_operadoras.pais', '=', '1')
+            ->where('1_operadoras.pais', '=', $idioma->id)
             ->orderBy('destacada', 'desc')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
     }
 
-    public function getTarifasLuzList()
+    public function getTarifasLuzList($lang = 'es')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
             ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
             ->where($this->tabla_luz . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
-            ->where('1_comercializadoras.pais', '=', '1')
+            ->where('1_comercializadoras.pais', '=', $idioma->id)
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
     }
 
-    public function getTarifasGasList()
+    public function getTarifasGasList($lang = 'es')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
             ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
             ->where($this->tabla_gas . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
-            ->where('1_comercializadoras.pais', '=', '1')
+            ->where('1_comercializadoras.pais', '=', $idioma->id)
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
     }
 
-    public function getTarifasGasLuzList()
+    public function getTarifasGasLuzList($lang = 'es')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
             ->where($this->tabla_luz_gas . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
-            ->where('1_comercializadoras.pais', '=', '1')
+            ->where('1_comercializadoras.pais', '=', $idioma->id)
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
     }
 
-    public function getTarifasFibraMovilList()
+    public function getTarifasFibraMovilList($lang = 'es')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_movil_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
             ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil_fibra . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
-            ->where('1_operadoras.pais', '=', '1')
+            ->where('1_operadoras.pais', '=', $idioma->id)
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
     }
 
-    public function getTarifasFibraMovilTvList($id = null)
+    public function getTarifasFibraMovilTvList($lang = 'es')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         $query = DB::table($this->tabla_movil_fibra_tv)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
             ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil_fibra_tv . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
-            ->where('1_operadoras.pais', '=', '1')
+            ->where('1_operadoras.pais', '=', $idioma->id)
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc');
 
@@ -120,14 +155,19 @@ class TarifasController extends Controller
         return $query->get();
     }
 
-    public function getTarifasVehiculosList()
+    public function getTarifasVehiculosList($lang = 'mx')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         $query = DB::table($this->tabla_vehiculo)
             ->join('1_vehiculos', '1_vehiculos.id', '=', $this->tabla_vehiculo . '.vehiculo')
             ->select($this->tabla_vehiculo . '.id', $this->tabla_vehiculo . '.vehiculo', $this->tabla_vehiculo . '.transmission', $this->tabla_vehiculo . '.hp', $this->tabla_vehiculo . '.price', $this->tabla_vehiculo . '.year', $this->tabla_vehiculo . '.chassis', $this->tabla_vehiculo . '.make', $this->tabla_vehiculo . '.model', $this->tabla_vehiculo . '.landingLead', $this->tabla_vehiculo . '.slug_tarifa', $this->tabla_vehiculo . '.fuelType', $this->tabla_vehiculo . '.images', '1_vehiculos.nombre', '1_vehiculos.logo')
             ->where($this->tabla_vehiculo . '.estado', '=', '1')
             ->where('1_vehiculos.estado', '=', '1')
-            ->where('1_vehiculos.pais', '=', '3')
+            ->where('1_vehiculos.pais', '=', $idioma->id)
             ->orderBy('price', 'desc');
 
         if (!empty($id)) {
@@ -137,9 +177,13 @@ class TarifasController extends Controller
         return $query->get();
     }
 
-    public function getTarifasCuponesList($lang = 1, $idCategoria = null)
+    public function getTarifasCuponesList($lang = 'es', $idCategoria = null)
     {
         $idCategoriaConsulta = 0;
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
         $idioma = Paises::where('codigo', $lang)->first();
 
         if ($idCategoria != null && $idCategoria != 'null') {
@@ -178,7 +222,7 @@ class TarifasController extends Controller
         }
 
         if ($idCategoriaConsulta != 0) {
-            $query->where('categoria',$idCategoriaConsulta);
+            $query->where('categoria', $idCategoriaConsulta);
         }
 
         return $query->get();
@@ -199,11 +243,17 @@ class TarifasController extends Controller
         return $query->first();
     }
 
-    public function getTarifasStreamingList($id = null)
+    public function getTarifasStreamingList($lang = 'es')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         $query = DB::table($this->tabla_streaming)
             ->select('*')
             ->where('estado', 1)
+            ->where('pais', $idioma->id)
             ->orderBy('destacada', 'asc');
 
         if (!empty($id)) {
@@ -277,14 +327,23 @@ class TarifasController extends Controller
     }
 
     /* Mexico */
-    public function getTarifasPlanCelularList()
+    public function getTarifasPlanCelularList($lang = 'es')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo')
             ->where($this->tabla_movil . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
-            ->where('1_operadoras.pais', '=', '3')
+            ->where('1_operadoras.pais', '=', $idioma->id)
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();
@@ -308,8 +367,13 @@ class TarifasController extends Controller
             ->first();
     }
 
-    public function getTarifasPrestamosList()
+    public function getTarifasPrestamosList($lang = 'co')
     {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
         $query = DB::table($this->tabla_prestamos)
             ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
             ->select($this->tabla_prestamos . '.*', '1_banca.nombre', '1_banca.logo')

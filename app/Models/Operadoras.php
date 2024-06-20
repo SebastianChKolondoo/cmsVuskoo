@@ -21,6 +21,7 @@ class Operadoras extends Model
         'politica_privacidad',
         'estado',
         'fecha_registro',
+        'pais'
     ];
 
     public function state()

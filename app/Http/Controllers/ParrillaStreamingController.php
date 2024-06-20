@@ -6,6 +6,7 @@ use App\Models\Paises;
 use App\Models\ParrillaStreaming;
 use App\Models\States;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ParrillaStreamingController extends Controller
 {
@@ -45,11 +46,22 @@ class ParrillaStreamingController extends Controller
     public function store(Request $request)
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
-        $tarifa = ParrillaStreaming::create([
+        $urlLogo = '';
+        
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower(str_replace([' ', '+'], ['_', ''], $request->nombre_tarifa)) . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
+            $urlLogo = Storage::disk('public')->url($path);
+        }
+
+        return $tarifa = ParrillaStreaming::create([
             'permanencia' => trim($request->permanencia),
             'nombre_tarifa' => trim($request->nombre_tarifa),
             'detalles_tarifa' => trim($request->detalles_tarifa),
             'categoria' => trim($request->categoria),
+            'estado' => $request->estado,
             'recomendaciones' => trim($request->recomendaciones),
             'titulo_relativo_1' => trim($request->titulo_relativo_1),
             'precio_relativo_1' => trim($request->precio_relativo_1),
@@ -67,18 +79,19 @@ class ParrillaStreamingController extends Controller
             'precio_parrilla_bloque_4' => trim($request->precio_parrilla_bloque_4),
             'num_meses_promo' => trim($request->num_meses_promo),
             'porcentaje_descuento' => trim($request->porcentaje_descuento),
-            'logo' => trim($request->logo),
+            'logo' => trim($urlLogo),
             'promocion' => trim($request->promocion),
             'destacada' => trim($request->destacada),
-            'fecha_publicacion' => trim($request->fecha_publicacion),
+            'fecha_publicacion' => now(),
             'fecha_expiracion' => trim($request->fecha_expiracion),
-            'fecha_registro' => trim($request->fecha_registro),
-            'moneda' => trim($request->moneda),
+            'fecha_registro' => now(),
+            'moneda' => trim($moneda->moneda),
+            'pais' => trim($request->pais),
             'landingLead' => trim($request->landingLead),
-            'slug_tarifa' => str_replace(' ', '_', $request->nombre_tarifa),
+            'slug_tarifa' => strtolower(str_replace([' ', '+'], ['_', ''], $request->nombre_tarifa)),
         ]);
 
-        //return redirect()->route('streaming.index')->with('info', 'Tarifa creada correctamente.');
+        return redirect()->route('streaming.index')->with('info', 'Tarifa creada correctamente.');
     }
 
     /**
@@ -97,17 +110,48 @@ class ParrillaStreamingController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $tarifa = ParrillaStreaming::find($id);
+        $urlLogo = null;
+        $logo_negativo = null;
+
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower($request->nombre) . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $urlLogo = Storage::disk('public')->url($path);
+        }
+
+        if ($request->hasFile('logo_negativo')) {
+            $file = $request->file('logo_negativo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower($request->nombre) . '_negativo.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $logo_negativo = Storage::disk('public')->url($path);
+        }
+
+        // Crear un array de datos a actualizar
+        $data = $request->all();
+        if ($urlLogo) {
+            $data['logo'] = $urlLogo;
+        }
+        if ($logo_negativo) {
+            $data['logo_negativo'] = $logo_negativo;
+        }
+
+        // Actualizar el modelo
+        
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
         //$slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
-        $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
-        $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
-        $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
-        $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
-        $request['slug_tarifa'] = str_replace(' ', '_', $request->nombre_tarifa);
-        $request['moneda'] = $moneda->moneda;
-        $tarifa = ParrillaStreaming::find($id);
-        $tarifa->update($request->all());
+        $data['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
+        $data['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
+        $data['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
+        $data['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
+        $data['slug_tarifa'] = strtolower(str_replace([' ', '+'], ['_', ''], $request->nombre_tarifa));
+        $data['moneda'] = $moneda->moneda;
+        $tarifa->update($data);
+        //$tarifa->update($request->all());
         return redirect()->route('streaming.index')->with('info', 'Oferta editada correctamente.');
     }
 
