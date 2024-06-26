@@ -35,6 +35,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('duracionContrato', 'Duración del contrato', ['class' => 'form-label']) !!}
+                            {!! Form::text('duracionContrato', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre_tarifa', null, [
                                 'class' => 'form-control',
@@ -45,7 +51,7 @@
                             {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                             {!! Form::textarea('parrilla_bloque_1', null, [
                                 'class' => 'form-control',
-                                
+                            
                                 'rows' => 2,
                             ]) !!}
                         </div>
@@ -53,7 +59,7 @@
                             {!! Form::label('parrilla_bloque_2', 'característica #2', ['class' => 'form-label']) !!}
                             {!! Form::textarea('parrilla_bloque_2', null, [
                                 'class' => 'form-control',
-                                
+                            
                                 'rows' => 2,
                             ]) !!}
                         </div>
@@ -61,7 +67,7 @@
                             {!! Form::label('parrilla_bloque_3', 'característica #3', ['class' => 'form-label']) !!}
                             {!! Form::textarea('parrilla_bloque_3', null, [
                                 'class' => 'form-control',
-                                
+                            
                                 'rows' => 2,
                             ]) !!}
                         </div>
@@ -69,7 +75,7 @@
                             {!! Form::label('parrilla_bloque_4', 'característica #4', ['class' => 'form-label']) !!}
                             {!! Form::textarea('parrilla_bloque_4', null, [
                                 'class' => 'form-control',
-                               
+                            
                                 'rows' => 2,
                             ]) !!}
                         </div>
@@ -88,7 +94,6 @@
                             {!! Form::label('precio_final', 'Precio final', ['class' => 'form-label']) !!}
                             {!! Form::text('precio_final', null, [
                                 'class' => 'form-control',
-                                
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
@@ -101,7 +106,6 @@
                             {!! Form::label('promocion', 'Promoción', ['class' => 'form-label']) !!}
                             {!! Form::text('promocion', null, [
                                 'class' => 'form-control',
-
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
@@ -118,28 +122,24 @@
                             {!! Form::label('coste_llamadas_minuto', 'Coste llamadas minuto', ['class' => 'form-label']) !!}
                             {!! Form::text('coste_llamadas_minuto', null, [
                                 'class' => 'form-control',
-                                
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('coste_establecimiento_llamada', 'Coste establecimiento llamada', ['class' => 'form-label']) !!}
                             {!! Form::text('coste_establecimiento_llamada', null, [
                                 'class' => 'form-control',
-                                
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('num_minutos_gratis', 'Minutos gratis', ['class' => 'form-label']) !!}
                             {!! Form::text('num_minutos_gratis', null, [
                                 'class' => 'form-control',
-                                
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('fecha_expiracion', 'Fecha expiración', ['class' => 'form-label']) !!}
                             {!! Form::date('fecha_expiracion', \Carbon\Carbon::now(), [
                                 'class' => 'form-control',
-                                
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
@@ -150,7 +150,46 @@
                         </div>
                         <div class="form-group col-12 col-md-12">
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
-                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
+                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor', 'rows' => 2]) !!}
+                        </div>
+                        <div class="col-12">
+                            <b>Información de apps ilimitadas para Colombia</b>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('appsIlimitadas', 'Apps ilimitadas', ['class' => 'form-label']) !!}
+                            {!! Form::select('appsIlimitadas', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('facebook', 'Facebook', ['class' => 'form-label']) !!}
+                            {!! Form::select('facebook', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('messenger', 'Messenger', ['class' => 'form-label']) !!}
+                            {!! Form::select('messenger', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('waze', 'Waze', ['class' => 'form-label']) !!}
+                            {!! Form::select('waze', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('whatsapp', 'Whatsapp', ['class' => 'form-label']) !!}
+                            {!! Form::select('whatsapp', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('twitter', 'X(twitter)', ['class' => 'form-label']) !!}
+                            {!! Form::select('twitter', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
                         </div>
                         <div class="col-12">
                             {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}

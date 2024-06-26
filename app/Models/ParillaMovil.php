@@ -45,7 +45,14 @@ class ParillaMovil extends Model
         'landingLead',
         'slug_tarifa',
         'pais',
-        'textoAdicional'
+        'textoAdicional',
+        'appsIlimitadas',
+        'facebook',
+        'messenger',
+        'waze',
+        'whatsapp',
+        'twitter',
+        'duracionContrato'
     ];
 
     public function state()

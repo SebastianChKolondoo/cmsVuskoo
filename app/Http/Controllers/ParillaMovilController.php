@@ -52,13 +52,13 @@ class ParillaMovilController extends Controller
         $empresa = Operadoras::find($request->operadora);
         $landingLead = '';
         switch ($request->pais) {
-            case 1://españa
+            case 1: //españa
                 $landingLead = '/internet-telefonia/comparador-movil/';
                 break;
-            case 2://colombia
+            case 2: //colombia
                 $landingLead = '/planes-celulares-internet-y-tv/comparador-planes-celular/';
                 break;
-            case 3://mexico
+            case 3: //mexico
                 $landingLead = '/planes-celulares-telefonia-internet-y-tv/comparador-planes-celular/';
                 break;
         }
@@ -85,7 +85,14 @@ class ParillaMovilController extends Controller
             'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
             'pais' => $request->pais,
-            'landingLead' => $landingLead
+            'landingLead' => $landingLead,
+            'appsIlimitadas' => $request->appsIlimitadas,
+            'facebook' => $request->facebook,
+            'messenger' => $request->messenger,
+            'waze' => $request->waze,
+            'whatsapp' => $request->whatsapp,
+            'twitter' => $request->twitter,
+            'duracionContrato' => $request->duracionContrato,
         ]);
 
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa creada correctamente.');
@@ -118,13 +125,13 @@ class ParillaMovilController extends Controller
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         switch ($request->pais) {
-            case 1://españa
+            case 1: //españa
                 $landingLead = '/internet-telefonia/comparador-movil/';
                 break;
-            case 2://colombia
-                $landingLead = '/planes-celular-internet/comparador-plan-celular/';
+            case 2: //colombia
+                $landingLead = '/internet-movil/comparador-movil/';
                 break;
-            case 3://mexico
+            case 3: //mexico
                 $landingLead = '/planes-celulares-telefonia-internet-y-tv/comparador-planes-celular/';
                 break;
         }
