@@ -47,7 +47,7 @@ class ParrillaStreamingController extends Controller
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $urlLogo = '';
-        
+
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
@@ -56,7 +56,7 @@ class ParrillaStreamingController extends Controller
             $urlLogo = Storage::disk('public')->url($path);
         }
 
-        return $tarifa = ParrillaStreaming::create([
+        $tarifa = ParrillaStreaming::create([
             'permanencia' => trim($request->permanencia),
             'nombre_tarifa' => trim($request->nombre_tarifa),
             'detalles_tarifa' => trim($request->detalles_tarifa),
@@ -117,19 +117,19 @@ class ParrillaStreamingController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->nombre) . '.' . $extension;
-            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $nombreArchivo = strtolower($request->nombre_tarifa) . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
             $urlLogo = Storage::disk('public')->url($path);
         }
 
         if ($request->hasFile('logo_negativo')) {
             $file = $request->file('logo_negativo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->nombre) . '_negativo.' . $extension;
-            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $nombreArchivo = strtolower($request->nombre_tarifa) . '_negativo.' . $extension;
+            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
             $logo_negativo = Storage::disk('public')->url($path);
         }
-
+        echo $urlLogo = Storage::disk('public')->url($path);
         // Crear un array de datos a actualizar
         $data = $request->all();
         if ($urlLogo) {
@@ -140,7 +140,7 @@ class ParrillaStreamingController extends Controller
         }
 
         // Actualizar el modelo
-        
+
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
         //$slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));

@@ -191,7 +191,7 @@ class ApiController extends Controller
                     ],
                     [
                         "title" => "Finanzas",
-                        "titleUrl" => "/",
+                        "titleUrl" => "/finanzas",
                         "children" => [
                             [
                                 "name" => "Banca",

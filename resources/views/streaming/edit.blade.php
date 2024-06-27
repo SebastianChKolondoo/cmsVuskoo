@@ -14,7 +14,7 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::model($streaming, ['route' => ['streaming.update', $streaming], 'method' => 'put']) !!}
+                    {!! Form::model($streaming, ['route' => ['streaming.update', $streaming], 'enctype' => 'multipart/form-data', 'method' => 'put']) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre_tarifa', 'Nombre plataforma', ['class' => 'form-label']) !!}
