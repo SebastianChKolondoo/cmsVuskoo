@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('operadora', 'Operadora', ['class' => 'form-label']) !!}
-                            {!! Form::select('operadora', $operadoras->pluck('nombre', 'id'), null, [
+                            {!! Form::select('operadora', $operadorasList, null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
@@ -220,15 +220,54 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
-                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
                         <div class="form-group col-12 col-md-12">
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
                             {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
+                        </div>
+                        <div class="col-12">
+                            <b>Información de apps ilimitadas para Colombia</b>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('appsIlimitadas', 'Apps ilimitadas', ['class' => 'form-label']) !!}
+                            {!! Form::select('appsIlimitadas', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('facebook', 'Facebook', ['class' => 'form-label']) !!}
+                            {!! Form::select('facebook', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('messenger', 'Messenger', ['class' => 'form-label']) !!}
+                            {!! Form::select('messenger', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('waze', 'Waze', ['class' => 'form-label']) !!}
+                            {!! Form::select('waze', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('whatsapp', 'Whatsapp', ['class' => 'form-label']) !!}
+                            {!! Form::select('whatsapp', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('twitter', 'X(twitter)', ['class' => 'form-label']) !!}
+                            {!! Form::select('twitter', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('instagram', 'Instagram', ['class' => 'form-label']) !!}
+                            {!! Form::select('instagram', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
                         </div>
                         <div class="col-12">
                             {!! Form::close() !!}

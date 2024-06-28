@@ -40,7 +40,10 @@ class ParillaMovilController extends Controller
         $states = States::all();
         $paises = Paises::all();
         $operadoras = Operadoras::where('estado', '1')->get();
-        return view('telefonia.movil.create', compact('states', 'operadoras', 'paises'));
+        $operadorasList = $operadoras->mapWithKeys(function ($operadora) {
+            return [$operadora->id => $operadora->nombre . ' - ' . $operadora->paises->nombre];
+        });
+        return view('telefonia.movil.create', compact('states', 'operadorasList', 'operadoras', 'paises'));
     }
 
     /**
@@ -48,18 +51,18 @@ class ParillaMovilController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Operadoras::find($request->operadora);
-        $landingLead = '';
-        switch ($request->pais) {
+        $pais = $empresa->pais;
+        $moneda = Paises::where('id', $pais)->select('moneda')->first();
+        switch ($pais) {
             case 1: //españa
                 $landingLead = '/internet-telefonia/comparador-movil/';
                 break;
             case 2: //colombia
-                $landingLead = '/planes-celulares-internet-y-tv/comparador-planes-celular/';
+                $landingLead = '/internet-movil/comparador-movil/';
                 break;
             case 3: //mexico
-                $landingLead = '/planes-celulares-telefonia-internet-y-tv/comparador-planes-celular/';
+                $landingLead = '';
                 break;
         }
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
@@ -84,7 +87,7 @@ class ParillaMovilController extends Controller
             'fecha_expiracion' => $request->fecha_expiracion,
             'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
-            'pais' => $request->pais,
+            'pais' => $pais,
             'landingLead' => $landingLead,
             'appsIlimitadas' => $request->appsIlimitadas,
             'facebook' => $request->facebook,
@@ -92,6 +95,7 @@ class ParillaMovilController extends Controller
             'waze' => $request->waze,
             'whatsapp' => $request->whatsapp,
             'twitter' => $request->twitter,
+            'instagram' => $request->instagram,
             'duracionContrato' => $request->duracionContrato,
         ]);
 
@@ -115,7 +119,10 @@ class ParillaMovilController extends Controller
         $states = States::all();
         $paises = Paises::all();
         $operadoras = Operadoras::all();
-        return view('telefonia.movil.edit', compact('tarifa', 'states', 'operadoras', 'paises'));
+        $operadorasList = $operadoras->mapWithKeys(function ($operadora) {
+            return [$operadora->id => $operadora->nombre . ' - ' . $operadora->paises->nombre];
+        });
+        return view('telefonia.movil.edit', compact('tarifa', 'states', 'operadorasList', 'paises'));
     }
 
     /**
@@ -123,8 +130,10 @@ class ParillaMovilController extends Controller
      */
     public function update(Request $request, $parillaMovil)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
-        switch ($request->pais) {
+        $empresa = Operadoras::find($request->operadora);
+        $pais = $empresa->pais;
+        $moneda = Paises::where('id', $pais)->select('moneda')->first();
+        switch ($pais) {
             case 1: //españa
                 $landingLead = '/internet-telefonia/comparador-movil/';
                 break;
@@ -132,18 +141,19 @@ class ParillaMovilController extends Controller
                 $landingLead = '/internet-movil/comparador-movil/';
                 break;
             case 3: //mexico
-                $landingLead = '/planes-celulares-telefonia-internet-y-tv/comparador-planes-celular/';
+                $landingLead = '';
                 break;
         }
-        $empresa = Operadoras::find($request->operadora);
+        $request['landingLead'] = $landingLead;
+        $request['pais'] = $pais;
+        $request['moneda'] = $moneda->moneda;
+
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
-        $request['moneda'] = $moneda->moneda;
-        $request['landingLead'] = $landingLead;
         $tarifa = ParillaMovil::find($parillaMovil);
         $tarifa->update($request->all());
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa editada correctamente.');

@@ -82,10 +82,10 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCupones"
                 aria-expanded="true" aria-controls="collapseCupones">
-                <i class="fa fa-ticket" aria-hidden="true"></i>
+                <i class="fa fa-binoculars" aria-hidden="true"></i>
                 <span>Cupones</span>
             </a>
-            <div id="collapseCupones" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="collapseCupones" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('cupones.index') }}">Cupones</a>
                     <a class="collapse-item" href="{{ route('tipoCupones.index') }}">Tipo de cupones</a>
@@ -149,6 +149,25 @@
                 <span>Streaming</span></a>
         </li>
     @endcan
+    
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBanca"
+                aria-expanded="true" aria-controls="collapseBanca">
+                <i class="fa fa-university" aria-hidden="true"></i>
+                <span>Banca</span>
+            </a>
+            <div id="collapseBanca" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    {{-- @can('zonabancos.view') --}}
+                        <a class="collapse-item" href="{{ route('bancos.index') }}">Bancos</a>
+                    {{-- @endcan
+                    @can('prestamos.view') --}}
+                        <a class="collapse-item" href="{{ route('prestamos.index') }}">Zona bancaria</a>
+                    {{-- @endcan --}}
+                </div>
+            </div>
+        </li>
+    
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline mt-5">

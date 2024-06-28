@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banca;
+use App\Models\CategoriasPrestamos;
+use App\Models\Paises;
 use App\Models\Prestamos;
 use App\Models\States;
 use Illuminate\Http\Request;
@@ -25,7 +27,11 @@ class PrestamosController extends Controller
     {
         $states = States::all();
         $prestadoras = Banca::all();
-        return view('prestamos.create', compact('states', 'prestadoras'));
+        $categorias = CategoriasPrestamos::all();
+        $operadorasList = $prestadoras->mapWithKeys(function ($prestadoras) {
+            return [$prestadoras->id => $prestadoras->nombre . ' - ' . $prestadoras->paises->nombre];
+        });
+        return view('prestamos.create', compact('states', 'operadorasList', 'categorias', 'prestadoras'));
     }
 
     /**
@@ -33,6 +39,8 @@ class PrestamosController extends Controller
      */
     public function store(Request $request)
     {
+        $empresa = Banca::find($request->banca);
+        $pais = $empresa->pais;
         Prestamos::create([
             'banca' => $request->banca,
             'titulo' => $request->titulo,
@@ -44,7 +52,9 @@ class PrestamosController extends Controller
             'parrilla_4' => $request->parrilla_4,
             'url_redirct' => $request->url_redirct,
             'destacada' => $request->destacada,
-            'estado' => $request->estado
+            'estado' => $request->estado,
+            'categoria' => $request->categoria,
+            'pais' => $pais
         ]);
         return redirect()->route('prestamos.index')->with('info', 'Tarifa creada correctamente.');
     }
@@ -65,7 +75,11 @@ class PrestamosController extends Controller
         $tarifa = Prestamos::find($id);
         $states = States::all();
         $prestadoras = Banca::all();
-        return view('prestamos.edit', compact('tarifa', 'states', 'prestadoras'));
+        $categorias = CategoriasPrestamos::all();
+        $operadorasList = $prestadoras->mapWithKeys(function ($prestadoras) {
+            return [$prestadoras->id => $prestadoras->nombre . ' - ' . $prestadoras->paises->nombre];
+        });
+        return view('prestamos.edit', compact('tarifa', 'categorias', 'operadorasList', 'states', 'prestadoras'));
     }
 
     /**
@@ -73,8 +87,13 @@ class PrestamosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $prestamo = Prestamos::find($id);
-        $prestamo->update($request->all());
+        $empresa = Banca::find($request->banca);
+        $pais = $empresa->pais;
+        
+        $request['pais'] = $pais;
+        
+        $tarifa = Prestamos::find($id);
+        $tarifa->update($request->all());
         return redirect()->route('prestamos.index')->with('info', 'Tarifa editada correctamente.');
     }
 

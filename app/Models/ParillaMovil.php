@@ -52,6 +52,7 @@ class ParillaMovil extends Model
         'waze',
         'whatsapp',
         'twitter',
+        'instagram',
         'duracionContrato'
     ];
 

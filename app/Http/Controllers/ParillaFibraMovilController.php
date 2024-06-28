@@ -37,7 +37,10 @@ class ParillaFibraMovilController extends Controller
         $states = States::all();
         $operadoras = Operadoras::where('estado', '1')->get();
         $paises = Paises::all();
-        return view('telefonia.fibramovil.create', compact('states', 'operadoras', 'paises'));
+        $operadorasList = $operadoras->mapWithKeys(function ($operadora) {
+            return [$operadora->id => $operadora->nombre . ' - ' . $operadora->paises->nombre];
+        });
+        return view('telefonia.fibramovil.create', compact('states', 'operadorasList', 'operadoras', 'paises'));
     }
 
     /**
@@ -45,9 +48,20 @@ class ParillaFibraMovilController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Operadoras::find($request->operadora);
-        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $pais = $empresa->pais;
+        $moneda = Paises::where('id', $pais)->select('moneda')->first();
+        switch ($pais) {
+            case 1: //españa
+                $landingLead = '/internet-telefonia/comparador-tarifas-fibra-y-movil/';
+                break;
+            case 2: //colombia
+                $landingLead = '/internet-movil/comparador-tarifas-fibra-y-movil/';
+                break;
+            case 3: //mexico
+                $landingLead = '';
+                break;
+        }
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaFibraMovil::create([
             'operadora' => $request->operadora,
@@ -70,7 +84,16 @@ class ParillaFibraMovilController extends Controller
             'fecha_expiracion' => $request->fecha_expiracion,
             'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
-            'pais' => $request->pais
+            'pais' => $pais,
+            'landingLead' => $landingLead,
+            'appsIlimitadas' => $request->appsIlimitadas,
+            'facebook' => $request->facebook,
+            'messenger' => $request->messenger,
+            'waze' => $request->waze,
+            'whatsapp' => $request->whatsapp,
+            'twitter' => $request->twitter,
+            'instagram' => $request->instagram,
+            'duracionContrato' => $request->duracionContrato,
         ]);
 
         return redirect()->route('parrillafibramovil.index')->with('info', 'Tarifa creada correctamente.');
@@ -93,7 +116,10 @@ class ParillaFibraMovilController extends Controller
         $paises = Paises::all();
         $states = States::all();
         $operadoras = Operadoras::all();
-        return view('telefonia.fibramovil.edit', compact('tarifa', 'states', 'operadoras', 'paises'));
+        $operadorasList = $operadoras->mapWithKeys(function ($operadora) {
+            return [$operadora->id => $operadora->nombre . ' - ' . $operadora->paises->nombre];
+        });
+        return view('telefonia.fibramovil.edit', compact('tarifa', 'states', 'operadorasList', 'operadoras', 'paises'));
     }
 
     /**
@@ -101,18 +127,31 @@ class ParillaFibraMovilController extends Controller
      */
     public function update(Request $request, $parillaMovil)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Operadoras::find($request->operadora);
-        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $pais = $empresa->pais;
+        $moneda = Paises::where('id', $pais)->select('moneda')->first();
+        switch ($pais) {
+            case 1: //españa
+                $landingLead = '/internet-telefonia/comparador-tarifas-fibra-y-movil/';
+                break;
+            case 2: //colombia
+                $landingLead = '/internet-movil/comparador-tarifas-fibra-y-movil/';
+                break;
+            case 3: //mexico
+                $landingLead = '';
+                break;
+        }
+        $request['landingLead'] = $landingLead;
+        $request['pais'] = $pais;
+        $request['moneda'] = $moneda->moneda;
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
-        $request['moneda'] = $moneda->moneda;
+    
         $tarifa = ParillaFibraMovil::find($parillaMovil);
-        $request->all();
         $tarifa->update($request->all());
         return redirect()->route('parrillafibramovil.index')->with('info', 'Tarifa editada correctamente.');
     }

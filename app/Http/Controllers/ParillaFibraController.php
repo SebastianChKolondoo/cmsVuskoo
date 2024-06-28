@@ -37,7 +37,10 @@ class ParillaFibraController extends Controller
         $states = States::all();
         $paises = Paises::all();
         $operadoras = Operadoras::where('estado', '1')->get();
-        return view('telefonia.fibra.create', compact('states', 'operadoras', 'paises'));
+        $operadorasList = $operadoras->mapWithKeys(function ($operadora) {
+            return [$operadora->id => $operadora->nombre . ' - ' . $operadora->paises->nombre];
+        });
+        return view('telefonia.fibra.create', compact('states', 'operadorasList', 'operadoras', 'paises'));
     }
 
     /**
@@ -45,8 +48,20 @@ class ParillaFibraController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Operadoras::find($request->operadora);
+        $pais = $empresa->pais;
+        $moneda = Paises::where('id', $pais)->select('moneda')->first();
+        switch ($pais) {
+            case 1: //españa
+                $landingLead = '/internet-telefonia/comparador-fibra/';
+                break;
+            case 2: //colombia
+                $landingLead = '/internet-movil/comparador-fibra/';
+                break;
+            case 3: //mexico
+                $landingLead = '';
+                break;
+        }
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaFibra::create([
             'operadora' => $request->operadora,
@@ -75,7 +90,8 @@ class ParillaFibraController extends Controller
             'fecha_registro' => $request->fecha_registro,
             'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
-            'pais' => $request->pais,
+            'pais' => $pais,
+            'landingLead' => $landingLead,
         ]);
 
         return redirect()->route('ParillaFibra.index')->with('info', 'Tarifa creada correctamente.');
@@ -98,7 +114,10 @@ class ParillaFibraController extends Controller
         $states = States::all();
         $paises = Paises::all();
         $operadoras = Operadoras::all();
-        return view('telefonia.fibra.edit', compact('tarifa', 'states', 'operadoras', 'paises'));
+        $operadorasList = $operadoras->mapWithKeys(function ($operadora) {
+            return [$operadora->id => $operadora->nombre . ' - ' . $operadora->paises->nombre];
+        });
+        return view('telefonia.fibra.edit', compact('tarifa', 'states', 'operadorasList', 'operadoras', 'paises'));
     }
 
     /**
@@ -106,16 +125,29 @@ class ParillaFibraController extends Controller
      */
     public function update(Request $request, $parillaFibra)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Operadoras::find($request->operadora);
-        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
+        $pais = $empresa->pais;
+        $moneda = Paises::where('id', $pais)->select('moneda')->first();
+        switch ($pais) {
+            case 1: //españa
+                $landingLead = '/internet-telefonia/comparador-fibra/';
+                break;
+            case 2: //colombia
+                $landingLead = '/internet-movil/comparador-fibra/';
+                break;
+            case 3: //mexico
+                $landingLead = '';
+                break;
+        }
+        $request['landingLead'] = $landingLead;
+        $request['pais'] = $pais;
+        $request['moneda'] = $moneda->moneda;
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
-        $request['moneda'] = $moneda->moneda;
         $tarifa = ParillaFibra::find($parillaFibra);
         $tarifa->update($request->all());
         return redirect()->route('parrillafibra.index')->with('info', 'Tarifa editada correctamente.');

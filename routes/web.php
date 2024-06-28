@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BancaController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ComercializadorasController;
 use App\Http\Controllers\ComerciosController;
@@ -90,3 +91,7 @@ Route::get('cuponesDuplicate/{id}', [CuponesController::class, 'duplicateOffer']
 /* prestamos */
 Route::resource('prestamos', PrestamosController::class)->names('prestamos')->middleware(['auth']);
 Route::get('prestamosDuplicate/{id}', [PrestamosController::class, 'duplicateOffer'])->name('prestamosDuplicate')->middleware(['auth']);
+
+/* Banca */
+Route::resource('bancos', BancaController::class)->names('bancos')->middleware(['auth']);
+Route::get('bancosDuplicate/{id}', [BancaController::class, 'duplicateOffer'])->name('bancosDuplicate')->middleware(['auth']);

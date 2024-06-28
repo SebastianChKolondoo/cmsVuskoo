@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('operadora', 'Operadora', ['class' => 'form-label']) !!}
-                            {!! Form::select('operadora', $operadoras->pluck('nombre', 'id'), null, [
+                            {!! Form::select('operadora', $operadorasList, null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
@@ -122,13 +122,7 @@
                             {!! Form::date('fecha_expiracion', \Carbon\Carbon::parse($tarifa->fecha_expiracion)->format('Y-m-d'), [
                                 'class' => 'form-control',
                             ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
-                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
+                        </div>                        
                         <div class="form-group col-12 col-md-12">
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
                             {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}

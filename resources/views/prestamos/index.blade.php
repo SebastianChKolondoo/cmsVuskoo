@@ -31,6 +31,7 @@
                         <th>id</th>
                         <th>Banca</th>
                         <th>Titulo</th>
+                        <th>Pais</th>
                         @can('prestamo.view.btn-edit')
                             <th></th>
                         @endcan
@@ -42,6 +43,7 @@
                             <td class="align-middle">{{ $prestamo->id }}</td>
                             <td class="align-middle">{{ optional($prestamo->banco)->nombre }}</td>
                             <td class="align-middle">{{ $prestamo->titulo != null ? $prestamo->titulo : $prestamo->parrilla_1 }}</td>
+                            <td class="align-middle">{{ $prestamo->paises->nombre }}</td>
                             <td>
                                 @can('prestamo.view.btn-edit')
                                     <a href="{{ route('prestamos.edit', $prestamo) }}" class="btn btn-primary">Editar</a>

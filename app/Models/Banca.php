@@ -12,6 +12,18 @@ class Banca extends Model
 
     protected $fillable = [
         'nombre',
-        'logo'
+        'logo',
+        'estado',
+        'pais'
     ];
+
+    public function state()
+    {
+        return $this->belongsTo(States::class, 'estado', 'id');
+    }
+
+    public function paises()
+    {
+        return $this->belongsTo(Paises::class, 'pais', 'id');
+    }
 }

@@ -11,6 +11,7 @@ class Prestamos extends Model
     protected $table = 'WEB_3_PRESTAMOS';
 
     protected $fillable = [
+        'categoria',
         'selector1',
         'titulo',
         'banca',
@@ -22,6 +23,7 @@ class Prestamos extends Model
         'url_redirct',
         'destacada',
         'estado',
+        'pais'
     ];
 
     public function state()
@@ -32,5 +34,10 @@ class Prestamos extends Model
     public function banco()
     {
         return $this->belongsTo(Banca::class, 'banca', 'id');
+    }
+    
+    public function paises()
+    {
+        return $this->belongsTo(Paises::class, 'pais', 'id');
     }
 }

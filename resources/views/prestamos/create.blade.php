@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2>Registrar cupón</h2>
+                    <h2>Registrar oferta de banca</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))
@@ -15,8 +15,12 @@
                     {!! Form::open(['route' => 'prestamos.store']) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('banca', 'Prestadora', ['class' => 'form-label']) !!}
-                            {!! Form::select('banca', $prestadoras->pluck('nombre', 'id'), null, [
+                            {!! Form::label('categoria', 'Categoria', ['class' => 'form-label']) !!}
+                            {!! Form::select('categoria', $categorias->pluck('nombre','id'), null, ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('banca', 'Banco', ['class' => 'form-label']) !!}
+                            {!! Form::select('banca', $operadorasList, null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>

@@ -12,22 +12,18 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'operadoras.store']) !!}
+                    {!! Form::open(['route' => 'bancos.store', 'enctype' => 'multipart/form-data']) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('name', 'Nombre operadora', ['class' => 'form-label']) !!}
-                            {!! Form::text('name', null, [
+                            {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
+                            {!! Form::text('nombre', null, [
                                 'class' => 'form-control',
-                                'placeholder' => 'Nombre',
                                 'required' => 'required',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('politica_privacidad', 'Politica de privcidad', ['class' => 'form-label']) !!}
-                            {!! Form::text('politica_privacidad', null, [
-                                'class' => 'form-control',
-                                'placeholder' => 'Enlace externo a politica de privacidad',
-                            ]) !!}
+                            {{ Form::label('logo', 'Logo') }}
+                            {{ Form::file('logo', ['class' => 'form-control']) }}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
@@ -51,7 +47,7 @@
         </div>
         <div class="row my-4">
             <div class="col-12">
-                <a href="{{ route('operadoras.index') }}" class="btn btn-dark">Volver</a>
+                <a href="{{ route('bancos.index') }}" class="btn btn-dark">Volver</a>
             </div>
         </div>
     </div>
