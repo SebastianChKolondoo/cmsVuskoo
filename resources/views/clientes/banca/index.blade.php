@@ -8,7 +8,7 @@
                 </div>
             @endif
             {{-- @can('banca.view.btn-create') --}}
-                <a href="{{ route('bancos.create') }}" class="btn btn-primary">Nueva banca</a>
+                <a href="{{ route('bancos.create') }}" class="btn btn-primary">Nuevo banco</a>
             {{-- @endcan --}}
         </div>
     </div>
