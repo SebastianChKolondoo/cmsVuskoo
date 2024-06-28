@@ -47,7 +47,6 @@ class ParillaLuzGasController extends Controller
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Comercializadoras::find($request->comercializadora);
-        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaLuzGas::create([
             'comercializadora' => $request->comercializadora,
@@ -86,7 +85,8 @@ class ParillaLuzGasController extends Controller
             'fecha_registro' => $request->fecha_registro,
             'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
-            'pais' => $request->pais
+            'pais' => $request->pais,
+            'textoAdicional' => $request->textoAdicional,
         ]);
 
         return redirect()->route('parrillaluzgas.index')->with('info', 'Tarifa creada correctamente.');

@@ -90,6 +90,7 @@ class ParillaMovilController extends Controller
             'pais' => $pais,
             'landingLead' => $landingLead,
             'appsIlimitadas' => $request->appsIlimitadas,
+            'textoAdicional' => $request->textoAdicional,
             'facebook' => $request->facebook,
             'messenger' => $request->messenger,
             'waze' => $request->waze,
@@ -97,6 +98,7 @@ class ParillaMovilController extends Controller
             'twitter' => $request->twitter,
             'instagram' => $request->instagram,
             'duracionContrato' => $request->duracionContrato,
+            'red5g' => $request->red5g,
         ]);
 
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa creada correctamente.');

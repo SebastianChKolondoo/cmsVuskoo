@@ -86,6 +86,7 @@ class ParillaFibraMovilController extends Controller
             'slug_tarifa' => $slug,
             'pais' => $pais,
             'landingLead' => $landingLead,
+            'textoAdicional' => $request->textoAdicional,
             'appsIlimitadas' => $request->appsIlimitadas,
             'facebook' => $request->facebook,
             'messenger' => $request->messenger,
@@ -94,6 +95,7 @@ class ParillaFibraMovilController extends Controller
             'twitter' => $request->twitter,
             'instagram' => $request->instagram,
             'duracionContrato' => $request->duracionContrato,
+            'red5g' => $request->red5g,
         ]);
 
         return redirect()->route('parrillafibramovil.index')->with('info', 'Tarifa creada correctamente.');

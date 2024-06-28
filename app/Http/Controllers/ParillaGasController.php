@@ -47,7 +47,6 @@ class ParillaGasController extends Controller
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Comercializadoras::find($request->comercializadora);
-        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_3)) . ' ' . $empresa->nombre_slug));
         $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_3)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaGas::create([
             'comercializadora' => $request->comercializadora,
@@ -63,6 +62,7 @@ class ParillaGasController extends Controller
             'luz_discriminacion_horaria' => $request->luz_discriminacion_horaria,
             'precio' => $request->precio,
             'precio_final' => $request->precio_final,
+            'textoAdicional' => $request->textoAdicional,
             'promocion' => $request->promocion,
             'num_meses_promo' => $request->num_meses_promo,
             'texto_alternativo_promo' => $request->texto_alternativo_promo,

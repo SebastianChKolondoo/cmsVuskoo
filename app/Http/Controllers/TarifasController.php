@@ -54,7 +54,6 @@ class TarifasController extends Controller
             ->where($this->tabla_fibra . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
             ->where('1_operadoras.pais', '=', $idioma->id)
-            ->orderBy('destacada', 'desc')
             ->orderBy('destacada', 'asc')
             ->orderBy('precio', 'asc')
             ->get();

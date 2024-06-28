@@ -137,6 +137,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('red5g', '5g', ['class' => 'form-label']) !!}
+                            {!! Form::select('red5g', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('coste_llamadas_minuto', 'Coste llamadas minuto', ['class' => 'form-label']) !!}
                             {!! Form::text('coste_llamadas_minuto', null, [
                                 'class' => 'form-control',

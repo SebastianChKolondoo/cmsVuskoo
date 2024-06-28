@@ -59,7 +59,8 @@ class ParillaFibraMovil extends Model
         'whatsapp',
         'twitter',
         'instagram',
-        'duracionContrato'
+        'duracionContrato',
+        'red5g'
     ];
 
     public function state()

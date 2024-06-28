@@ -54,7 +54,8 @@ class parrillamovil extends Model
         'waze',
         'whatsapp',
         'twitter',
-        'duracionContrato'
+        'duracionContrato',
+        'red5g'
     ];
 
     public function state()
