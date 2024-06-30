@@ -55,7 +55,9 @@ class parrillamovil extends Model
         'whatsapp',
         'twitter',
         'duracionContrato',
-        'red5g'
+        'red5g',
+        'tinder',
+        'lolamusic'
     ];
 
     public function state()

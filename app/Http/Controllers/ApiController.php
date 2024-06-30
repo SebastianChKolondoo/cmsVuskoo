@@ -194,8 +194,16 @@ class ApiController extends Controller
                         "titleUrl" => "/finanzas",
                         "children" => [
                             [
-                                "name" => "Banca",
-                                "url" => "/finanzas/banca"
+                                "name" => "Cuenta de ahorro",
+                                "url" => "/finanzas/comparador-ofertas-zona-bancaria/cuenta-ahorro"
+                            ],
+                            [
+                                "name" => "Tarjeta de credito",
+                                "url" => "/finanzas/comparador-ofertas-zona-bancaria/tarjeta-credito"
+                            ],
+                            [
+                                "name" => "Creditos",
+                                "url" => "/finanzas/comparador-ofertas-zona-bancaria/creditos"
                             ]
                         ]
                     ]

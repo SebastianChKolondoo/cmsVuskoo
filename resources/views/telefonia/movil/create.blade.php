@@ -197,6 +197,18 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('tinder', 'Tinder+', ['class' => 'form-label']) !!}
+                            {!! Form::select('tinder', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('lolamusic', 'Lola Music', ['class' => 'form-label']) !!}
+                            {!! Form::select('lolamusic', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
                         <div class="col-12">
                             {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}
                             {!! Form::close() !!}

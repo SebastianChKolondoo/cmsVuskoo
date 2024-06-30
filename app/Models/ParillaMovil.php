@@ -54,7 +54,9 @@ class ParillaMovil extends Model
         'twitter',
         'instagram',
         'duracionContrato',
-        'red5g'
+        'red5g',
+        'tinder',
+        'lolamusic'
     ];
 
     public function state()

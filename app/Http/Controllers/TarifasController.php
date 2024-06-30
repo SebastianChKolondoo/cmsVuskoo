@@ -366,24 +366,29 @@ class TarifasController extends Controller
             ->first();
     }
 
-    public function getTarifasPrestamosList($lang = 'co')
+    public function getTarifasPrestamosList($lang = 'co', $categoria = null)
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        if ($categoria != null) {
+            $validacionPais = Paises::where('codigo', $lang)->count();
+            if ($validacionPais == 0) {
+                return [];
+            }
+            $idioma = Paises::where('codigo', $lang)->first();
+            $query = DB::table($this->tabla_prestamos)
+                ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
+                ->select($this->tabla_prestamos . '.*', '1_banca.nombre', '1_banca.logo')
+                ->where($this->tabla_prestamos . '.estado', '=', '1')
+                ->where($this->tabla_prestamos . '.banca', '=', $categoria)
+                ->orderBy('destacada', 'asc');
+
+            if (!empty($id)) {
+                $query->where($this->tabla_prestamos . '.id', '=', $id);
+            }
+
+            return $query->get();
+        } else{
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
-        $query = DB::table($this->tabla_prestamos)
-            ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
-            ->select($this->tabla_prestamos . '.*', '1_banca.nombre', '1_banca.logo')
-            ->where($this->tabla_prestamos . '.estado', '=', '1')
-            ->orderBy('destacada', 'asc');
-
-        if (!empty($id)) {
-            $query->where($this->tabla_prestamos . '.id', '=', $id);
-        }
-
-        return $query->get();
     }
 
     public function getTarifaPrestamoList($id = null)

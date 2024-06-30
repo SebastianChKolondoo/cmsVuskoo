@@ -99,6 +99,8 @@ class ParillaMovilController extends Controller
             'instagram' => $request->instagram,
             'duracionContrato' => $request->duracionContrato,
             'red5g' => $request->red5g,
+            'tinder' => $request->tinder,
+            'lolamusic' => $request->lolamusic,
         ]);
 
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa creada correctamente.');
