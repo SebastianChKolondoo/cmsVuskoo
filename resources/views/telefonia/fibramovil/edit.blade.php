@@ -33,6 +33,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('duracionContrato', 'Duración del contrato', ['class' => 'form-label']) !!}
+                            {!! Form::text('duracionContrato', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre_tarifa', null, [
                                 'class' => 'form-control',
@@ -182,6 +188,10 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                        <div class="form-group col-12 col-md-12">
+                            {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
+                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
+                        </div>
                         <div class="col-12">
                             <b>Información de apps ilimitadas para Colombia</b>
                         </div>
@@ -227,21 +237,17 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-12">
-                            {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
-                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
-                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('tinder', 'Tinder+', ['class' => 'form-label']) !!}
                             {!! Form::select('tinder', $states->pluck('name', 'id'), null, [
                                 'class' => 'form-control',
-                            ]) !!}
+                                ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('lolamusic', 'Lola Music', ['class' => 'form-label']) !!}
                             {!! Form::select('lolamusic', $states->pluck('name', 'id'), null, [
                                 'class' => 'form-control',
-                            ]) !!}
+                                ]) !!}
                         </div>
                         <div class="col-12">
                             {!! Form::submit('Guardar cambios', ['class' => 'btn btn-primary']) !!}

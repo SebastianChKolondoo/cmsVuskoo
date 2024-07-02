@@ -93,6 +93,7 @@ class ParillaFibraController extends Controller
             'slug_tarifa' => $slug,
             'pais' => $pais,
             'landingLead' => $landingLead,
+            'duracionContrato' => $request->duracionContrato,
         ]);
 
         return redirect()->route('ParillaFibra.index')->with('info', 'Tarifa creada correctamente.');

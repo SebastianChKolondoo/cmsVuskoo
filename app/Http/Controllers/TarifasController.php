@@ -378,7 +378,7 @@ class TarifasController extends Controller
                 ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
                 ->select($this->tabla_prestamos . '.*', '1_banca.nombre', '1_banca.logo')
                 ->where($this->tabla_prestamos . '.estado', '=', '1')
-                ->where($this->tabla_prestamos . '.banca', '=', $categoria)
+                ->where($this->tabla_prestamos . '.categoria', '=', $categoria)
                 ->orderBy('destacada', 'asc');
 
             if (!empty($id)) {

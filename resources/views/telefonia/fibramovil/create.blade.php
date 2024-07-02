@@ -35,6 +35,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('duracionContrato', 'Duración del contrato', ['class' => 'form-label']) !!}
+                            {!! Form::text('duracionContrato', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre_tarifa', null, [
                                 'class' => 'form-control',
@@ -175,48 +181,6 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-{{--                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('TV', 'TV', ['class' => 'form-label']) !!}
-                            {!! Form::select('TV', $states->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('Netflix', 'Netflix', ['class' => 'form-label']) !!}
-                            {!! Form::select('Netflix', $states->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('HBO', 'HBO', ['class' => 'form-label']) !!}
-                            {!! Form::select('HBO', $states->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('AmazonPrime', 'AmazonPrime', ['class' => 'form-label']) !!}
-                            {!! Form::select('AmazonPrime', $states->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('Filmin', 'Filmin', ['class' => 'form-label']) !!}
-                            {!! Form::select('Filmin', $states->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('DAZN', 'DAZN', ['class' => 'form-label']) !!}
-                            {!! Form::select('DAZN', $states->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('otros_canales_TV', 'otros_canales_TV', ['class' => 'form-label']) !!}
-                            {!! Form::select('otros_canales_TV', $states->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('fecha_expiracion', 'Fecha expiración', ['class' => 'form-label']) !!}
                             {!! Form::date('fecha_expiracion', \Carbon\Carbon::now(), [
