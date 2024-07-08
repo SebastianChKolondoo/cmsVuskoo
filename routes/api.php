@@ -122,4 +122,5 @@ Route::get('/cargarCategoriasPaises/{id?}', [ApiController::class, 'cargarCatego
 
 /* Prestamos */
 Route::get('getTarifasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasPrestamosList']);
+Route::get('getBancasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getBancasPrestamosList']);
 Route::get('getTarifaPrestamo/{id}', [TarifasController::class, 'getTarifaPrestamoList']);

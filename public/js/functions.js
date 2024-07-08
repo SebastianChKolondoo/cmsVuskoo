@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
 	const tiempoCupon = document.getElementById('TiempoCupon');
 	const fechaExpiracionField = document.getElementById('field_fecha_expiracion');
 
@@ -47,24 +46,6 @@ $(document).ready(function () {
 		};
 	});
 
-	$('.egresos').change(function () {
-		total = 0;
-		total += parseInt($('#visdomegr_arriendo').val());
-		total += parseInt($('#visdomegr_servicios_publi').val());
-		total += parseInt($('#visdomegr_transporte').val());
-		total += parseInt($('#visdomegr_alimentacion').val());
-		total += parseInt($('#visdomegr_salud').val());
-		total += parseInt($('#visdomegr_gasto_individua').val());
-		total += parseInt($('#visdomegr_administracion').val());
-		total += parseInt($('#visdomegr_tarjetas_de_cre').val());
-		total += parseInt($('#visdomegr_prestamos').val());
-		$('#visdomegr_total_egresos').val(total);
-	});
-
-	$('#departament').change(function () {
-		showCities($(this).val());
-	});
-
 	$('#TiempoCupon').change(function () {
 		if ($(this).val() == 1) {
 			$('#field_fecha_expiracion').removeClass('d-none');
@@ -90,38 +71,9 @@ $(document).ready(function () {
 	$('#pais').change(function () {
 		cargarPaisesCategorias($(this).val());
 	});
-
-
-	openChild();
-	$('#btnItem').click(function () {
-		openAllTabs();
-	});
-
 });
 
 let collapseContainers = false;
-
-function openAllTabs() {
-	if (!collapseContainers) {
-		$('.collapse').removeClass('show');
-		collapseContainers = true;
-	}
-	else {
-		$('.collapse').addClass('show');
-		collapseContainers = false;
-	}
-}
-
-
-function openChild() {
-	let url = window.location;
-	url = String(window.location);
-	let stringUrl = url.split("#");
-	if (stringUrl.length > 1) {
-		$('#' + stringUrl[1]).addClass('show').focus();
-
-	}
-}
 
 function cargarPaisesComercio(id) {
 	$('#pais').html('<option>Cargando...</option>');
@@ -130,7 +82,7 @@ function cargarPaisesComercio(id) {
 	if (id) {
 		url += '/' + id;
 	}
-
+	
 	$.ajax({
 		url: url,
 		method: 'GET'

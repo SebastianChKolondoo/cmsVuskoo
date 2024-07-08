@@ -386,7 +386,7 @@ class TarifasController extends Controller
             }
 
             return $query->get();
-        } else{
+        } else {
             return [];
         }
     }
@@ -404,5 +404,18 @@ class TarifasController extends Controller
         }
 
         return $query->first();
+    }
+
+    public function getBancasPrestamosList($lang = 'co', $categoria = null)
+    {
+        $query = DB::table($this->tabla_prestamos)
+            ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
+            ->select('1_banca.nombre', '1_banca.id', '1_banca.logo')
+            ->where($this->tabla_prestamos . '.estado', '=', '1')
+            ->where($this->tabla_prestamos . '.categoria', '=', $categoria)
+            ->groupBy('1_banca.nombre')
+            ->orderBy('destacada', 'asc');
+
+        return $query->get();
     }
 }
