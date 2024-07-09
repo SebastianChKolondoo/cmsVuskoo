@@ -195,15 +195,15 @@ class ApiController extends Controller
                         "children" => [
                             [
                                 "name" => "Cuenta de ahorro",
-                                "url" => "/finanzas/comparador-ofertas-zona-bancaria/cuenta-ahorro"
+                                "url" => "/finanzas/comparador-finanzas/cuenta-ahorro"
                             ],
                             [
                                 "name" => "Tarjeta de crédito",
-                                "url" => "/finanzas/comparador-ofertas-zona-bancaria/tarjeta-credito"
+                                "url" => "/finanzas/comparador-finanzas/tarjeta-credito"
                             ],
                             [
                                 "name" => "Créditos",
-                                "url" => "/finanzas/comparador-ofertas-zona-bancaria/creditos"
+                                "url" => "/finanzas/comparador-finanzas/creditos"
                             ]
                         ]
                     ]
