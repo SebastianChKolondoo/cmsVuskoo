@@ -425,6 +425,16 @@ class ApiController extends Controller
             ->get();
     }
 
+    public function getMetaSeoList($lang = null)
+    {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        return Paises::where('codigo', $lang)->first();
+        
+    }
+
     public function cargarPaisesCupones($id)
     {
         $data = DB::table('1_comercios')
