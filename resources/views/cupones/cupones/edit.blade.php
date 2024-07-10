@@ -105,6 +105,8 @@
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
                             {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor', 'rows' => 2]) !!}
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-12">
                             {!! Form::submit('Actualizar', ['class' => 'btn btn-primary']) !!}
                             {!! Form::close() !!}

@@ -16,9 +16,8 @@
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('comercio', 'Comercio', ['class' => 'form-label']) !!}
-                            {!! Form::select('comercio', $comercios->pluck('nombre', 'id')->prepend('Seleccione...', ''), null, [
+                            {!! Form::select('comercio', ['' => 'Seleccione...'] + $comercios->pluck('nombre', 'id')->toArray(), null, [
                                 'class' => 'form-control',
-                                'id' => 'comercio'
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
@@ -89,9 +88,9 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div  id="field_fecha_expiracion" class="form-group col-12 col-md-4">
+                        <div id="field_fecha_expiracion" class="form-group col-12 col-md-4">
                             {!! Form::label('fecha_expiracion', 'Fecha expiración', ['class' => 'form-label']) !!}
-                            {!! Form::date('fecha_expiracion', \Carbon\Carbon::now(), [
+                            {!! Form::date('fecha_expiracion', \Carbon\Carbon::parse(now())->format('Y-m-d'), [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
@@ -104,8 +103,10 @@
                         </div>
                         <div class="form-group col-12 col-md-12">
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
-                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
+                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor', 'rows' => 2]) !!}
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-12">
                             {!! Form::submit('Registrar', ['class' => 'btn btn-primary']) !!}
                             {!! Form::close() !!}
