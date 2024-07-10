@@ -76,8 +76,8 @@ $(document).ready(function () {
 let collapseContainers = false;
 
 function cargarPaisesComercio(id) {
+
 	$('#pais').html('<option>Cargando...</option>');
-	$('#categoria').html('<option>Cargando...</option>');
 	let url = '/api/cargarPaises';
 	if (id) {
 		url += '/' + id;
@@ -91,7 +91,7 @@ function cargarPaisesComercio(id) {
 		for (let i = 0; i < data.length; i++) {
 			lista += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
 		}
-		$('#pais').html(lista);
+		$('#pais').html(lista).attr('disabled',false);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		console.error('Error:', textStatus, errorThrown);
 	});
@@ -112,7 +112,7 @@ function cargarPaisesCategorias(id) {
 		for (let i = 0; i < data.length; i++) {
 			lista += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
 		}
-		$('#categoria').html(lista);
+		$('#categoria').html(lista).attr('disabled',false);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		console.error('Error:', textStatus, errorThrown);
 	});

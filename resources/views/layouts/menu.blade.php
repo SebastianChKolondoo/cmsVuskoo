@@ -156,7 +156,7 @@
                 <i class="fa fa-university" aria-hidden="true"></i>
                 <span>Banca</span>
             </a>
-            <div id="collapseBanca" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="collapseBanca" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     {{-- @can('zonabancos.view') --}}
                         <a class="collapse-item" href="{{ route('bancos.index') }}">Bancos</a>

@@ -24,12 +24,14 @@
                             {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
                             {!! Form::select('pais', [], null, [
                                 'class' => 'form-control',
+                                'disabled' => true
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('categoria', 'Categoria', ['class' => 'form-label']) !!}
                             {!! Form::select('categoria', [], null, [
                                 'class' => 'form-control',
+                                'disabled' => true
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
