@@ -12,6 +12,12 @@ class Paises extends Model
     protected $fillable = [
         'codigo',
         'nombre',
-        'moneda'
+        'moneda',
+        'lang',
+        'locale',
+        'language',
+        'geo_region',
+        'geo_position',
+        'geo_placename'
     ];        
 }

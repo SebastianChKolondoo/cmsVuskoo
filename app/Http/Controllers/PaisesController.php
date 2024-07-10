@@ -33,7 +33,13 @@ class PaisesController extends Controller
         Paises::create([
             'codigo' => $request->codigo,
             'nombre' => $request->nombre,
-            'moneda' => $request->moneda
+            'moneda' => $request->moneda,
+            'lang' => $request->lang,
+            'locale' => $request->locale,
+            'language' => $request->language,
+            'geo_region' => $request->geo_region,
+            'geo_position' => $request->geo_position,
+            'geo_placename' => $request->geo_placename,
         ]);
         return redirect()->route('paises.index')->with('info', 'Pais creado correctamente.');
     }
@@ -53,7 +59,7 @@ class PaisesController extends Controller
     {
         $pais = Paises::find($id);
         $estados = States::all();
-        return view('pais.edit', compact('pais','estados'));
+        return view('pais.edit', compact('pais', 'estados'));
     }
 
     /**
@@ -61,11 +67,10 @@ class PaisesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $pais = Paises::find($id);
         $pais->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');
-
     }
 
     /**

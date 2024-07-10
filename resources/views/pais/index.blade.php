@@ -8,7 +8,7 @@
                 </div>
             @endif
             @can('paises.view.btn-create')
-                <a href="{{ route('paises.create') }}" class="btn btn-primary">Nueva pais</a>
+                <a href="{{ route('paises.create') }}" class="btn btn-primary">Nuevo pais</a>
             @endcan
         </div>
     </div>
@@ -33,6 +33,7 @@
                         <th>Nombre</th>
                         <th>Codigo</th>
                         <th>Moneda</th>
+                        <th>Lang</th>
                         @can('paises.view-btn-edit')
                             <th>&nbsp;</th>
                         @endcan
@@ -44,6 +45,7 @@
                         <td class="align-middle">{{ $pais->nombre }}</td>
                         <td class="align-middle">{{ $pais->codigo }}</td>
                         <td class="align-middle">{{ $pais->moneda }}</td>
+                        <td class="align-middle">{{ $pais->lang }}</td>
                         @can('paises.view-btn-edit')
                             <td>
                                 <a href="{{ route('paises.edit', $pais) }}" class="btn btn-primary">Editar</a>
