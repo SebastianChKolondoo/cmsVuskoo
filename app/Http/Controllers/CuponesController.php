@@ -68,6 +68,7 @@ class CuponesController extends Controller
             'tipoCupon' => $request->tipoCupon,
             'TiempoCupon' => $request->TiempoCupon,
             'CodigoCupon' => $request->CodigoCupon,
+            'pagina_final' => $request->pagina_final
             
 
         ]);

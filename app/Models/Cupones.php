@@ -32,7 +32,8 @@ class Cupones extends Model
         'landing_link',
         'tipoCupon',
         'TiempoCupon',
-        'CodigoCupon'
+        'CodigoCupon',
+        'pagina_final'
     ];
 
     public function state()

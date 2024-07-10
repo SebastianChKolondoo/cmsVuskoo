@@ -66,10 +66,15 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('landing_link', 'URL redireccion', ['class' => 'form-label']) !!}
+                            {!! Form::label('landing_link', 'URL redireccion primaria', ['class' => 'form-label']) !!}
                             {!! Form::text('landing_link', null, [
                                 'class' => 'form-control',
-                                'required' => 'required',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('pagina_final', 'URL redireccion final', ['class' => 'form-label']) !!}
+                            {!! Form::text('pagina_final', null, [
+                                'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
