@@ -71,12 +71,12 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        {{-- <div class="form-group col-12 col-md-4">
                             {!! Form::label('pagina_final', 'URL redireccion final', ['class' => 'form-label']) !!}
                             {!! Form::text('pagina_final', null, [
                                 'class' => 'form-control',
                             ]) !!}
-                        </div>
+                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('descuento', 'Descuento', ['class' => 'form-label']) !!}
                             {!! Form::text('descuento', null, [

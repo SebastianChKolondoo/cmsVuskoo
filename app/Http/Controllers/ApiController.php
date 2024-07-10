@@ -158,7 +158,7 @@ class ApiController extends Controller
             case 'co':
                 $data = [
                     [
-                        "title" => "Internet y movil",
+                        "title" => "Internet y móvil",
                         "titleUrl" => "/internet-movil",
                         "children" => [
                             [

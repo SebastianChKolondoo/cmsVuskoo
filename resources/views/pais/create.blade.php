@@ -87,7 +87,7 @@
         </div>
         <div class="row my-4">
             <div class="col-12">
-                <a href="{{ route('comercios.index') }}" class="btn btn-dark">Volver</a>
+                <a href="{{ route('paises.index') }}" class="btn btn-dark">Volver</a>
             </div>
         </div>
     </div>
