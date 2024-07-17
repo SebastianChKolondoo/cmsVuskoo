@@ -47,21 +47,16 @@ class LeadController extends Controller
         ]);
 
         // Guardar el nuevo registro en la base de datos
-        $data = $lead->save();
         if ($lead->save()) {
             switch ($request->input('landing')) {
                 case 'comparador-fibra':
-                    return $this->leadFibra($lead, $lead->id);
-                    break;
-                case 'comparador-tarifas-luz':
-                    return $this->leadLuz($lead, $lead->id);
-                    break;
                 case 'comparador-tarifas-fibra-y-movil':
-                    return $this->leadFibraMovil($lead, $lead->id);
-                    break;
                 case 'comparador-movil':
                     return $this->leadMovil($lead, $lead->id);
-                    break;
+                case 'comparador-tarifas-luz':
+                    return $this->leadLuz($lead, $lead->id);
+                default:
+                    return $this->leadMovil($lead, $lead->id);
             }
         }
     }
@@ -81,14 +76,14 @@ class LeadController extends Controller
                 'message' => 'Mensaje enviado con exito',
                 'status' => 201
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'En este momento no podemos procesar tu mensaje',
                 'status' => 503
             ], 200);
         }
     }
-    
+
     public function FormNewsletterRegister(Request $request)
     {
         $contactenos = new NewsLetter([
@@ -101,7 +96,7 @@ class LeadController extends Controller
                 'message' => 'Suscripción realizada con exito',
                 'status' => 201
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'En este momento no podemos procesar tu suscripción',
                 'status' => 503
@@ -114,9 +109,18 @@ class LeadController extends Controller
         switch ($lead['company']) {
             case 7:    /*pepePhone*/
                 return $this->apiPepephone($lead, $idLead);
-                break;
+            case 27:    /*Lowi*/
+                return $this->apiLowi($lead, $idLead);
+            case 20:    /*Butik*/
+                return $this->apiButik($lead, $idLead);
+            case 22:    /*Másmóvil*/
+                return $this->apiMasMovil($lead, $idLead);
             default:
-                break;
+                $this->utilsController->registroDeErrores(16, 'Lead saved', 'lead save sin operador ajax', $lead['company'], $this->visitorIp);
+                return response()->json([
+                    'message' => 'ok: Registrado el numero',
+                    'status' => 201
+                ], 200);
         }
     }
 
@@ -125,47 +129,45 @@ class LeadController extends Controller
         switch ($lead['company']) {
             case 13:    /*Plenitude*/
                 return $this->apiPlenitude($lead, $idLead);
-                break;
             case 14:    /*Octopus Energy*/
-                break;
             default:
                 break;
         }
     }
 
-    public function leadFibraMovil($lead, $idLead)
+    /* public function leadFibraMovil($lead, $idLead)
     {
         switch ($lead['company']) {
-            case 27:    /*Lowi*/
+            case 27:    /*Lowi
                 return $this->apiLowi($lead, $idLead);
                 break;
-            case 20:    /*Butik*/
+            case 20:    /*Butik
                 return $this->apiButik($lead, $idLead);
                 break;
-            case 22:    /*Másmóvil*/
+            case 22:    /*Másmóvil
                 return $this->apiMasMovil($lead, $idLead);
                 break;
             default:
                 break;
         }
-    }
+    } */
 
-    public function leadFibra($lead, $idLead)
+    /* public function leadFibra($lead, $idLead)
     {
         switch ($lead['company']) {
-            case 20:    /*Butik*/
+            case 20:    /*Butik
                 return $this->apiButik($lead, $idLead);
                 break;
-            case 27:    /*Lowi*/
+            case 27:    /*Lowi
                 return $this->apiLowi($lead, $idLead);
                 break;
-            case 22:    /*Lowi*/
+            case 22:    /*Lowi
                 return $this->apiMasMovil($lead, $idLead);
                 break;
             default:
                 break;
         }
-    }
+    } */
 
     // API CPL Lowi
     public function apiLowi($lead, $idLead)

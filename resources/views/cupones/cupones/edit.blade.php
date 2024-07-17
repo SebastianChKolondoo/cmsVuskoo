@@ -23,7 +23,7 @@
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
                             {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
-                                'class' => 'form-control',
+                                'class' => 'form-control'
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">

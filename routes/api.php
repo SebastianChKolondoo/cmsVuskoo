@@ -58,7 +58,7 @@ Route::get('getDetailOffercomparadortarifasfibraymovil/{id}', [TarifasController
 /* Fibra, Movil y TV */
 Route::get('getTarifasFibraMovilTv/{lang?}', [TarifasController::class, 'getTarifasFibraMovilTvList']);
 Route::get('filterMovilFibraTv/{lang?}', [FilterController::class, 'getValuesFilterFibraMovilTvList']);
-Route::get('getExtraOffercomparadormovilfibratv/{lang?}', [ExtraOfferController::class, 'getExtraOfferFibraMovilTvList']);
+Route::get('getExtraOffercomparadorfibramoviltv/{lang?}', [ExtraOfferController::class, 'getExtraOfferFibraMovilTvList']);
 Route::get('getDetailOffercomparadorfibramoviltv/{id}', [TarifasController::class, 'getDetailOfferFibraMovilTvList']);
 /* Streaming */
 Route::get('getTarifasStreaming/{lang?}', [TarifasController::class, 'getTarifasStreamingList']);
@@ -95,9 +95,6 @@ Route::post('facebookZapierCpl', [ZapierController::class, 'facebookZapierCpl'])
 Route::post('redesSocialesZapier', [ZapierController::class, 'redesSocialesZapier']);
 Route::post('redesSocialesEnergyZapier', [ZapierController::class, 'redesSocialesEnergyZapier']);
 
-/* Menu */
-Route::get('getMenu/{lang?}', [ApiController::class, 'getMenuList']);
-
 /* Mexico */
 Route::get('getTarifasPlanCelular/{lang?}', [TarifasController::class, 'getTarifasPlanCelularList']);
 Route::get('filterPlanCelular/{lang?}', [FilterController::class, 'getValuesFilterPlanCelularList']);
@@ -125,3 +122,9 @@ Route::get('/cargarCategoriasPaises/{id?}', [ApiController::class, 'cargarCatego
 Route::get('getTarifasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasPrestamosList']);
 Route::get('getBancasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getBancasPrestamosList']);
 Route::get('getTarifaPrestamo/{id}', [TarifasController::class, 'getTarifaPrestamoList']);
+
+/* Administracion pagina web */
+/* Menu */
+Route::get('getMenu/{lang?}', [ApiController::class, 'getMenuList']);
+/* carga footer */
+Route::get('getFooter/{lang?}', [ApiController::class, 'getFooterList']);

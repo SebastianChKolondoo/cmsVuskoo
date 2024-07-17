@@ -6,6 +6,7 @@ use App\Models\Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Lead;
+use App\Models\PaginaWebFooter;
 use App\Models\Paises;
 use Mockery\Undefined;
 use Psy\Readline\Hoa\Console;
@@ -434,24 +435,35 @@ class ApiController extends Controller
         return Paises::where('codigo', $lang)->first();
         
     }
-
+    
     public function cargarPaisesCupones($id)
     {
         $data = DB::table('1_comercios')
-            ->select('pais')
-            ->where('1_comercios.id', '=', $id)
-            ->orderBy('nombre', 'asc')
-            ->first();
-
+        ->select('pais')
+        ->where('1_comercios.id', '=', $id)
+        ->orderBy('nombre', 'asc')
+        ->first();
+        
         return Paises::whereIn('id', json_decode($data->pais))->get();
     }
-
+    
     public function cargarCategoriasPaisesCupones($id)
     {
         $idArray = explode(',', $id);
         return DB::table('categorias_comercios')
-            ->whereIn('categorias_comercios.pais', $idArray)
-            ->orderBy('nombre', 'asc')
-            ->get();
+        ->whereIn('categorias_comercios.pais', $idArray)
+        ->orderBy('nombre', 'asc')
+        ->get();
+    }
+    
+    public function getFooterList($lang = null)
+    {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $validacionPais = Paises::where('codigo', $lang)->first();
+        return PaginaWebFooter::where('pais', $validacionPais->id)->first();
+        
     }
 }

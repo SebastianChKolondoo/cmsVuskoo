@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OperadorasController;
+use App\Http\Controllers\PaginaWebFooterController;
 use App\Http\Controllers\PaisesController;
 use App\Http\Controllers\ParillaFibraController;
 use App\Http\Controllers\ParillaFibraMovilController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\TipoCuponController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilsController;
 use App\Models\Comercios;
+use App\Models\PaginaWebFooter;
 use App\Models\ParillaFibraMovil;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -95,3 +97,6 @@ Route::get('prestamosDuplicate/{id}', [PrestamosController::class, 'duplicateOff
 /* Banca */
 Route::resource('bancos', BancaController::class)->names('bancos')->middleware(['auth']);
 Route::get('bancosDuplicate/{id}', [BancaController::class, 'duplicateOffer'])->name('bancosDuplicate')->middleware(['auth']);
+
+/* Pagina web */
+Route::resource('paginaweb', PaginaWebFooterController::class)->names('paginaweb')->middleware(['auth']);
