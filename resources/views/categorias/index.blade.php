@@ -31,7 +31,7 @@
                     <tr>
                         <th>id</th>
                         <th>Nombre</th>
-                        <th>Pais</th>
+                        {{-- <th>Pais</th> --}}
                         @can('categorias.view.btn-edit')
                         <th></th>
                         @endcan
@@ -41,7 +41,7 @@
                     @foreach ($categorias as $categoria)
                         <td class="align-middle">{{ $categoria->id }}</td>
                         <td class="align-middle">{{ $categoria->nombre }}</td>
-                        <td class="align-middle">{{ $categoria->paises->nombre }}</td>
+                        {{-- <td class="align-middle">{{ $categoria->paises->nombre }}</td> --}}
                         @can('categorias.view.btn-edit')
                             <td>
                                 <a href="{{ route('categorias.edit', $categoria) }}" class="btn btn-primary">Editar</a>

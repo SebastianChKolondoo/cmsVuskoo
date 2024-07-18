@@ -14,7 +14,7 @@ $(document).ready(function () {
 
 	// Inicializa el estado correcto cuando la página se carga
 	toggleFechaExpiracion();
-	
+
 	const tipoCupon = document.getElementById('tipoCupon');
 	const codigoCupon = document.getElementById('field_codigo_cupon');
 
@@ -66,11 +66,12 @@ $(document).ready(function () {
 
 	$('#comercio').change(function () {
 		cargarPaisesComercio($(this).val());
+		//cargarCategoriaMarca($(this).val());
 	});
 
-	$('#pais').change(function () {
+	/* $('#pais').change(function () {
 		cargarPaisesCategorias($(this).val());
-	});
+	}); */
 });
 
 let collapseContainers = false;
@@ -78,11 +79,41 @@ let collapseContainers = false;
 function cargarPaisesComercio(id) {
 
 	$('#pais').html('<option>Cargando...</option>');
+	$('#categoria').html('<option>Cargando...</option>');
 	let url = '/api/cargarPaises';
+	let categoria = '';
 	if (id) {
 		url += '/' + id;
 	}
-	
+
+	$.ajax({
+		url: url,
+		method: 'GET'
+	}).done(function (data) {
+		let lista = '<option>seleccione...</option>';
+		if(data['categoria'].length != 0){
+			$('#btn-save').attr('disabled', true).attr('value','Información incompleta en comercio');
+		}
+		for (let i = 0; i < data['paises'].length; i++) {
+			lista += '<option value="' + data['paises'][i].id + '">' + data['paises'][i].nombre + '</option>';
+		}
+		$('#pais').html(lista).attr('disabled', false);
+		categoria = '<option value="' + data['categoria'].id + '">' + data['categoria'].nombre + '</option>';
+		$('#pais').html(lista).attr('disabled', false);
+		$('#categoria').html(categoria).attr('disabled', true);
+	}).fail(function (jqXHR, textStatus, errorThrown) {
+		console.error('Error:', textStatus, errorThrown);
+	});
+}
+
+function cargarCategoriaMarca(id) {
+
+	$('#categoria').html('<option>aqui va...</option>');
+	let url = '/api/cargarCategoriaMarca';
+	if (id) {
+		url += '/' + id;
+	}
+
 	$.ajax({
 		url: url,
 		method: 'GET'
@@ -91,7 +122,7 @@ function cargarPaisesComercio(id) {
 		for (let i = 0; i < data.length; i++) {
 			lista += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
 		}
-		$('#pais').html(lista).attr('disabled',false);
+		$('#pais').html(lista).attr('disabled', false);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		console.error('Error:', textStatus, errorThrown);
 	});
@@ -112,7 +143,7 @@ function cargarPaisesCategorias(id) {
 		for (let i = 0; i < data.length; i++) {
 			lista += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
 		}
-		$('#categoria').html(lista).attr('disabled',false);
+		$('#categoria').html(lista).attr('disabled', false);
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		console.error('Error:', textStatus, errorThrown);
 	});

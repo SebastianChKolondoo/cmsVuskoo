@@ -32,9 +32,9 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->except('_token');
+        /* $data = $request->except('_token'); */
         // Iterar sobre cada elemento del request
-        foreach ($data as $key => $value) {
+        /* foreach ($data as $key => $value) {
             $codigoPais = explode('_', $key)[1];
             // Guardar la categoría
             if(!empty($value)){
@@ -44,7 +44,10 @@ class CategoriasController extends Controller
                     'pais' => $codigoPais,
                 ]);
             }
-        }
+        } */
+        Categorias::create([
+            'nombre' => strtolower($request->nombre),
+        ]);
         return redirect()->route('categorias.index')->with('info', 'Categoria creada correctamente.');
     }
 

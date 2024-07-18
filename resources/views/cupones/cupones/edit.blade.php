@@ -113,7 +113,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            {!! Form::submit('Actualizar', ['class' => 'btn btn-primary']) !!}
+                            {!! Form::submit('Actualizar', ['class' => 'btn btn-primary', 'id' => 'btn-save']) !!}
                             {!! Form::close() !!}
                         </div>
                     </div>

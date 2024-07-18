@@ -37,7 +37,15 @@
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
-                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
+                            {!! Form::select('pais[]', $paises->pluck('nombre', 'id'), null, [
+                                'class' => 'form-control',
+                                'multiple' => 'multiple',
+                                'id' => 'paisChange'
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('categoria', 'Categoria', ['class' => 'form-label']) !!}
+                            {!! Form::select('categoria', $categorias->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>

@@ -36,6 +36,12 @@
                                 'id' => 'paisChange'
                             ]) !!}
                         </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('categoria', 'Categoria', ['class' => 'form-label']) !!}
+                            {!! Form::select('categoria', ['' => 'Seleccione...'] + $categorias->pluck('nombre', 'id')->toArray(), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
                     </div>
                     {{ Form::submit('Actualizar', ['class' => 'btn btn-primary']) }}
                     {{ Form::close() }}

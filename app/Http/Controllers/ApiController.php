@@ -433,29 +433,65 @@ class ApiController extends Controller
             return [];
         }
         return Paises::where('codigo', $lang)->first();
-        
     }
-    
+
     public function cargarPaisesCupones($id)
     {
+        // Consulta la base de datos para obtener los valores de 'pais' y 'categoria'
         $data = DB::table('1_comercios')
-        ->select('pais')
-        ->where('1_comercios.id', '=', $id)
-        ->orderBy('nombre', 'asc')
-        ->first();
-        
+            ->select('pais', 'categoria')
+            ->where('1_comercios.id', '=', $id)
+            ->orderBy('nombre', 'asc')
+            ->first();
+
+        // Si $data es nulo, retorna un array vacío o maneja el error según sea necesario
+        if (!$data) {
+            return [
+                'paises' => ['nombre'=>'no disponible'],
+                'categoria' => ['nombre'=>'no disponible'],
+            ];
+        }
+
+        // Obtiene la categoría
+        $categoria = Categorias::select('*')->where('id',$data->categoria)->first();
+        if (!$categoria) {
+            return [
+                'paises' => ['nombre'=>'no disponible'],
+                'categoria' => ['nombre'=>'no disponible'],
+            ];
+        }
+
+        // Obtiene los países
+        $paises = Paises::whereIn('id', json_decode($data->pais))->get();
+
+        // Retorna ambos valores en un array asociativo
+        return [
+            'paises' => $paises,
+            'categoria' => $categoria,
+        ];
+    }
+
+
+    public function cargarCategoriaMarca($id)
+    {
+        $data = DB::table('1_comercios')
+            ->select('pais', 'categoria')
+            ->where('1_comercios.id', '=', $id)
+            ->orderBy('nombre', 'asc')
+            ->first();
+
         return Paises::whereIn('id', json_decode($data->pais))->get();
     }
-    
+
     public function cargarCategoriasPaisesCupones($id)
     {
         $idArray = explode(',', $id);
         return DB::table('categorias_comercios')
-        ->whereIn('categorias_comercios.pais', $idArray)
-        ->orderBy('nombre', 'asc')
-        ->get();
+            ->whereIn('categorias_comercios.pais', $idArray)
+            ->orderBy('nombre', 'asc')
+            ->get();
     }
-    
+
     public function getFooterList($lang = null)
     {
         $validacionPais = Paises::where('codigo', $lang)->count();
@@ -464,6 +500,5 @@ class ApiController extends Controller
         }
         $validacionPais = Paises::where('codigo', $lang)->first();
         return PaginaWebFooter::where('pais', $validacionPais->id)->first();
-        
     }
 }

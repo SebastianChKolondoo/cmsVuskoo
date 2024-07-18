@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorias;
 use App\Models\Comercios;
 use App\Models\Paises;
 use App\Models\States;
@@ -50,6 +51,7 @@ class ComerciosController extends Controller
             'politica_privacidad' => ($request->politica),
             'estado' => ($request->state),
             'fecha_registro' => now(),
+            'categoria' => $request->categoria
         ]);
 
         return redirect()->route('comercios.index')->with('info', 'comercio creado correctamente.');
@@ -76,7 +78,8 @@ class ComerciosController extends Controller
         }
         $paises = Paises::all();
         $estados = States::all();
-        return view('clientes.comercios.edit', compact('comercio', 'estados', 'paises'));
+        $categorias = Categorias::all();
+        return view('clientes.comercios.edit', compact('comercio', 'estados', 'paises', 'categorias'));
     }
 
     /**
