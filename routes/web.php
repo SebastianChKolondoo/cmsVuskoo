@@ -24,6 +24,7 @@ use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\PrestamosController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TipoCuponController;
+use App\Http\Controllers\TraduccionCategoriasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilsController;
 use App\Models\Comercios;
@@ -100,3 +101,6 @@ Route::get('bancosDuplicate/{id}', [BancaController::class, 'duplicateOffer'])->
 
 /* Pagina web */
 Route::resource('paginaweb', PaginaWebFooterController::class)->names('paginaweb')->middleware(['auth']);
+
+/* traducciones */
+Route::resource('traduccionCategorias', TraduccionCategoriasController::class)->names('traduccionCategorias')->middleware(['auth']);

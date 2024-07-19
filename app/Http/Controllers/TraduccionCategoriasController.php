@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorias;
+use App\Models\Paises;
 use App\Models\TraduccionCategorias;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,8 @@ class TraduccionCategoriasController extends Controller
      */
     public function index()
     {
-        //
+        $data = Categorias::all();
+        return view('traduccionCategorias.index', compact('data'));
     }
 
     /**
@@ -20,7 +23,8 @@ class TraduccionCategoriasController extends Controller
      */
     public function create()
     {
-        //
+        $data = Paises::all();
+        return view('traduccionCategorias.create', compact('data'));
     }
 
     /**
@@ -42,9 +46,11 @@ class TraduccionCategoriasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TraduccionCategorias $traduccionCategorias)
+    public function edit($id)
     {
-        //
+        $categoria = Categorias::find($id);
+        $data = Paises::all();
+        return view('traduccionCategorias.edit', compact('data','categoria'));
     }
 
     /**
