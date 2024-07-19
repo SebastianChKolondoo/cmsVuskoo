@@ -31,6 +31,7 @@
                     <tr>
                         <th>id</th>
                         <th>Nombre</th>
+                        <th>Categoria</th>
                         @can('comercios.view.btn-edit')
                             <th></th>
                         @endcan
@@ -40,6 +41,7 @@
                     @foreach ($comercios as $comercio)
                         <td class="align-middle">{{ $comercio->id }}</td>
                         <td class="align-middle">{{ $comercio->nombre }}</td>
+                        <td class="align-middle">{{ optional($comercio->categorias)->nombre ?? 'No asignada' }}</td>
                         {{-- <td class="align-middle">{{ $comercio->paises->nombre }}</td> --}}
                         @can('comercios.view.btn-edit')
                             <td>

@@ -27,6 +27,11 @@ class Comercios extends Model
     {
         return $this->belongsTo(States::class, 'estado', 'id');
     }
+
+    public function categorias()
+    {
+        return $this->belongsTo(Categorias::class, 'categoria', 'id');
+    }
    
     /* public function paises()
     {

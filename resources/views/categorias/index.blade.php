@@ -31,7 +31,6 @@
                     <tr>
                         <th>id</th>
                         <th>Nombre</th>
-                        {{-- <th>Pais</th> --}}
                         @can('categorias.view.btn-edit')
                         <th></th>
                         @endcan
