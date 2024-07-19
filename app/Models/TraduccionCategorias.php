@@ -14,4 +14,9 @@ class TraduccionCategorias extends Model
         'nombre',
         'pais',
     ];
+
+    public function paises()
+    {
+        return $this->belongsTo(Paises::class, 'pais', 'id');
+    }
 }

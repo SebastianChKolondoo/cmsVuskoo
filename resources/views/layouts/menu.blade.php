@@ -83,13 +83,14 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCupones"
                 aria-expanded="true" aria-controls="collapseCupones">
                 <i class="fa fa-binoculars" aria-hidden="true"></i>
-                <span>Cupones</span>
+                <span>Cupones <sup><i class="fa fa-star" aria-hidden="true"></i></sup></span>
             </a>
             <div id="collapseCupones" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('cupones.index') }}">Cupones</a>
                     <a class="collapse-item" href="{{ route('tipoCupones.index') }}">Tipo de cupones</a>
                     <a class="collapse-item" href="{{ route('categorias.index') }}">Categorias</a>
+                    <a class="collapse-item" href="{{ route('traduccionCategorias.index') }}">Traducciones</a>
                 </div>
 
             </div>

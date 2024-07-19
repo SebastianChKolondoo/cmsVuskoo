@@ -32,7 +32,18 @@ class TraduccionCategoriasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        foreach ($data as $key => $value) {
+            $codigoPais = explode('_', $key)[1];
+            // Guardar la categoría
+            if(!empty($value)){
+                Categorias::create([
+                    'categoria' => $value,
+                    'nombre' => strtolower($value),
+                    'pais' => $codigoPais,
+                ]);
+            }
+        }
     }
 
     /**
@@ -49,16 +60,29 @@ class TraduccionCategoriasController extends Controller
     public function edit($id)
     {
         $categoria = Categorias::find($id);
-        $data = Paises::all();
-        return view('traduccionCategorias.edit', compact('data','categoria'));
+        $paises = Paises::all();
+        foreach($paises as $pais){
+            $validacion = TraduccionCategorias::where('categoria',$id)->where('pais',$pais->id)->count();
+            if($validacion == 0){
+                $validacion = TraduccionCategorias::create([
+                    'categoria' => $id,
+                    'pais' => $pais->id
+                ]);
+            }
+        }
+
+        $traducciones = TraduccionCategorias::where('categoria',$id)->get();
+        return view('traduccionCategorias.edit', compact('traducciones','categoria'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TraduccionCategorias $traduccionCategorias)
+    public function update(Request $request,$id)
     {
-        //
+        $data = TraduccionCategorias::find($id);
+        $data->update($request->all());
+        return back()->with('info', 'Información actualizada correctamente.');
     }
 
     /**
