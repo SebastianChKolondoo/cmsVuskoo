@@ -11,8 +11,10 @@ use App\Http\Controllers\HelperController;
 use App\Http\Controllers\TarifasController;
 use App\Http\Controllers\UtilsController;
 use App\Http\Controllers\ZapierController;
+use App\Models\Comercios;
+use App\Models\Cupones;
 
-Route::get('/', function(){
+Route::get('/', function () {
     return 'welcome to Vuskoo!';
 });
 
@@ -127,5 +129,23 @@ Route::get('getTarifaPrestamo/{id}', [TarifasController::class, 'getTarifaPresta
 /* Administracion pagina web */
 /* Menu */
 Route::get('getMenu/{lang?}', [ApiController::class, 'getMenuList']);
+Route::get('getMenuApi/{lang?}', [ApiController::class, 'getMenuApi']);
 /* carga footer */
 Route::get('getFooter/{lang?}', [ApiController::class, 'getFooterList']);
+
+route::get('/cambio', function () {
+    $data = Cupones::limit(200)->orderBy('store', 'desc')->get();
+    foreach ($data as $item) {
+        $a = Comercios::where('nombre', $item->store)->count();
+        if ($a == 1) {
+            $a = Comercios::where('nombre', $item->store)->first();
+            $item['store'] = $a->id;
+            $cupon = Cupones::find($item->id);
+            if($cupon->update(['store' => $a->id])){
+                echo 'cambio de '.$a->nombre.' a '.$a->id.' realizado<br>';
+            }else{
+                echo $a->id.' no realizado<br>';
+            }
+        }
+    }
+});

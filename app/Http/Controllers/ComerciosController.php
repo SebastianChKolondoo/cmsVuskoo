@@ -6,6 +6,7 @@ use App\Models\Categorias;
 use App\Models\Comercios;
 use App\Models\Paises;
 use App\Models\States;
+use App\Models\TipoCupon;
 use Illuminate\Http\Request;
 
 class ComerciosController extends Controller
@@ -31,8 +32,10 @@ class ComerciosController extends Controller
     public function create()
     {
         $paises = Paises::all();
-        $estados =  States::all();
-        return view('clientes.comercios.create', compact('estados', 'paises'));
+        $estados = States::all();
+        $categorias = Categorias::all();
+        $tipoCupon = TipoCupon::all();
+        return view('clientes.comercios.create', compact('estados', 'paises','categorias','tipoCupon'));
     }
 
     /**
@@ -44,14 +47,16 @@ class ComerciosController extends Controller
             'nombre' => ($request->name),
             'tipo_conversion' => '',
             'color' => '',
+            'idPerseo' => $request->idPerseo,
             'color_texto' => '',
             'logo' => ($request->logo),
             'logo_negativo' => ($request->negativo),
-            'isotipo' => '',
             'politica_privacidad' => ($request->politica),
-            'estado' => ($request->state),
             'fecha_registro' => now(),
-            'categoria' => $request->categoria
+            'categoria' => $request->categoria,
+            'estado' => ($request->state),
+            'pais' => $request->pais,
+            'TipoCupon' => $request->TipoCupon
         ]);
 
         return redirect()->route('comercios.index')->with('info', 'comercio creado correctamente.');
@@ -71,15 +76,11 @@ class ComerciosController extends Controller
     public function edit($id)
     {
         $comercio = Comercios::find($id);
-        $array = json_decode($comercio->pais, true);
-        if (json_last_error() === JSON_ERROR_NONE) {
-            $array = array_map('intval', $array);
-            $comercio->pais = $array;
-        }
         $paises = Paises::all();
         $estados = States::all();
         $categorias = Categorias::all();
-        return view('clientes.comercios.edit', compact('comercio', 'estados', 'paises', 'categorias'));
+        $tipoCupon = TipoCupon::all();
+        return view('clientes.comercios.edit', compact('tipoCupon','comercio', 'estados', 'paises', 'categorias'));
     }
 
     /**

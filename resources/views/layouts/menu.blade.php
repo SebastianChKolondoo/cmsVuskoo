@@ -173,7 +173,14 @@
     <div class="sidebar-heading">
         Página Web
     </div>
-    @can('cupones.view')
+    @can('paginawebmenu.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/paginawebmenu">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+                <span>Menú</span></a>
+        </li>
+    @endcan
+    @can('paginawebfooter.view')
         <li class="nav-item active">
             <a class="nav-link" href="/paginaweb">
                 <i class="fa-solid fa-layer-group"></i>

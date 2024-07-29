@@ -52,7 +52,9 @@ class ParillaLuzGas extends Model
         'landingLead',
         'slug_tarifa',
         'pais',
-        'textoAdicional'
+        'textoAdicional',
+        'tituloSeo',
+        'descripcionSeo'
     ];
 
     public function state()

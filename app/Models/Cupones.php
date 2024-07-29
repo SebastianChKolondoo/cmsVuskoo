@@ -10,30 +10,27 @@ class Cupones extends Model
     use HasFactory;
     protected $table = "WEB_3_TARIFAS_CUPONES";
     protected $fillable = [
-        'codigo',
-        'landing_link',
         'comercio',
-        'estado',
-        'landing_link',
-        'funcion',
-        'cateogria',
+        'codigo',
+        'titulo',
         'descripcion',
-        'destacada',
-        'fecha_publicacion',
-        'fecha_expiracion',
-        'slug_tarifa',
-        'categoria',
-        'pais',
-        'textoAdicional',
-        'created_at',
-        'updated_at',
-        'nombre_tarifa',
-        'descuento',
-        'landing_link',
-        'tipoCupon',
-        'TiempoCupon',
+        'label',
         'CodigoCupon',
-        'pagina_final'
+        'featured',
+        'source',
+        'deeplink',
+        'affiliate_link',
+        'cashback_link',
+        'url',
+        'image_url',
+        'tipoCupon',
+        'merchant_home_page',
+        'fecha_inicial',
+        'fecha_final',
+        'estado',
+        'pais',
+        'destacada',
+        'TiempoCupon'
     ];
 
     public function state()

@@ -195,26 +195,27 @@ class TarifasController extends Controller
             }
         }
 
-        $query = DB::table($this->tabla_cupones)
+        return $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
+            ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
+            ->join('paises', 'paises.id', '=', $this->tabla_cupones . '.pais')
             ->select(
                 $this->tabla_cupones . '.*',
-                DB::raw('DATE_FORMAT(fecha_expiracion, "%d-%m-%Y") as fecha_expiracion'),
-                DB::raw('DATEDIFF(fecha_expiracion, CURRENT_DATE) AS dias_restantes'),
+                DB::raw('CURRENT_DATE'),
+                DB::raw('DATE_FORMAT(' . $this->tabla_cupones . '.fecha_final, "%d-%m-%Y") as fecha_final'),
+                DB::raw('DATEDIFF(' . $this->tabla_cupones . '.fecha_final, CURRENT_DATE) AS dias_restantes'),
                 '1_comercios.nombre as nombre_comercio',
                 '1_comercios.logo',
                 'paises.nombre as pais',
-                'TipoCupon.nombre as cupon',
-                'categorias_comercios.nombre as categoria_nombre'
+                'TipoCupon.nombre as cupon'
             )
-            ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
-            ->join('paises', 'paises.id', '=', $this->tabla_cupones . '.pais')
-            ->join('categorias_comercios', 'categorias_comercios.id', '=', $this->tabla_cupones . '.categoria')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
-            ->where($this->tabla_cupones . '.fecha_expiracion', '>=', DB::raw('CURRENT_DATE'))
-            ->orderBy('destacada', 'asc');
+            ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
+            ->whereDate($this->tabla_cupones . '.fecha_final', '>=', DB::raw('CURRENT_DATE'))
+            ->orderBy('destacada', 'asc')
+            ->get();
 
         if (!empty($id)) {
             $query->where($this->tabla_cupones . '.id', '=', $id);
@@ -224,14 +225,14 @@ class TarifasController extends Controller
             $query->where('categoria', $idCategoriaConsulta);
         }
 
-        return $query->get();
+        /* return $query->get(); */
     }
 
     public function getTarifaCuponList($id)
     {
         $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
-            ->select($this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_expiracion, "%d-%m-%Y") as fecha_expiracion'), DB::raw('DATEDIFF(fecha_expiracion, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo', 'paises.nombre as pais', 'TipoCupon.nombre as cupon')
+            ->select($this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_final, "%d-%m-%Y") as fecha_final'), DB::raw('DATEDIFF(fecha_final, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo', 'paises.nombre as pais', 'TipoCupon.nombre as cupon')
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
             ->join('paises', 'paises.id', $this->tabla_cupones . '.pais')
             ->where($this->tabla_cupones . '.estado', '=', '1')

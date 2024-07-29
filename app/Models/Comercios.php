@@ -12,6 +12,7 @@ class Comercios extends Model
     protected $fillable = [
         'funcion_api',
         'nombre',
+        'idPerseo',
         'nombre_slug',
         'TipoCupon',
         'tipo_conversion',

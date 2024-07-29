@@ -85,6 +85,8 @@ class ParillaFibraController extends Controller
             'texto_alternativo_promo' => $request->texto_alternativo_promo,
             'destacada' => $request->destacada,
             'textoAdicional' => $request->textoAdicional,
+            'tituloSeo' => $request->tituloSeo,
+            'descripcionSeo' => $request->descripcionSeo,
             'orden_parrilla_operadora' => $request->orden_parrilla_operadora,
             'fecha_publicacion' => $request->fecha_publicacion,
             'fecha_expiracion' => $request->fecha_expiracion,

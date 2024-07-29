@@ -89,6 +89,8 @@ class ParrillaStreamingController extends Controller
             'pais' => trim($request->pais),
             'landingLead' => trim($request->landingLead),
             'slug_tarifa' => strtolower(str_replace([' ', '+'], ['_', ''], $request->nombre_tarifa)),
+            'tituloSeo' => $request->tituloSeo,
+            'descripcionSeo' => $request->descripcionSeo,
         ]);
 
         return redirect()->route('streaming.index')->with('info', 'Tarifa creada correctamente.');

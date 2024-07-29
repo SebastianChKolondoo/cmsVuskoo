@@ -91,6 +91,8 @@ class ParillaMovilController extends Controller
             'landingLead' => $landingLead,
             'appsIlimitadas' => $request->appsIlimitadas,
             'textoAdicional' => $request->textoAdicional,
+            'tituloSeo' => $request->tituloSeo,
+            'descripcionSeo' => $request->descripcionSeo,
             'facebook' => $request->facebook,
             'messenger' => $request->messenger,
             'waze' => $request->waze,

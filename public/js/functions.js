@@ -1,4 +1,9 @@
 $(document).ready(function () {
+
+	$('#additemmenu').on('click', () => {
+		agregarItemSumenu();
+	});
+
 	const tiempoCupon = document.getElementById('TiempoCupon');
 	const fechaExpiracionField = document.getElementById('field_fecha_expiracion');
 
@@ -67,6 +72,8 @@ $(document).ready(function () {
 	$('#comercio').change(function () {
 		cargarPaisesComercio($(this).val());
 	});
+
+
 });
 
 let collapseContainers = false;
@@ -135,5 +142,34 @@ function cargarPaisesCategorias(id) {
 	}).fail(function (jqXHR, textStatus, errorThrown) {
 		console.error('Error:', textStatus, errorThrown);
 	});
+}
+
+function agregarItemSumenu() {
+	var elementos = document.querySelectorAll('.nuevoSubmenu');
+	var cantidad = elementos.length;
+	var nuevoItem = `
+	<div class="row nuevoSubmenu">
+		<div class="col-12 col-md-5">
+			<div class="form-group">
+				<label for="nombresubmenu_${cantidad}" class="form-label">Nombre SubMenú ${cantidad+1}</label>
+				<input type="text" name="nombresubmenu_${cantidad}" class="form-control" required="required">
+			</div>
+		</div>
+		<div class="col-12 col-md-5">
+			<div class="form-group">
+				<label for="urlsubmenu_${cantidad}" class="form-label">Url SubMenú ${cantidad+1}</label>
+				<input type="text" name="urlsubmenu_${cantidad}" class="form-control" required="required">
+			</div>
+		</div>
+		<div class="col-12 col-md-2">
+			<div class="form-group">
+				<label for="ordensubmenu_${cantidad}" class="form-label">Orden SubMenú ${cantidad+1}</label>
+				<select type="text" value="${cantidad}" name="ordensubmenu_${cantidad}" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
+			</div>
+		</div>
+	</div>`;
+	$('#contenedorItemSubmenu').append(nuevoItem);
+
+
 }
 

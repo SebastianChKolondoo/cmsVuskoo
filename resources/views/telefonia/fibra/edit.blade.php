@@ -144,10 +144,21 @@
                             {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
                             {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor', 'rows' => 2]) !!}
                         </div>
-                    </div>
-                    <div class="col-12">
-                        {!! Form::submit('Guardar cambios', ['class' => 'btn btn-primary']) !!}
-                        {!! Form::close() !!}
+                        <div class="form-group col-12 col-md-12 mt-3">
+                            <h2>Información para Seo</h2>
+                        </div>
+                        <div class="form-group col-12 col-md-6">
+                            {!! Form::label('tituloSeo', 'Título Seo', ['class' => 'form-label']) !!}
+                            {!! Form::text('tituloSeo', null, ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-12">
+                            {!! Form::label('descripcionSeo', 'Descripción Seo', ['class' => 'form-label']) !!}
+                            {!! Form::textarea('descripcionSeo', null, ['class' => 'form-control', 'rows' => 2]) !!}
+                        </div>
+                        <div class="col-12">
+                            {!! Form::submit('Guardar cambios', ['class' => 'btn btn-primary']) !!}
+                            {!! Form::close() !!}
+                        </div>
                     </div>
                 </div>
             </div>

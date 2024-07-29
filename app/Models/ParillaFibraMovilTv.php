@@ -69,7 +69,9 @@ class ParillaFibraMovilTv extends Model
         'duracionContrato',
         'red5g',
         'tinder',
-        'lolamusic'
+        'lolamusic',
+        'tituloSeo',
+        'descripcionSeo'
     ];
 
     public function state()

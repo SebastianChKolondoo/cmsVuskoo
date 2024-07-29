@@ -9,6 +9,8 @@ use App\Http\Controllers\CuponesController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\OperadorasController;
 use App\Http\Controllers\PaginaWebFooterController;
 use App\Http\Controllers\PaisesController;
@@ -104,3 +106,8 @@ Route::resource('paginaweb', PaginaWebFooterController::class)->names('paginaweb
 
 /* traducciones */
 Route::resource('traduccionCategorias', TraduccionCategoriasController::class)->names('traduccionCategorias')->middleware(['auth']);
+
+/* menu */
+Route::resource('paginawebmenu', MenuController::class)->names('paginawebmenu')->middleware(['auth']);
+
+Route::resource('paginawebsubmenu', MenuItemController::class)->names('paginawebsubmenu')->middleware(['auth']);

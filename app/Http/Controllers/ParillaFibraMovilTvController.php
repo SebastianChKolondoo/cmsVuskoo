@@ -98,6 +98,8 @@ class ParillaFibraMovilTvController extends Controller
             'red5g' => $request->red5g,
             'tinder' => $request->tinder,
             'lolamusic' => $request->lolamusic,
+            'tituloSeo' => $request->tituloSeo,
+            'descripcionSeo' => $request->descripcionSeo,
         ]);
 
         return redirect()->route('parrillafibramoviltv.index')->with('info', 'Tarifa creada correctamente.');

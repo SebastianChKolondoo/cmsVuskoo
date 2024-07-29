@@ -46,7 +46,9 @@ class ParrillaStreaming extends Model
         'landingLead',
         'slug_tarifa',
         'estado',
-        'pais'
+        'pais',
+        'tituloSeo',
+        'descripcionSeo'
     ];
     public function state()
     {

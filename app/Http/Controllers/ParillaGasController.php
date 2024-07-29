@@ -78,7 +78,10 @@ class ParillaGasController extends Controller
             'fecha_registro' => $request->fecha_registro,
             'moneda' =>  $moneda->moneda,
             'slug_tarifa' => $slug,
-            'pais' => $request->pais
+            'pais' => $request->pais,
+            'textoAdicional' => $request->textoAdicional,
+            'tituloSeo' => $request->tituloSeo,
+            'descripcionSeo' => $request->descripcionSeo,
         ]);
 
         return redirect()->route('parrillagas.index')->with('info', 'Tarifa creada correctamente.');

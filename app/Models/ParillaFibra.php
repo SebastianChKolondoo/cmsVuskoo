@@ -44,6 +44,8 @@ class ParillaFibra extends Model
         'pais',
         'textoAdicional',
         'duracionContrato',
+        'tituloSeo',
+        'descripcionSeo'
     ];
 
     public function state()

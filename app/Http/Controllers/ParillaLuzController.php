@@ -81,6 +81,8 @@ class ParillaLuzController extends Controller
             'slug_tarifa' => $slug,
             'pais' => $request->pais,
             'textoAdicional' => $request->textoAdicional,
+            'tituloSeo' => $request->tituloSeo,
+            'descripcionSeo' => $request->descripcionSeo,
         ]);
 
         return redirect()->route('parrillaluz.index')->with('info', 'Tarifa creada correctamente.');
@@ -109,7 +111,7 @@ class ParillaLuzController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $parillaLuz)
+    public function update(Request $request, $id)
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Comercializadoras::find($request->comercializadora);
@@ -120,7 +122,7 @@ class ParillaLuzController extends Controller
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['slug_tarifa'] = $slug;
         $request['moneda'] = $moneda->moneda;
-        $tarifa = ParillaLuz::find($parillaLuz);
+        $tarifa = ParillaLuz::find($id);
         $tarifa->update($request->all());
         return redirect()->route('parrillaluz.index')->with('info', 'Tarifa editada correctamente.');
     }

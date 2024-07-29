@@ -87,6 +87,8 @@ class ParillaLuzGasController extends Controller
             'slug_tarifa' => $slug,
             'pais' => $request->pais,
             'textoAdicional' => $request->textoAdicional,
+            'tituloSeo' => $request->tituloSeo,
+            'descripcionSeo' => $request->descripcionSeo,
         ]);
 
         return redirect()->route('parrillaluzgas.index')->with('info', 'Tarifa creada correctamente.');

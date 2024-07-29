@@ -6,6 +6,7 @@ use App\Models\Categorias;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Lead;
+use App\Models\Menu;
 use App\Models\PaginaWebFooter;
 use App\Models\Paises;
 use Mockery\Undefined;
@@ -48,6 +49,45 @@ class ApiController extends Controller
         return view('swagger');
     }
 
+    public function getMenuApi($lang = 'es')
+    {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
+        // Realizar la consulta SQL para obtener los datos
+        $rows = DB::table('pagina_web_menu')
+            ->leftJoin('pagina_web_menu_item', 'pagina_web_menu_item.idMenu', '=', 'pagina_web_menu.id')
+            ->select('pagina_web_menu.id as menuId', 'pagina_web_menu.titulo', 'pagina_web_menu.urlTitulo', 'pagina_web_menu_item.nombre', 'pagina_web_menu_item.url')
+            ->where('pagina_web_menu.pais', $idioma->id)
+            ->get();
+
+        // Estructurar los datos para coincidir con la estructura JSON deseada
+        $menuItems = [];
+
+        foreach ($rows as $row) {
+            $menuId = $row->menuId;
+            if (!isset($menuItems[$menuId])) {
+                $menuItems[$menuId] = [
+                    'title' => $row->titulo,
+                    'titleUrl' => $row->urlTitulo,
+                    'children' => []
+                ];
+            }
+            if ($row->nombre && $row->url) {
+                $menuItems[$menuId]['children'][] = [
+                    'name' => $row->nombre,
+                    'url' => $row->url
+                ];
+            }
+        }
+
+        $data = array_values($menuItems);
+
+        // Retornar la estructura en formato JSON
+        return response()->json($data, 200, [], JSON_PRETTY_PRINT);
+    }
     public function getMenuList($lang = 'es')
     {
         $data = [];
@@ -251,15 +291,15 @@ class ApiController extends Controller
                 $idCategoriaConsulta = $categoria->id;
             }
         }
-
         $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
             ->select('1_comercios.id', '1_comercios.nombre', '1_comercios.logo')
             ->where('1_comercios.estado', '=', '1')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
-            ->where($this->tabla_cupones . '.fecha_expiracion', '>=', DB::raw('CURRENT_DATE'))
-            ->groupBy($this->tabla_cupones . '.comercio');
+            ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
+            ->whereDate($this->tabla_cupones . '.fecha_final', '>=', DB::raw('CURRENT_DATE'))
+            ->groupBy($this->tabla_cupones . '.comercio');;
 
         if ($idCategoriaConsulta != 0) {
             $query->where('categoria', $idCategoriaConsulta);
@@ -276,7 +316,7 @@ class ApiController extends Controller
         }
         $idioma = Paises::where('codigo', $lang)->first();
         $categoria = '';
-        $idCategoriaConsulta = 0;
+        /* $idCategoriaConsulta = 0;
         if ($idCategoria != null && $idCategoria != 'null' && $idCategoria != 'undefined') {
             $categoria = Categorias::where('nombre', $idCategoria)->count();
             if ($categoria == 0) {
@@ -285,14 +325,15 @@ class ApiController extends Controller
                 $categoria = Categorias::where('nombre', $idCategoria)->first();
                 $idCategoriaConsulta = $categoria->id;
             }
-        }
-
-        return DB::table($this->tabla_cupones)
+        } */
+        
+        return $cupones = DB::table($this->tabla_cupones)
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
             ->select('TipoCupon.id', 'TipoCupon.nombre')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
-            ->where($this->tabla_cupones . '.fecha_expiracion', '>=', DB::raw('CURRENT_DATE'))
+            ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
+            ->whereDate($this->tabla_cupones . '.fecha_final', '>=', DB::raw('CURRENT_DATE'))
             ->groupBy($this->tabla_cupones . '.tipoCupon')
             ->get();
     }
@@ -447,17 +488,17 @@ class ApiController extends Controller
         // Si $data es nulo, retorna un array vacío o maneja el error según sea necesario
         if (!$data) {
             return [
-                'paises' => ['nombre'=>'no disponible'],
-                'categoria' => ['nombre'=>'no disponible'],
+                'paises' => ['nombre' => 'no disponible'],
+                'categoria' => ['nombre' => 'no disponible'],
             ];
         }
 
         // Obtiene la categoría
-        $categoria = Categorias::select('*')->where('id',$data->categoria)->first();
+        $categoria = Categorias::select('*')->where('id', $data->categoria)->first();
         if (!$categoria) {
             return [
-                'paises' => ['nombre'=>'no disponible'],
-                'categoria' => ['nombre'=>'no disponible'],
+                'paises' => ['nombre' => 'no disponible'],
+                'categoria' => ['nombre' => 'no disponible'],
             ];
         }
 
