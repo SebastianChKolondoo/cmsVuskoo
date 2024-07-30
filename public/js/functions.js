@@ -5,13 +5,16 @@ $(document).ready(function () {
 	});
 
 	const tiempoCupon = document.getElementById('TiempoCupon');
-	const fechaExpiracionField = document.getElementById('field_fecha_expiracion');
+	const fechaExpiracionInicial = document.getElementById('field_fecha_inicial');
+	const fechaExpiracionFinal = document.getElementById('field_fecha_final');
 
 	function toggleFechaExpiracion() {
 		if (tiempoCupon.value == '2') {
-			fechaExpiracionField.classList.add('d-none');
+			fechaExpiracionInicial.classList.add('d-none');
+			fechaExpiracionFinal.classList.add('d-none');
 		} else {
-			fechaExpiracionField.classList.remove('d-none');
+			fechaExpiracionInicial.classList.remove('d-none');
+			fechaExpiracionFinal.classList.remove('d-none');
 		}
 	}
 	// Escucha el cambio en el select
@@ -24,7 +27,7 @@ $(document).ready(function () {
 	const codigoCupon = document.getElementById('field_codigo_cupon');
 
 	function toggleTipoCupon() {
-		if (tipoCupon.value == '3') {
+		if (tipoCupon.value == '1') {
 			codigoCupon.classList.remove('d-none');
 		} else {
 			codigoCupon.classList.add('d-none');
@@ -61,7 +64,7 @@ $(document).ready(function () {
 	});
 
 	$('#tipoCupon').change(function () {
-		if ($(this).val() == 3) {
+		if ($(this).val() == 1) {
 			$('#field_codigo_cupon').removeClass('d-none');
 		}
 		else {
@@ -69,9 +72,9 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#comercio').change(function () {
+	/* $('#comercio').change(function () {
 		cargarPaisesComercio($(this).val());
-	});
+	}); */
 
 
 });

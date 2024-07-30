@@ -111,3 +111,5 @@ Route::resource('traduccionCategorias', TraduccionCategoriasController::class)->
 Route::resource('paginawebmenu', MenuController::class)->names('paginawebmenu')->middleware(['auth']);
 
 Route::resource('paginawebsubmenu', MenuItemController::class)->names('paginawebsubmenu')->middleware(['auth']);
+
+Route::resource('formularioContactenos', MenuItemController::class)->names('paginawebsubmenu')->middleware(['auth']);

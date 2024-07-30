@@ -133,7 +133,7 @@ Route::get('getMenuApi/{lang?}', [ApiController::class, 'getMenuApi']);
 /* carga footer */
 Route::get('getFooter/{lang?}', [ApiController::class, 'getFooterList']);
 
-route::get('/cambio', function () {
+/* route::get('/cambio', function () {
     $data = Cupones::limit(200)->orderBy('store', 'desc')->get();
     foreach ($data as $item) {
         $a = Comercios::where('nombre', $item->store)->count();
@@ -149,3 +149,4 @@ route::get('/cambio', function () {
         }
     }
 });
+ */

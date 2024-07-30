@@ -39,9 +39,10 @@
                         <th>id</th>
                         <th>Estado</th>
                         <th>Comercio</th>
-                        <th>Nombre</th>
+                        {{-- <th>Nombre</th> --}}
+                        <th>Tipo</th>
                         <th>Visible en</th>
-                        @can('gas.view.btn-edit')
+                        @can('cupones.view.btn-edit')
                             <th></th>
                         @endcan
                     </tr>
@@ -52,13 +53,14 @@
                             <td class="align-middle">{{ $tarifa->id }}</td>
                             <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
                             <td class="align-middle">{{ $tarifa->comercios->nombre ?? 'Not Available' }}</td>
-                            <td class="align-middle">{{ $tarifa->label }}</td>
+                            {{-- <td class="align-middle">{{ $tarifa->titulo }}</td> --}}
+                            <td class="align-middle">{{ optional($tarifa->tipoCupones)->nombre }}</td>
                             <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                             <td>
-                                @can('gas.view.btn-edit')
+                                @can('cupones.view.btn-edit')
                                     <a href="{{ route('cupones.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                 @endcan
-                                @can('gas.view.btn-duplicate')
+                                @can('cupones.view.btn-duplicate')
                                     <a href="{{ route('cuponesDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
                                 @endcan
                             </td>
@@ -73,10 +75,10 @@
                     <tr>
                         <th>id</th>
                         <th>Comercio</th>
-                        <th>Nombre</th>
+                        {{-- <th>Nombre</th> --}}
                         <th>Categoria</th>
                         <th>Visible en</th>
-                        @can('gas.view.btn-edit')
+                        @can('cupones.view.btn-edit')
                             <th></th>
                         @endcan
                     </tr>
@@ -87,14 +89,14 @@
                             <tr>
                                 <td class="align-middle">{{ $tarifa->id }}</td>
                                 <td class="align-middle">{{ $tarifa->comercios->nombre ?? 'Not Available' }}</td>
-                                <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
+                                {{-- <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td> --}}
                                 <td class="align-middle">{{ optional($tarifa->categorias)->nombre }}</td>
                                 <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                                 <td>
-                                    @can('gas.view.btn-edit')
+                                    @can('cupones.view.btn-edit')
                                         <a href="{{ route('cupones.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     @endcan
-                                    @can('gas.view.btn-duplicate')
+                                    @can('cupones.view.btn-duplicate')
                                         <a href="{{ route('cuponesDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
                                     @endcan
                                 </td>
@@ -110,10 +112,10 @@
                     <tr>
                         <th>id</th>
                         <th>Comercio</th>
-                        <th>Nombre</th>
+                        {{-- <th>Nombre</th> --}}
                         <th>Categoria</th>
                         <th>Visible en</th>
-                        @can('gas.view.btn-edit')
+                        @can('cupones.view.btn-edit')
                             <th></th>
                         @endcan
                     </tr>
@@ -124,14 +126,14 @@
                             <tr>
                                 <td class="align-middle">{{ $tarifa->id }}</td>
                                 <td class="align-middle">{{ $tarifa->comercios->nombre ?? 'Not Available' }}</td>
-                                <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
+                                {{-- <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td> --}}
                                 <td class="align-middle">{{ optional($tarifa->categorias)->nombre }}</td>
                                 <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                                 <td>
-                                    @can('gas.view.btn-edit')
+                                    @can('cupones.view.btn-edit')
                                         <a href="{{ route('cupones.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     @endcan
-                                    @can('gas.view.btn-duplicate')
+                                    @can('cupones.view.btn-duplicate')
                                         <a href="{{ route('cuponesDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
                                     @endcan
                                 </td>

@@ -57,12 +57,12 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        {{-- <div class="form-group col-12 col-md-4">
                             {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
                             {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',
                             ]) !!}
-                        </div>
+                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('categoria', 'Categoria', ['class' => 'form-label']) !!}
                             {!! Form::select('categoria', ['' => 'Seleccione...'] + $categorias->pluck('nombre', 'id')->toArray(), null, [

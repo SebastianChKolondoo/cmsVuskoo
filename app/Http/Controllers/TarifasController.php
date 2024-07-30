@@ -200,6 +200,7 @@ class TarifasController extends Controller
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
             ->join('paises', 'paises.id', '=', $this->tabla_cupones . '.pais')
             ->select(
+                'paises.moneda',
                 $this->tabla_cupones . '.*',
                 DB::raw('CURRENT_DATE'),
                 DB::raw('DATE_FORMAT(' . $this->tabla_cupones . '.fecha_final, "%d-%m-%Y") as fecha_final'),

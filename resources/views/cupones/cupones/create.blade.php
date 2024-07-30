@@ -16,17 +16,16 @@
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('comercio', 'Comercio', ['class' => 'form-label']) !!}
-                            {!! Form::select('comercio', ['' => 'Seleccione...'] + $comercios->pluck('nombre', 'id')->toArray(), null, [
+                            {!! Form::select('comercio', $comercios->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        {{-- <div class="form-group col-12 col-md-4">
                             {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
-                            {!! Form::select('pais', [], null, [
+                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',
-                                'disabled' => true
                             ]) !!}
-                        </div>
+                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
                             {!! Form::select('estado', $states->pluck('name', 'id'), null, [
@@ -40,45 +39,63 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('tipoCupon', 'Tipo de cupon', ['class' => 'form-label']) !!}
+                            {!! Form::label('tipoCupon', 'Tipo de cupón', ['class' => 'form-label']) !!}
                             {!! Form::select('tipoCupon', $tipoCupon->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div id="field_codigo_cupon" class="form-group col-12 col-md-4">
-                            {!! Form::label('CodigoCupon', 'Código de cupón', ['class' => 'form-label']) !!}
-                            {!! Form::text('CodigoCupon', null, [
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('titulo', 'Título', ['class' => 'form-label']) !!}
+                            {!! Form::text('titulo', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('nombre_tarifa', 'Nombre de la tarifa', ['class' => 'form-label']) !!}
-                            {!! Form::text('nombre_tarifa', null, [
+                            {!! Form::label('descripcion', 'Descripción', ['class' => 'form-label']) !!}
+                            {!! Form::text('descripcion', null, [
                                 'class' => 'form-control',
                                 'required' => 'required',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('landing_link', 'URL redireccion primaria', ['class' => 'form-label']) !!}
-                            {!! Form::text('landing_link', null, [
+                            {!! Form::label('label', 'Label', ['class' => 'form-label']) !!}
+                            {!! Form::text('label', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        {{-- <div class="form-group col-12 col-md-4">
-                            {!! Form::label('pagina_final', 'URL redireccion final', ['class' => 'form-label']) !!}
-                            {!! Form::text('pagina_final', null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div> --}}
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('descuento', 'Descuento', ['class' => 'form-label']) !!}
-                            {!! Form::text('descuento', null, [
+                        <div id="field_codigo_cupon" class="form-group col-12 col-md-4">
+                            {!! Form::label('CodigoCupon', 'Codigo del cupón', ['class' => 'form-label']) !!}
+                            {!! Form::text('CodigoCupon', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('codigo', 'Codigo', ['class' => 'form-label']) !!}
-                            {!! Form::text('codigo', null, [
+                            {!! Form::label('source', 'Source', ['class' => 'form-label']) !!}
+                            {!! Form::text('source', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('affiliate_link', 'Link Afiliado', ['class' => 'form-label']) !!}
+                            {!! Form::text('affiliate_link', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('url', 'Url', ['class' => 'form-label']) !!}
+                            {!! Form::text('url', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('merchant_home_page', 'Merchant home page', ['class' => 'form-label']) !!}
+                            {!! Form::text('merchant_home_page', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('deeplink', 'Deeplink', ['class' => 'form-label']) !!}
+                            {!! Form::text('deeplink', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
@@ -88,17 +105,16 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div id="field_fecha_expiracion" class="form-group col-12 col-md-4">
-                            {!! Form::label('fecha_expiracion', 'Fecha expiración', ['class' => 'form-label']) !!}
-                            {!! Form::date('fecha_expiracion', \Carbon\Carbon::parse(now())->format('Y-m-d'), [
+                        <div id="field_fecha_inicial" class="form-group col-12 col-md-4">
+                            {!! Form::label('fecha_inicial', 'Fecha inicial', ['class' => 'form-label']) !!}
+                            {!! Form::date('fecha_inicial', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-12">
-                            {!! Form::label('descripcion', 'Descripción', ['class' => 'form-label']) !!}
-                            {!! Form::textarea('descripcion', null, [
+                        <div id="field_fecha_final" class="form-group col-12 col-md-4">
+                            {!! Form::label('fecha_final', 'Fecha final', ['class' => 'form-label']) !!}
+                            {!! Form::date('fecha_final', null, [
                                 'class' => 'form-control',
-                                'rows' => 2,
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-12">

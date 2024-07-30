@@ -36,7 +36,7 @@ class CuponesController extends Controller
         $comercios = Comercios::where('estado', '1')->get();
         $paises = Paises::all();
         $tipoCupon = TipoCupon::all();
-        return view('cupones.cupones.create', compact('tipoCupon','states', 'comercios', 'paises','categorias'));
+        return view('cupones.cupones.create', compact('tipoCupon', 'states', 'comercios', 'paises', 'categorias'));
     }
 
     /**
@@ -44,31 +44,37 @@ class CuponesController extends Controller
      */
     public function store(Request $request)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
+        //$moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Comercios::find($request->comercio);
-        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->nombre_tarifa)) . ' ' . $empresa->nombre_slug)));
-        $fechaExpiracion = $request->fecha_expiracion;
-        if($request['TiempoCupon'] == 2){
-            $fechaExpiracion = '2099-01-01';
+        /* $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->nombre_tarifa)) . ' ' . $empresa->nombre_slug))); */
+        $fecha_inicial = $request->fecha_inicial;
+        $fecha_final = $request->fecha_final;
+        if ($request['TiempoCupon'] == 2) {
+            $fecha_final = '1970-01-01';
+            $fecha_inicial = '2099-01-01';
         }
         $tarifa = Cupones::create([
             'comercio' => $request->comercio,
-            'estado' => $request->estado,
-            'nombre_tarifa' => $request->nombre_tarifa,
-            'descripcion' => trim($request->descripcion),
-            'categoria' => $request->categoria,
-            'destacada' => $request->destacada,
-            'fecha_expiracion' => $fechaExpiracion,
-            'moneda' =>  $moneda->moneda,
-            'slug_tarifa' => $slug,
-            'pais' => $request->pais,
             'codigo' => $request->codigo,
-            'descuento' => $request->descuento,
-            'landing_link' => $request->landing_link,
+            'titulo' => $request->titulo,
+            'descripcion' => trim($request->descripcion),
+            'label' => $request->label,
+            'CodigoCupon' => trim($request->CodigoCupon),
+            'featured' => $request->featured,
+            'source' => $request->source,
+            'deeplink' => $request->deeplink,
+            'affiliate_link' => $request->affiliate_link,
+            'cashback_link' => $request->cashback_link,
+            'url' => $request->url,
+            'image_url' => $request->image_url,
             'tipoCupon' => $request->tipoCupon,
-            'TiempoCupon' => $request->TiempoCupon,
-            'CodigoCupon' => $request->CodigoCupon,
-            /* 'pagina_final' => $request->pagina_final */
+            'merchant_home_page' => $request->merchant_home_page,
+            'fecha_inicial' => $fecha_inicial,
+            'fecha_final' => $fecha_final,
+            'estado' => $request->estado,
+            'pais' => $empresa->pais,
+            'destacada' => $request->destacada,
+            'TiempoCupon' => $request->TiempoCupon
         ]);
 
         return redirect()->route('cupones.index')->with('info', 'Tarifa creada correctamente.');
@@ -89,11 +95,11 @@ class CuponesController extends Controller
     {
         $tarifa = Cupones::find($cupon);
         $paises = Paises::all();
-        $categorias = Categorias::where('pais',$tarifa->pais)->get();
+        $categorias = Categorias::where('pais', $tarifa->pais)->get();
         $states = States::all();
         $comercios = Comercios::all();
         $tipoCupon = TipoCupon::all();
-        return view('cupones.cupones.edit', compact('tipoCupon','tarifa', 'states', 'comercios', 'paises','categorias'));
+        return view('cupones.cupones.edit', compact('tipoCupon', 'tarifa', 'states', 'comercios', 'paises', 'categorias'));
     }
 
     /**
@@ -101,16 +107,13 @@ class CuponesController extends Controller
      */
     public function update(Request $request, $cupon)
     {
-        $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Comercios::find($request->comercio);
-        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->nombre_tarifa)) . ' ' . $empresa->nombre_slug)));
         $request['descripcion'] = trim(str_replace('  ', ' ', $request->descripcion));
-        $request['slug_tarifa'] = $slug;
-        $request['moneda'] = $moneda->moneda;
-        if($request['TiempoCupon'] == 2){
+        $request['pais'] = $empresa->pais;
+        if ($request['TiempoCupon'] == 2) {
             $request['fecha_expiracion'] = '2099-01-01';
         }
-        if($request['tipoCupon'] != 3){
+        if ($request['tipoCupon'] != 1) {
             $request['CodigoCupon'] = NULL;
         }
         $tarifa = Cupones::find($cupon);
