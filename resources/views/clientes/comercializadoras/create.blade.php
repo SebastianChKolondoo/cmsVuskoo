@@ -15,27 +15,49 @@
                     {!! Form::open(['route' => 'comercializadoras.store', 'enctype' => 'multipart/form-data']) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
-                            {{ Form::label('logo', 'Logo') }}
-                            {{ Form::file('logo', ['class' => 'form-control']) }}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {{ Form::label('logo_negativo', 'logo negativo') }}
-                            {{ Form::file('logo_negativo', ['class' => 'form-control']) }}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('name', 'Nombre comercializadora', ['class' => 'form-label']) !!}
-                            {!! Form::text('name', null, [
+                            {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
+                            {!! Form::text('nombre', null, [
                                 'class' => 'form-control',
-                                'placeholder' => 'Nombre',
                                 'required' => 'required',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('politica_privacidad', 'Politica de privcidad', ['class' => 'form-label']) !!}
+                            {!! Form::label('nombre_slug', 'Slug', ['class' => 'form-label']) !!}
+                            {!! Form::text('nombre_slug', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        {{-- <div class="form-group col-12 col-md-4">
+                            {!! Form::label('funcion_api', 'Función api', ['class' => 'form-label']) !!}
+                            {!! Form::text('funcion_api', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div> --}}
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('tipo_conversion', 'Tipo de conversión', ['class' => 'form-label']) !!}
+                            {!! Form::text('tipo_conversion', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('politica_privacidad', 'Política de privacidad', ['class' => 'form-label']) !!}
                             {!! Form::text('politica_privacidad', null, [
                                 'class' => 'form-control',
-                                'placeholder' => 'Enlace externo a politica de privacidad',
                             ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo', 'Logo') }}
+                            @if (!empty($operadora->logo))
+                                <a href="{{ $operadora->logo }}" target="_blank">ver logo</a>
+                            @endif
+                            {{ Form::file('logo', ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo_negativo', 'logo negativo') }}
+                            @if (!empty($operadora->logo_negativo))
+                                <a href="{{ $operadora->logo_negativo }}" target="_blank">ver logo negativo</a>
+                            @endif
+                            {{ Form::file('logo_negativo', ['class' => 'form-control']) }}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
@@ -49,6 +71,8 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-12 col-md-12">
                             {!! Form::submit('Registrar', ['class' => 'btn btn-primary mt-3']) !!}
                             {!! Form::close() !!}

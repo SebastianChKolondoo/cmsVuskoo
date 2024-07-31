@@ -13,14 +13,10 @@ class Operadoras extends Model
         'nombre',
         'nombre_slug',
         'tipo_conversion',
-        'color',
-        'color_texto',
         'logo',
         'logo_negativo',
-        'isotipo',
         'politica_privacidad',
         'estado',
-        'fecha_registro',
         'pais'
     ];
 

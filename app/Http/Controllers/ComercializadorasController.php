@@ -52,14 +52,14 @@ class ComercializadorasController extends Controller
         }
 
         Comercializadoras::create([
-            'nombre' => ($request->name),
-            'tipo_conversion' => '',
-            'politica_privacidad' => ($request->politica),
-            'estado' => ($request->state),
-            'fecha_registro' => now(),
-            'pais' => $request->pais,
+            'nombre' => $request->nombre,
+            'nombre_slug' => $request->nombre_slug,
+            'tipo_conversion' => $request->tipo_conversion,
             'logo' => $urlLogo,
             'logo_negativo' => $logo_negativo,
+            'politica_privacidad' => $request->politica_privacidad,
+            'estado' => $request->estado,
+            'pais' => $request->pais
 
         ]);
 

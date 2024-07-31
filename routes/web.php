@@ -7,6 +7,7 @@ use App\Http\Controllers\ComerciosController;
 use App\Http\Controllers\ContenidoMarcaController;
 use App\Http\Controllers\CuponesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FormulariosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
@@ -109,7 +110,7 @@ Route::resource('traduccionCategorias', TraduccionCategoriasController::class)->
 
 /* menu */
 Route::resource('paginawebmenu', MenuController::class)->names('paginawebmenu')->middleware(['auth']);
-
+/*  */
 Route::resource('paginawebsubmenu', MenuItemController::class)->names('paginawebsubmenu')->middleware(['auth']);
-
-Route::resource('formularioContactenos', MenuItemController::class)->names('paginawebsubmenu')->middleware(['auth']);
+/*  */
+Route::get('formularioContactenos', FormulariosController::class)->name('formularioContactenos')->middleware(['auth']);
