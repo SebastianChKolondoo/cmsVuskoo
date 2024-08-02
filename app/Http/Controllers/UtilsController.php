@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Events;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
@@ -49,21 +50,23 @@ class UtilsController extends Controller
             )
         );
     }
-    
+
     function addError(Request $request)
     {
-        return $request;
-        DB::table('events')->insert(
-            array(
-                'event_type' => $request->tipo,
-                'source' => $request->origen,
-                'message' => $request->mensaje,
-                'country_code' => $request->country_code,
-                'instance' => $request->decideCountry,
-                'route' =>  $request->decideCountry,
-                'calling_IP' => $request->ip
-            )
-        );
+        Events::create([
+            'event_type' => $request->tipo,
+            'source' => $request->origen,
+            'message' => $request->mensaje,
+            'country_code' => $request->country_code,
+            'instance' => $request->decideCountry,
+            'route' => $request->decideCountry,
+            'calling_IP' => $request->ip
+        ]);
+
+        return response()->json([
+            'message' => 'Suscripción realizada con exito',
+            'status' => 201
+        ], 200);
     }
 
     /**
@@ -172,11 +175,11 @@ class UtilsController extends Controller
         return DB::connection('common_event_log')->table('banned_phones')->where('phone', preg_replace('/\s+/', '', $phone))->exists();
     }
 
-    function quitarTildes($cadena) {
+    function quitarTildes($cadena)
+    {
         $buscar = array('Á', 'É', 'Í', 'Ó', 'Ú', 'á', 'é', 'í', 'ó', 'ú');
         $reemplazar = array('A', 'E', 'I', 'O', 'U', 'a', 'e', 'i', 'o', 'u');
         $resultado = str_replace($buscar, $reemplazar, $cadena);
         return $resultado;
     }
-
 }
