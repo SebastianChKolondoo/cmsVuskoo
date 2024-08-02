@@ -34,8 +34,8 @@ class Comercios extends Model
         return $this->belongsTo(Categorias::class, 'categoria', 'id');
     }
    
-    /* public function paises()
+    public function paises()
     {
-        return $this->belongsToMany(Paises::class, 'pais', 'id');
-    } */
+        return $this->belongsTo(Paises::class, 'pais', 'id');
+    }
 }

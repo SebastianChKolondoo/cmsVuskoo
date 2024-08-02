@@ -45,10 +45,8 @@ class ComerciosController extends Controller
     {
         $permisos = Comercios::create([
             'nombre' => ($request->name),
-            'tipo_conversion' => '',
-            'color' => '',
+            'nombre_slug' => $request->nombre_slug,
             'idPerseo' => $request->idPerseo,
-            'color_texto' => '',
             'logo' => ($request->logo),
             'logo_negativo' => ($request->negativo),
             'politica_privacidad' => ($request->politica),
@@ -56,7 +54,6 @@ class ComerciosController extends Controller
             'categoria' => $request->categoria,
             'estado' => ($request->state),
             'pais' => $request->pais,
-            'TipoCupon' => $request->TipoCupon
         ]);
 
         return redirect()->route('comercios.index')->with('info', 'comercio creado correctamente.');

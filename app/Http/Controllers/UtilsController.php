@@ -49,6 +49,22 @@ class UtilsController extends Controller
             )
         );
     }
+    
+    function addError(Request $request)
+    {
+        return $request;
+        DB::table('events')->insert(
+            array(
+                'event_type' => $request->tipo,
+                'source' => $request->origen,
+                'message' => $request->mensaje,
+                'country_code' => $request->country_code,
+                'instance' => $request->decideCountry,
+                'route' =>  $request->decideCountry,
+                'calling_IP' => $request->ip
+            )
+        );
+    }
 
     /**
      * Obtencion de la IP REAL del visitante

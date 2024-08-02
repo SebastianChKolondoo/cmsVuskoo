@@ -113,4 +113,4 @@ Route::resource('paginawebmenu', MenuController::class)->names('paginawebmenu')-
 /*  */
 Route::resource('paginawebsubmenu', MenuItemController::class)->names('paginawebsubmenu')->middleware(['auth']);
 /*  */
-Route::get('formularioContactenos', FormulariosController::class)->name('formularioContactenos')->middleware(['auth']);
+/* Route::get('formularioContactenos', FormulariosController::class)->name('formularioContactenos')->middleware(['auth']); */

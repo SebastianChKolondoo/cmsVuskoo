@@ -97,6 +97,9 @@ Route::post('facebookZapierCpl', [ZapierController::class, 'facebookZapierCpl'])
 Route::post('redesSocialesZapier', [ZapierController::class, 'redesSocialesZapier']);
 Route::post('redesSocialesEnergyZapier', [ZapierController::class, 'redesSocialesEnergyZapier']);
 
+/* registrar error en plataforma */
+Route::post('addError', [UtilsController::class, 'addError']);
+
 /* Mexico */
 Route::get('getTarifasPlanCelular/{lang?}', [TarifasController::class, 'getTarifasPlanCelularList']);
 Route::get('filterPlanCelular/{lang?}', [FilterController::class, 'getValuesFilterPlanCelularList']);
@@ -113,9 +116,6 @@ Route::get('getDetailOffervehiculos/{id}', [TarifasController::class, 'getDetail
 /* Cupones */
 Route::get('getTarifasCupones/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasCuponesList']);
 Route::get('getTarifaCupon/{id}', [TarifasController::class, 'getTarifaCuponList']);
-/* Route::get('filterCupones/{lang?}', [FilterController::class, 'getValuesFilterCuponesList']); */
-/* Route::get('getExtraOffercomparadorCupones', [ExtraOfferController::class, 'getExtraOfferCuponesList']); */
-Route::get('getDetailOfferCupones/{id}', [TarifasController::class, 'getDetailOfferCuponesList']);
 /*  */
 Route::get('/cargarPaises/{id?}', [ApiController::class, 'cargarPaisesCupones']);
 Route::get('/cargarCategoriaMarca/{id?}', [ApiController::class, 'cargarCategoriaMarca']);
@@ -133,7 +133,7 @@ Route::get('getMenuApi/{lang?}', [ApiController::class, 'getMenuApi']);
 /* carga footer */
 Route::get('getFooter/{lang?}', [ApiController::class, 'getFooterList']);
 
-/* route::get('/cambio', function () {
+route::get('/cambioNombreIdComerciosCupones', function () {
     $data = Cupones::limit(200)->orderBy('store', 'desc')->get();
     foreach ($data as $item) {
         $a = Comercios::where('nombre', $item->store)->count();
@@ -149,4 +149,3 @@ Route::get('getFooter/{lang?}', [ApiController::class, 'getFooterList']);
         }
     }
 });
- */
