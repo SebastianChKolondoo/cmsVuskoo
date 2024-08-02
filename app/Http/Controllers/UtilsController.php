@@ -51,6 +51,7 @@ class UtilsController extends Controller
         );
     }
 
+    /*  */
     function addError(Request $request)
     {
         Events::create([
@@ -64,7 +65,7 @@ class UtilsController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Suscripción realizada con exito',
+            'message' => 'Incidencia reportada con exito',
             'status' => 201
         ], 200);
     }
