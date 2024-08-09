@@ -60,8 +60,35 @@ class MenuItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MenuItem $menuItem)
+    public function destroy($id)
     {
-        //
+        $item = MenuItem::findOrFail($id);
+        $item->delete();
+
+        return back()->with('info', 'Sub-menú eliminado correctamente.');
+    }
+
+    public function addStoreItemEdit(Request $request, $id)
+    {
+        $nombreVariable = 'nombresubmenu_';
+        $datosRequest = $request->all();
+
+        $cantidad = count(array_filter($datosRequest, function ($key) use ($nombreVariable) {
+            return strpos($key, $nombreVariable) === 0;
+        }, ARRAY_FILTER_USE_KEY));
+        
+        if ($cantidad > 0) {
+
+            for ($i = 0; $i < $cantidad; $i++) {
+                MenuItem::create([
+                    'idMenu' => $id,
+                    'nombre' => $request->input('nombresubmenu_' . $i),
+                    'url' => $request->input('urlsubmenu_' . $i),
+                    'orden' => $request->input('ordensubmenu_' . $i),
+
+                ]);
+            }
+        }
+        return back()->with('info', 'Sub-menú creado correctamente.');
     }
 }

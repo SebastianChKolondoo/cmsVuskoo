@@ -110,7 +110,8 @@ Route::resource('traduccionCategorias', TraduccionCategoriasController::class)->
 
 /* menu */
 Route::resource('paginawebmenu', MenuController::class)->names('paginawebmenu')->middleware(['auth']);
-/*  */
+
 Route::resource('paginawebsubmenu', MenuItemController::class)->names('paginawebsubmenu')->middleware(['auth']);
-/*  */
-/* Route::get('formularioContactenos', FormulariosController::class)->name('formularioContactenos')->middleware(['auth']); */
+/* Route::delete('paginawebsubmenu/{item}', [MenuItemController::class, 'destroy'])->name('paginawebsubmenu.destroy'); */
+
+Route::post('addStoreItemEdit/{id}', [MenuItemController::class, 'addStoreItemEdit'])->name('addStoreItemEdit')->middleware(['auth']);

@@ -83,7 +83,7 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCupones"
                 aria-expanded="true" aria-controls="collapseCupones">
                 <i class="fa fa-binoculars" aria-hidden="true"></i>
-                <span>Cupones <sup><i class="fa fa-star" aria-hidden="true"></i></sup></span>
+                <span>Cupones</span>
             </a>
             <div id="collapseCupones" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -188,6 +188,7 @@
         </li>
     @endcan
 
+    <li class="text-center"><small>Version 1.0</small></li>
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline mt-5">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

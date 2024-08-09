@@ -35,7 +35,7 @@
                     @foreach ($data as $item)
                     <td class="align-middle">{{$item->id}}</td>
                     <td class="align-middle">{{$item->titulo}}</td>
-                    <td class="align-middle">{{$item->paises->nombre}}</td>
+                    <td class="align-middle">{{optional($item->paises)->nombre}}</td>
                         @can('paginawebmenu.view.btn-edit')
                             <td>
                                 <a href="{{ route('paginawebmenu.edit', $item) }}" class="btn btn-primary">Editar</a>

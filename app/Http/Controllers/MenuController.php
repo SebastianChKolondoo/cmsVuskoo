@@ -39,8 +39,8 @@ class MenuController extends Controller
         }, ARRAY_FILTER_USE_KEY));
 
         $id = Menu::create([
-            'titulo' => $request->nombre,
-            'urlTitulo' => $request->url,
+            'titulo' => $request->titulo,
+            'urlTitulo' => $request->urlTitulo,
             'pais' => $request->pais
         ]);
 
@@ -56,6 +56,8 @@ class MenuController extends Controller
                 ]);
             }
         }
+
+        return redirect()->route('paginawebmenu.index')->with('info', 'Menú creado correctamente.');
     }
 
     /**
@@ -74,7 +76,8 @@ class MenuController extends Controller
         $menu = Menu::find($id);
         $items = MenuItem::where('idMenu',$id)->get();
         $paises = Paises::all();
-        return view('menu.edit', compact('menu','items','paises'));
+        $idMenu = $id;
+        return view('menu.edit', compact('menu','items','paises','idMenu'));
     }
 
     /**
@@ -90,8 +93,10 @@ class MenuController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Menu $menu)
-    {
-        //
+    public function destroy($id){
+        $item = Menu::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('paginawebmenu.index')->with('info', 'Menú eliminado correctamente.');
     }
 }

@@ -28,11 +28,25 @@
                                 'required' => 'required',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        <div class="form-group col-12 col-md-3">
                             {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
                             {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',
                             ]) !!}
+                        </div>
+                        <div class="col-12 col-md-1">
+                            <div class="form-group">
+                                <label for="eliminar">Acción</label>
+                                <div class="d-block">
+                                    <form action="{{ route('paginawebmenu.destroy', $menu) }}" method="POST"
+                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este elemento?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-small btn-danger"><i class="fa fa-times"
+                                                aria-hidden="true"></i></button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {{ Form::submit('Actualizar', ['class' => 'btn btn-primary']) }}
@@ -40,9 +54,27 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 mt-5 mb-2">
+    </div>
+    <div class="row ">
+        <div class="col-12 mt-5 mb-2 d-flex justify-content-between">
             <h2>Editar Submenú</h2>
+            <button class="btn btn-dark" id="additemmenu" type="button">Agregar subMenú</button>
         </div>
+    </div>
+    <div id="addItemMenu" class="card d-none">
+        <div class="card-body">
+            {!! Form::open(['route' => ['addStoreItemEdit', $idMenu]]) !!}
+            <div id="contenedorItemSubmenu">
+            </div>
+            <div class="row">
+                <div class="form-group col-12 col-md-12">
+                    {!! Form::submit('Registrar', ['class' => 'btn btn-primary mt-3']) !!}
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         @foreach ($items as $item)
             <div class="col-12 my-1">
                 <div class="card">
@@ -67,13 +99,27 @@
                                     'required' => 'required',
                                 ]) !!}
                             </div>
-                            <div class="col-12 col-md-2">
+                            <div class="col-12 col-md-1">
                                 <div class="form-group">
-                                    {!! Form::label('orden', 'Orden SubMenú', ['class' => 'form-label']) !!}
+                                    {!! Form::label('orden', 'Orden', ['class' => 'form-label']) !!}
                                     {!! Form::select('orden', range(0, 10), null, [
                                         'class' => 'form-control',
                                         'required' => 'required',
                                     ]) !!}
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-1">
+                                <div class="form-group">
+                                    <label for="eliminar">Acción</label>
+                                    <div class="d-block">
+                                        <form action="{{ route('paginawebsubmenu.destroy', $item->id) }}" method="POST"
+                                            onsubmit="return confirm('¿Estás seguro de que deseas eliminar este elemento?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-small btn-danger"><i class="fa fa-times"
+                                                    aria-hidden="true"></i></button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12">
@@ -86,8 +132,8 @@
             </div>
         @endforeach
     </div>
-    <div class="row justify-content-center mb-4">
-        <div class="col-12">
+    <div class="row justify-content-center mb-5">
+        <div class="col-12 mt-5">
             <a href="{{ route('paginawebmenu.index') }}" class="btn btn-dark">Volver</a>
         </div>
     </div>

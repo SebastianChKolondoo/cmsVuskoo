@@ -15,7 +15,5 @@ class Contactenos extends Model
         'email',
         'politica',
         'urlOffer',
-        'created_at',
-        'updated_at'
     ];
 }

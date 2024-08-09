@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
 	$('#additemmenu').on('click', () => {
+		$('#addItemMenu').removeClass('d-none');
 		agregarItemSumenu();
 	});
 
@@ -147,11 +148,21 @@ function cargarPaisesCategorias(id) {
 	});
 }
 
+function eliminarItemMenu(id){
+	$('#itemSubmenu_'+id).remove();
+	var elementos = document.querySelectorAll('.nuevoSubmenu');
+	var cantidad = elementos.length;
+
+	if(cantidad == 0){
+		$('#addItemMenu').addClass('d-none');
+	}
+}
+
 function agregarItemSumenu() {
 	var elementos = document.querySelectorAll('.nuevoSubmenu');
 	var cantidad = elementos.length;
 	var nuevoItem = `
-	<div class="row nuevoSubmenu">
+	<div class="row nuevoSubmenu" id="itemSubmenu_${cantidad}">
 		<div class="col-12 col-md-5">
 			<div class="form-group">
 				<label for="nombresubmenu_${cantidad}" class="form-label">Nombre SubMenú ${cantidad+1}</label>
@@ -164,11 +175,15 @@ function agregarItemSumenu() {
 				<input type="text" name="urlsubmenu_${cantidad}" class="form-control" required="required">
 			</div>
 		</div>
-		<div class="col-12 col-md-2">
+		<div class="col-12 col-md-1">
 			<div class="form-group">
-				<label for="ordensubmenu_${cantidad}" class="form-label">Orden SubMenú ${cantidad+1}</label>
+				<label for="ordensubmenu_${cantidad}" class="form-label">Orden ${cantidad+1}</label>
 				<select type="text" value="${cantidad}" name="ordensubmenu_${cantidad}" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
 			</div>
+		</div>
+		<div class="col-12 col-md-1">
+		<label>Acción</label>
+			<button type="button" onclick=(eliminarItemMenu(${cantidad})) class="btn btn-small d-block btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
 		</div>
 	</div>`;
 	$('#contenedorItemSubmenu').append(nuevoItem);
