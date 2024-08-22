@@ -7,6 +7,9 @@ use App\Http\Controllers\ComerciosController;
 use App\Http\Controllers\ContenidoMarcaController;
 use App\Http\Controllers\CuponesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FormularioContactenosController;
+use App\Http\Controllers\FormularioLeadsController;
+use App\Http\Controllers\FormularioNewsletterController;
 use App\Http\Controllers\FormulariosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -31,6 +34,9 @@ use App\Http\Controllers\TraduccionCategoriasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtilsController;
 use App\Models\Comercios;
+use App\Models\FormularioContactenos;
+use App\Models\FormularioLeads;
+use App\Models\FormularioNewsletter;
 use App\Models\PaginaWebFooter;
 use App\Models\ParillaFibraMovil;
 use Illuminate\Support\Facades\Auth;
@@ -115,3 +121,9 @@ Route::resource('paginawebsubmenu', MenuItemController::class)->names('paginaweb
 /* Route::delete('paginawebsubmenu/{item}', [MenuItemController::class, 'destroy'])->name('paginawebsubmenu.destroy'); */
 
 Route::post('addStoreItemEdit/{id}', [MenuItemController::class, 'addStoreItemEdit'])->name('addStoreItemEdit')->middleware(['auth']);
+
+
+/* Formularios */
+Route::resource('formulariocontactenos', FormularioContactenosController::class)->names('formulariocontactenos')->middleware(['auth']);
+Route::resource('formularionews', FormularioNewsletterController::class)->names('formularionews')->middleware(['auth']);
+Route::resource('formularioleads', FormularioLeadsController::class)->names('formularioleads')->middleware(['auth']);

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CuponesController;
 use App\Http\Controllers\ExtraOfferController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\LeadController;
@@ -27,7 +28,8 @@ Route::get('getComercializadorasLuzGas/{lang?}', [ApiController::class, 'getCome
 Route::get('getOperadorasFibraMovil/{lang?}', [ApiController::class, 'getOperadorasFibraMovilList']);
 Route::get('getOperadorasFibraMovilTv/{lang?}', [ApiController::class, 'getOperadorasFibraMovilTvList']);
 Route::get('getMarcasVehiculos/{lang?}', [ApiController::class, 'getMarcasVehiculosList']);
-Route::get('getComerciosCupones/{lang?}/{categoria?}', [ApiController::class, 'getComerciosCuponesList']);
+Route::get('getComerciosCupones/{lang?}', [ApiController::class, 'getComerciosCuponesList']);
+Route::get('getCategoriasCupones/{lang?}', [ApiController::class, 'getCategoriasCuponesList']);
 Route::get('getTipoCupones/{lang?}/{categoria?}', [ApiController::class, 'getTipoCuponesList']);
 Route::get('getMetaDataSEO/{lang?}', [ApiController::class, 'getMetaSeoList']);
 /* Luz */
@@ -116,6 +118,9 @@ Route::get('getDetailOffervehiculos/{id}', [TarifasController::class, 'getDetail
 /* Cupones */
 Route::get('getTarifasCupones/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasCuponesList']);
 Route::get('getTarifaCupon/{id}', [TarifasController::class, 'getTarifaCuponList']);
+
+Route::get('getPaisesCupon', [CuponesController::class, 'getPaisesCuponList']);
+
 /*  */
 Route::get('/cargarPaises/{id?}', [ApiController::class, 'cargarPaisesCupones']);
 Route::get('/cargarCategoriaMarca/{id?}', [ApiController::class, 'cargarCategoriaMarca']);

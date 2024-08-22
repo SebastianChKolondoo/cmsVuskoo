@@ -55,13 +55,13 @@ class UtilsController extends Controller
     function addError(Request $request)
     {
         Events::create([
-            'event_type' => $request->tipo,
-            'source' => $request->origen,
-            'message' => $request->mensaje,
+            'event_type' => $request->event_type,
+            'source' => $request->source,
+            'message' => $request->message,
             'country_code' => $request->country_code,
-            'instance' => $request->decideCountry,
-            'route' => $request->decideCountry,
-            'calling_IP' => $request->ip
+            'instance' => $request->instance,
+            'route' => $request->route,
+            'calling_IP' => $request->calling_IP
         ]);
 
         return response()->json([

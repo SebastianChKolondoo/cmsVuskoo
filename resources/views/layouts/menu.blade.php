@@ -187,8 +187,34 @@
                 <span>Footer</span></a>
         </li>
     @endcan
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+    <div class="sidebar-heading">
+        Formularios
+    </div>
+    @can('formulariocontactenos.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/formulariocontactenos">
+                <i class="fa fa-comments" aria-hidden="true"></i>
+                <span>Contáctenos</span></a>
+        </li>
+    @endcan
+    @can('formularionews.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/formularionews">
+                <i class="fa fa-podcast" aria-hidden="true"></i>
+                <span>NewsLetter</span></a>
+        </li>
+    @endcan
+    @can('formularioleads.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/formularioleads">
+                <i class="fa fa-child" aria-hidden="true"></i>
+                <span>Leads</span></a>
+        </li>
+    @endcan
 
-    <li class="text-center"><small>Version 1.0</small></li>
+    <li class="text-center"><small>Version 1.0.1</small></li>
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline mt-5">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

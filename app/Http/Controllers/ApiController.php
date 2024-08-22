@@ -273,13 +273,14 @@ class ApiController extends Controller
             ->get();
     }
 
-    public function getComerciosCuponesList($lang = 1, $idCategoria = null)
+    public function getComerciosCuponesList($lang = null, $idCategoria = null)
     {
         $validacionPais = Paises::where('codigo', $lang)->count();
         if ($validacionPais == 0) {
             return [];
         }
         $idioma = Paises::where('codigo', $lang)->first();
+
         $categoria = '';
         $idCategoriaConsulta = 0;
         if ($idCategoria != null && $idCategoria != 'null' && $idCategoria != 'undefined') {
@@ -291,6 +292,7 @@ class ApiController extends Controller
                 $idCategoriaConsulta = $categoria->id;
             }
         }
+
         $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
             ->select('1_comercios.id', '1_comercios.nombre', '1_comercios.logo')
@@ -299,11 +301,31 @@ class ApiController extends Controller
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
             ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
             ->whereDate($this->tabla_cupones . '.fecha_final', '>=', DB::raw('CURRENT_DATE'))
-            ->groupBy($this->tabla_cupones . '.comercio');;
+            ->groupBy($this->tabla_cupones . '.comercio');
 
-        if ($idCategoriaConsulta != 0) {
-            $query->where('categoria', $idCategoriaConsulta);
+        return $query->get();
+    }
+
+    public function getCategoriasCuponesList($lang = null)
+    {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
         }
+        $idioma = Paises::where('codigo', $lang)->first();
+
+
+        $query = DB::table('1_comercios')
+            ->select('categorias_comercios.nombre')
+            ->where('1_comercios.estado', '=', 1)
+            ->where($this->tabla_cupones . '.estado', '=', '1')
+            ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
+            ->join($this->tabla_cupones, '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
+            ->join('categorias_comercios', '1_comercios.categoria', '=', 'categorias_comercios.id')
+            
+            ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
+            ->whereDate($this->tabla_cupones . '.fecha_final', '>=', DB::raw('CURRENT_DATE'))
+            ->groupBy('1_comercios.categoria');
 
         return $query->get();
     }
@@ -326,7 +348,7 @@ class ApiController extends Controller
                 $idCategoriaConsulta = $categoria->id;
             }
         } */
-        
+
         return $cupones = DB::table($this->tabla_cupones)
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
             ->select('TipoCupon.id', 'TipoCupon.nombre')
