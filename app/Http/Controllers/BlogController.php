@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog;
+use App\Models\CategoriaBlog;
+use App\Models\Categorias_blog;
+use App\Models\Paises;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -13,6 +17,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use JetBrains\PhpStorm\NoReturn;
 use Mockery\Exception;
 
@@ -69,7 +74,7 @@ class BlogController extends Controller
         if ($categoria && $id == null) {
             $query->where('wp_terms.slug', '=', $categoria);
         }
-        if($categoria !== 'destacado'){
+        if ($categoria !== 'destacado') {
             $query->where('wp_terms.slug', '!=', 'destacado');
         }
 
@@ -102,7 +107,7 @@ class BlogController extends Controller
             ->join('wp_terms', 'wp_terms.term_id', '=', 'wp_term_taxonomy.term_id')
             ->join('wp_postmeta', 'wp_postmeta.post_id', '=', 'wp_posts.ID')
             ->join('wp_terms as principal', 'principal.term_id', '=', 'wp_postmeta.meta_value')
-            
+
             ->where('wp_postmeta.meta_key', '=', '_yoast_wpseo_primary_category')
             ->where('wp_posts.post_type', '=', 'post')
             ->where('wp_yoast_indexable.object_type', '=', 'post')
@@ -110,7 +115,7 @@ class BlogController extends Controller
             ->where('wp_term_taxonomy.taxonomy', '=', 'category')
             ->where('wp_posts.ID', '=', $id)
             ->orderBy('wp_posts.ID', 'desc');
-        
+
         return $query->get();
     }
 
@@ -141,7 +146,7 @@ class BlogController extends Controller
             ->join('wp_terms', 'wp_terms.term_id', '=', 'wp_term_taxonomy.term_id')
             ->join('wp_postmeta', 'wp_postmeta.post_id', '=', 'wp_posts.ID')
             ->join('wp_terms as principal', 'principal.term_id', '=', 'wp_postmeta.meta_value')
-            
+
             ->where('wp_postmeta.meta_key', '=', '_yoast_wpseo_primary_category')
             ->where('wp_posts.post_type', '=', 'post')
             ->where('wp_yoast_indexable.object_type', '=', 'post')
@@ -152,7 +157,6 @@ class BlogController extends Controller
             ->where('wp_terms.slug', '!=', 'destacado')
             ->orderBy('wp_posts.ID', 'desc')
             ->limit(3)->get();
-        
     }
 
     public function getBlogId($id)
@@ -174,5 +178,90 @@ class BlogController extends Controller
         }
 
         return $query->get();
+    }
+
+
+    /* Nuevo blog */
+
+    function index()
+    {
+        $data = Blog::all();
+        return view('blog.index', compact('data'));
+    }
+
+    function edit($id)
+    {
+        $data = Blog::find($id);
+        $paises = Paises::all();
+        $categorias = CategoriaBlog::all();
+        return view('blog.edit', compact('data', 'paises', 'categorias'));
+    }
+
+    function create()
+    {
+        $paises = Paises::all();
+        $categorias = CategoriaBlog::all();
+        return view('blog.create', compact('paises', 'categorias'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+        $blog = Blog::find($id);
+        $data = $request->all();
+        $urlImagen = null;
+
+        if ($request->hasFile('imagen')) {
+            $file = $request->file('imagen');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = 'banner_blog_' . $id . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('blogs', $file, $nombreArchivo);
+            $urlImagen = Storage::disk('public')->url($path);
+        }
+
+        // Crear un array de datos a actualizar
+        if ($urlImagen) {
+            $data['imagen'] = $urlImagen;
+        }
+
+        $blog->update($data);
+        return back()->with('info', 'Blog actualizado correctamente.');
+    }
+
+    public function store(Request $request)
+    {
+        $urlImagen = null;
+
+
+        if ($request->hasFile('imagen')) {
+            $file = $request->file('imagen');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = 'banner_blog_' . time() . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('blogs', $file, $nombreArchivo);
+            $urlImagen = Storage::disk('public')->url($path);
+        }
+
+        $data = Blog::create([
+            'imagen' => $urlImagen,
+            'fecha_publicacion' => now(),
+            'titulo' => $request->titulo,
+            'contenido' => $request->contenido,
+            'entradilla' => $request->entradilla,
+            'seo_titulo' => $request->seo_titulo,
+            'seo_descripcion' => $request->seo_descripcion,
+            'migapan' => $request->migapan,
+            'url_amigable' => $request->url_amigable,
+            'categoria' => $request->categoria,
+            'pais' => $request->pais,
+        ]);
+
+
+        return redirect()->route('blog.index')->with('info', 'Entrada de blog creada correctamente.');
+    }
+
+    public function blogPreview($id)
+    {
+        $data = Blog::find($id);
+        return view('blog.preview', compact('data'));
     }
 }

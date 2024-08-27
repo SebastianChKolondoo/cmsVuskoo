@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BancaController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ComercializadorasController;
 use App\Http\Controllers\ComerciosController;
@@ -127,3 +128,10 @@ Route::post('addStoreItemEdit/{id}', [MenuItemController::class, 'addStoreItemEd
 Route::resource('formulariocontactenos', FormularioContactenosController::class)->names('formulariocontactenos')->middleware(['auth']);
 Route::resource('formularionews', FormularioNewsletterController::class)->names('formularionews')->middleware(['auth']);
 Route::resource('formularioleads', FormularioLeadsController::class)->names('formularioleads')->middleware(['auth']);
+
+
+/* Blog */
+Route::resource('blog', BlogController::class)->names('blog')->middleware(['auth']);
+
+
+Route::get('blogPreview/{id}', [BlogController::class, 'blogPreview'])->name('blogPreview')->middleware(['auth']);

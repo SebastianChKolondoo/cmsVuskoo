@@ -46,14 +46,45 @@
             @include('layouts.footer')
         </div>
     </div>
-    
+
     <script>
         $(document).ready(function() {
             $('.editor').trumbowyg({
+                minHeight: 200,
+                plugins: {
+                    // Habilitar plugins
+                    table: {
+                        multiRows: true,
+                        adjustTable: true
+                    },
+                    font: {
+                        fonts: {
+                            'Arial': 'Arial, Helvetica, sans-serif',
+                            'Times New Roman': 'Times New Roman',
+                            'Courier': 'Courier New, Courier, monospace'
+                        }
+                    },
+                    color: {
+                        colors: ['#ff0000', '#00ff00', '#0000ff']
+                    }
+                },
+                lang: 'es',
+                semantic: true,
+
+                // Configuración de la barra de herramientas
                 btns: [
-                    ['strong', 'em'],
+                    ['viewHTML'],
+                    ['bold', 'italic', 'underline'],
+                    ['font', 'size'],
+                    ['color'],
+                    ['alignLeft', 'alignCenter', 'alignRight'],
                     ['unorderedList', 'orderedList'],
-                ]
+                    ['link'],
+                    ['image'],
+                    ['table'],
+                    ['removeformat'],
+                    ['fullscreen']
+                ],
             });
             $('table').DataTable({
                 "language": {

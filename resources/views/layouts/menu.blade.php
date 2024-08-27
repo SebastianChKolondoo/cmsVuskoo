@@ -213,8 +213,18 @@
                 <span>Leads</span></a>
         </li>
     @endcan
-
-    <li class="text-center"><small>Version 1.0.1</small></li>
+    <hr class="sidebar-divider d-none d-md-block">
+    <div class="sidebar-heading">
+        Blog
+    </div>
+    @can('blog.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/blog">
+                <i class="fa fa-inbox" aria-hidden="true"></i>
+                <span>Blog</span></a>
+        </li>
+    @endcan
+    <li class="text-center"><small>Version 1.0.2</small></li>
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline mt-5">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

@@ -121,6 +121,8 @@ Route::get('getTarifaCupon/{id}', [TarifasController::class, 'getTarifaCuponList
 
 Route::get('getPaisesCupon', [CuponesController::class, 'getPaisesCuponList']);
 
+Route::get('getCuponesComercio/{id}', [CuponesController::class, 'getCuponesComercioList']);
+
 /*  */
 Route::get('/cargarPaises/{id?}', [ApiController::class, 'cargarPaisesCupones']);
 Route::get('/cargarCategoriaMarca/{id?}', [ApiController::class, 'cargarCategoriaMarca']);

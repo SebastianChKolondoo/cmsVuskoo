@@ -131,25 +131,35 @@ class CuponesController extends Controller
         $tarifa = Cupones::find($duplica->id);
         return redirect()->route('cupones.edit', ['cupone' => $tarifa->id]);
     }
-    
+
     public function getPaisesCuponList()
     {
-        return Cupones::where('estado',1)
-        ->select('paises.id', 'paises.nombre')
-        ->whereDate('fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
-        ->whereDate('.fecha_final', '>=', DB::raw('CURRENT_DATE'))
-        ->join('paises','paises.id','WEB_3_TARIFAS_CUPONES.pais')
-        ->groupBy('pais')
-        ->get();
+        return Cupones::where('estado', 1)
+            ->select('paises.id', 'paises.nombre')
+            ->whereDate('fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
+            ->whereDate('.fecha_final', '>=', DB::raw('CURRENT_DATE'))
+            ->join('paises', 'paises.id', 'WEB_3_TARIFAS_CUPONES.pais')
+            ->groupBy('pais')
+            ->get();
     }
 
     public function getComerciosCuponList()
     {
-        return Cupones::where('estado',1)
-        ->select('comercio')
-        ->whereDate('fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
-        ->whereDate('.fecha_final', '>=', DB::raw('CURRENT_DATE'))
-        ->groupBy('pais')
-        ->get();
+        return Cupones::where('estado', 1)
+            ->select('comercio')
+            ->whereDate('fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
+            ->whereDate('.fecha_final', '>=', DB::raw('CURRENT_DATE'))
+            ->groupBy('pais')
+            ->get();
+    }
+    
+    public function getCuponesComercioList($id)
+    {
+        return Cupones::where('estado', 1)
+            ->select('*')
+            ->whereDate('fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
+            ->whereDate('.fecha_final', '>=', DB::raw('CURRENT_DATE'))
+            ->where('comercio',$id)
+            ->get();
     }
 }

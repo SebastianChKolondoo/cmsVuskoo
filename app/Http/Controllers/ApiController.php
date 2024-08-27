@@ -517,7 +517,7 @@ class ApiController extends Controller
 
         // Obtiene la categoría
         $categoria = Categorias::select('*')->where('id', $data->categoria)->first();
-        if (!$categoria) {
+        if (!$categoria->id) {
             return [
                 'paises' => ['nombre' => 'no disponible'],
                 'categoria' => ['nombre' => 'no disponible'],
@@ -525,7 +525,7 @@ class ApiController extends Controller
         }
 
         // Obtiene los países
-        $paises = Paises::whereIn('id', json_decode($data->pais))->get();
+        $paises = Paises::whereIn('id', is_array(json_decode($data->pais)) ? json_decode($data->pais) : [json_decode($data->pais)])->get();
 
         // Retorna ambos valores en un array asociativo
         return [
@@ -543,7 +543,7 @@ class ApiController extends Controller
             ->orderBy('nombre', 'asc')
             ->first();
 
-        return Paises::whereIn('id', json_decode($data->pais))->get();
+        return Paises::whereIn('id', is_array(json_decode($data->pais)) ? json_decode($data->pais) : [json_decode($data->pais)])->get();
     }
 
     public function cargarCategoriasPaisesCupones($id)
