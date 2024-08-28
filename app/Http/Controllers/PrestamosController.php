@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Banca;
 use App\Models\CategoriasPrestamos;
+use App\Models\EmisorBanca;
 use App\Models\Paises;
 use App\Models\Prestamos;
 use App\Models\States;
@@ -28,10 +29,12 @@ class PrestamosController extends Controller
         $states = States::all();
         $prestadoras = Banca::all();
         $categorias = CategoriasPrestamos::all();
+        $emisor = EmisorBanca::all();
+        $Sino = States::all();
         $operadorasList = $prestadoras->mapWithKeys(function ($prestadoras) {
             return [$prestadoras->id => $prestadoras->nombre . ' - ' . $prestadoras->paises->nombre];
         });
-        return view('prestamos.create', compact('states', 'operadorasList', 'categorias', 'prestadoras'));
+        return view('prestamos.create', compact('states', 'operadorasList', 'categorias', 'prestadoras', 'emisor', 'Sino'));
     }
 
     /**
@@ -54,7 +57,26 @@ class PrestamosController extends Controller
             'destacada' => $request->destacada,
             'estado' => $request->estado,
             'categoria' => $request->categoria,
-            'pais' => $pais
+            'pais' => $pais,
+            'interes_mensual' => $request->interes_mensual,
+            'inteses_anual' => $request->inteses_anual,
+            'ingresos_minimos' => $request->ingresos_minimos,
+            'descuento_comercio' => $request->descuento_comercio,
+            'apertura_cuenta' => $request->apertura_cuenta,
+            'disposicion_efectivo' => $request->disposicion_efectivo,
+            'cajeros' => $request->cajeros,
+            'red_cajeros' => $request->red_cajeros,
+            'retiros_costo' => $request->retiros_costo,
+            'cashback' => $request->cashback,
+            'cuota_manejo_1' => $request->cuota_manejo_1,
+            'cuota_manejo_2' => $request->cuota_manejo_2,
+            'cuota_manejo_3' => $request->cuota_manejo_3,
+            'programa_puntos' => $request->programa_puntos,
+            'emisor' => $request->emisor,
+            'compras_extranjero' => $request->compras_extranjero,
+            'avance_cajero' => $request->avance_cajero,
+            'avance_oficina' => $request->avance_oficina,
+            'reposicion_tarjeta' => $request->reposicion_tarjeta,
         ]);
         return redirect()->route('prestamos.index')->with('info', 'Tarifa creada correctamente.');
     }
@@ -76,10 +98,12 @@ class PrestamosController extends Controller
         $states = States::all();
         $prestadoras = Banca::all();
         $categorias = CategoriasPrestamos::all();
+        $emisor = EmisorBanca::all();
+        $Sino = States::all();
         $operadorasList = $prestadoras->mapWithKeys(function ($prestadoras) {
             return [$prestadoras->id => $prestadoras->nombre . ' - ' . $prestadoras->paises->nombre];
         });
-        return view('prestamos.edit', compact('tarifa', 'categorias', 'operadorasList', 'states', 'prestadoras'));
+        return view('prestamos.edit', compact('tarifa', 'categorias', 'operadorasList', 'states', 'prestadoras', 'emisor', 'Sino'));
     }
 
     /**
@@ -89,9 +113,9 @@ class PrestamosController extends Controller
     {
         $empresa = Banca::find($request->banca);
         $pais = $empresa->pais;
-        
+
         $request['pais'] = $pais;
-        
+
         $tarifa = Prestamos::find($id);
         $tarifa->update($request->all());
         return redirect()->route('prestamos.index')->with('info', 'Tarifa editada correctamente.');

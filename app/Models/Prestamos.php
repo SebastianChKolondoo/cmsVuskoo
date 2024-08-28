@@ -23,7 +23,26 @@ class Prestamos extends Model
         'url_redirct',
         'destacada',
         'estado',
-        'pais'
+        'pais',
+        'interes_mensual',
+        'inteses_anual',
+        'ingresos_minimos',
+        'descuento_comercio',
+        'apertura_cuenta',
+        'disposicion_efectivo',
+        'cajeros',
+        'red_cajeros',
+        'retiros_costo',
+        'cashback',
+        'cuota_manejo_1',
+        'cuota_manejo_2',
+        'cuota_manejo_3',
+        'programa_puntos',
+        'emisor',
+        'compras_extranjero',
+        'avance_cajero',
+        'avance_oficina',
+        'reposicion_tarjeta',
     ];
 
     public function state()
