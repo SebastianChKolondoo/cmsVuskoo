@@ -54,10 +54,8 @@ class UserController extends Controller
                 'name' => ($request->name),
                 'lastname' => ($request->lastname),
                 'email' => strtolower($request->email),
-                'phone' => $request->phone,
-                'numberDocument' => $request->numberDocument,
                 'email_verified_at' => now(),
-                'password' => bcrypt($request->idNumber),
+                'password' => bcrypt($request->numberDocument),
             ]);
             $user->roles()->sync($request->roles);
             return redirect('/usuarios')->with('info', 'El registro de ' . $request->name . ' ' . $request->lastname . ' ha sido creado.');

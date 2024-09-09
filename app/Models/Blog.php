@@ -20,7 +20,8 @@ class Blog extends Model
         'migapan',
         'url_amigable',
         'categoria',
-        'pais'
+        'pais',
+        'estado'
     ];
 
     public function paises()

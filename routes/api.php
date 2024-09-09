@@ -117,6 +117,7 @@ Route::get('getDetailOffervehiculos/{id}', [TarifasController::class, 'getDetail
 
 /* Cupones */
 Route::get('getTarifasCupones/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasCuponesList']);
+Route::get('getTarifasCuponesDestacados/{lang?}', [TarifasController::class, 'getTarifasCuponesDestacadosList']);
 Route::get('getTarifaCupon/{id}', [TarifasController::class, 'getTarifaCuponList']);
 
 Route::get('getPaisesCupon', [CuponesController::class, 'getPaisesCuponList']);
@@ -140,6 +141,12 @@ Route::get('getMenuApi/{lang?}', [ApiController::class, 'getMenuApi']);
 /* carga footer */
 Route::get('getFooter/{lang?}', [ApiController::class, 'getFooterList']);
 
+Route::get('getBlogInfo/{lang?}', [BlogController::class, 'getBlogNewList']);/* listo */
+Route::get('getBlogInfo/{categoria}/{amigable}', [BlogController::class, 'getBlogItemList']); /* listo */
+Route::get('getBlogInfoCategoria/{categoria}', [BlogController::class, 'getBlogInfoCategoriaList']); /* listo */
+Route::get('getBlogInfoHome/{lang?}', [BlogController::class, 'getBlogInfoHomeList']); /* listo */
+Route::get('getMenuInfoBlog/{lang?}', [BlogController::class, 'getMenuInfoBlogList']); /* listo */
+
 route::get('/cambioNombreIdComerciosCupones', function () {
     $data = Cupones::limit(200)->orderBy('store', 'desc')->get();
     foreach ($data as $item) {
@@ -156,3 +163,5 @@ route::get('/cambioNombreIdComerciosCupones', function () {
         }
     }
 });
+
+

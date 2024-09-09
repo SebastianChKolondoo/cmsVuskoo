@@ -40,12 +40,12 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        {{-- <div class="form-group col-12 col-md-4">
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('landing_link', 'Landing link', ['class' => 'form-label']) !!}
                             {!! Form::text('landing_link', null, [
                                 'class' => 'form-control',
                             ]) !!}
-                        </div> --}}
+                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                             {!! Form::textarea('parrilla_bloque_1', null, [

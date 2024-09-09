@@ -176,6 +176,41 @@ class TarifasController extends Controller
         return $query->get();
     }
 
+    public function getTarifasCuponesDestacadosList($lang)
+    {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        $idioma = Paises::where('codigo', $lang)->first();
+
+        return DB::table($this->tabla_cupones)
+            ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
+            ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
+            ->join('paises', 'paises.id', '=', $this->tabla_cupones . '.pais')
+            ->join('categorias_comercios', 'categorias_comercios.id', '1_comercios.categoria')
+            ->select(
+                'paises.moneda',
+                $this->tabla_cupones . '.*',
+                DB::raw('CURRENT_DATE'),
+                DB::raw('DATE_FORMAT(' . $this->tabla_cupones . '.fecha_final, "%d-%m-%Y") as fecha_final'),
+                DB::raw('DATEDIFF(' . $this->tabla_cupones . '.fecha_final, CURRENT_DATE) AS dias_restantes'),
+                '1_comercios.nombre as nombre_comercio',
+                '1_comercios.logo',
+                'paises.nombre as pais',
+                'TipoCupon.nombre as cupon',
+                'categorias_comercios.nombre as categoriaItem'
+            )
+            ->where($this->tabla_cupones . '.destacada', '=', '2')
+            ->where($this->tabla_cupones . '.estado', '=', '1')
+            ->where('1_comercios.estado', '=', '1')
+            ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
+            ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
+            ->whereDate($this->tabla_cupones . '.fecha_final', '>=', DB::raw('CURRENT_DATE'))
+            ->orderBy('id', 'asc')
+            ->get();
+    }
+
     public function getTarifasCuponesList($lang = 'es', $idCategoria = null)
     {
         $idCategoriaConsulta = 0;
@@ -190,15 +225,16 @@ class TarifasController extends Controller
             if ($categoria == 0) {
                 return [];
             } else {
-                $categoria = Categorias::where('nombre', $idCategoria)->first();
+                $categoria = Categorias::where(' ', strtolower($idCategoria))->first();
                 $idCategoriaConsulta = $categoria->id;
             }
         }
 
-        return $query = DB::table($this->tabla_cupones)
+        $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
             ->join('paises', 'paises.id', '=', $this->tabla_cupones . '.pais')
+            ->join('categorias_comercios', 'categorias_comercios.id', '1_comercios.categoria')
             ->select(
                 'paises.moneda',
                 $this->tabla_cupones . '.*',
@@ -208,26 +244,27 @@ class TarifasController extends Controller
                 '1_comercios.nombre as nombre_comercio',
                 '1_comercios.logo',
                 'paises.nombre as pais',
-                'TipoCupon.nombre as cupon'
+                'TipoCupon.nombre as cupon',
+                'categorias_comercios.nombre as categoriaItem'
             )
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
             ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
             ->whereDate($this->tabla_cupones . '.fecha_final', '>=', DB::raw('CURRENT_DATE'))
-            ->orderBy('destacada', 'asc')
-            ->get();
+            ->orderBy('destacada', 'asc');
 
         if (!empty($id)) {
             $query->where($this->tabla_cupones . '.id', '=', $id);
         }
 
-        if ($idCategoriaConsulta != 0) {
-            $query->where('categoria', $idCategoriaConsulta);
+        if ($idCategoriaConsulta != null) {
+            $query->where('1_comercios.categoria', '=', $idCategoriaConsulta);
         }
 
-        /* return $query->get(); */
+        return $query->get();
     }
+
 
     public function getTarifaCuponList($id)
     {
@@ -268,7 +305,7 @@ class TarifasController extends Controller
     {
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
-            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo','politica_privacidad')
+            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad')
             ->where($this->tabla_movil . '.id', '=', $id)
             ->first();
     }
@@ -277,7 +314,7 @@ class TarifasController extends Controller
     {
         return DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
-            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz . '.comercializadora as operadora','politica_privacidad')
+            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz . '.comercializadora as operadora', 'politica_privacidad')
             ->where($this->tabla_luz . '.id', '=', $id)
             ->first();
     }
@@ -286,7 +323,7 @@ class TarifasController extends Controller
     {
         return DB::table($this->tabla_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
-            ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_gas . '.comercializadora as operadora','politica_privacidad')
+            ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_gas . '.comercializadora as operadora', 'politica_privacidad')
             ->where($this->tabla_gas . '.id', '=', $id)
             ->first();
     }
@@ -295,7 +332,7 @@ class TarifasController extends Controller
     {
         return DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
-            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora','politica_privacidad')
+            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora', 'politica_privacidad')
             ->where($this->tabla_luz_gas . '.id', '=', $id)
             ->first();
     }
@@ -313,7 +350,7 @@ class TarifasController extends Controller
     {
         return DB::table($this->tabla_movil_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
-            ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo','politica_privacidad')
+            ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad')
             ->where($this->tabla_movil_fibra . '.id', '=', $id)
             ->first();
     }
@@ -322,7 +359,7 @@ class TarifasController extends Controller
     {
         return DB::table($this->tabla_movil_fibra_tv)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
-            ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo','politica_privacidad')
+            ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad')
             ->where($this->tabla_movil_fibra_tv . '.id', '=', $id)
             ->first();
     }
@@ -354,7 +391,7 @@ class TarifasController extends Controller
     {
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
-            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo','politica_privacidad')
+            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad')
             ->where($this->tabla_movil . '.id', '=', $id)
             ->first();
     }
@@ -363,7 +400,7 @@ class TarifasController extends Controller
     {
         return DB::table($this->tabla_vehiculo)
             ->join('1_vehiculos', '1_vehiculos.id', '=', $this->tabla_vehiculo . '.vehiculo')
-            ->select($this->tabla_vehiculo . '.*', '1_vehiculos.nombre', '1_vehiculos.logo','politica_privacidad')
+            ->select($this->tabla_vehiculo . '.*', '1_vehiculos.nombre', '1_vehiculos.logo', 'politica_privacidad')
             ->where($this->tabla_vehiculo . '.id', '=', $id)
             ->first();
     }

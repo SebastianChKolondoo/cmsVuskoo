@@ -17,10 +17,9 @@
                     {!! Form::model($user, ['route' => ['user.update', $user], 'method' => 'put']) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('numberDocument', 'Número de documento', ['class' => 'form-label']) !!}
+                            {!! Form::label('numberDocument', 'Contraseña', ['class' => 'form-label']) !!}
                             {!! Form::text('numberDocument', null, [
                                 'class' => 'form-control',
-                                'placeholder' => 'Número de documento',
                                 'required' => 'required',
                             ]) !!}
                         </div>

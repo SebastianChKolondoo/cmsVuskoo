@@ -41,11 +41,11 @@
                     @foreach ($data as $item)
                         <td class="align-middle">{{ $item->id }}</td>
                         <td class="align-middle">{{ $item->titulo }}</td>
-                        <td class="align-middle">{{ $item->categoria }}</td>
+                        <td class="align-middle">{{ $item->categorias->nombre }}</td>
                         @can('blog.view-btn-edit')
-                        <td>
-                                <a href="blogPreview/{{$item->id}}" target="_blank" class="btn btn-warning">Preview</a>
-                                <a href="{{ route('blog.edit', $item) }}" class="btn btn-primary">Editar</a>
+                        <td class="d-flex">
+                                <a href="blogPreview/{{$item->id}}" target="_blank" class="btn btn-warning mx-1">Preview</a>
+                                <a href="{{ route('blog.edit', $item) }}" class="btn btn-primary mx-1">Editar</a>
                             </td>
                         @endcan
                         </tr>

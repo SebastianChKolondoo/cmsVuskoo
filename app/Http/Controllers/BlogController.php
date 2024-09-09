@@ -81,6 +81,23 @@ class BlogController extends Controller
         return $query->get();
     }
 
+    public function getBlogNewList($lang)
+    {
+        $paises = Paises::where('codigo', $lang)->first();
+        return Blog::select('blog.id', 'blog.imagen', 'blog.fecha_publicacion', 'blog.titulo', 'blog.entradilla', 'blog.categoria', 'categorias_blog.id', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('pais', $paises->id)->get();
+    }
+
+    public function getBlogItemList($categoria, $amigable)
+    {
+        $categoria = CategoriaBlog::where('slug', strtolower($categoria))->first();
+        $blog = Blog::select('id')->where('url_amigable', strtolower($amigable))->where('categoria', $categoria->id)->count();
+        if ($blog == 0) {
+            return ['mensaje' => 'El blog no existe', 'error' => 404];
+        } else {
+            return Blog::select('blog.imagen', 'blog.fecha_publicacion', 'blog.titulo', 'blog.contenido', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('categoria', $categoria->id)->where('url_amigable', $amigable)->get();
+        }
+    }
+
     public function getBlogPreviewList($id)
     {
         $query = DB::connection('mysql_second')->table('wp_posts')
@@ -263,5 +280,31 @@ class BlogController extends Controller
     {
         $data = Blog::find($id);
         return view('blog.preview', compact('data'));
+    }
+
+    public function getBlogInfoCategoriaList($categoria)
+    {
+        $categoriaCount = CategoriaBlog::where('slug', strtolower($categoria))->count();
+        if ($categoriaCount != 0) {
+            $data = CategoriaBlog::where('slug', strtolower($categoria))->first();
+            $blog = Blog::select('id')->where('categoria', $data->id)->count();
+            if ($blog != 0) {
+                return Blog::select('blog.imagen', 'blog.fecha_publicacion', 'blog.titulo', 'blog.contenido', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('categoria', $data->id)->get();
+            } else {
+                return ['mensaje' => 'La categoria no tiene blogs', 'error' => 404];
+            }
+        } else {
+            return ['mensaje' => 'La categoria no tiene blogs', 'error' => 404];
+        }
+    }
+
+    public function getBlogInfoHomeList($lang) {
+        $pais = Paises::where('codigo', $lang)->first();
+        return Blog::select('blog.imagen', 'blog.fecha_publicacion', 'blog.titulo', 'blog.contenido', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('pais',$pais->id)->orderBy('blog.fecha_publicacion','desc')->limit(3)->get();        
+    }
+
+    public function getMenuInfoBlogList($lang) {
+        $pais = Paises::where('codigo', $lang)->first();
+        return $blog = Blog::select('categorias_blog.nombre','categorias_blog.slug','blog.categoria')->groupBy('categoria')->where('pais',$pais->id)->join('categorias_blog','categorias_blog.id','blog.categoria')->get();
     }
 }
