@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlarmasController;
 use App\Http\Controllers\BancaController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoriasController;
@@ -11,9 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormularioContactenosController;
 use App\Http\Controllers\FormularioLeadsController;
 use App\Http\Controllers\FormularioNewsletterController;
-use App\Http\Controllers\FormulariosController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\OperadorasController;
@@ -29,20 +28,12 @@ use App\Http\Controllers\ParillaMovilController;
 use App\Http\Controllers\ParrillaStreamingController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\PrestamosController;
+use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\TipoCuponController;
 use App\Http\Controllers\TraduccionCategoriasController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UtilsController;
-use App\Models\Comercios;
-use App\Models\FormularioContactenos;
-use App\Models\FormularioLeads;
-use App\Models\FormularioNewsletter;
-use App\Models\PaginaWebFooter;
-use App\Models\ParillaFibraMovil;
 use Illuminate\Support\Facades\Auth;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +54,7 @@ Route::resource('usuarios', UserController::class)->middleware(['auth'])->names(
 Route::resource('permisos', PermisosController::class)->names('permisos')->middleware(['auth']);
 Route::resource('roles', RolesController::class)->names('roles')->middleware(['auth']);
 Route::resource('comercializadoras', ComercializadorasController::class)->names('comercializadoras')->middleware(['auth']);
+Route::resource('proveedores', ProveedoresController::class)->names('proveedores')->middleware(['auth']);
 Route::resource('operadoras', OperadorasController::class)->names('operadoras')->middleware(['auth']);
 Route::resource('comercios', ComerciosController::class)->names('comercios')->middleware(['auth']);
 Route::resource('paises', PaisesController::class)->names('paises')->middleware(['auth']);
@@ -75,6 +67,12 @@ Route::get('parrillamovilDuplicate/{id}', [ParillaMovilController::class, 'dupli
 Route::resource('parrillafibra', ParillaFibraController::class)->names('parrillafibra')->middleware(['auth']);
 Route::get('parrillafibraDuplicate/{id}', [ParillaFibraController::class, 'duplicateOffer'])->name('parrillafibraDuplicate')->middleware(['auth']);
 
+/* alarmas */
+Route::resource('alarmas', AlarmasController::class)->names('alarmas')->middleware(['auth']);
+Route::get('alarmasDuplicate/{id}', [ParillaFibraController::class, 'duplicateOffer'])->name('alarmasDuplicate')->middleware(['auth']);
+
+
+/* Parrillas */
 Route::resource('parrillafibramovil', ParillaFibraMovilController::class)->names('parrillafibramovil')->middleware(['auth']);
 Route::get('parrillafibramovilDuplicate/{id}', [ParillaFibraMovilController::class, 'duplicateOffer'])->name('parrillafibramovilDuplicate')->middleware(['auth']);
 

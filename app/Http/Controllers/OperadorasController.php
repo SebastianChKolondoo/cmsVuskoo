@@ -132,8 +132,8 @@ class OperadorasController extends Controller
 
         // Actualizar el modelo
         $operadora->update($data);
-
-        return redirect()->route('operadoras.index')->with('info', 'Operadora editada correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('operadoras.index')->with('info', 'Operadora editada correctamente.');
     }
 
     /**

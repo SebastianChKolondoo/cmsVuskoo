@@ -83,6 +83,7 @@ class TraduccionCategoriasController extends Controller
         $data = TraduccionCategorias::find($id);
         $data->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');
+        //return back()->with('info', 'Información actualizada correctamente.');
     }
 
     /**

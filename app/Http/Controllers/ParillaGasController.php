@@ -124,7 +124,8 @@ class ParillaGasController extends Controller
         $request['moneda'] = $moneda->moneda;
         $tarifa = ParillaGas::find($parillaGas);
         $tarifa->update($request->all());
-        return redirect()->route('parrillagas.index')->with('info', 'Tarifa editada correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('parrillagas.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     /**

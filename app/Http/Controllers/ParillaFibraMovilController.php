@@ -159,7 +159,8 @@ class ParillaFibraMovilController extends Controller
     
         $tarifa = ParillaFibraMovil::find($parillaMovil);
         $tarifa->update($request->all());
-        return redirect()->route('parrillafibramovil.index')->with('info', 'Tarifa editada correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('parrillafibramovil.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     public function duplicateOffer($id)

@@ -7,7 +7,7 @@
                     {{ session('info') }}
                 </div>
             @endif
-            @can('operadoras.view.btn-create')
+            @can('parrillafibramoviltv.view.btn-create')
                 <a href="{{ route('parrillafibramoviltv.create') }}" class="btn btn-primary">Nueva Oferta</a>
             @endcan
         </div>

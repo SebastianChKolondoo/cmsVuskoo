@@ -14,22 +14,28 @@
                     @endif
                     {!! Form::open(['route' => 'paises.store']) !!}
                     <div class="row">
-                        <div class="form-group col-12 col-md-4">
+                        <div class="form-group col-12 col-md-3">
                             {!! Form::label('codigo', 'Codigo', ['class' => 'form-label']) !!}
                             {!! Form::text('codigo', null, [
                                 'class' => 'form-control',
                                 'required' => 'required',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        <div class="form-group col-12 col-md-3">
                             {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        <div class="form-group col-12 col-md-3">
                             {!! Form::label('moneda', 'Moneda', ['class' => 'form-label']) !!}
                             {!! Form::text('moneda', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-3">
+                            {!! Form::label('decimales', 'Cantidad de decimales', ['class' => 'form-label']) !!}
+                            {!! Form::number('decimales', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>

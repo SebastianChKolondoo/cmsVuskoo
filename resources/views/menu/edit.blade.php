@@ -14,43 +14,39 @@
                     @endif
                     {!! Form::model($menu, ['route' => ['paginawebmenu.update', $menu], 'method' => 'put']) !!}
                     <div class="row">
-                        <div class="form-group col-12 col-md-4">
+                        <div class="form-group col-12 col-md-5">
                             {!! Form::label('titulo', 'Nombre menú', ['class' => 'form-label']) !!}
                             {!! Form::text('titulo', null, [
                                 'class' => 'form-control',
                                 'required' => 'required',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        <div class="form-group col-12 col-md-5">
                             {!! Form::label('urlTitulo', 'Url', ['class' => 'form-label']) !!}
                             {!! Form::text('urlTitulo', null, [
                                 'class' => 'form-control',
                                 'required' => 'required',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-3">
+                        <div class="form-group col-12 col-md-2">
                             {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
                             {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="col-12 col-md-1">
-                            <div class="form-group">
-                                <label for="eliminar">Acción</label>
-                                <div class="d-block">
-                                    <form action="{{ route('paginawebmenu.destroy', $menu) }}" method="POST"
-                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este elemento?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-small btn-danger"><i class="fa fa-times"
-                                                aria-hidden="true"></i></button>
-                                    </form>
-                                </div>
-                            </div>
+                        <div class="col-12 col-md-12 d-flex">
+                            {{ Form::submit('Actualizar', ['class' => 'btn btn-primary']) }}
+                            {!! Form::close() !!}
+                            <form action="{{ route('paginawebmenu.destroy', $menu) }}" method="POST"
+                                onsubmit="return confirm('¿Estás seguro de que deseas eliminar este elemento?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-small btn-danger mx-1">
+                                    Eliminar
+                                </button>
+                            </form>
                         </div>
                     </div>
-                    {{ Form::submit('Actualizar', ['class' => 'btn btn-primary']) }}
-                    {{ Form::close() }}
                 </div>
             </div>
         </div>
@@ -79,6 +75,7 @@
             <div class="col-12 my-1">
                 <div class="card">
                     <div class="card-body">
+                        <!-- Formulario de actualización -->
                         {!! Form::model($item, ['route' => ['paginawebsubmenu.update', $item], 'method' => 'put']) !!}
                         <div class="row">
                             {!! Form::hidden('idMenu', null, [
@@ -99,7 +96,7 @@
                                     'required' => 'required',
                                 ]) !!}
                             </div>
-                            <div class="col-12 col-md-1">
+                            <div class="col-12 col-md-2">
                                 <div class="form-group">
                                     {!! Form::label('orden', 'Orden', ['class' => 'form-label']) !!}
                                     {!! Form::select('orden', range(0, 10), null, [
@@ -108,25 +105,20 @@
                                     ]) !!}
                                 </div>
                             </div>
-                            <div class="col-12 col-md-1">
-                                <div class="form-group">
-                                    <label for="eliminar">Acción</label>
-                                    <div class="d-block">
-                                        <form action="{{ route('paginawebsubmenu.destroy', $item->id) }}" method="POST"
-                                            onsubmit="return confirm('¿Estás seguro de que deseas eliminar este elemento?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-small btn-danger"><i class="fa fa-times"
-                                                    aria-hidden="true"></i></button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12">
+                            <div class="col-12 col-md-12 d-flex">
                                 {{ Form::submit('Actualizar', ['class' => 'btn btn-primary']) }}
-                                {{ Form::close() }}
+                                {!! Form::close() !!}
+                                <form action="{{ route('paginawebsubmenu.destroy', $item->id) }}" method="POST"
+                                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar este elemento?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger mx-1">
+                                        Eliminar
+                                    </button>
+                                </form>
                             </div>
                         </div>
+                        <!-- Formulario de eliminación -->
                     </div>
                 </div>
             </div>

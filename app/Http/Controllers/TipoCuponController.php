@@ -59,7 +59,8 @@ class TipoCuponController extends Controller
     {
         $tipoCupon = TipoCupon::find($id);
         $tipoCupon->update($request->all());
-        return redirect()->route('tipoCupones.index')->with('info', 'Tipo de cupon editado correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('tipoCupones.index')->with('info', 'Tipo de cupon editado correctamente.');
     }
 
     /**

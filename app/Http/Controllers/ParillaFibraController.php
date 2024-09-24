@@ -154,7 +154,8 @@ class ParillaFibraController extends Controller
         $request['slug_tarifa'] = $slug;
         $tarifa = ParillaFibra::find($parillaFibra);
         $tarifa->update($request->all());
-        return redirect()->route('parrillafibra.index')->with('info', 'Tarifa editada correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('parrillafibra.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     public function duplicateOffer($id)

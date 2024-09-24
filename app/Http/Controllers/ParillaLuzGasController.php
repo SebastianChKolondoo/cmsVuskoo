@@ -131,7 +131,8 @@ class ParillaLuzGasController extends Controller
         $request['moneda'] = $moneda->moneda;
         $tarifa = ParillaLuzGas::find($parillaLuzGas);
         $tarifa->update($request->all());
-        return redirect()->route('parrillaluzgas.index')->with('info', 'Tarifa editada correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('parrillaluzgas.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     public function duplicateOffer($id)

@@ -130,8 +130,8 @@ class ParrillaStreamingController extends Controller
             $nombreArchivo = strtolower($request->nombre_tarifa) . '_negativo.' . $extension;
             $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
             $logo_negativo = Storage::disk('public')->url($path);
+            $urlLogo = Storage::disk('public')->url($path);
         }
-        echo $urlLogo = Storage::disk('public')->url($path);
         // Crear un array de datos a actualizar
         $data = $request->all();
         if ($urlLogo) {
@@ -154,7 +154,8 @@ class ParrillaStreamingController extends Controller
         $data['moneda'] = $moneda->moneda;
         $tarifa->update($data);
         //$tarifa->update($request->all());
-        return redirect()->route('streaming.index')->with('info', 'Oferta editada correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('streaming.index')->with('info', 'Oferta editada correctamente.');
     }
 
     /**

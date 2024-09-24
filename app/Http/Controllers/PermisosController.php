@@ -65,7 +65,8 @@ class PermisosController extends Controller
         $permiso = Permission::find($permiso);
         $permiso->update($request->all());
         $permiso->roles()->sync($request->roles);
-        return redirect()->route('permisos.index')->with('info','Permiso editado correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('permisos.index')->with('info','Permiso editado correctamente.');
     }
 
     /**

@@ -64,6 +64,11 @@ Route::get('getTarifasFibraMovilTv/{lang?}', [TarifasController::class, 'getTari
 Route::get('filterMovilFibraTv/{lang?}', [FilterController::class, 'getValuesFilterFibraMovilTvList']);
 Route::get('getExtraOffercomparadorfibramoviltv/{lang?}', [ExtraOfferController::class, 'getExtraOfferFibraMovilTvList']);
 Route::get('getDetailOffercomparadorfibramoviltv/{id}', [TarifasController::class, 'getDetailOfferFibraMovilTvList']);
+/* Alarmas */
+Route::get('getTarifasAlarmas/{lang?}', [TarifasController::class, 'getTarifasAlarmasList']);
+Route::get('filterMovilFibraTv/{lang?}', [FilterController::class, 'getValuesFilterFibraMovilTvList']);
+Route::get('getExtraOffercomparadorfibramoviltv/{lang?}', [ExtraOfferController::class, 'getExtraOfferFibraMovilTvList']);
+Route::get('getDetailOffercomparadorfibramoviltv/{id}', [TarifasController::class, 'getDetailOfferFibraMovilTvList']);
 /* Streaming */
 Route::get('getTarifasStreaming/{lang?}', [TarifasController::class, 'getTarifasStreamingList']);
 /* blog */

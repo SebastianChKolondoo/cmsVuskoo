@@ -118,7 +118,8 @@ class PrestamosController extends Controller
 
         $tarifa = Prestamos::find($id);
         $tarifa->update($request->all());
-        return redirect()->route('prestamos.index')->with('info', 'Tarifa editada correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('prestamos.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     /**

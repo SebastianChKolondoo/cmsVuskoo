@@ -65,7 +65,8 @@ class PaginaWebFooterController extends Controller
         $request['pais'] = $request->pais;
         $tarifa = PaginaWebFooter::find($id);
         $tarifa->update($request->all());
-        return redirect()->route('paginaweb.index')->with('info', 'Footer editado correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('paginaweb.index')->with('info', 'Footer editado correctamente.');
     }
 
     /**

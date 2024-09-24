@@ -65,6 +65,13 @@
                     <span>Comercios</span></a>
             </li>
         @endcan
+        @can('proveedores.view')
+            <li class="nav-item active">
+                <a class="nav-link" href="/proveedores">
+                    <i class="fa fa-bullseye" aria-hidden="true"></i>
+                    <span>Proveedores</span></a>
+            </li>
+        @endcan
         @can('paises.view')
             <li class="nav-item active">
                 <a class="nav-link" href="/paises">
@@ -165,6 +172,20 @@
                     @can('prestamos.view') --}}
                 <a class="collapse-item" href="{{ route('prestamos.index') }}">Zona bancaria</a>
                 {{-- @endcan --}}
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAlarma"
+            aria-expanded="true" aria-controls="collapseAlarma">
+            <i class="fa fa-bullseye" aria-hidden="true"></i>
+            <span>Seguros</span>
+        </a>
+        <div id="collapseAlarma" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {{-- @can('zonabancos.view') --}}
+                <a class="collapse-item" href="{{ route('alarmas.index') }}">Alarmas</a>
+                {{-- @endcan  --}}
             </div>
         </div>
     </li>

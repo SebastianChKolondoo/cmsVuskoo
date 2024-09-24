@@ -162,7 +162,8 @@ class ParillaMovilController extends Controller
         $request['slug_tarifa'] = $slug;
         $tarifa = ParillaMovil::find($parillaMovil);
         $tarifa->update($request->all());
-        return redirect()->route('parrillamovil.index')->with('info', 'Tarifa editada correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('parrillamovil.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     /**

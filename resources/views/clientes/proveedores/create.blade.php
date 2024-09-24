@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2>Registrar comercializadora</h2>
+                    <h2>Registrar proveedor</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))
@@ -12,7 +12,7 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'comercializadoras.store', 'enctype' => 'multipart/form-data']) !!}
+                    {!! Form::open(['route' => 'proveedores.store', 'enctype' => 'multipart/form-data']) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}

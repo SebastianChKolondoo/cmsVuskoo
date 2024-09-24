@@ -66,7 +66,8 @@ class RolesController extends Controller
         $roles = Role::find($rol);
         $roles->update($request->all());
         $roles->syncPermissions($request->permisos);
-        return redirect()->route('roles.index')->with('info', 'Rol editado correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('roles.index')->with('info', 'Rol editado correctamente.');
     }
 
     /**

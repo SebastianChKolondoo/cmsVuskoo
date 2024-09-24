@@ -18,6 +18,7 @@ class Paises extends Model
         'language',
         'geo_region',
         'geo_position',
-        'geo_placename'
+        'geo_placename',
+        'decimales'
     ];        
 }

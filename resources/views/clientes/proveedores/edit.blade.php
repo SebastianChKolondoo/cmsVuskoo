@@ -1,18 +1,22 @@
 @extends('layouts.app')
 @section('content')
-    <div class="row my-4">
+    <div class="row justify-content-center my-4">
+        <div class="col-12 mb-3">
+            <h2>Editar proveedor</h2>
+        </div>
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h2>Registrar comercializadora</h2>
-                </div>
                 <div class="card-body">
                     @if (session('info'))
                         <div class="alert alert-success">
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'comercializadoras.store', 'enctype' => 'multipart/form-data']) !!}
+                    {!! Form::model($proveedor, [
+                        'route' => ['proveedores.update', $proveedor],
+                        'method' => 'put',
+                        'enctype' => 'multipart/form-data',
+                    ]) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
@@ -47,10 +51,16 @@
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {{ Form::label('logo', 'Logo') }}
+                            @if (!empty($proveedor->logo))
+                                <a href="{{ $proveedor->logo }}" target="_blank">ver logo</a>
+                            @endif
                             {{ Form::file('logo', ['class' => 'form-control']) }}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {{ Form::label('logo_negativo', 'logo negativo') }}
+                            @if (!empty($proveedor->logo_negativo))
+                                <a href="{{ $proveedor->logo_negativo }}" target="_blank">ver logo negativo</a>
+                            @endif
                             {{ Form::file('logo_negativo', ['class' => 'form-control']) }}
                         </div>
                         <div class="form-group col-12 col-md-4">
@@ -66,19 +76,16 @@
                             ]) !!}
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-12 col-md-12">
-                            {!! Form::submit('Registrar', ['class' => 'btn btn-primary mt-3']) !!}
-                            {!! Form::close() !!}
-                        </div>
-                    </div>
+
+                    {{ Form::submit('Actualizar', ['class' => 'btn btn-primary']) }}
+                    {{ Form::close() }}
                 </div>
             </div>
         </div>
-        <div class="row my-4">
-            <div class="col-12">
-                <a href="{{ route('comercializadoras.index') }}" class="btn btn-dark">Volver</a>
-            </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <a href="{{ route('proveedores.index') }}" class="btn btn-dark">Volver</a>
         </div>
     </div>
 @endsection

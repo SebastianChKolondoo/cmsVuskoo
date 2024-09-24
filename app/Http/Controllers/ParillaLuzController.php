@@ -124,7 +124,8 @@ class ParillaLuzController extends Controller
         $request['moneda'] = $moneda->moneda;
         $tarifa = ParillaLuz::find($id);
         $tarifa->update($request->all());
-        return redirect()->route('parrillaluz.index')->with('info', 'Tarifa editada correctamente.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect()->route('parrillaluz.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     public function duplicateOffer($id)

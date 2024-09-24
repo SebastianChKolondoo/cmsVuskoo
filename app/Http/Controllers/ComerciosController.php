@@ -87,6 +87,7 @@ class ComerciosController extends Controller
     {
         $comercios = Comercios::find($comercio);
         $comercios->update($request->all());
+        //return back()->with('info', 'Información actualizada correctamente.');
         return redirect()->route('comercios.index')->with('info', 'comercio editado correctamente.');
     }
 

@@ -90,7 +90,8 @@ class UserController extends Controller
         $user = User::find($user);
         $user->update($request->all());
         $user->roles()->sync($request->roles);
-        return redirect('/usuarios')->with('info', 'El registro de ' . $request->name . ' ' . $request->lastname . ' ha sido actualizado.');
+        return back()->with('info', 'Información actualizada correctamente.');
+        //return redirect('/usuarios')->with('info', 'El registro de ' . $request->name . ' ' . $request->lastname . ' ha sido actualizado.');
     }
 
     /**

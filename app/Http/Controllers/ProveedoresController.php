@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comercializadoras;
 use App\Models\Paises;
+use App\Models\Proveedores;
 use App\Models\States;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ComercializadorasController extends Controller
+class ProveedoresController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $comercializadoras = Comercializadoras::all();
-        return view('clientes.comercializadoras.index', compact('comercializadoras'));
+        $proveedores = Proveedores::all();
+        return view('clientes.proveedores.index', compact('proveedores'));
     }
 
     /**
@@ -26,7 +23,7 @@ class ComercializadorasController extends Controller
     {
         $estados = States::all();
         $paises = Paises::all();
-        return view('clientes.comercializadoras.create', compact('estados', 'paises'));
+        return view('clientes.proveedores.create', compact('estados', 'paises'));
     }
 
     /**
@@ -51,7 +48,7 @@ class ComercializadorasController extends Controller
             $logo_negativo = Storage::disk('public')->url($path);
         }
 
-        Comercializadoras::create([
+        Proveedores::create([
             'nombre' => $request->nombre,
             'nombre_slug' => $request->nombre_slug,
             'tipo_conversion' => $request->tipo_conversion,
@@ -63,13 +60,13 @@ class ComercializadorasController extends Controller
 
         ]);
 
-        return redirect()->route('comercializadoras.index')->with('info', 'Comercializadora creado correctamente.');
+        return redirect()->route('proveedores.index')->with('info', 'Proveedor creado correctamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Comercializadoras $comercializadoras)
+    public function show(Proveedores $proveedores)
     {
         //
     }
@@ -79,19 +76,19 @@ class ComercializadorasController extends Controller
      */
     public function edit($id)
     {
-        $comercializadora = Comercializadoras::find($id);
+        $proveedor = Proveedores::find($id);
         $estados = States::all();
         $paises = Paises::all();
-        return view('clientes.comercializadoras.edit', compact('comercializadora', 'estados', 'paises'));
+        return view('clientes.proveedores.edit', compact('proveedor', 'estados', 'paises'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $comercializadora)
+    public function update(Request $request,  $proveedor)
     {
-        $comercializadoras = Comercializadoras::find($comercializadora);
-        
+        $proveedores = Proveedores::find($proveedor);
+
         $urlLogo = null;
         $logo_negativo = null;
 
@@ -121,15 +118,14 @@ class ComercializadorasController extends Controller
         }
 
         // Actualizar el modelo
-        $comercializadoras->update($data);
+        $proveedores->update($data);
         return back()->with('info', 'Información actualizada correctamente.');
-        //return redirect()->route('comercializadoras.index')->with('info', 'Comercializadora editado correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comercializadoras $comercializadoras)
+    public function destroy(Proveedores $proveedores)
     {
         //
     }
