@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Alarmas extends Model
+class SegurosSalud extends Model
 {
     use HasFactory;
-    protected $table = 'WEB_3_TARIFAS_ALARMAS';
+    protected $table = 'WEB_3_TARIFAS_SEGUROS_SALUD';
 
     protected $fillable = [
         'proveedor',
@@ -26,14 +26,7 @@ class Alarmas extends Model
         'destacada',
         'estado',
         'pais',
-        'verificacion_video',
-        'compatible_mascotas',
-        'boton_panico',
-        'fotodetector',
-        'detector_infrarrojo',
-        'detector_magnetico',
-        'llaves_tags',
-        'extras',
+        'copago'
     ];
 
     public function proveedores()

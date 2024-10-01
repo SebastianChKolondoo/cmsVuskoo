@@ -25,6 +25,7 @@ class TarifasController extends Controller
     protected $tabla_cupones = 'WEB_3_TARIFAS_CUPONES';
     protected $tabla_prestamos = 'WEB_3_PRESTAMOS';
     protected $tabla_alarmas = 'WEB_3_TARIFAS_ALARMAS';
+    protected $tabla_seguro_salud = 'WEB_3_TARIFAS_SEGUROS_SALUD';
 
     public function conversorValor($valor, $decimal, $pais)
     {
@@ -623,7 +624,7 @@ class TarifasController extends Controller
 
     public function getTarifasPrestamosList($lang = 'co', $categoria = null)
     {
-        
+
         if ($categoria != null) {
             $validacionPais = Paises::where('codigo', $lang)->count();
             if ($validacionPais == 0) {
@@ -637,7 +638,7 @@ class TarifasController extends Controller
                 ->select($this->tabla_prestamos . '.*', '1_banca.nombre', '1_banca.logo', 'paises.decimales')
                 ->where($this->tabla_prestamos . '.estado', '=', '1')
                 ->where($this->tabla_prestamos . '.categoria', '=', $categoria)
-                ->where('1_banca.pais',$idioma->id)
+                ->where('1_banca.pais', $idioma->id)
                 ->orderBy('destacada', 'asc');
 
             if (!empty($id)) {
@@ -676,35 +677,166 @@ class TarifasController extends Controller
 
             $idioma = Paises::where('codigo', $lang)->first();
             return DB::table($this->tabla_prestamos)
-            ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
-            ->join('paises', 'paises.id', '=', '1_banca.pais')
-            ->select('1_banca.nombre', '1_banca.id', '1_banca.logo', 'paises.decimales')
-            ->where('1_banca.pais',$idioma->id)
-            ->where($this->tabla_prestamos . '.estado', '=', '1')
-            ->where($this->tabla_prestamos . '.categoria', '=', $categoria)
-            ->groupBy('1_banca.nombre')
-            ->orderBy('destacada', 'asc')
-            ->get();
-            
+                ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
+                ->join('paises', 'paises.id', '=', '1_banca.pais')
+                ->select('1_banca.nombre', '1_banca.id', '1_banca.logo', 'paises.decimales')
+                ->where('1_banca.pais', $idioma->id)
+                ->where($this->tabla_prestamos . '.estado', '=', '1')
+                ->where($this->tabla_prestamos . '.categoria', '=', $categoria)
+                ->groupBy('1_banca.nombre')
+                ->orderBy('destacada', 'asc')
+                ->get();
+        } else {
+            return [];
+        }
+    }
+
+    public function getTarifasAlarmasList($lang)
+    {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        if ($validacionPais == 1) {
+            $idioma = Paises::where('codigo', $lang)->first();
+            $query = DB::table($this->tabla_alarmas)
+                ->join('1_proveedores', '1_proveedores.id', '=', $this->tabla_alarmas . '.proveedor')
+                ->join('paises', 'paises.id', '=', '1_proveedores.pais')
+                ->select('1_proveedores.nombre as proveedor_nombre', '1_proveedores.id  as proveedor_id', '1_proveedores.logo  as proveedor_logo', 'paises.decimales', $this->tabla_alarmas . '.*')
+                ->where('1_proveedores.pais', $idioma->id)
+                ->where($this->tabla_alarmas . '.estado', '=', '1')
+                ->orderBy('destacada', 'asc');
+
+            $data = $query->get();
+
+            foreach ($data as $item) {
+                // Formatear los números y luego convertirlos de nuevo a numérico
+                $item->precio_1 = $this->conversorValor($item->precio_1, $item->decimales, $item->pais);
+                $item->precio_2 = $this->conversorValor($item->precio_2, $item->decimales, $item->pais);
+            }
+            return $data;
         } else {
             return [];
         }
     }
     
-    public function getTarifasAlarmasList($lang)
+    public function getTarifasSeguroSaludList($lang, $categoria)
     {
         $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        if ($categoria == null) {
+            return [];
+        }
+
         if ($validacionPais == 1) {
             $idioma = Paises::where('codigo', $lang)->first();
-            return DB::table($this->tabla_alarmas)
-            ->join('1_proveedores', '1_proveedores.id', '=', $this->tabla_alarmas . '.proveedor')
-            ->join('paises', 'paises.id', '=', '1_proveedores.pais')
-            ->select('1_proveedores.nombre as proveedor_nombre', '1_proveedores.id  as proveedor_id', '1_proveedores.logo  as proveedor_logo', 'paises.decimales',$this->tabla_alarmas.'.*')
-            ->where('1_proveedores.pais',$idioma->id)
-            ->where($this->tabla_alarmas . '.estado', '=', '1')
-            ->orderBy('destacada', 'asc')
-            ->get();
-            
+            $query = DB::table($this->tabla_seguro_salud)
+                ->join('1_proveedores', '1_proveedores.id', '=', $this->tabla_seguro_salud . '.proveedor')
+                ->join('paises', 'paises.id', '=', '1_proveedores.pais')
+                ->select('1_proveedores.nombre as proveedor_nombre', '1_proveedores.id  as proveedor_id', '1_proveedores.logo  as proveedor_logo', 'paises.decimales', $this->tabla_seguro_salud . '.*')
+                ->where('1_proveedores.pais', $idioma->id)
+                ->where($this->tabla_seguro_salud . '.copago', $categoria)
+                ->orderBy('destacada', 'asc');
+
+            $data = $query->get();
+
+            foreach ($data as $item) {
+                // Formatear los números y luego convertirlos de nuevo a numérico
+                $item->precio_1 = $this->conversorValor($item->precio_1, $item->decimales, $item->pais);
+                $item->precio_2 = $this->conversorValor($item->precio_2, $item->decimales, $item->pais);
+            }
+            return $data;
+        } else {
+            return [];
+        }
+    }
+
+    public function getTarifasComparadorCuotaMensualList($lang)
+    {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        if ($validacionPais == 1) {
+            $idioma = Paises::where('codigo', $lang)->first();
+            $query = DB::table($this->tabla_alarmas)
+                ->join('1_proveedores', '1_proveedores.id', '=', $this->tabla_alarmas . '.proveedor')
+                ->join('paises', 'paises.id', '=', '1_proveedores.pais')
+                ->select('1_proveedores.nombre as proveedor_nombre', '1_proveedores.id  as proveedor_id', '1_proveedores.logo  as proveedor_logo', 'paises.decimales', $this->tabla_alarmas . '.*')
+                ->where('1_proveedores.pais', $idioma->id)
+                ->where($this->tabla_alarmas . '.estado', '=', '1')
+                ->inRandomOrder()
+                ->take(4);
+
+            $data = $query->get();
+
+            foreach ($data as $item) {
+                // Formatear los números y luego convertirlos de nuevo a numérico
+                $item->precio_1 = $this->conversorValor($item->precio_1, $item->decimales, $item->pais);
+                $item->precio_2 = $this->conversorValor($item->precio_2, $item->decimales, $item->pais);
+            }
+            return $data;
+        } else {
+            return [];
+        }
+    }
+    
+    public function getTarifasComparadorSaludList($lang)
+    {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        if ($validacionPais == 1) {
+            $idioma = Paises::where('codigo', $lang)->first();
+            $query = DB::table($this->tabla_seguro_salud)
+                ->join('1_proveedores', '1_proveedores.id', '=', $this->tabla_seguro_salud . '.proveedor')
+                ->join('paises', 'paises.id', '=', '1_proveedores.pais')
+                ->select('1_proveedores.nombre as proveedor_nombre', '1_proveedores.id  as proveedor_id', '1_proveedores.logo  as proveedor_logo', 'paises.decimales', $this->tabla_seguro_salud . '.*')
+                ->where('1_proveedores.pais', $idioma->id)
+                ->where('')
+                ->where($this->tabla_seguro_salud . '.estado', '=', '1');
+
+            $data = $query->get();
+
+            foreach ($data as $item) {
+                // Formatear los números y luego convertirlos de nuevo a numérico
+                $item->precio_1 = $this->conversorValor($item->precio_1, $item->decimales, $item->pais);
+                $item->precio_2 = $this->conversorValor($item->precio_2, $item->decimales, $item->pais);
+            }
+            return $data;
+        } else {
+            return [];
+        }
+    }
+    
+    public function getTarifasComparadorAlarmasEquiposList($lang)
+    {
+        $validacionPais = Paises::where('codigo', $lang)->count();
+        if ($validacionPais == 0) {
+            return [];
+        }
+        if ($validacionPais == 1) {
+            $idioma = Paises::where('codigo', $lang)->first();
+            $query = DB::table($this->tabla_alarmas)
+                ->join('1_proveedores', '1_proveedores.id', '=', $this->tabla_alarmas . '.proveedor')
+                ->join('paises', 'paises.id', '=', '1_proveedores.pais')
+                ->select('1_proveedores.nombre as proveedor_nombre', '1_proveedores.id  as proveedor_id', '1_proveedores.logo  as proveedor_logo', 'paises.decimales', $this->tabla_alarmas . '.*')
+                ->where('1_proveedores.pais', $idioma->id)
+                ->where($this->tabla_alarmas . '.estado', '=', '1')
+                ->inRandomOrder()
+                ->take(4);
+
+            $data = $query->get();
+
+            foreach ($data as $item) {
+                // Formatear los números y luego convertirlos de nuevo a numérico
+                $item->precio_1 = $this->conversorValor($item->precio_1, $item->decimales, $item->pais);
+                $item->precio_2 = $this->conversorValor($item->precio_2, $item->decimales, $item->pais);
+            }
+            return $data;
         } else {
             return [];
         }

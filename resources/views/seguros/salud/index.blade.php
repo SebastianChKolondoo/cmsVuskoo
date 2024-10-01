@@ -7,8 +7,8 @@
                     {{ session('info') }}
                 </div>
             @endif
-            @can('parrillaalarmas.view.btn-create')
-                <a href="{{ route('alarmas.create') }}" class="btn btn-primary">Nueva oferta</a>
+            @can('parrillasalud.view.btn-create')
+                <a href="{{ route('segurossalud.create') }}" class="btn btn-primary">Nueva oferta</a>
             @endcan
         </div>
     </div>
@@ -53,11 +53,11 @@
                             {{-- <td class="align-middle">{{ $item->item }}</td> --}}
                             <td class="align-middle">{{ optional($item->paises)->nombre }}</td>
                             <td>
-                                @can('parrillaalarmas.view.btn-edit')
-                                    <a href="{{ route('alarmas.edit', $item) }}" class="btn btn-primary">Editar</a>
+                                @can('parrillasalud.view.btn-edit')
+                                    <a href="{{ route('segurossalud.edit', $item) }}" class="btn btn-primary">Editar</a>
                                 @endcan
-                               {{--  @can('parrillaalarmas.view.btn-duplicate')
-                                    <a href="{{ route('alarmasDuplicate', $item) }}" class="btn btn-warning">Duplicar</a>
+                               {{--  @can('segurossalud.view.btn-duplicate')
+                                    <a href="{{ route('segurossaludDuplicate', $item) }}" class="btn btn-warning">Duplicar</a>
                                 @endcan --}}
                             </td>
                         </tr>
@@ -85,13 +85,13 @@
                                 {{-- <td class="align-middle">{{ $item->item }}</td> --}}
                                 <td class="align-middle">{{ optional($item->paises)->nombre }}</td>
                                 <td>
-                                    @can('parrillaalarmas.view.btn-edit')
-                                        <a href="{{ route('parrillamovil.edit', $item) }}" class="btn btn-primary">Editar</a>
+                                    @can('parrillasalud.view.btn-edit')
+                                        <a href="{{ route('segurossalud.edit', $item) }}" class="btn btn-primary">Editar</a>
                                     @endcan
-                                    @can('parrillaalarmas.view.btn-duplicate')
-                                        <a href="{{ route('parrillamovilDuplicate', $item) }}"
+                                    {{-- @can('parrillasalud.view.btn-duplicate')
+                                        <a href="{{ route('segurossaludDuplicate', $item) }}"
                                             class="btn btn-warning">Duplicar</a>
-                                    @endcan
+                                    @endcan --}}
                                 </td>
                             </tr>
                         @endif
@@ -119,13 +119,13 @@
                                 {{-- <td class="align-middle">{{ $item->item }}</td> --}}
                                 <td class="align-middle">{{ optional($item->paises)->nombre }}</td>
                                 <td>
-                                    @can('parrillaalarmas.view.btn-edit')
-                                        <a href="{{ route('parrillamovil.edit', $item) }}" class="btn btn-primary">Editar</a>
+                                    @can('parrillasalud.view.btn-edit')
+                                        <a href="{{ route('segurossalud.edit', $item) }}" class="btn btn-primary">Editar</a>
                                     @endcan
-                                    @can('parrillaalarmas.view.btn-duplicate')
-                                        <a href="{{ route('parrillamovilDuplicate', $item) }}"
+                                    {{-- @can('parrillasalud.view.btn-duplicate')
+                                        <a href="{{ route('segurossaludDuplicate', $item) }}"
                                             class="btn btn-warning">Duplicar</a>
-                                    @endcan
+                                    @endcan --}}
                                 </td>
                             </tr>
                         @endif

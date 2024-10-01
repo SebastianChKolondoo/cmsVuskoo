@@ -66,6 +66,11 @@ Route::get('getExtraOffercomparadorfibramoviltv/{lang?}', [ExtraOfferController:
 Route::get('getDetailOffercomparadorfibramoviltv/{id}', [TarifasController::class, 'getDetailOfferFibraMovilTvList']);
 /* Alarmas */
 Route::get('getTarifasAlarmas/{lang?}', [TarifasController::class, 'getTarifasAlarmasList']);
+Route::get('getTarifasComparadorCuotaMensual/{lang?}', [TarifasController::class, 'getTarifasComparadorCuotaMensualList']);
+/* seguros salud */
+Route::get('getTarifasSegurosSalud/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasSeguroSaludList']);
+Route::get('getTarifasComparadorSegurosSalud/{lang?}', [TarifasController::class, 'getTarifasComparadorSaludList']);
+/* fibra movil tv */
 Route::get('filterMovilFibraTv/{lang?}', [FilterController::class, 'getValuesFilterFibraMovilTvList']);
 Route::get('getExtraOffercomparadorfibramoviltv/{lang?}', [ExtraOfferController::class, 'getExtraOfferFibraMovilTvList']);
 Route::get('getDetailOffercomparadorfibramoviltv/{id}', [TarifasController::class, 'getDetailOfferFibraMovilTvList']);

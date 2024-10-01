@@ -24,39 +24,40 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="offset-md-8"></div>
+                        <div class="col-12"><b>Cuota mensual</b></div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('selector_1', 'selector_1', ['class' => 'form-label']) !!}
+                            {!! Form::label('selector_1', 'Tiempo', ['class' => 'form-label']) !!}
                             {!! Form::text('selector_1', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('precio_1', 'precio_1', ['class' => 'form-label']) !!}
+                            {!! Form::label('precio_1', 'Precio', ['class' => 'form-label']) !!}
                             {!! Form::text('precio_1', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('divisa_1', 'divisa_1', ['class' => 'form-label']) !!}
+                            {!! Form::label('divisa_1', 'Divisa', ['class' => 'form-label']) !!}
                             {!! Form::text('divisa_1', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                        <div class="col-12"><b>Cuota sin promoción</b></div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('selector_2', 'selector_2', ['class' => 'form-label']) !!}
+                            {!! Form::label('selector_2', 'Tiempo', ['class' => 'form-label']) !!}
                             {!! Form::text('selector_2', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('precio_2', 'precio_2', ['class' => 'form-label']) !!}
+                            {!! Form::label('precio_2', 'Precio', ['class' => 'form-label']) !!}
                             {!! Form::text('precio_2', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('divisa_2', 'divisa_2', ['class' => 'form-label']) !!}
+                            {!! Form::label('divisa_2', 'Divisa', ['class' => 'form-label']) !!}
                             {!! Form::text('divisa_2', null, [
                                 'class' => 'form-control',
                             ]) !!}
@@ -115,6 +116,58 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                        <div class="col-12 my-3">
+                            <h4>Capacidad de equipos</h4>
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('verificacion_video', 'Verificación por vídeo', ['class' => 'form-label']) !!}
+                            {!! Form::select('verificacion_video', $estados->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('compatible_mascotas', 'Compatible con mascotas', ['class' => 'form-label']) !!}
+                            {!! Form::select('compatible_mascotas', $estados->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('boton_panico', 'Botón del pánico', ['class' => 'form-label']) !!}
+                            {!! Form::select('boton_panico', $estados->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('fotodetector', 'Fotodetectores', ['class' => 'form-label']) !!}
+                            {!! Form::select('fotodetector', $estados->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('detector_infrarrojo', 'Detector de infrarrojos', ['class' => 'form-label']) !!}
+                            {!! Form::select('detector_infrarrojo', $estados->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('detector_magnetico', 'Detector magnético', ['class' => 'form-label']) !!}
+                            {!! Form::select('detector_magnetico', $estados->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('llaves_tags', 'Llaves o tags', ['class' => 'form-label']) !!}
+                            {!! Form::select('llaves_tags', $estados->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-12">
+                            {!! Form::label('extras', 'Extras', ['class' => 'form-label']) !!}
+                            {!! Form::text('extras', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        
                     </div>
 
                     {{ Form::submit('Actualizar', ['class' => 'btn btn-primary']) }}
@@ -125,7 +178,7 @@
     </div>
     <div class="row justify-content-center mb-4">
         <div class="col-12">
-            <a href="{{ route('proveedores.index') }}" class="btn btn-dark">Volver</a>
+            <a href="{{ route('alarmas.index') }}" class="btn btn-dark">Volver</a>
         </div>
     </div>
 @endsection

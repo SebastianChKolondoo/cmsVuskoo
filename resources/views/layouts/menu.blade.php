@@ -185,6 +185,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 {{-- @can('zonabancos.view') --}}
                 <a class="collapse-item" href="{{ route('alarmas.index') }}">Alarmas</a>
+                <a class="collapse-item" href="{{ route('segurossalud.index') }}">Seguros de salud</a>
                 {{-- @endcan  --}}
             </div>
         </div>

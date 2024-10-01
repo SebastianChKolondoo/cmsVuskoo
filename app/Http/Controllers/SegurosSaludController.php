@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alarmas;
 use App\Models\Paises;
 use App\Models\Proveedores;
+use App\Models\SegurosSalud;
 use App\Models\States;
 use Illuminate\Http\Request;
 
-class AlarmasController extends Controller
+class SegurosSaludController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $data = Alarmas::all();
-        return view('seguros.alarmas.index', compact('data'));
+        $data = SegurosSalud::all();
+        return view('seguros.salud.index', compact('data'));
     }
 
     public function create()
@@ -24,7 +21,7 @@ class AlarmasController extends Controller
         $estados = States::all();
         $paises = Paises::all();
         $proveedores = Proveedores::all();
-        return view('seguros.alarmas.create', compact('proveedores', 'estados', 'paises'));
+        return view('seguros.salud.create', compact('proveedores', 'estados', 'paises'));
     }
 
     /**
@@ -32,7 +29,7 @@ class AlarmasController extends Controller
      */
     public function store(Request $request)
     {
-        Alarmas::create([
+        SegurosSalud::create([
             'proveedor' => $request->proveedor,
             'selector_1' => $request->selector_1,
             'precio_1' => $request->precio_1,
@@ -56,16 +53,17 @@ class AlarmasController extends Controller
             'detector_magnetico' => $request->detector_magnetico,
             'llaves_tags' => $request->llaves_tags,
             'extras' => $request->extras,
+            'copago' => $request->copago
 
         ]);
 
-        return redirect()->route('alarmas.index')->with('info', 'Oferta creado correctamente.');
+        return redirect()->route('segurossalud.index')->with('info', 'Oferta creado correctamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Alarmas $alarmas)
+    public function show(SegurosSalud $segurosSalud)
     {
         //
     }
@@ -75,11 +73,11 @@ class AlarmasController extends Controller
      */
     public function edit($id)
     {
-        $oferta = Alarmas::find($id);
+        $oferta = SegurosSalud::find($id);
         $estados = States::all();
         $proveedores = Proveedores::all();
         $paises = Paises::all();
-        return view('seguros.alarmas.edit', compact('oferta', 'estados', 'paises', 'proveedores'));
+        return view('seguros.salud.edit', compact('oferta', 'estados', 'paises', 'proveedores'));
     }
 
     /**
@@ -87,7 +85,7 @@ class AlarmasController extends Controller
      */
     public function update(Request $request,  $alarma)
     {
-        $alarma = Alarmas::find($alarma);
+        $alarma = SegurosSalud::find($alarma);
         $alarma->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');
     }
@@ -95,7 +93,7 @@ class AlarmasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Alarmas $alarma)
+    public function destroy(SegurosSalud $segurosSalud)
     {
         //
     }

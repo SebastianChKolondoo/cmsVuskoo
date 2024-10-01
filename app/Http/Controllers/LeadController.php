@@ -114,7 +114,10 @@ class LeadController extends Controller
             case 20:    /*Butik*/
                 return $this->apiButik($lead, $idLead);
             case 22:    /*Másmóvil*/
-                return $this->apiMasMovil($lead, $idLead);
+                /* return $this->apiMasMovil($lead, $idLead); */
+                return $this->apiMasMovilNew($lead, $idLead);
+            case 34:    /*Silbo*/
+                return $this->apiSilbo($lead, $idLead);
             default:
                 $this->utilsController->registroDeErrores(16, 'Lead saved', 'lead save sin operador ajax', $lead['company'], $this->visitorIp);
                 return response()->json([
@@ -279,6 +282,138 @@ class LeadController extends Controller
         }
         return response()->json([
             'message' => isset($data['message']['status_msg']) ? $data['message']['status_msg'] : $data['message']['id'],
+            'status' => $codigo
+        ], 200);
+    }
+
+    public function apiMasMovilNew($lead, $idLead)
+    {
+        $apiUrl = 'https://api.byside.com/1.0/call/createCall';
+        $authHeader = 'Basic Qzk4NTdFNkIxOTpUZU9ZR0l6eUxVdXlOYW8wRm5wZUlWN0ow';
+
+        $requestData = [
+            'phone' => '+34' . $this->utilsController->formatTelephone($lead['phone']),
+            'schedule_datetime' => 'NOW',
+            'branch_id' => '26970',
+            'channel' => 'proveedores',
+            'lang' => 'es',
+            'uuid' => time(),
+            'is_uid_authenticated' => false,
+            'url' => $lead['urlOffer'],
+            'user_ip' => $this->visitorIp,
+            'info' => [
+                'proveedor_id' => 'Arkeero',
+                'mm_external_campaign_900' => '900696940'
+            ],
+        ];
+
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'charset' => 'utf-8',
+            'Authorization' => $authHeader,
+        ])->post($apiUrl, $requestData);
+
+        $data = $response->json();
+
+        if (isset($data['message']['id'])) {
+            $message = "ok: Registrado el numero " . $requestData['phone'] . " con id = " . $data['message']['id'] . ", «lead» de *mas movil - " . ($lead['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+            $this->utilsController->registroDeErrores(16, 'Lead saved mas movil', $message, $lead['urlOffer'], $this->visitorIp);
+            $codigo = 201;
+
+            $leadValidation = Lead::find($idLead);
+            if ($leadValidation) {
+                $leadValidation->idResponse = $data['message']['id'];
+                $leadValidation->save();
+            } else {
+                $message = "-0: Fallo al registrar el numero " . $requestData['phone'] . ", «lead» de *mas movil - " . ($lead['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $data['message']['status_msg'] . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+                $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
+            }
+        } else {
+            switch (isset($data['message']['status'])) {
+                case '-5':
+                case '-4':
+                case '-2':
+                case '-3':
+                    $message = $data['message']['status'] . ": Fallo al registrar el numero " . $requestData['phone'] . ", «lead» de *mas movil - " . ($lead['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $data['message']['status_msg'] . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+                    $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
+                    $codigo = 502;
+                    break;
+            }
+        }
+        return response()->json([
+            'message' => isset($data['message']['status_msg']) ? $data['message']['status_msg'] : $data['message']['id'],
+            'status' => $codigo
+        ], 200);
+    }
+
+    public function apiSilbo($lead, $idLead)
+    {
+        $apiUrl = 'https://ws.grupov3.com/BulkC2C/';
+        $authHeader = 'Authorization: Bearer c2lsYm9hZmlsaWFkb3M6eFRheXBZVTg3UmJTaEJrRGNRdW4zSg==';
+
+
+        $requestData = [
+            'LeadId' => time(),
+            'name' => '',
+            'surname' => '',
+            'email' => '',
+            'createDate' => date('Y-m-d H:i:s'),
+            'telephone' => $this->utilsController->formatTelephone($lead['phone']),
+            "url" => "vuskoo.com/es",
+            "utm" => "9800000000",
+            "leadType" => "CMB",
+            "subCampaign" => "affiliate-arkeero",
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'charset' => 'utf-8',
+            'Authorization' => $authHeader,
+        ])->post($apiUrl, $requestData);
+
+        $data = $response->json();
+
+        if (isset($data[0]['Detail']) == '1000') {
+            $message = "ok: Registrado el numero " . $requestData['telephone'] . " con id = " . $idLead . ", «lead» de *Silbo - " . ($lead['company']) . "* en función apiSilbo(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+            $this->utilsController->registroDeErrores(16, 'Lead saved Silbo', $message, $lead['urlOffer'], $this->visitorIp);
+            $codigo = 201;
+
+            $leadValidation = Lead::find($idLead);
+            if ($leadValidation) {
+                $leadValidation->idResponse = $data[0]['CampaingId'] . '-' . $data[0]['TraceId'];
+                $leadValidation->save();
+            } else {
+                $message = "-0: Fallo al registrar el numero " . $requestData['telephone'] . ", «lead» de *Silbo - " . ($lead['company']) . "* en función apiSilbo(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $data[0]['Detail'] . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+                $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
+            }
+        } else {
+            $errorLead = '';
+            switch (isset($data[0]['Detail'])) {
+                case '1000':
+                    $respuestaLead = 'OK. Lead insertado correctamente';
+                    break;
+                case '1100':
+                    $respuestaLead = 'Lead no válido repetido.';
+                    break;
+                case '1300':
+                    $respuestaLead = 'Lead no válido Ya cliente.';
+                    break;
+                case '1301':
+                    $respuestaLead = 'Lead no válido Ya cliente grupo';
+                    break;
+                case '1400':
+                    $respuestaLead = 'Lead no válido Blacklist/Robinson/No Llamable';
+                    break;
+            }
+            $message = $data['message']['status'] . ": Fallo al registrar el numero " . $requestData['telephone'] . ", «lead» de *Silbo - " . ($lead['company']) . "* en función apiSilbo(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $respuestaLead . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+            $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
+            $codigo = 502;
+        }
+        return response()->json([
+            'message' => $respuestaLead,
             'status' => $codigo
         ], 200);
     }

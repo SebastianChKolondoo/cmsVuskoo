@@ -30,9 +30,11 @@ use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\PrestamosController;
 use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\SegurosSaludController;
 use App\Http\Controllers\TipoCuponController;
 use App\Http\Controllers\TraduccionCategoriasController;
 use App\Http\Controllers\UserController;
+use App\Models\SegurosSalud;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -67,8 +69,9 @@ Route::get('parrillamovilDuplicate/{id}', [ParillaMovilController::class, 'dupli
 Route::resource('parrillafibra', ParillaFibraController::class)->names('parrillafibra')->middleware(['auth']);
 Route::get('parrillafibraDuplicate/{id}', [ParillaFibraController::class, 'duplicateOffer'])->name('parrillafibraDuplicate')->middleware(['auth']);
 
-/* alarmas */
+/* Seguros */
 Route::resource('alarmas', AlarmasController::class)->names('alarmas')->middleware(['auth']);
+Route::resource('segurossalud', SegurosSaludController::class)->names('segurossalud')->middleware(['auth']);
 Route::get('alarmasDuplicate/{id}', [ParillaFibraController::class, 'duplicateOffer'])->name('alarmasDuplicate')->middleware(['auth']);
 
 

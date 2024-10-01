@@ -1,18 +1,22 @@
 @extends('layouts.app')
 @section('content')
-    <div class="row my-4">
+    <div class="row justify-content-center my-4">
+        <div class="col-12 mb-3">
+            <h2>Editar tarifa</h2>
+        </div>
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h2>Registrar proveedor</h2>
-                </div>
                 <div class="card-body">
                     @if (session('info'))
                         <div class="alert alert-success">
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'alarmas.store', 'enctype' => 'multipart/form-data']) !!}
+                    {!! Form::model($oferta, [
+                        'route' => ['segurossalud.update', $oferta],
+                        'method' => 'put',
+                        'enctype' => 'multipart/form-data',
+                    ]) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('proveedor', 'Proveedor', ['class' => 'form-label']) !!}
@@ -20,7 +24,7 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="col-12"><b>Cuota mensual</b></div>
+                        <div class="offset-md-8"></div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('selector_1', 'Tiempo', ['class' => 'form-label']) !!}
                             {!! Form::text('selector_1', null, [
@@ -39,7 +43,6 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="col-12"><b>Cuota sin promoción</b></div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('selector_2', 'Tiempo', ['class' => 'form-label']) !!}
                             {!! Form::text('selector_2', null, [
@@ -89,6 +92,13 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('copago', 'Copago', ['class' => 'form-label']) !!}
+                            {!! Form::select('copago', $estados->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('url_redirct', 'url_redirct', ['class' => 'form-label']) !!}
                             {!! Form::text('url_redirct', null, [
                                 'class' => 'form-control',
@@ -112,71 +122,18 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="col-12 my-3">
-                            <h4>Capacidad de equipos</h4>
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('verificacion_video', 'Verificación por vídeo', ['class' => 'form-label']) !!}
-                            {!! Form::select('verificacion_video', $estados->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('compatible_mascotas', 'Compatible con mascotas', ['class' => 'form-label']) !!}
-                            {!! Form::select('compatible_mascotas', $estados->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('boton_panico', 'Botón del pánico', ['class' => 'form-label']) !!}
-                            {!! Form::select('boton_panico', $estados->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('fotodetector', 'Fotodetectores', ['class' => 'form-label']) !!}
-                            {!! Form::select('fotodetector', $estados->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('detector_infrarrojo', 'Detector de infrarrojos', ['class' => 'form-label']) !!}
-                            {!! Form::select('detector_infrarrojo', $estados->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('detector_magnetico', 'Detector magnético', ['class' => 'form-label']) !!}
-                            {!! Form::select('detector_magnetico', $estados->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('llaves_tags', 'Llaves o tags', ['class' => 'form-label']) !!}
-                            {!! Form::select('llaves_tags', $estados->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-12">
-                            {!! Form::label('extras', 'Extras', ['class' => 'form-label']) !!}
-                            {!! Form::text('extras', null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        
+
                     </div>
 
-                    {{ Form::submit('Registrar', ['class' => 'btn btn-primary']) }}
+                    {{ Form::submit('Actualizar', ['class' => 'btn btn-primary']) }}
                     {{ Form::close() }}
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-        <div class="row my-4">
-            <div class="col-12">
-                <a href="{{ route('alarmas.index') }}" class="btn btn-dark">Volver</a>
-            </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <a href="{{ route('segurossalud.index') }}" class="btn btn-dark">Volver</a>
         </div>
     </div>
 @endsection
