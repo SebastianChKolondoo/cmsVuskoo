@@ -52,6 +52,20 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo', 'Logo') }}
+                            @if (!empty($comercio->logo))
+                                <a href="{{ $comercio->logo }}" target="_blank">ver logo</a>
+                            @endif
+                            {{ Form::file('logo', ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo_negativo', 'logo negativo') }}
+                            @if (!empty($comercio->logo_negativo))
+                                <a href="{{ $comercio->logo_negativo }}" target="_blank">ver logo negativo</a>
+                            @endif
+                            {{ Form::file('logo_negativo', ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
                             {!! Form::select('estado', $estados->pluck('name', 'id'), null, [
                                 'class' => 'form-control',

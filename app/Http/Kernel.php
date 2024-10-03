@@ -23,11 +23,10 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
-    /**
-     * The application's route middleware groups.
-     *
-     * @var array<string, array<int, class-string|string>>
-     */
+    protected $routeMiddleware = [
+        'api.key' => \App\Http\Middleware\ApiKeyMiddleware::class,
+    ];
+
     protected $middlewareGroups = [
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
@@ -37,13 +36,15 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-
+    
         'api' => [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \Illuminate\Http\Middleware\HandleCors::class, // Asegúrate de agregar esto
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\ApiKeyMiddleware::class, // Asegúrate de que tu middleware de API Key esté aquí si quieres que aplique a todas las rutas API
         ],
     ];
+    
 
     /**
      * The application's middleware aliases.

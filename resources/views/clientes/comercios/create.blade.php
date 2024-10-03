@@ -52,6 +52,14 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo', 'Logo') }}
+                            {{ Form::file('logo', ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {{ Form::label('logo_negativo', 'logo negativo') }}
+                            {{ Form::file('logo_negativo', ['class' => 'form-control']) }}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
                             {!! Form::select('estado', $estados->pluck('name', 'id'), null, [
                                 'class' => 'form-control',

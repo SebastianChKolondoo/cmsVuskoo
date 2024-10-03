@@ -36,16 +36,17 @@ class ProveedoresController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->name) . '.' . $extension;
-            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
-            $urlLogo = Storage::disk('public')->url($path);
+            $nombreArchivo = strtolower($request->nombre) . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
+
         if ($request->hasFile('logo_negativo')) {
             $file = $request->file('logo_negativo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->name) . '_negativo.' . $extension;
-            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
-            $logo_negativo = Storage::disk('public')->url($path);
+            $nombreArchivo = strtolower($request->nombre) . '_negativo.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
 
         Proveedores::create([
@@ -97,7 +98,7 @@ class ProveedoresController extends Controller
             $extension = $file->getClientOriginalExtension();
             $nombreArchivo = strtolower($request->nombre) . '.' . $extension;
             $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
-            $urlLogo = Storage::disk('public')->url($path);
+            $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
 
         if ($request->hasFile('logo_negativo')) {
@@ -105,7 +106,7 @@ class ProveedoresController extends Controller
             $extension = $file->getClientOriginalExtension();
             $nombreArchivo = strtolower($request->nombre) . '_negativo.' . $extension;
             $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
-            $logo_negativo = Storage::disk('public')->url($path);
+            $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
 
         // Crear un array de datos a actualizar

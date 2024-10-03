@@ -8,6 +8,7 @@ use App\Models\Paises;
 use App\Models\States;
 use App\Models\TipoCupon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ComerciosController extends Controller
 {
@@ -43,12 +44,30 @@ class ComerciosController extends Controller
      */
     public function store(Request $request)
     {
-        $permisos = Comercios::create([
+        $urlLogo = '';
+        $logo_negativo = '';
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower($request->nombre) . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
+        }
+
+        if ($request->hasFile('logo_negativo')) {
+            $file = $request->file('logo_negativo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower($request->nombre) . '_negativo.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
+        }
+
+        $comercios = Comercios::create([
             'nombre' => ($request->name),
             'nombre_slug' => $request->nombre_slug,
             'idPerseo' => $request->idPerseo,
-            'logo' => ($request->logo),
-            'logo_negativo' => ($request->negativo),
+            'logo' => $urlLogo,
+            'logo_negativo' => $logo_negativo,
             'politica_privacidad' => ($request->politica),
             'fecha_registro' => now(),
             'categoria' => $request->categoria,
@@ -86,8 +105,36 @@ class ComerciosController extends Controller
     public function update(Request $request, $comercio)
     {
         $comercios = Comercios::find($comercio);
-        $comercios->update($request->all());
-        //return back()->with('info', 'Información actualizada correctamente.');
+        $urlLogo = null;
+        $logo_negativo = null;
+
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower($request->nombre) . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
+        }
+
+        if ($request->hasFile('logo_negativo')) {
+            $file = $request->file('logo_negativo');
+            $extension = $file->getClientOriginalExtension();
+            $nombreArchivo = strtolower($request->nombre) . '_negativo.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
+        }
+
+        // Crear un array de datos a actualizar
+        $data = $request->all();
+        if ($urlLogo) {
+            $data['logo'] = $urlLogo;
+        }
+        if ($logo_negativo) {
+            $data['logo_negativo'] = $logo_negativo;
+        }
+
+        // Actualizar el modelo
+        $comercios->update($data);
         return redirect()->route('comercios.index')->with('info', 'comercio editado correctamente.');
     }
 

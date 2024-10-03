@@ -102,15 +102,12 @@ class OperadorasController extends Controller
         $urlLogo = '';
         $logo_negativo = '';
 
-        $urlLogo = null;
-        $logo_negativo = null;
-
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
             $nombreArchivo = strtolower($request->nombre) . '.' . $extension;
             $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
-            $urlLogo = Storage::disk('public')->url($path);
+            $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
 
         if ($request->hasFile('logo_negativo')) {
@@ -118,7 +115,7 @@ class OperadorasController extends Controller
             $extension = $file->getClientOriginalExtension();
             $nombreArchivo = strtolower($request->nombre) . '_negativo.' . $extension;
             $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
-            $logo_negativo = Storage::disk('public')->url($path);
+            $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
 
         // Crear un array de datos a actualizar
