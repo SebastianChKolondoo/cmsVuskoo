@@ -21,7 +21,8 @@ class Comercios extends Model
         'politica_privacidad',
         'estado',
         'pais',
-        'categoria'
+        'categoria',
+        'telefono'
     ];
 
     public function state()

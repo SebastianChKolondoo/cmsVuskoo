@@ -22,6 +22,18 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('nombre_slug', 'Slug', ['class' => 'form-label']) !!}
+                            {!! Form::text('nombre_slug', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('telefono', 'Teléfono', ['class' => 'form-label']) !!}
+                            {!! Form::text('telefono', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('funcion_api', 'Función Api', ['class' => 'form-label']) !!}
                             {!! Form::text('funcion_api', null, [
                                 'class' => 'form-control',
@@ -30,12 +42,6 @@
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('idPerseo', 'ID perseo', ['class' => 'form-label']) !!}
                             {!! Form::text('idPerseo', null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('nombre_slug', 'Slug', ['class' => 'form-label']) !!}
-                            {!! Form::text('nombre_slug', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>

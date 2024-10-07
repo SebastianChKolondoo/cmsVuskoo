@@ -59,4 +59,9 @@ class Prestamos extends Model
     {
         return $this->belongsTo(Paises::class, 'pais', 'id');
     }
+    
+    public function categorias()
+    {
+        return $this->belongsTo(CategoriasPrestamos::class, 'categoria', 'id');
+    }
 }

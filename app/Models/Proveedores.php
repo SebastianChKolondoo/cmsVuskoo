@@ -19,6 +19,7 @@ class Proveedores extends Model
         'politica_privacidad',
         'estado',
         'pais',
+        'telefono'
     ];
 
     public function state()

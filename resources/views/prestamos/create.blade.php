@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2>Registrar oferta de banco</h2>
+                    <h2>Registrar oferta de finanza</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))
@@ -25,12 +25,6 @@
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>
-                            {{-- <div class="form-group col-12 col-md-4">
-                                {!! Form::label('banca', 'Prestadora', ['class' => 'form-label']) !!}
-                                {!! Form::select('banca', $prestadoras->pluck('nombre', 'id'), null, [
-                                    'class' => 'form-control',
-                                ]) !!}
-                            </div> --}}
                             <div class="form-group col-12 col-md-4">
                                 {!! Form::label('titulo', 'Titulo', ['class' => 'form-label']) !!}
                                 {!! Form::text('titulo', null, [
@@ -118,25 +112,25 @@
                             </div>
                             <div class="form-group col-12 col-md-4">
                                 {!! Form::label('descuento_comercio', 'Descuentos en comercios', ['class' => 'form-label']) !!}
-                                {!! Form::select('descuento_comercio', $Sino->pluck('name', 'id'), null, [
+                                {!! Form::select('descuento_comercio', $states->pluck('name', 'id'), null, [
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>
                             <div class="form-group col-12 col-md-4">
                                 {!! Form::label('apertura_cuenta', 'Apertura de cuenta', ['class' => 'form-label']) !!}
-                                {!! Form::select('apertura_cuenta', $Sino->pluck('name', 'id'), null, [
+                                {!! Form::select('apertura_cuenta', $states->pluck('name', 'id'), null, [
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>
                             <div class="form-group col-12 col-md-4">
                                 {!! Form::label('disposicion_efectivo', 'Disposición gratuita de efectivo', ['class' => 'form-label']) !!}
-                                {!! Form::select('disposicion_efectivo', $Sino->pluck('name', 'id'), null, [
+                                {!! Form::select('disposicion_efectivo', $states->pluck('name', 'id'), null, [
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>
                             <div class="form-group col-12 col-md-4">
                                 {!! Form::label('cajeros', '¿Tiene cajeros?', ['class' => 'form-label']) !!}
-                                {!! Form::select('cajeros', $Sino->pluck('name', 'id'), null, [
+                                {!! Form::select('cajeros', $states->pluck('name', 'id'), null, [
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>
@@ -196,13 +190,13 @@
                             </div>
                             <div class="form-group col-12 col-md-4">
                                 {!! Form::label('compras_extranjero', 'Compras en el extranjero', ['class' => 'form-label']) !!}
-                                {!! Form::select('compras_extranjero', $Sino->pluck('name', 'id'), null, [
+                                {!! Form::select('compras_extranjero', $states->pluck('name', 'id'), null, [
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>
                             <div class="form-group col-12 col-md-4">
                                 {!! Form::label('reposicion_tarjeta', 'Reposición de tarjeta', ['class' => 'form-label']) !!}
-                                {!! Form::select('reposicion_tarjeta', $Sino->pluck('name', 'id'), null, [
+                                {!! Form::select('reposicion_tarjeta', $states->pluck('name', 'id'), null, [
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>
@@ -216,6 +210,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12">
+            <a href="{{ route('prestamos.index') }}" class="btn btn-dark">Volver</a>
         </div>
     </div>
 @endsection

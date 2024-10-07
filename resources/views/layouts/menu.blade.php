@@ -72,6 +72,13 @@
                     <span>Proveedores</span></a>
             </li>
         @endcan
+        @can('proveedores.view')
+            <li class="nav-item active">
+                <a class="nav-link" href="/bancos">
+                    <i class="fa fa-university" aria-hidden="true"></i>
+                    <span>Bancos</span></a>
+            </li>
+        @endcan
         @can('paises.view')
             <li class="nav-item active">
                 <a class="nav-link" href="/paises">
@@ -162,15 +169,15 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBanca"
             aria-expanded="true" aria-controls="collapseBanca">
             <i class="fa fa-university" aria-hidden="true"></i>
-            <span>Banca</span>
+            <span>Finanzas</span>
         </a>
         <div id="collapseBanca" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 {{-- @can('zonabancos.view') --}}
-                <a class="collapse-item" href="{{ route('bancos.index') }}">Bancos</a>
                 {{-- @endcan
                     @can('prestamos.view') --}}
-                <a class="collapse-item" href="{{ route('prestamos.index') }}">Zona bancaria</a>
+                <a class="collapse-item" href="{{ route('prestamos.index') }}">Tarifas Colombia</a>
+                <a class="collapse-item" href="{{ route('prestamos.index') }}">Tarifas España</a>
                 {{-- @endcan --}}
             </div>
         </div>
@@ -186,6 +193,8 @@
                 {{-- @can('zonabancos.view') --}}
                 <a class="collapse-item" href="{{ route('alarmas.index') }}">Alarmas</a>
                 <a class="collapse-item" href="{{ route('segurossalud.index') }}">Seguros de salud</a>
+                {{-- <a class="collapse-item" href="{{ route('unificadoras.index') }}">Unificadoras</a>
+                <a class="collapse-item" href="{{ route('microcreditos.index') }}">Microcreditos</a> --}}
                 {{-- @endcan  --}}
             </div>
         </div>

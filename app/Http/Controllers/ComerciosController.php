@@ -73,6 +73,7 @@ class ComerciosController extends Controller
             'categoria' => $request->categoria,
             'estado' => ($request->state),
             'pais' => $request->pais,
+            'telefono' => $request->telefono,
         ]);
 
         return redirect()->route('comercios.index')->with('info', 'comercio creado correctamente.');

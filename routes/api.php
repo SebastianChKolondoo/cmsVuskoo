@@ -145,6 +145,12 @@ Route::middleware('api')->group(function () {
     Route::get('getBancasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getBancasPrestamosList']);
     Route::get('getTarifaPrestamo/{id}', [TarifasController::class, 'getTarifaPrestamoList']);
 
+
+     /* Prestamos */
+     Route::get('getTarifasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasPrestamosList']);
+     Route::get('getBancasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getBancasPrestamosList']);
+     Route::get('getTarifaPrestamo/{id}', [TarifasController::class, 'getTarifaPrestamoList']);
+ 
     /* Administracion pagina web */
     /* Menu */
     Route::get('getMenu/{lang?}', [ApiController::class, 'getMenuList']);

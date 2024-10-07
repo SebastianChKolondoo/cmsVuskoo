@@ -59,7 +59,8 @@ class ComercializadorasController extends Controller
             'logo_negativo' => $logo_negativo,
             'politica_privacidad' => $request->politica_privacidad,
             'estado' => $request->estado,
-            'pais' => $request->pais
+            'pais' => $request->pais,
+            'telefono' => $request->telefono,
 
         ]);
 

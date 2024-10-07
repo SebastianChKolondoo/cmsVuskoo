@@ -5,20 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Banca;
 use App\Models\CategoriasPrestamos;
 use App\Models\EmisorBanca;
-use App\Models\Paises;
 use App\Models\Prestamos;
 use App\Models\States;
+use App\Models\Unificadores;
 use Illuminate\Http\Request;
 
-class PrestamosController extends Controller
+class UnificadoresController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tarifas = Prestamos::all();
-        return view('prestamos.index', compact('tarifas'));
+        $tarifas = Prestamos::whereIn('categoria',[4])->get();
+        return view('unificadoras.index', compact('tarifas'));
     }
 
     /**
@@ -28,13 +28,12 @@ class PrestamosController extends Controller
     {
         $states = States::all();
         $prestadoras = Banca::all();
-        $categorias = CategoriasPrestamos::whereIn('id', [1, 2, 3])->get();
+        $categorias = CategoriasPrestamos::whereIn('id', [4])->get();
         $emisor = EmisorBanca::all();
-        $Sino = States::all();
         $operadorasList = $prestadoras->mapWithKeys(function ($prestadoras) {
             return [$prestadoras->id => $prestadoras->nombre . ' - ' . $prestadoras->paises->nombre];
         });
-        return view('prestamos.create', compact('states', 'operadorasList', 'categorias', 'prestadoras', 'emisor', 'Sino'));
+        return view('unificadoras.create', compact('states', 'operadorasList', 'categorias', 'prestadoras', 'emisor'));
     }
 
     /**
@@ -56,27 +55,11 @@ class PrestamosController extends Controller
             'url_redirct' => $request->url_redirct,
             'destacada' => $request->destacada,
             'estado' => $request->estado,
-            'categoria' => $request->categoria,
+            'categoria' => 4,
             'pais' => $pais,
             'interes_mensual' => $request->interes_mensual,
             'inteses_anual' => $request->inteses_anual,
             'ingresos_minimos' => $request->ingresos_minimos,
-            'descuento_comercio' => $request->descuento_comercio,
-            'apertura_cuenta' => $request->apertura_cuenta,
-            'disposicion_efectivo' => $request->disposicion_efectivo,
-            'cajeros' => $request->cajeros,
-            'red_cajeros' => $request->red_cajeros,
-            'retiros_costo' => $request->retiros_costo,
-            'cashback' => $request->cashback,
-            'cuota_manejo_1' => $request->cuota_manejo_1,
-            'cuota_manejo_2' => $request->cuota_manejo_2,
-            'cuota_manejo_3' => $request->cuota_manejo_3,
-            'programa_puntos' => $request->programa_puntos,
-            'emisor' => $request->emisor,
-            'compras_extranjero' => $request->compras_extranjero,
-            'avance_cajero' => $request->avance_cajero,
-            'avance_oficina' => $request->avance_oficina,
-            'reposicion_tarjeta' => $request->reposicion_tarjeta,
         ]);
         return redirect()->route('prestamos.index')->with('info', 'Tarifa creada correctamente.');
     }
@@ -84,7 +67,7 @@ class PrestamosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Prestamos $prestamos)
+    public function show(Unificadores $unificadores)
     {
         //
     }
@@ -97,26 +80,12 @@ class PrestamosController extends Controller
         $tarifa = Prestamos::find($id);
         $states = States::all();
         $prestadoras = Banca::all();
-        $categorias = CategoriasPrestamos::whereIn('id', [1, 2, 3])->get();
+        $categorias = CategoriasPrestamos::whereIn('id', [4])->get();
         $emisor = EmisorBanca::all();
-        $Sino = States::all();
         $operadorasList = $prestadoras->mapWithKeys(function ($prestadoras) {
             return [$prestadoras->id => $prestadoras->nombre . ' - ' . $prestadoras->paises->nombre];
         });
-
-        switch ($tarifa->categoria) {
-            case 1:
-            case 2:
-            case 3:
-                return view('prestamos.edit', compact('tarifa', 'categorias', 'operadorasList', 'states', 'prestadoras', 'emisor', 'Sino'));
-                break;
-            case 4:
-                return view('unificadoras.edit', compact('tarifa', 'categorias', 'operadorasList', 'states', 'prestadoras'));
-                break;
-            case 5:
-                return view('microcreditos.edit', compact('tarifa', 'categorias', 'operadorasList', 'states', 'prestadoras'));
-                break;
-        }
+        return view('unificadoras.edit', compact('tarifa', 'categorias', 'operadorasList', 'states', 'prestadoras', 'emisor'));
     }
 
     /**
@@ -128,27 +97,18 @@ class PrestamosController extends Controller
         $pais = $empresa->pais;
 
         $request['pais'] = $pais;
+        $request['categoria'] = 4;
 
         $tarifa = Prestamos::find($id);
         $tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');
-        //return redirect()->route('prestamos.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Prestamos $prestamos)
+    public function destroy(Unificadores $unificadores)
     {
         //
-    }
-
-    public function duplicateOffer($id)
-    {
-        $tarifaBase = Prestamos::find($id);
-        $duplica = $tarifaBase->replicate();
-        $duplica->save();
-        $tarifa = Prestamos::find($duplica->id);
-        return redirect()->route('prestamos.edit', ['prestamo' => $tarifa->id]);
     }
 }

@@ -26,7 +26,8 @@ class SegurosSalud extends Model
         'destacada',
         'estado',
         'pais',
-        'copago'
+        'copago',
+        'telefono'
     ];
 
     public function proveedores()

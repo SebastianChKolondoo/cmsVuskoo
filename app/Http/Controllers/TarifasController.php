@@ -52,7 +52,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
-            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'paises.decimales')
+            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'paises.decimales', '1_operadoras.telefono')
             ->where($this->tabla_movil . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
             ->where('1_operadoras.pais', '=', $idioma->id)
@@ -81,7 +81,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
-            ->select($this->tabla_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'paises.decimales')
+            ->select($this->tabla_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'paises.decimales', '1_operadoras.telefono')
             ->where($this->tabla_fibra . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
             ->where('1_operadoras.pais', '=', $idioma->id)
@@ -108,7 +108,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', 'paises.decimales')
+            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', 'paises.decimales', '1_comercializadoras.telefono')
             ->where($this->tabla_luz . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
             ->where('1_comercializadoras.pais', '=', $idioma->id)
@@ -133,9 +133,9 @@ class TarifasController extends Controller
         }
         $idioma = Paises::where('codigo', $lang)->first();
         $data = DB::table($this->tabla_gas)
-            ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
+            ->join('1_comercializadoras',  '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', 'paises.decimales')
+            ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', 'paises.decimales','1_comercializadoras.telefono')
             ->where($this->tabla_gas . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
             ->where('1_comercializadoras.pais', '=', $idioma->id)
@@ -164,7 +164,7 @@ class TarifasController extends Controller
         $data =  DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', 'paises.decimales')
+            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', 'paises.decimales', '1_comercializadoras.telefono')
             ->where($this->tabla_luz_gas . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
             ->where('1_comercializadoras.pais', '=', $idioma->id)
@@ -194,7 +194,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_movil_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
-            ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'paises.decimales')
+            ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'paises.decimales', '1_operadoras.telefono')
             ->where($this->tabla_movil_fibra . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
             ->where('1_operadoras.pais', '=', $idioma->id)
@@ -222,7 +222,7 @@ class TarifasController extends Controller
         $query = DB::table($this->tabla_movil_fibra_tv)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
-            ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'paises.decimales')
+            ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'paises.decimales', '1_operadoras.telefono')
             ->where($this->tabla_movil_fibra_tv . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
             ->where('1_operadoras.pais', '=', $idioma->id)
@@ -418,7 +418,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
-            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad', 'paises.decimales')
+            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad', 'paises.decimales', '1_operadoras.telefono')
             ->where($this->tabla_movil . '.id', '=', $id)
             ->first();
 
@@ -438,7 +438,7 @@ class TarifasController extends Controller
         $data =  DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales')
+            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales','1.comercializadoras.telefono')
             ->where($this->tabla_luz . '.id', '=', $id)
             ->first();
 
@@ -466,7 +466,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_gas . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales')
+            ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_gas . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales', '1_comercializadoras.telefono')
             ->where($this->tabla_gas . '.id', '=', $id)
             ->first();
 
@@ -494,7 +494,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales')
+            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales','1_comercializadoras.telenofo')
             ->where($this->tabla_luz_gas . '.id', '=', $id)
             ->first();
 
@@ -522,7 +522,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
-            ->select($this->tabla_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', '1_operadoras.politica_privacidad', 'paises.decimales')
+            ->select($this->tabla_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', '1_operadoras.politica_privacidad', 'paises.decimales', '1_operadoras.telefono')
             ->where($this->tabla_fibra . '.id', '=', $id)
             ->first();
 
@@ -542,7 +542,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_movil_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
-            ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad', 'paises.decimales')
+            ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad', 'paises.decimales', '1_operadoras.telefono')
             ->where($this->tabla_movil_fibra . '.id', '=', $id)
             ->first();
 
@@ -562,7 +562,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_movil_fibra_tv)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
-            ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad', 'paises.decimales')
+            ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad', 'paises.decimales', '1_operadoras.telefono')
             ->where($this->tabla_movil_fibra_tv . '.id', '=', $id)
             ->first();
 
@@ -593,7 +593,7 @@ class TarifasController extends Controller
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
-            ->select('paises.decimales', $this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'paises.decimales')
+            ->select('paises.decimales', $this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'paises.decimales', '1_operadoras.telefono')
             ->where($this->tabla_movil . '.estado', '=', '1')
             ->where('1_operadoras.estado', '=', '1')
             ->where('1_operadoras.pais', '=', $idioma->id)
@@ -719,7 +719,7 @@ class TarifasController extends Controller
             return [];
         }
     }
-    
+
     public function getTarifasSeguroSaludList($lang, $categoria)
     {
         $validacionPais = Paises::where('codigo', $lang)->count();
@@ -782,7 +782,7 @@ class TarifasController extends Controller
             return [];
         }
     }
-    
+
     public function getTarifasComparadorSaludList($lang)
     {
         $validacionPais = Paises::where('codigo', $lang)->count();
@@ -811,7 +811,7 @@ class TarifasController extends Controller
             return [];
         }
     }
-    
+
     public function getTarifasComparadorAlarmasEquiposList($lang)
     {
         $validacionPais = Paises::where('codigo', $lang)->count();

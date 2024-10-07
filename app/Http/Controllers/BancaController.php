@@ -50,7 +50,8 @@ class BancaController extends Controller
             'nombre' => $request->nombre,
             'pais' => $request->pais,
             'logo' => trim($urlLogo),
-            'estado' => $request->estado
+            'estado' => $request->estado,
+            /* 'telefono' => $request->telefono, */
         ]);
         return redirect()->route('bancos.index')->with('info', 'Banco creado correctamente.');
     }

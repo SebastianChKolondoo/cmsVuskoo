@@ -22,6 +22,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('telefono', 'Teléfono', ['class' => 'form-label']) !!}
+                            {!! Form::text('telefono', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {{ Form::label('logo', 'Logo') }}
                             {{ Form::file('logo', ['class' => 'form-control']) }}
                         </div>

@@ -17,7 +17,8 @@ class Comercializadoras extends Model
         'logo_negativo',
         'politica_privacidad',
         'estado',
-        'pais'
+        'pais',
+        'telefono'
     ];
 
     public function state()

@@ -14,7 +14,8 @@ class Banca extends Model
         'nombre',
         'logo',
         'estado',
-        'pais'
+        'pais',
+        'telefono'
     ];
 
     public function state()

@@ -15,6 +15,7 @@ use App\Http\Controllers\FormularioNewsletterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuItemController;
+use App\Http\Controllers\MicrocreditosController;
 use App\Http\Controllers\OperadorasController;
 use App\Http\Controllers\PaginaWebFooterController;
 use App\Http\Controllers\PaisesController;
@@ -33,6 +34,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SegurosSaludController;
 use App\Http\Controllers\TipoCuponController;
 use App\Http\Controllers\TraduccionCategoriasController;
+use App\Http\Controllers\UnificadoresController;
 use App\Http\Controllers\UserController;
 use App\Models\SegurosSalud;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +76,9 @@ Route::resource('alarmas', AlarmasController::class)->names('alarmas')->middlewa
 Route::resource('segurossalud', SegurosSaludController::class)->names('segurossalud')->middleware(['auth']);
 Route::get('alarmasDuplicate/{id}', [ParillaFibraController::class, 'duplicateOffer'])->name('alarmasDuplicate')->middleware(['auth']);
 
+/* Finanzas españa */
+Route::resource('unificadoras', UnificadoresController::class)->names('unificadoras')->middleware(['auth']);
+Route::resource('microcreditos', MicrocreditosController::class)->names('microcreditos')->middleware(['auth']);
 
 /* Parrillas */
 Route::resource('parrillafibramovil', ParillaFibraMovilController::class)->names('parrillafibramovil')->middleware(['auth']);

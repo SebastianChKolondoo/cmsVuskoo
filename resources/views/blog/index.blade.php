@@ -41,7 +41,7 @@
                     @foreach ($data as $item)
                         <td class="align-middle">{{ $item->id }}</td>
                         <td class="align-middle">{{ $item->titulo }}</td>
-                        <td class="align-middle">{{ $item->categorias->nombre }}</td>
+                        <td class="align-middle">{{ optional($item->categorias)->nombre }}</td>
                         @can('blog.view-btn-edit')
                         <td class="d-flex">
                                 <a href="blogPreview/{{$item->id}}" target="_blank" class="btn btn-warning mx-1">Preview</a>

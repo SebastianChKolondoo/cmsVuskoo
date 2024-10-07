@@ -31,6 +31,12 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('telefono', 'Teléfono', ['class' => 'form-label']) !!}
+                            {!! Form::text('telefono', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
                         {{-- <div class="form-group col-12 col-md-4">
                             {!! Form::label('funcion_api', 'Función api', ['class' => 'form-label']) !!}
                             {!! Form::text('funcion_api', null, [
