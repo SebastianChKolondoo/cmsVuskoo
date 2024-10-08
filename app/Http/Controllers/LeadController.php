@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\UtilsController;
+use App\Mail\ConfirmacionNewsletter;
 use App\Models\Contactenos;
 use App\Models\NewsLetter;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Client\ConnectionException;
-
+use Illuminate\Support\Facades\Mail;
 
 class LeadController extends Controller
 {
@@ -85,13 +86,17 @@ class LeadController extends Controller
     }
 
     public function FormNewsletterRegister(Request $request)
-    {
+    {   
+        $email = $request->input('email');
+
+        
         $contactenos = new NewsLetter([
-            'email' => $request->input('email'),
+            'email' => $email,
             'politica' => true
         ]);
-
+        
         if ($contactenos->save()) {
+            Mail::to($email)->send(new ConfirmacionNewsletter());
             return response()->json([
                 'message' => 'Suscripción realizada con exito',
                 'status' => 201

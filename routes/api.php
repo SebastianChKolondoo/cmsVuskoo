@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CuponesController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ExtraOfferController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\LeadController;
@@ -18,6 +19,8 @@ use App\Models\Cupones;
 Route::get('/', function () {
     return 'welcome to Vuskoo!';
 });
+
+Route::get('emailtest', [EmailController::class, 'sendMail'])->name('emailtest');
 
 Route::middleware('api')->group(function () {
     Route::get('getOperadoras/{lang?}', [ApiController::class, 'getOperadorasMovilList']);
@@ -146,11 +149,11 @@ Route::middleware('api')->group(function () {
     Route::get('getTarifaPrestamo/{id}', [TarifasController::class, 'getTarifaPrestamoList']);
 
 
-     /* Prestamos */
-     Route::get('getTarifasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasPrestamosList']);
-     Route::get('getBancasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getBancasPrestamosList']);
-     Route::get('getTarifaPrestamo/{id}', [TarifasController::class, 'getTarifaPrestamoList']);
- 
+    /* Prestamos */
+    Route::get('getTarifasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasPrestamosList']);
+    Route::get('getBancasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getBancasPrestamosList']);
+    Route::get('getTarifaPrestamo/{id}', [TarifasController::class, 'getTarifaPrestamoList']);
+
     /* Administracion pagina web */
     /* Menu */
     Route::get('getMenu/{lang?}', [ApiController::class, 'getMenuList']);
@@ -163,6 +166,10 @@ Route::middleware('api')->group(function () {
     Route::get('getBlogInfoCategoria/{categoria}', [BlogController::class, 'getBlogInfoCategoriaList']); /* listo */
     Route::get('getBlogInfoHome/{lang?}', [BlogController::class, 'getBlogInfoHomeList']); /* listo */
     Route::get('getMenuInfoBlog/{lang?}', [BlogController::class, 'getMenuInfoBlogList']); /* listo */
+
+    /* mail */
+    
+
 
     route::get('/cambioNombreIdComerciosCupones', function () {
         $data = Cupones::limit(200)->orderBy('store', 'desc')->get();

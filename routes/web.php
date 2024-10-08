@@ -9,6 +9,7 @@ use App\Http\Controllers\ComerciosController;
 use App\Http\Controllers\ContenidoMarcaController;
 use App\Http\Controllers\CuponesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FormularioContactenosController;
 use App\Http\Controllers\FormularioLeadsController;
 use App\Http\Controllers\FormularioNewsletterController;
@@ -38,6 +39,7 @@ use App\Http\Controllers\UnificadoresController;
 use App\Http\Controllers\UserController;
 use App\Models\SegurosSalud;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
