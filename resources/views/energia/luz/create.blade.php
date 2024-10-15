@@ -38,6 +38,13 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                        <div class="form-group col-12 col-md-8">
+                            {!! Form::label('slug_tarifa', 'Slug de la tarifa', ['class' => 'form-label']) !!}
+                            {!! Form::text('slug_tarifa', null, [
+                                'class' => 'form-control',
+                                'required' => 'required',
+                            ]) !!}
+                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('landing_link', 'Landing link', ['class' => 'form-label']) !!}
                             {!! Form::text('landing_link', null, [

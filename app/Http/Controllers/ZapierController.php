@@ -172,8 +172,8 @@ class ZapierController extends Controller
         $IP_data = $this->visitorIp;
         $country_code = !empty($IP_data->country_code) ? $IP_data->country_code : null;
         $lead = Lead::create([
-            'landing' => 'Facebook',
-            'urlOffer' => 'Facebook',
+            'landing' => 'www.vuskoo.com',
+            'urlOffer' => 'www.vuskoo.com',
             'company' => $request->dataToSend['company'],
             'idOferta' => '0',
             'phone' => $request->dataToSend['tel_usuario'],
@@ -189,12 +189,10 @@ class ZapierController extends Controller
             'acepta_comunicaciones_comerciales' => $request->dataToSend['acepta_comunicaciones_comerciales'],
 
         ]);
-
-        //echo $lead->save();
         return $lead->id;
     }
 
-    public function facebookZapierCpl(Request $request)
+    /* public function facebookZapierCpl(Request $request)
     {
         try {
             $GLOBALS["country_instance"]  = "es";
@@ -206,6 +204,7 @@ class ZapierController extends Controller
             $email = (!empty($request->email) && is_string($request->email)) ? trim($request->email) : null;
             $nombre = (!empty($request->nombre)) ? $request->nombre : null;
             $company = $request->company;
+            $producto = $request->producto;
             //$instance = DB::table('1_operadoras')->select('nombre', 'funcion_api')->where('id', $company)->where('tipo_conversion', 'cpl')->whereNotNull('funcion_api')->where('estado', '1')->first();
             $instance = DB::table('1_operadoras')->select('nombre', 'funcion_api')->where('id', $company)->where('tipo_conversion', 'cpl')->whereNotNull('funcion_api')->first();
             $instance_zapier = !is_null($instance) ? ($instance->funcion_api) . "ZapierCpl" : null;
@@ -217,7 +216,7 @@ class ZapierController extends Controller
                     "nombre_usuario" => $nombre,
                     "email" => $email,
                     "company" => $company,
-                    "producto" => "FACEBOOK",
+                    "producto" => $producto,
                     "tipo_conversion" => "cpl",
                     "tarifa" => 'n/d',
                     "tipo_formulario" => "c2c",
@@ -227,22 +226,104 @@ class ZapierController extends Controller
                 );
 
                 $response = $this->$instance_zapier($request);
+                echo 'dfgsgs';
+                print_r($response);
+                echo '----'.json_decode($response->content())->call_response;
+
                 if (json_decode($response->content())->call_response == "ok") {
-                    // DADO DE BAJA 
-                    //$this->audienceTalkingOfflineLeadCommunication('fblead', 'c2c', $tlf_movil, 'TELCO', $this->formatCloseLeadsValues('atkey', $instance->nombre), 'facebook','social');
                     return response()->json(array('status' => "ok"), 200);
                 } else {
-                    return response()->json(array('status' => "ko"), 200);
+                    return response()->json(array('status' => "kqo"), 200);
                 }
             } else {
-                //$this->utilsController->registroDeErrores(4, 'facebookZapierCpl', "Se intenta acceder a la función sin identificador de compañía válido o a función no permitida. id de compañía solicitada: *".$company."*. Datos recibidos del formulario: ".json_encode(array('tlf_movil' => $tlf_movil,'email' => $email,'nombre' => $nombre,'company' => $company)), JSON_UNESCAPED_UNICODE)
-                return response()->json(array('status' => "ko"), 500);
+                $this->utilsController->registroDeErrores(4, 'facebookZapierCpl', "Se intenta acceder a la función sin identificador de compañía válido o a función no permitida. id de compañía solicitada: *".$company."*. Datos recibidos del formulario: ".json_encode(array('tlf_movil' => $tlf_movil,'email' => $email,'nombre' => $nombre,'company' => $company)), JSON_UNESCAPED_UNICODE);
+                return response()->json(array('status' => "kko"), 500);
             }
         } catch (ConnectionException | \PDOException | \Exception $e) {
-            //$this->utilsController->registroDeErrores(3, 'facebookZapierCpl', "Fallo en  facebookZapierCpl. ERROR capturado en catch: " . $e->getMessage());
-            return response()->json(array('status' => "ko"), 500);
+            $this->utilsController->registroDeErrores(3, 'facebookZapierCpl', "Fallo en  facebookZapierCpl. ERROR capturado en catch: " . $e->getMessage());
+            return response()->json(array('status' => "koo"), 500);
+        }
+    } */
+
+    public function facebookZapierCpl(Request $request)
+    {
+        try {
+            // Establecemos el país en el contexto global
+            $GLOBALS["country_instance"] = "es";
+
+            // Formateamos el número de teléfono
+            $tlf_movil = $this->utilsController->formatTelephone($request->tlf_movil);
+            if (empty($tlf_movil)) {
+                // Retorna respuesta en caso de número vacío o inválido
+                return response()->json(['status' => "ko"], 200);
+            }
+
+            // Validamos y limpiamos los datos del request
+            $email = (!empty($request->email) && is_string($request->email)) ? trim($request->email) : null;
+            $nombre = $request->nombre ?? null;
+            $company = $request->company;
+            $producto = $request->producto;
+
+            // Obtenemos la instancia de la operadora correspondiente
+            $instance = DB::table('1_operadoras')
+                ->select('nombre', 'funcion_api')
+                ->where('id', $company)
+                ->where('tipo_conversion', 'cpl')
+                ->whereNotNull('funcion_api')
+                ->first();
+
+            // Si existe la función API asociada, la construimos
+            $instance_zapier = $instance ? $instance->funcion_api . "ZapierCpl" : null;
+
+            // Validamos la existencia de la función API y el número de teléfono
+            if (!is_null($instance_zapier) && method_exists($this, $instance_zapier) && !empty($tlf_movil)) {
+
+                // Sobreescribimos el objeto request para el registro del "lead" en la BBDD
+                $request->dataToSend = [
+                    "tel_usuario" => $tlf_movil,
+                    "nombre_usuario" => $nombre,
+                    "email" => $email,
+                    "company" => $company,
+                    "producto" => $producto,
+                    "tipo_conversion" => "cpl",
+                    "tarifa" => 'n/d',
+                    "tipo_formulario" => "c2c",
+                    'acepta_politica_privacidad' => 1,
+                    'acepta_cesion_datos_a_proveedor' => 1,
+                    'acepta_comunicaciones_comerciales' => 1
+                ];
+
+                // Ejecutamos la función específica para la compañía
+                $response = $this->$instance_zapier($request);
+
+                // Decodificamos la respuesta y validamos el estado
+                $responseContent = json_decode($response->content());
+                if ($responseContent->call_response === "ok") {
+                    return response()->json(['status' => "ok"], 200);
+                }
+
+                // En caso de respuesta no exitosa
+                return response()->json(['status' => "ko", 'message' => $responseContent], 200);
+            } else {
+                // Registramos el error en caso de compañía o función no válida
+                $this->utilsController->registroDeErrores(
+                    4,
+                    'facebookZapierCpl',
+                    "Intento de acceder a función no permitida. ID de compañía: *$company*. Datos: " . json_encode(['tlf_movil' => $tlf_movil, 'email' => $email, 'nombre' => $nombre, 'company' => $company], JSON_UNESCAPED_UNICODE)
+                );
+                return response()->json(['status' => "kko"], 500);
+            }
+        } catch (ConnectionException | \PDOException | \Exception $e) {
+            // Registramos el error capturado en el catch
+            $this->utilsController->registroDeErrores(
+                3,
+                'facebookZapierCpl',
+                "Error en facebookZapierCpl: " . $e->getMessage()
+            );
+            return response()->json(['status' => "koo"], 500);
         }
     }
+
 
     public function ajaxApiPepephoneZapierCpl(Request $request)
     {
@@ -1077,14 +1158,87 @@ class ZapierController extends Controller
         return response()->json(array('call_response' => $return, 'lead_id' => $lead_id), 200);
     }
 
+    /* public function ajaxApiMasMovilZapierCpl(Request $request)
+    {
+        $lead_id = $this->leadRegister($request);
+
+        $apiUrl = 'https://api.byside.com/1.0/call/createCall';
+        $authHeader = 'Basic Qzk4NTdFNkIxOTpUZU9ZR0l6eUxVdXlOYW8wRm5wZUlWN0ow';
+        $auth_user = "C9857E6B19";
+        $auth_password = "TeOYGIzyLUuyNao0FnpeIV7J0";
+        $uuid = time() + rand();
+        $phone = $this->utilsController->formatTelephone($request->dataToSend['tel_usuario']);
+
+        $requestData = [
+            'phone' => '34' . $phone,
+            'schedule_datetime' => 'NOW',
+            'channel' => 'proveedores',
+            'branch_id' => '26970',
+            'lang' => 'es',
+            'uuid' => $uuid,
+            'is_uid_authenticated' => false,
+            'user_ip' => $this->visitorIp,
+            'url' => $request->dataToSend['producto'],
+            'info' => [
+                'mm_external_campaign_900' => '900696243',
+                'proveedor_id' => 'HMG',
+            ],
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'charset' => 'utf-8',
+            'Authorization' => $authHeader,
+        ])->post($apiUrl, $requestData);
+        
+        $data = $response->json();
+        
+        $response_id = isset($data['message']['id']) ? $data['message']['id'] : null;
+        $response_status = isset($data['message']['status']) ? $data['message']['status'] : null;
+        $response_msg = isset($data['message']['status_msg']) ? $data['message']['status_msg'] : null;
+        
+
+
+        if (isset($response_id)) {
+            $message = "ok: Registrado el numero " . $requestData['phone'] . " con id = " . $data['message']['id'] . ", «lead» de *mas movil - " . ($request->dataToSend['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+            $this->utilsController->registroDeErrores(16, 'Lead saved mas movil', $message, $request->dataToSend['urlOffer'], $this->visitorIp);
+
+            $lead = Lead::find($lead_id);
+            $lead->idResponse = $data['message']['id'];
+            $lead->save();
+
+            return response()->json([
+                'content' => 'ok',
+                'call_response' => 'ok',
+                'message' => isset($response_msg) ? $response_msg : $data['message']['id'],
+                'status' => 201
+            ], 200);
+        } else {
+            switch (isset($response_status)) {
+                case '-5':
+                case '-4':
+                case '-2':
+                case '-3':
+                    $message = $data['message']['status'] . ": Fallo al registrar el numero " . $requestData['phone'] . ", «lead» de *mas movil - " . ($request->dataToSend['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $response_msg . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+                    $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $request->dataToSend['producto'], $this->visitorIp);
+                    return response()->json([
+                        'content' => 'ko',
+                        'call_response' => 'ko',
+                        'message' => isset($response_msg) ? $response_msg : $response_id,
+                        'status' => 502
+                    ], 502);
+                    break;
+            }
+        }
+    }
+ */
+
     public function ajaxApiMasMovilZapierCpl(Request $request)
     {
         $lead_id = $this->leadRegister($request);
 
-
-
         $apiUrl = 'https://api.byside.com/1.0/call/createCall';
-        $authHeader = 'Basic Qzk4NTdFNkIxOTpUZU9ZR0l6eUxVdXlOYW8wRm5wZUlWN0ow';
         $auth_user = "C9857E6B19";
         $auth_password = "TeOYGIzyLUuyNao0FnpeIV7J0";
         $base64Credentials = base64_encode("$auth_user:$auth_password");
@@ -1107,52 +1261,52 @@ class ZapierController extends Controller
             ],
         ];
 
-
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
             'charset' => 'utf-8',
-            'Authorization' => $authHeader,
+            'Authorization' => 'Basic ' . $base64Credentials,
         ])->post($apiUrl, $requestData);
 
         $data = $response->json();
 
-        print_r($data);
+        // Verificar si el 'message' existe y asignar variables
+        $response_id = $data['message']['id'] ?? null;
+        $response_status = $data['message']['status'] ?? null;
+        $response_msg = $data['message']['status_msg'] ?? null;
 
+        // Verificar si la respuesta contiene un ID (es exitoso)
+        if ($response_id != null) {
+            $message = "ok: Registrado el numero " . $requestData['phone'] . " con id = " . $response_id . ", «lead» de *mas movil - " . ($request->dataToSend['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+            $this->utilsController->registroDeErrores(16, 'Lead saved mas movil', $message, $request->dataToSend['producto'], $this->visitorIp);
 
-        if (isset($data['message']['id'])) {
-            $message = "ok: Registrado el numero " . $requestData['phone'] . " con id = " . $data['message']['id'] . ", «lead» de *mas movil - " . ($request->dataToSend['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($data);
-            $this->utilsController->registroDeErrores(16, 'Lead saved mas movil', $message, $request->dataToSend['urlOffer'], $this->visitorIp);
-            $codigo = 201;
-
-            $leadValidation = Lead::where('id', $lead_id);
-            print_r($leadValidation);
+            // Guardar el ID de respuesta en el lead
             $lead = Lead::find($lead_id);
-            
-            if ($lead) {
-                $lead->idResponse = $data['message']['id'];
-                $lead->save();
-            }
+            $lead->idResponse = $response_id;
+            $lead->save();
 
+            // Retornar respuesta exitosa
+            return response()->json([
+                'content' => 'ok',
+                'call_response' => 'ok',
+                'message' => $response_msg ?? $response_id,
+                'status' => 201
+            ], 201);
+            
         } else {
-            switch (isset($data['message']['status'])) {
-                case '-5':
-                case '-4':
-                case '-2':
-                case '-3':
-                    $message = $data['message']['status'] . ": Fallo al registrar el numero " . $requestData['phone'] . ", «lead» de *mas movil - " . ($request->dataToSend['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $data['message']['status_msg'] . " - Datos recibidos del «lead» en la función: " . json_encode($data);
-                    $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $request->dataToSend['urlOffer'], $this->visitorIp);
-                    $codigo = 502;
-                    break;
+            // Manejar errores de status específicos
+            if (in_array($response_status, ['-8', '-5', '-4', '-2', '-3'])) {
+                $message = $response_status . ": Fallo al registrar el numero " . $requestData['phone'] . ", «lead» de *mas movil - " . ($request->dataToSend['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $response_msg . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+                $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $request->dataToSend['producto'], $this->visitorIp);
+
+                return response()->json([
+                    'content' => 'ko',
+                    'call_response' => 'ko',
+                    'message' => $response_msg ?? 'Error desconocido',
+                    'status' => 502
+                ], 502);
             }
         }
-
-        return response()->json([
-            'content' => 'ok',
-            'call_response' => 'ok',
-            'message' => isset($data['message']['status_msg']) ? $data['message']['status_msg'] : $data['message']['id'],
-            'status' => $codigo
-        ], 200);
     }
 
     public function ajaxApiV3(Request $request)

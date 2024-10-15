@@ -53,6 +53,13 @@
                                 'placeholder' => 'nombre de la tarifa',
                             ]) !!}
                         </div>
+                        <div class="form-group col-12 col-md-8">
+                            {!! Form::label('slug_tarifa', 'Slug de la tarifa', ['class' => 'form-label']) !!}
+                            {!! Form::text('slug_tarifa', null, [
+                                'class' => 'form-control',
+                                'required' => 'required',
+                            ]) !!}
+                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                             {!! Form::textarea('parrilla_bloque_1', null, [

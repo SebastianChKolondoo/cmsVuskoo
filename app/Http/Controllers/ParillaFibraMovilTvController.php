@@ -62,7 +62,6 @@ class ParillaFibraMovilTvController extends Controller
                 $landingLead = '';
                 break;
         }
-        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaFibraMovilTv::create([
             'operadora' => $request->operadora,
             'estado' => $request->estado,
@@ -83,7 +82,7 @@ class ParillaFibraMovilTvController extends Controller
             'num_minutos_gratis' => $request->num_minutos_gratis,
             'fecha_expiracion' => $request->fecha_expiracion,
             'moneda' =>  $moneda->moneda,
-            'slug_tarifa' => $slug,
+            'slug_tarifa' => $request->slug_tarifa,
             'pais' => $pais,
             'landingLead' => $landingLead,
             'appsIlimitadas' => $request->appsIlimitadas,
@@ -150,12 +149,10 @@ class ParillaFibraMovilTvController extends Controller
         $request['landingLead'] = $landingLead;
         $request['pais'] = $pais;
         $request['moneda'] = $moneda->moneda;
-        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
-        $request['slug_tarifa'] = $slug;
 
         $tarifa = ParillaFibraMovilTv::find($parillaMoviltv);
         $tarifa->update($request->all());

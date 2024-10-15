@@ -47,7 +47,6 @@ class ParillaGasController extends Controller
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Comercializadoras::find($request->comercializadora);
-        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_3)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaGas::create([
             'comercializadora' => $request->comercializadora,
             'estado' => $request->estado,
@@ -77,7 +76,7 @@ class ParillaGasController extends Controller
             'fecha_expiracion' => $request->fecha_expiracion,
             'fecha_registro' => $request->fecha_registro,
             'moneda' =>  $moneda->moneda,
-            'slug_tarifa' => $slug,
+            'slug_tarifa' => $request->slug_tarifa,
             'pais' => $request->pais,
             'textoAdicional' => $request->textoAdicional,
             'tituloSeo' => $request->tituloSeo,
@@ -114,13 +113,10 @@ class ParillaGasController extends Controller
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Comercializadoras::find($request->comercializadora);
-        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_3)) . ' ' . $empresa->nombre_slug));
-        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_3)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
-        $request['slug_tarifa'] = $slug;
         $request['moneda'] = $moneda->moneda;
         $tarifa = ParillaGas::find($parillaGas);
         $tarifa->update($request->all());

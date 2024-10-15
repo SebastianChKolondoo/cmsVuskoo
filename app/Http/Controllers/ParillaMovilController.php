@@ -65,7 +65,6 @@ class ParillaMovilController extends Controller
                 $landingLead = '';
                 break;
         }
-        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaMovil::create([
             'operadora' => $request->operadora,
             'estado' => $request->estado,
@@ -86,7 +85,7 @@ class ParillaMovilController extends Controller
             'num_minutos_gratis' => $request->num_minutos_gratis,
             'fecha_expiracion' => $request->fecha_expiracion,
             'moneda' =>  $moneda->moneda,
-            'slug_tarifa' => $slug,
+            'slug_tarifa' => $request->slug_tarifa,
             'pais' => $pais,
             'landingLead' => $landingLead,
             'appsIlimitadas' => $request->appsIlimitadas,
@@ -154,12 +153,10 @@ class ParillaMovilController extends Controller
         $request['pais'] = $pais;
         $request['moneda'] = $moneda->moneda;
 
-        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
-        $request['slug_tarifa'] = $slug;
         $tarifa = ParillaMovil::find($parillaMovil);
         $tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');

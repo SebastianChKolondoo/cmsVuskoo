@@ -20,12 +20,6 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        {{-- <div class="form-group col-12 col-md-4">
-                            {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
-                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
                             {!! Form::select('estado', $states->pluck('name', 'id'), null, [
@@ -58,7 +52,7 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('label', 'Label', ['class' => 'form-label']) !!}
+                            {!! Form::label('label', 'Promoción', ['class' => 'form-label']) !!}
                             {!! Form::text('label', null, [
                                 'class' => 'form-control',
                             ]) !!}
@@ -69,19 +63,19 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        {{-- <div class="form-group col-12 col-md-4">
                             {!! Form::label('source', 'Source', ['class' => 'form-label']) !!}
                             {!! Form::text('source', null, [
                                 'class' => 'form-control',
                             ]) !!}
-                        </div>
+                        </div> --}}
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('affiliate_link', 'Link Afiliado', ['class' => 'form-label']) !!}
-                            {!! Form::text('affiliate_link', null, [
+                            {!! Form::label('url', 'Url de cupón', ['class' => 'form-label']) !!}
+                            {!! Form::text('url', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="form-group col-12 col-md-4">
+                        {{-- <div class="form-group col-12 col-md-4">
                             {!! Form::label('url', 'Url', ['class' => 'form-label']) !!}
                             {!! Form::text('url', null, [
                                 'class' => 'form-control',
@@ -98,7 +92,7 @@
                             {!! Form::text('deeplink', null, [
                                 'class' => 'form-control',
                             ]) !!}
-                        </div>
+                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('TiempoCupon', '¿Tiene expiración?', ['class' => 'form-label']) !!}
                             {!! Form::select('TiempoCupon', $states->pluck('name', 'id'), null, [

@@ -28,32 +28,14 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('telefono', 'Teléfono', ['class' => 'form-label']) !!}
-                            {!! Form::text('telefono', null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('funcion_api', 'Función Api', ['class' => 'form-label']) !!}
-                            {!! Form::text('funcion_api', null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('idPerseo', 'ID perseo', ['class' => 'form-label']) !!}
                             {!! Form::text('idPerseo', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        {{-- <div class="form-group col-12 col-md-4">
-                            {!! Form::label('TipoCupon', 'Tipo de cupón', ['class' => 'form-label']) !!}
-                            {!! Form::select('TipoCupon', ['' => 'Seleccione...'] + $tipoCupon->pluck('nombre', 'id')->toArray(), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div> --}}
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('politica_privacidad', 'Pólitica de privacidad', ['class' => 'form-label']) !!}
-                            {!! Form::text('politica_privacidad', null, [
+                            {!! Form::label('url_comercio', 'Url de comercio', ['class' => 'form-label']) !!}
+                            {!! Form::text('url_comercio', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
@@ -71,12 +53,6 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        {{-- <div class="form-group col-12 col-md-4">
-                            {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
-                            {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('categoria', 'Categoria', ['class' => 'form-label']) !!}
                             {!! Form::select('categoria', ['' => 'Seleccione...'] + $categorias->pluck('nombre', 'id')->toArray(), null, [

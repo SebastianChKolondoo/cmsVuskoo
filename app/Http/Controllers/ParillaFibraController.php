@@ -62,7 +62,6 @@ class ParillaFibraController extends Controller
                 $landingLead = '';
                 break;
         }
-        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $tarifa = ParillaFibra::create([
             'operadora' => $request->operadora,
             'estado' => $request->estado,
@@ -92,10 +91,10 @@ class ParillaFibraController extends Controller
             'fecha_expiracion' => $request->fecha_expiracion,
             'fecha_registro' => $request->fecha_registro,
             'moneda' =>  $moneda->moneda,
-            'slug_tarifa' => $slug,
             'pais' => $pais,
             'landingLead' => $landingLead,
             'duracionContrato' => $request->duracionContrato,
+            'slug_tarifa' => $request->slug_tarifa,
         ]);
 
         return redirect()->route('ParillaFibra.index')->with('info', 'Tarifa creada correctamente.');
@@ -146,12 +145,10 @@ class ParillaFibraController extends Controller
         $request['landingLead'] = $landingLead;
         $request['pais'] = $pais;
         $request['moneda'] = $moneda->moneda;
-        $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $request['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
-        $request['slug_tarifa'] = $slug;
         $tarifa = ParillaFibra::find($parillaFibra);
         $tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');

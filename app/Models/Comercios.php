@@ -22,7 +22,7 @@ class Comercios extends Model
         'estado',
         'pais',
         'categoria',
-        'telefono'
+        'url_comercio'
     ];
 
     public function state()

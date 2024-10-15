@@ -438,7 +438,7 @@ class TarifasController extends Controller
         $data =  DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales','1.comercializadoras.telefono')
+            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales','1_comercializadoras.telefono')
             ->where($this->tabla_luz . '.id', '=', $id)
             ->first();
 

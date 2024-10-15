@@ -66,6 +66,7 @@ class ComerciosController extends Controller
             'nombre' => ($request->name),
             'nombre_slug' => $request->nombre_slug,
             'idPerseo' => $request->idPerseo,
+            'url_comercio' => $request->url_comercio,
             'logo' => $urlLogo,
             'logo_negativo' => $logo_negativo,
             'politica_privacidad' => ($request->politica),

@@ -15,16 +15,21 @@ class UtilsController extends Controller
 {
     function formatTelephone(string $phone): string
     {
-        //Revisión de formato telefónico. Pepephone Api solo acepta numeración normal y con 34 delante. La validación por env de números nacionales incluye +34,34 y 0034 previo al número de 9 cifras.
-        return str_replace(array(" ", "+"), "", $phone);
-        if (Str::substr($phone, 0, 4) === "0034" && strlen($phone) === 13) {
+        // Elimina espacios y el símbolo '+' si está presente
+        $phone = str_replace([" ", "+"], "", $phone);
+
+        // Si comienza con '0034' y tiene longitud 13, elimina los primeros 4 caracteres
+        if (Str::startsWith($phone, "0034") && strlen($phone) === 13) {
             $phone = Str::substr($phone, 4);
-        } elseif (Str::substr($phone, 0, 2) === "34" && strlen($phone) === 11) {
+        }
+        // Si comienza con '34' y tiene longitud 11, elimina los primeros 2 caracteres
+        elseif (Str::startsWith($phone, "34") && strlen($phone) === 11) {
             $phone = Str::substr($phone, 2);
         }
 
         return $phone;
     }
+
     //Para evitar entrar en bucle en funciones y no saturar/consumir las llamadas a IpAPI, tenemos los parámetros $country_code (recogido a partir de checkingGuestLocationApi()) y $decideCountry (que viene de la función homologa) recibidos en la función cuando se quieran registrar. En cualquier caso, guarda laIP.
     /**
      * Función de registro eventos
@@ -38,7 +43,7 @@ class UtilsController extends Controller
      */
     function registroDeErrores(int $tipo, string $origen, string $mensaje, string|null $country_code = null, string|null $decideCountry = null): void
     {
-        DB::table('events')->insert(
+        $data = DB::table('events')->insert(
             array(
                 'event_type' => $tipo,
                 'source' => $origen,

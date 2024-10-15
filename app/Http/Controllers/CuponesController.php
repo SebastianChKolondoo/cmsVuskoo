@@ -62,14 +62,14 @@ class CuponesController extends Controller
             'label' => $request->label,
             'CodigoCupon' => trim($request->CodigoCupon),
             'featured' => $request->featured,
-            'source' => $request->source,
+            /* 'source' => $request->source,
             'deeplink' => $request->deeplink,
             'affiliate_link' => $request->affiliate_link,
-            'cashback_link' => $request->cashback_link,
+            'cashback_link' => $request->cashback_link, */
             'url' => $request->url,
             'image_url' => $request->image_url,
             'tipoCupon' => $request->tipoCupon,
-            'merchant_home_page' => $request->merchant_home_page,
+            /* 'merchant_home_page' => $request->merchant_home_page, */
             'fecha_inicial' => $fecha_inicial,
             'fecha_final' => $fecha_final,
             'estado' => $request->estado,
