@@ -570,4 +570,6 @@ class ApiController extends Controller
         $validacionPais = Paises::where('codigo', $lang)->first();
         return PaginaWebFooter::where('pais', $validacionPais->id)->first();
     }
+
+    
 }

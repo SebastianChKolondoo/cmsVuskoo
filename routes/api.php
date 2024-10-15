@@ -21,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('emailtest', [EmailController::class, 'sendMail'])->name('emailtest');
+Route::get('getBlogPreview/{id}', [BlogController::class, 'getBlogPreviewList']);
 
 Route::middleware('api')->group(function () {
     Route::get('getOperadoras/{lang?}', [ApiController::class, 'getOperadorasMovilList']);
@@ -81,11 +82,19 @@ Route::middleware('api')->group(function () {
     /* Streaming */
     Route::get('getTarifasStreaming/{lang?}', [TarifasController::class, 'getTarifasStreamingList']);
     /* blog */
-    Route::get('getBlog/{lang?}', [BlogController::class, 'getBlogList']);
-    Route::get('getBlogPreview/{id}', [BlogController::class, 'getBlogPreviewList']);
+   /*  Route::get('getBlog/{lang?}', [BlogController::class, 'getBlogList']);
     Route::get('getBlogHome/{lang?}', [BlogController::class, 'getBlogHomeList']);
     Route::get('getBlog/{categoria}/{id?}', [BlogController::class, 'getBlogList']);
-    Route::get('getMenuBlog/{lang?}', [BlogController::class, 'getMenuBlogList']);
+    Route::get('getMenuBlog/{lang?}', [BlogController::class, 'getMenuBlogList']); */
+
+    Route::get('getBlog/{lang?}', [BlogController::class, 'getBlogNewList']);
+    Route::get('getBlog/{lang?}/{categoria?}/{amigable?}', [BlogController::class, 'getBlogItemList']); 
+    /* Route::get('getBlog/{lang}/{categoria?}/{amigable?}', [BlogController::class, 'getBlogItemList']); 
+    /* Route::get('getBlogCategoria/{lang}/{categoria?}', [BlogController::class, 'getBlogInfoCategoriaList']);  */
+    Route::get('getBlogHome/{lang?}', [BlogController::class, 'getBlogInfoHomeList']); 
+    Route::get('getMenuBlog/{lang?}', [BlogController::class, 'getMenuInfoBlogList']); 
+
+
     /* Suministros */
     Route::get('getSuministros/{lang?}', [BlogController::class, 'getSuministrosList']);
     Route::get('getSuministrosById/{id}', [BlogController::class, 'getSuministrosList']);
@@ -161,12 +170,7 @@ Route::middleware('api')->group(function () {
     /* carga footer */
     Route::get('getFooter/{lang?}', [ApiController::class, 'getFooterList']);
 
-    Route::get('getBlogInfo/{lang?}', [BlogController::class, 'getBlogNewList']);/* listo */
-    Route::get('getBlogInfo/{categoria}/{amigable}', [BlogController::class, 'getBlogItemList']); /* listo */
-    Route::get('getBlogInfoCategoria/{categoria}', [BlogController::class, 'getBlogInfoCategoriaList']); /* listo */
-    Route::get('getBlogInfoHome/{lang?}', [BlogController::class, 'getBlogInfoHomeList']); /* listo */
-    Route::get('getMenuInfoBlog/{lang?}', [BlogController::class, 'getMenuInfoBlogList']); /* listo */
-
+    
     /* mail */
     
 

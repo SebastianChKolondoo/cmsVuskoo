@@ -86,20 +86,21 @@ class LeadController extends Controller
     }
 
     public function FormNewsletterRegister(Request $request)
-    {   
+    {
         $email = $request->input('email');
+        $envio = UtilsController::class;
 
-        
         $contactenos = new NewsLetter([
             'email' => $email,
             'politica' => true
         ]);
-        
+
         if ($contactenos->save()) {
-            Mail::to($email)->send(new ConfirmacionNewsletter());
+            $envio = UtilsController::EmailNewsletter($email);
             return response()->json([
                 'message' => 'Suscripción realizada con exito',
-                'status' => 201
+                'status' => 201,
+                'response' => $envio
             ], 200);
         } else {
             return response()->json([
@@ -138,6 +139,10 @@ class LeadController extends Controller
             case 13:    /*Plenitude*/
                 return $this->apiPlenitude($lead, $idLead);
             case 14:    /*Octopus Energy*/
+                break;
+            case 15:    /*Frank Energy*/
+                return $this->apiFrank($lead, $idLead);
+                break;
             default:
                 break;
         }
@@ -240,7 +245,8 @@ class LeadController extends Controller
             'channel' => 'proveedores',
             'branch_id' => '26970',
             'lang' => null,
-            'uuid' => 84125734612783612387162,
+            //'uuid' => 84125734612783612387162,
+            'uuid' => time(),
             'is_uid_authenticated' => false,
             'user_ip' => $this->visitorIp,
             'url' => $lead['urlOffer'],
@@ -394,28 +400,39 @@ class LeadController extends Controller
                 $message = "-0: Fallo al registrar el numero " . $requestData['telephone'] . ", «lead» de *Silbo - " . ($lead['company']) . "* en función apiSilbo(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $data[0]['Detail'] . " - Datos recibidos del «lead» en la función: " . json_encode($data);
                 $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
             }
+            return response()->json([
+                'message' => 'OK. Lead insertado correctamente',
+                'status' => $codigo
+            ], 200);
         } else {
             $errorLead = '';
+            $respuestaLead = '';
             switch (isset($data[0]['Detail'])) {
                 case '1000':
                     $respuestaLead = 'OK. Lead insertado correctamente';
+                    $codigo = 201;
                     break;
                 case '1100':
                     $respuestaLead = 'Lead no válido repetido.';
+                    $codigo = 502;
                     break;
                 case '1300':
                     $respuestaLead = 'Lead no válido Ya cliente.';
+                    $codigo = 502;
                     break;
                 case '1301':
                     $respuestaLead = 'Lead no válido Ya cliente grupo';
+                    $codigo = 502;
                     break;
                 case '1400':
                     $respuestaLead = 'Lead no válido Blacklist/Robinson/No Llamable';
+                    $codigo = 502;
                     break;
             }
+
             $message = $data['message']['status'] . ": Fallo al registrar el numero " . $requestData['telephone'] . ", «lead» de *Silbo - " . ($lead['company']) . "* en función apiSilbo(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $respuestaLead . " - Datos recibidos del «lead» en la función: " . json_encode($data);
             $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
-            $codigo = 502;
+            //$codigo = 502;
         }
         return response()->json([
             'message' => $respuestaLead,
@@ -519,6 +536,74 @@ class LeadController extends Controller
                 ->timeout(20)
                 ->get($full_api_url);
 
+            $responseObj = json_decode($response);
+
+            if (isset($responseObj->status) && $responseObj->status === "success") {
+
+                $leadValidation = Lead::find($idLead);
+                if ($leadValidation) {
+                    $leadValidation->idResponse = $responseObj->id;
+                    $leadValidation->save();
+                } else {
+                    $message = "-0: Fallo al registrar el numero " . $lead['phone'] . ", «lead» de *mas plenitude - " . ($lead['company']) . "* en función plenitude(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $responseObj->status . " - Datos recibidos del «lead» en la función: " . json_encode($responseObj);
+                    $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
+                }
+
+                $message = "ok: Registrado el numero " . $lead['phone'] . " con id = " . $idLead . ", «lead» de *Plenitude - " . ($lead['company']) . "* en función apiPlenitude(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($responseObj);
+                $this->utilsController->registroDeErrores(16, 'Lead saved Plenitude', $message, $lead['urlOffer'], $this->visitorIp);
+                $responseObj->code = 201;
+            } else {
+                $message = "Fallo al registrar el numero " . $lead['phone'] . ", «lead» de *Plenitude - " . ($lead['company']) . "* en función apiPlenitude(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . json_encode($responseObj);
+                $this->utilsController->registroDeErrores(10, 'ajaxApiPlenitude', $message);
+                $responseObj->code = 502;
+            }
+
+            return response()->json([
+                'message' => $responseObj->status,
+                'status' => $responseObj->code
+            ], 200);
+        } catch (ConnectionException $e) {
+            $fallo_envio_lead = true;
+            $message = "Fallo de IpAPI ajaxApiV3 falla al enviar el «lead» desde IP: " . $this->visitorIp . ' -> ERROR: ' . $e->getMessage();
+            $this->utilsController->registroDeErrores(10, 'ajaxApiV3', $message);
+        }
+    }
+
+    public function apiFrank($lead, $idLead)
+    {
+        //$this->visitorIp = $this->utilsController->$this->visitorIp;
+        try {
+            $apiKey = "to-be-received";
+            $signingKey = "to-be-received";
+
+            $response = null;
+            $base_api_url = "https://preview.frank-api.nl/admin/webhooks/lead";
+            //$base_api_url = "https://frank-api.nl/admin/webhooks/lead"; /* prod */
+
+            $data = array(
+                'firstName' =>  "Arkeero",
+                'lastName' =>  "Vuskoo",
+                'lastName2' =>  null,
+                'phoneNumber' => $this->utilsController->formatTelephone($lead['phone']),
+                'emailAddress' =>  "",
+                'country' =>  "ES",
+                'leadReference' =>  time(),
+                'originOfLead' =>  "vuskoo.com",
+            );
+
+            $payload = json_encode($data);
+            $timestamp = round(microtime(true) * 1000);
+
+            // Generación de la firma usando HMAC-SHA256
+            $signature = hash_hmac('sha256', "$timestamp.$payload", $signingKey);
+
+            echo $response = Http::withHeaders([
+                'ApiKey' => $apiKey,
+                'Content-Type' => 'application/json',
+                'X-Signature' => "t=$timestamp,v1=$signature"
+            ])->post('webhook-url', $data);
+
+            return $response;
             $responseObj = json_decode($response);
 
             if (isset($responseObj->status) && $responseObj->status === "success") {

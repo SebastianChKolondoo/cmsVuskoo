@@ -41,7 +41,7 @@ class BancaController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->nombre). '.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre)) . '.' . $extension;
             $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
             $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
@@ -86,7 +86,7 @@ class BancaController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->nombre).'.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre)) . '.' . $extension;
             $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
             $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }

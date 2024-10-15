@@ -29,6 +29,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('landing_link', 'Landing link', ['class' => 'form-label']) !!}
+                            {!! Form::text('landing_link', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('destacada', 'Destacada', ['class' => 'form-label']) !!}
                             {!! Form::select('destacada', $states->pluck('name', 'id'), null, [
                                 'class' => 'form-control',

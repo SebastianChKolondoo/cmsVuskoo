@@ -39,16 +39,16 @@ class ComercializadorasController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->name) . '.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '.' . $extension;
             $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
-            $urlLogo = Storage::disk('public')->url($path);
+            $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
         if ($request->hasFile('logo_negativo')) {
             $file = $request->file('logo_negativo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->name) . '_negativo.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '_negativo.' . $extension;
             $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
-            $logo_negativo = Storage::disk('public')->url($path);
+            $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
 
         Comercializadoras::create([
@@ -99,7 +99,7 @@ class ComercializadorasController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->nombre) . '.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '.' . $extension;
             $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
             $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
@@ -107,7 +107,7 @@ class ComercializadorasController extends Controller
         if ($request->hasFile('logo_negativo')) {
             $file = $request->file('logo_negativo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->nombre) . '_negativo.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '_negativo.' . $extension;
             $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
             $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }

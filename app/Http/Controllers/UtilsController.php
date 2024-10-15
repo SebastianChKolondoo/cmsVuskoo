@@ -183,4 +183,44 @@ class UtilsController extends Controller
         $resultado = str_replace($buscar, $reemplazar, $cadena);
         return $resultado;
     }
+
+    public static function EmailNewsletter($mail)
+    {
+        // URL de la API
+        $url = 'https://hapi.crm-hermes.com/api/Notification/SendEmails';
+
+        // Token para autenticación
+        $token = 'a8086d4d-1313-4286-8fb3-424ceafd2c29';
+        $idruta = 126;
+        $emailList = ["dmalagon@arkeero.com", "netadv@outlook.es", $mail];
+        $htmlContent = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Confirmación de suscripción a vuskoo.com</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></head><body style="background-color: #f4f4f4;"><div class="container my-5"><div class="row justify-content-center"><div class="col-12 col-md-8"><div class="card shadow-lg"><div class="card-header text-center bg-white"><img src="https://www.vuskoo.com/img/logos/logo.svg" alt="Vuskoo" class="img-fluid" style="max-width: 150px;"></div><div class="card-body text-center"><h1 class="card-title">¡Gracias por suscribirte!</h1><p class="card-text">Hola,</p><p class="card-text">Estamos encantados de que te hayas suscrito a nuestro boletín de noticias. A partir de ahora, recibirás nuestras actualizaciones y las últimas novedades directamente en tu bandeja de entrada.</p></div><div class="card-footer text-center bg-light"><p class="mb-0">Si no realizaste esta solicitud, puedes ignorar este correo.</p><p class="text-muted mb-0">© 2024 Vuskoo. Todos los derechos reservados.</p></div></div></div></div></div><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script></body></html>';
+        $subject = 'Confirmación a newsLetter';
+        $fromName = 'Confirmación a newsLetter';
+        $presender = 'notification';
+
+        // Cuerpo de la solicitud
+        $body = [
+            'token' => $token,
+            'idruta' => $idruta,
+            'emailList' => $emailList,
+            'html' => $htmlContent,
+            'asunto' => $subject,
+            'fromname' => $fromName,
+            'presender' => $presender
+        ];
+
+        // Envío de la solicitud POST
+        $response = Http::post($url, $body);
+
+        // Manejo de la respuesta
+        if ($response->successful()) {
+            return $response->json(); // Respuesta exitosa
+        } else {
+            return [
+                'error' => true,
+                'message' => 'Error al enviar el correo electrónico',
+                'status_code' => $response->status()
+            ];
+        }
+    }
 }

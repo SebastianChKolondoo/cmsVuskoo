@@ -20,10 +20,10 @@ class ExtraOfferController extends Controller
     {
         return DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
-            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
-            ->where($this->tabla_luz.'.estado','=','1')
-            ->where($this->tabla_luz.'.pais','=','1')
-            ->where('1_comercializadoras.estado','=','1')
+            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', '1_comercializadoras.telefono')
+            ->where($this->tabla_luz . '.estado', '=', '1')
+            ->where($this->tabla_luz . '.pais', '=', '1')
+            ->where('1_comercializadoras.estado', '=', '1')
             ->inRandomOrder()
             ->take(3)
             ->get();
@@ -33,10 +33,10 @@ class ExtraOfferController extends Controller
     {
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
-            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where($this->tabla_movil.'.estado','=','1')
-            ->where($this->tabla_movil.'.pais','=','1')
-            ->where('1_operadoras.estado','=','1')
+            ->select($this->tabla_movil . '.*', '1_operadoras.nombre', '1_operadoras.logo', '1_operadoras.telefono')
+            ->where($this->tabla_movil . '.estado', '=', '1')
+            ->where($this->tabla_movil . '.pais', '=', '1')
+            ->where('1_operadoras.estado', '=', '1')
             ->inRandomOrder()
             ->take(3)
             ->get();
@@ -46,10 +46,10 @@ class ExtraOfferController extends Controller
     {
         return DB::table($this->tabla_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
-            ->select($this->tabla_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where($this->tabla_fibra.'.estado','=','1')
-            ->where($this->tabla_fibra.'.pais','=','1')
-            ->where('1_operadoras.estado','=','1')
+            ->select($this->tabla_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', '1_operadoras.telefono')
+            ->where($this->tabla_fibra . '.estado', '=', '1')
+            ->where($this->tabla_fibra . '.pais', '=', '1')
+            ->where('1_operadoras.estado', '=', '1')
             ->inRandomOrder()
             ->take(3)
             ->get();
@@ -59,10 +59,10 @@ class ExtraOfferController extends Controller
     {
         return DB::table($this->tabla_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
-            ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
-            ->where($this->tabla_gas.'.estado','=','1')
-            ->where($this->tabla_gas.'.pais','=','1')
-            ->where('1_comercializadoras.estado','=','1')
+            ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', '1_comercializadoras.telefono')
+            ->where($this->tabla_gas . '.estado', '=', '1')
+            ->where($this->tabla_gas . '.pais', '=', '1')
+            ->where('1_comercializadoras.estado', '=', '1')
             ->inRandomOrder()
             ->take(3)
             ->get();
@@ -72,10 +72,10 @@ class ExtraOfferController extends Controller
     {
         return DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
-            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
-            ->where($this->tabla_luz_gas.'.estado','=','1')
-            ->where($this->tabla_luz_gas.'.pais','=','1')
-            ->where('1_comercializadoras.estado','=','1')
+            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', '1_comercializadoras.telefono')
+            ->where($this->tabla_luz_gas . '.estado', '=', '1')
+            ->where($this->tabla_luz_gas . '.pais', '=', '1')
+            ->where('1_comercializadoras.estado', '=', '1')
             ->inRandomOrder()
             ->take(3)
             ->get();
@@ -85,10 +85,10 @@ class ExtraOfferController extends Controller
     {
         return DB::table($this->tabla_movil_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
-            ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where($this->tabla_movil_fibra.'.estado','=','1')
-            ->where($this->tabla_movil_fibra.'.pais','=','1')
-            ->where('1_operadoras.estado','=','1')
+            ->select($this->tabla_movil_fibra . '.*', '1_operadoras.nombre', '1_operadoras.logo', '1_operadoras.telefono')
+            ->where($this->tabla_movil_fibra . '.estado', '=', '1')
+            ->where($this->tabla_movil_fibra . '.pais', '=', '1')
+            ->where('1_operadoras.estado', '=', '1')
             ->inRandomOrder()
             ->take(3)
             ->get();
@@ -98,10 +98,10 @@ class ExtraOfferController extends Controller
     {
         return DB::table($this->tabla_movil_fibra_tv)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
-            ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo')
-            ->where($this->tabla_movil_fibra_tv.'.estado','=','1')
-            ->where('1_operadoras.estado','=','1')
-            ->where('1_operadoras.pais','=','1')
+            ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo', '1_operadoras.telefono')
+            ->where($this->tabla_movil_fibra_tv . '.estado', '=', '1')
+            ->where('1_operadoras.estado', '=', '1')
+            ->where('1_operadoras.pais', '=', '1')
             ->inRandomOrder()
             ->take(3)
             ->get();
@@ -112,9 +112,9 @@ class ExtraOfferController extends Controller
     {
         return DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
-            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo')
-            ->where($this->tabla_luz.'.estado','=','1')
-            ->where('1_comercializadoras.pais','=','3')
+            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', '1_comercializadoras.telefono')
+            ->where($this->tabla_luz . '.estado', '=', '1')
+            ->where('1_comercializadoras.pais', '=', '3')
             ->inRandomOrder()
             ->take(3)
             ->get();

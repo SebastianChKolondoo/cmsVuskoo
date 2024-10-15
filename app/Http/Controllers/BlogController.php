@@ -81,59 +81,80 @@ class BlogController extends Controller
         return $query->get();
     }
 
-    public function getBlogNewList($lang)
+    public function getBlogNewList($lang = 'es')
     {
         $paises = Paises::where('codigo', $lang)->first();
-        return Blog::select('blog.id', 'blog.imagen', 'blog.fecha_publicacion', 'blog.titulo', 'blog.entradilla', 'blog.categoria', 'categorias_blog.id', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('pais', $paises->id)->get();
+        return Blog::select(
+            'blog.id',
+            'blog.url_amigable as url_amigable',
+            'blog.imagen',
+            'blog.fecha_publicacion',
+            'blog.titulo',
+            'blog.entradilla',
+            'blog.categoria',
+            'categorias_blog.id',
+            'categorias_blog.nombre as categoria',
+            'categorias_blog.slug as categoria_slug'
+        )
+            ->join('categorias_blog', 'categoria', 'categorias_blog.id')
+            ->where('pais', $paises->id)->get();
     }
 
-    public function getBlogItemList($categoria, $amigable)
+    public function getBlogItemList($lang = 'es', $categoria = null, $amigable = null)
     {
+        $paises = Paises::where('codigo', $lang)->first();
         $categoria = CategoriaBlog::where('slug', strtolower($categoria))->first();
-        $blog = Blog::select('id')->where('url_amigable', strtolower($amigable))->where('categoria', $categoria->id)->count();
-        if ($blog == 0) {
+        $blog = Blog::select('id')
+            ->where('categoria', $categoria->id);
+        if ($amigable != null) {
+            $blog->where('url_amigable', strtolower($amigable));
+        }
+        if ($blog->count() == 0) {
             return ['mensaje' => 'El blog no existe', 'error' => 404];
         } else {
-            return Blog::select('blog.imagen', 'blog.fecha_publicacion', 'blog.titulo', 'blog.contenido', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('categoria', $categoria->id)->where('url_amigable', $amigable)->get();
+            $data = Blog::select(
+                'blog.id',
+                'blog.entradilla',
+                'blog.categoria',
+                'categorias_blog.id',
+                'blog.imagen',
+                'blog.url_amigable as url_amigable',
+                'blog.fecha_publicacion',
+                'blog.titulo',
+                'blog.contenido',
+                'categorias_blog.nombre as categoria',
+                'categorias_blog.slug as categoria_slug',
+                'blog.url_amigable as url_amigable'
+            )
+                ->join('categorias_blog', 'categoria', 'categorias_blog.id')
+                ->where('categoria', $categoria->id);
+
+            if ($amigable != null) {
+                $data->where('url_amigable', strtolower($amigable));
+            }
+
+            return $data->get();
         }
     }
 
     public function getBlogPreviewList($id)
     {
-        $query = DB::connection('mysql_second')->table('wp_posts')
-            ->select(
-                'wp_yoast_indexable.open_graph_image as imagen',
-                'wp_posts.post_date as fecha_publicacion',
-                'wp_posts.post_title as titulo',
-                'wp_posts.post_content as contenido',
-                'wp_posts.post_excerpt as entradilla',
-                'wp_yoast_indexable.title as seo_titulo',
-                'wp_yoast_indexable.description as seo_descripcion',
-                'wp_yoast_indexable.breadcrumb_title as migapan',
-                'wp_yoast_indexable.estimated_reading_time_minutes as tiempo_lectura',
-                'wp_posts.post_name as url_amigable',
-                'wp_users.display_name as autor',
-                'wp_postmeta.meta_value as categoriaPrincipal',
-                'principal.slug as categoria_slug',
-                'principal.name as categoria'
-            )
-            ->join('wp_yoast_indexable', 'wp_yoast_indexable.object_id', '=', 'wp_posts.ID')
-            ->join('wp_users', 'wp_users.ID', '=', 'wp_posts.post_author')
-            ->join('wp_term_relationships', 'wp_term_relationships.object_id', '=', 'wp_posts.ID')
-            ->join('wp_term_taxonomy', 'wp_term_taxonomy.term_taxonomy_id', '=', 'wp_term_relationships.term_taxonomy_id')
-            ->join('wp_terms', 'wp_terms.term_id', '=', 'wp_term_taxonomy.term_id')
-            ->join('wp_postmeta', 'wp_postmeta.post_id', '=', 'wp_posts.ID')
-            ->join('wp_terms as principal', 'principal.term_id', '=', 'wp_postmeta.meta_value')
-
-            ->where('wp_postmeta.meta_key', '=', '_yoast_wpseo_primary_category')
-            ->where('wp_posts.post_type', '=', 'post')
-            ->where('wp_yoast_indexable.object_type', '=', 'post')
-            ->where('wp_yoast_indexable.object_sub_type', '=', 'post')
-            ->where('wp_term_taxonomy.taxonomy', '=', 'category')
-            ->where('wp_posts.ID', '=', $id)
-            ->orderBy('wp_posts.ID', 'desc');
-
-        return $query->get();
+        return Blog::select(
+            'blog.id',
+            'blog.entradilla',
+            'blog.categoria',
+            'categorias_blog.id',
+            'blog.imagen',
+            'blog.url_amigable as url_amigable',
+            'blog.fecha_publicacion',
+            'blog.titulo',
+            'blog.contenido',
+            'categorias_blog.nombre as categoria',
+            'categorias_blog.slug as categoria_slug',
+            'blog.url_amigable as url_amigable'
+        )
+            ->join('categorias_blog', 'categoria', 'categorias_blog.id')
+            ->where('blog.id', $id)->get();
     }
 
     public function getBlogHomeList()
@@ -298,13 +319,15 @@ class BlogController extends Controller
         }
     }
 
-    public function getBlogInfoHomeList($lang) {
+    public function getBlogInfoHomeList($lang)
+    {
         $pais = Paises::where('codigo', $lang)->first();
-        return Blog::select('blog.imagen', 'blog.fecha_publicacion', 'blog.titulo', 'blog.contenido', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('pais',$pais->id)->orderBy('blog.fecha_publicacion','desc')->limit(3)->get();        
+        return Blog::select('blog.imagen', 'blog.fecha_publicacion', 'blog.titulo', 'blog.contenido', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('pais', $pais->id)->orderBy('blog.fecha_publicacion', 'desc')->limit(3)->get();
     }
 
-    public function getMenuInfoBlogList($lang) {
+    public function getMenuInfoBlogList($lang)
+    {
         $pais = Paises::where('codigo', $lang)->first();
-        return $blog = Blog::select('categorias_blog.nombre','categorias_blog.slug','blog.categoria')->groupBy('categoria')->where('pais',$pais->id)->join('categorias_blog','categorias_blog.id','blog.categoria')->get();
+        return $blog = Blog::select('categorias_blog.nombre', 'categorias_blog.slug', 'blog.categoria')->groupBy('categoria')->where('pais', $pais->id)->join('categorias_blog', 'categorias_blog.id', 'blog.categoria')->get();
     }
 }
