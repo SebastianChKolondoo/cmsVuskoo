@@ -39,7 +39,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::paginate(1);
+        $roles = Role::all();
         return view('usuarios.create', compact('roles'));
     }
 
@@ -48,14 +48,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validacion =  DB::table('users')->where('numberDocument', '=', $request->numberDocument)->get()->count();
-        if ($validacion == 0) {
+        //$validacion =  DB::table('users')->where('numberDocument', '=', $request->numberDocument)->get()->count();
+        
+        if (true) {
             $user = User::create([
                 'name' => ($request->name),
                 'lastname' => ($request->lastname),
                 'email' => strtolower($request->email),
                 'email_verified_at' => now(),
-                'password' => bcrypt($request->numberDocument),
+                'password' => $request->password,
             ]);
             $user->roles()->sync($request->roles);
             return redirect('/usuarios')->with('info', 'El registro de ' . $request->name . ' ' . $request->lastname . ' ha sido creado.');

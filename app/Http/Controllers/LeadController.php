@@ -90,13 +90,27 @@ class LeadController extends Controller
         $email = $request->input('email');
         $envio = UtilsController::class;
 
+        $validacion = NewsLetter::where('email',$email)->count();
+
+        if($validacion !== 0){
+            return response()->json([
+                'message' => 'Este email ya se encuentra registrado',
+                'status' => 503
+            ], 200);
+        }
+
+        $token_email = base64_encode($email);
+
         $contactenos = new NewsLetter([
             'email' => $email,
-            'politica' => true
+            'politica' => true,
+            'token' => $token_email,
+            'verificacion_email' => 2
         ]);
 
         if ($contactenos->save()) {
-            $envio = UtilsController::EmailNewsletter($email);
+            //$envio = UtilsController::EmailNewsletter($email);
+            $envio = UtilsController::EmailNewsletter($email, $token_email);
             return response()->json([
                 'message' => 'Suscripción realizada con exito',
                 'status' => 201,

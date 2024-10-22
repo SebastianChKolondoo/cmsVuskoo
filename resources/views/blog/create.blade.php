@@ -49,6 +49,18 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('destacada', 'Destacada', ['class' => 'form-label']) !!}
+                            {!! Form::select('destacada', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
+                            {!! Form::select('estado', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('url_amigable', 'URL amigable', ['class' => 'form-label']) !!}
                             {!! Form::text('url_amigable', null, [
                                 'class' => 'form-control',
@@ -68,8 +80,8 @@
                         </div>
                         <div class="form-group col-12 col-md-12">
                             {!! Form::label('titulo', 'Titulo', ['class' => 'form-label']) !!}
-                            {!! Form::textarea('titulo', null, [
-                                'class' => 'form-control editor',
+                            {!! Form::text('titulo', null, [
+                                'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-12">

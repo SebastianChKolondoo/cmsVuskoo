@@ -10,6 +10,7 @@ use App\Models\Blog;
 use App\Models\CategoriaBlog;
 use App\Models\Categorias_blog;
 use App\Models\Paises;
+use App\Models\States;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -28,7 +29,7 @@ class BlogController extends Controller
         return DB::connection('mysql_second')->table('wp_term_taxonomy')->select('wp_terms.name', 'wp_terms.slug')->join('wp_terms', 'wp_terms.term_id', '=', 'wp_term_taxonomy.term_id')->where('taxonomy', "category")->get();
     }
 
-    public function getBlogList($categoria = null, $id = null)
+    /* public function getBlogList($categoria = null, $id = null)
     {
         $query = DB::connection('mysql_second')->table('wp_posts')
             ->select(
@@ -80,7 +81,7 @@ class BlogController extends Controller
 
         return $query->get();
     }
-
+ */
     public function getBlogNewList($lang = 'es')
     {
         $paises = Paises::where('codigo', $lang)->first();
@@ -97,7 +98,9 @@ class BlogController extends Controller
             'categorias_blog.slug as categoria_slug'
         )
             ->join('categorias_blog', 'categoria', 'categorias_blog.id')
-            ->where('pais', $paises->id)->get();
+            ->where('pais', $paises->id)
+            ->orderBy('blog.id','desc')
+            ->get();
     }
 
     public function getBlogItemList($lang = 'es', $categoria = null, $amigable = null)
@@ -232,14 +235,16 @@ class BlogController extends Controller
         $data = Blog::find($id);
         $paises = Paises::all();
         $categorias = CategoriaBlog::all();
-        return view('blog.edit', compact('data', 'paises', 'categorias'));
+        $states = States::all();
+        return view('blog.edit', compact('data', 'paises', 'categorias', 'states'));
     }
 
     function create()
     {
         $paises = Paises::all();
+        $states = States::all();
         $categorias = CategoriaBlog::all();
-        return view('blog.create', compact('paises', 'categorias'));
+        return view('blog.create', compact('paises', 'categorias','states'));
     }
 
 
@@ -253,8 +258,8 @@ class BlogController extends Controller
             $file = $request->file('imagen');
             $extension = $file->getClientOriginalExtension();
             $nombreArchivo = 'banner_blog_' . $id . '.' . $extension;
-            $path = Storage::disk('public')->putFileAs('blogs', $file, $nombreArchivo);
-            $urlImagen = Storage::disk('public')->url($path);
+            $path = Storage::disk('public')->putFileAs('blog', $file, $nombreArchivo);
+            $urlImagen = 'https://cms.vuskoo.com/storage/blog/'.$nombreArchivo;
         }
 
         // Crear un array de datos a actualizar
@@ -275,8 +280,8 @@ class BlogController extends Controller
             $file = $request->file('imagen');
             $extension = $file->getClientOriginalExtension();
             $nombreArchivo = 'banner_blog_' . time() . '.' . $extension;
-            $path = Storage::disk('public')->putFileAs('blogs', $file, $nombreArchivo);
-            $urlImagen = Storage::disk('public')->url($path);
+            $path = Storage::disk('public')->putFileAs('blog', $file, $nombreArchivo);
+            $urlImagen = 'https://cms.vuskoo.com/storage/blog/'.$nombreArchivo;
         }
 
         $data = Blog::create([
@@ -291,6 +296,8 @@ class BlogController extends Controller
             'url_amigable' => $request->url_amigable,
             'categoria' => $request->categoria,
             'pais' => $request->pais,
+            'destacada' => $request->destacada,
+            'estado' => $request->estado,
         ]);
 
 
@@ -319,15 +326,15 @@ class BlogController extends Controller
         }
     }
 
-    public function getBlogInfoHomeList($lang)
+    public function getBlogInfoHomeList($lang = 'es')
     {
         $pais = Paises::where('codigo', $lang)->first();
-        return Blog::select('blog.imagen', 'blog.fecha_publicacion', 'blog.titulo', 'blog.contenido', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('pais', $pais->id)->orderBy('blog.fecha_publicacion', 'desc')->limit(3)->get();
+        return Blog::select('blog.imagen','blog.url_amigable', 'blog.fecha_publicacion', 'blog.titulo', 'blog.contenido', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('pais', $pais->id)->orderBy('blog.fecha_publicacion', 'desc')->limit(3)->get();
     }
 
     public function getMenuInfoBlogList($lang)
     {
         $pais = Paises::where('codigo', $lang)->first();
-        return $blog = Blog::select('categorias_blog.nombre', 'categorias_blog.slug', 'blog.categoria')->groupBy('categoria')->where('pais', $pais->id)->join('categorias_blog', 'categorias_blog.id', 'blog.categoria')->get();
+        return $blog = Blog::select('categorias_blog.nombre','blog.url_amigable', 'categorias_blog.slug', 'blog.categoria')->groupBy('categoria')->where('pais', $pais->id)->join('categorias_blog', 'categorias_blog.id', 'blog.categoria')->get();
     }
 }

@@ -63,16 +63,15 @@ class ComerciosController extends Controller
         }
 
         $comercios = Comercios::create([
-            'nombre' => ($request->name),
+            'nombre' => ($request->nombre),
             'nombre_slug' => $request->nombre_slug,
             'idPerseo' => $request->idPerseo,
             'url_comercio' => $request->url_comercio,
             'logo' => $urlLogo,
             'logo_negativo' => $logo_negativo,
-            'politica_privacidad' => ($request->politica),
             'fecha_registro' => now(),
             'categoria' => $request->categoria,
-            'estado' => ($request->state),
+            'estado' => $request->estado,
             'pais' => $request->pais,
             'telefono' => $request->telefono,
         ]);

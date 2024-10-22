@@ -51,11 +51,10 @@ class ApiController extends Controller
 
     public function getMenuApi($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         // Realizar la consulta SQL para obtener los datos
         $rows = DB::table('pagina_web_menu')
             ->leftJoin('pagina_web_menu_item', 'pagina_web_menu_item.idMenu', '=', 'pagina_web_menu.id')
@@ -258,11 +257,10 @@ class ApiController extends Controller
     /* funciones para consultar las ofertas comerciales */
     public function getComercializadorasLuzList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
             ->select('1_comercializadoras.id', '1_comercializadoras.nombre', '1_comercializadoras.logo')
@@ -275,22 +273,18 @@ class ApiController extends Controller
 
     public function getComerciosCuponesList($lang = null, $idCategoria = null)
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
 
-        $categoria = '';
         $idCategoriaConsulta = 0;
-        if ($idCategoria != null && $idCategoria != 'null' && $idCategoria != 'undefined') {
-            $categoria = Categorias::where('nombre', $idCategoria)->count();
-            if ($categoria == 0) {
+        if (!is_null($idCategoria) && $idCategoria !== 'null' && $idCategoria !== 'undefined') {
+            $categoria = Categorias::where('nombre', $idCategoria)->first();
+            if (!$categoria) {
                 return [];
-            } else {
-                $categoria = Categorias::where('nombre', $idCategoria)->first();
-                $idCategoriaConsulta = $categoria->id;
             }
+            $idCategoriaConsulta = $categoria->id;
         }
 
         $query = DB::table($this->tabla_cupones)
@@ -299,20 +293,24 @@ class ApiController extends Controller
             ->where('1_comercios.estado', '=', '1')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
-            ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
-            ->whereDate($this->tabla_cupones . '.fecha_final', '>=', DB::raw('CURRENT_DATE'))
+            ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', now())
+            ->whereDate($this->tabla_cupones . '.fecha_final', '>=', now())
             ->groupBy($this->tabla_cupones . '.comercio');
+
+        if ($idCategoriaConsulta > 0) {
+            $query->where($this->tabla_cupones . '.categoria', '=', $idCategoriaConsulta);
+        }
 
         return $query->get();
     }
 
+
     public function getCategoriasCuponesList($lang = null)
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
 
 
         $query = DB::table('1_comercios')
@@ -332,11 +330,10 @@ class ApiController extends Controller
 
     public function getTipoCuponesList($lang = 1, $idCategoria = null)
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         $categoria = '';
         /* $idCategoriaConsulta = 0;
         if ($idCategoria != null && $idCategoria != 'null' && $idCategoria != 'undefined') {
@@ -362,11 +359,10 @@ class ApiController extends Controller
 
     public function getComercializadorasGasList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
             ->select('1_comercializadoras.id', '1_comercializadoras.nombre', '1_comercializadoras.logo')
@@ -379,11 +375,10 @@ class ApiController extends Controller
 
     public function getOperadorasMovilList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
@@ -396,11 +391,10 @@ class ApiController extends Controller
 
     public function getOperadorasFibraList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
@@ -413,11 +407,10 @@ class ApiController extends Controller
 
     public function getComercializadorasLuzGasList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->select('1_comercializadoras.id', '1_comercializadoras.nombre', '1_comercializadoras.logo')
@@ -430,11 +423,10 @@ class ApiController extends Controller
 
     public function getOperadorasFibraMovilList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_movil_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
@@ -447,11 +439,10 @@ class ApiController extends Controller
 
     public function getOperadorasFibraMovilTvList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_movil_fibra_tv)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
@@ -466,11 +457,10 @@ class ApiController extends Controller
 
     public function getOperadorasPlanCelularList($lang = 3)
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
@@ -483,11 +473,10 @@ class ApiController extends Controller
 
     public function getMarcasVehiculosList($lang = 3)
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
             return [];
         }
-        $idioma = Paises::where('codigo', $lang)->first();
         return DB::table($this->tabla_vehiculos)
             ->where('1_vehiculos.pais', '=', $idioma->id)
             ->where($this->tabla_vehiculos . '.estado', '=', '1')
@@ -570,6 +559,4 @@ class ApiController extends Controller
         $validacionPais = Paises::where('codigo', $lang)->first();
         return PaginaWebFooter::where('pais', $validacionPais->id)->first();
     }
-
-    
 }

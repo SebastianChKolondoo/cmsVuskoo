@@ -44,11 +44,10 @@ class TarifasController extends Controller
 
     public function getTarifasMovilList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         $data = DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
@@ -73,11 +72,10 @@ class TarifasController extends Controller
 
     public function getTarifasFibraList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         $data = DB::table($this->tabla_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
@@ -100,11 +98,10 @@ class TarifasController extends Controller
 
     public function getTarifasLuzList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         $data = DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
@@ -127,11 +124,10 @@ class TarifasController extends Controller
 
     public function getTarifasGasList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         $data = DB::table($this->tabla_gas)
             ->join('1_comercializadoras',  '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
@@ -156,11 +152,10 @@ class TarifasController extends Controller
 
     public function getTarifasGasLuzList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         $data =  DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
@@ -186,11 +181,10 @@ class TarifasController extends Controller
 
     public function getTarifasFibraMovilList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         $data = DB::table($this->tabla_movil_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
@@ -214,11 +208,10 @@ class TarifasController extends Controller
 
     public function getTarifasFibraMovilTvList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         $query = DB::table($this->tabla_movil_fibra_tv)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
@@ -247,11 +240,10 @@ class TarifasController extends Controller
 
     public function getTarifasVehiculosList($lang = 'mx')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         $query = DB::table($this->tabla_vehiculo)
             ->join('1_vehiculos', '1_vehiculos.id', '=', $this->tabla_vehiculo . '.vehiculo')
             ->join('paises', 'paises.id', '=', '1_vehiculos.pais')
@@ -272,11 +264,10 @@ class TarifasController extends Controller
 
     public function getTarifasCuponesDestacadosList($lang)
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
 
         $data = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
@@ -311,11 +302,10 @@ class TarifasController extends Controller
     public function getTarifasCuponesList($lang = '', $idCategoria = null)
     {
         $idCategoriaConsulta = 0;
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
 
         if ($idCategoria != null && $idCategoria != 'null') {
             $categoria = Categorias::where('nombre', $idCategoria)->count();
@@ -332,6 +322,7 @@ class TarifasController extends Controller
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
             ->join('paises', 'paises.id', '=', $this->tabla_cupones . '.pais')
             ->join('categorias_comercios', 'categorias_comercios.id', '1_comercios.categoria')
+            ->join('traduccion_categorias', 'traduccion_categorias.categoria', '1_comercios.categoria')
             ->select(
                 'paises.decimales',
                 'paises.moneda',
@@ -343,10 +334,12 @@ class TarifasController extends Controller
                 '1_comercios.logo',
                 'paises.nombre as pais',
                 'TipoCupon.nombre as cupon',
-                'categorias_comercios.nombre as categoriaItem'
+                'categorias_comercios.nombre as categoriaItem',
+                'traduccion_categorias.nombre as traduccion'
             )
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
+            ->where('traduccion_categorias.pais', '=', $idioma->id)
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
             ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
             ->whereDate($this->tabla_cupones . '.fecha_final', '>=', DB::raw('CURRENT_DATE'))
@@ -381,11 +374,10 @@ class TarifasController extends Controller
 
     public function getTarifasStreamingList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         $query = DB::table($this->tabla_streaming)
             ->select('*', 'paises.decimales')
             ->join('paises', 'paises.id', $this->tabla_streaming . '.pais')
@@ -585,11 +577,10 @@ class TarifasController extends Controller
         if ($validacionPais == 0) {
             return [];
         }
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')

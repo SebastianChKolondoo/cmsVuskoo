@@ -22,11 +22,10 @@ class FilterController extends Controller
     /* funciones para llamar las bases para los filtros de precio */
     public function getValuesFilterMovilList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         return DB::table($this->tabla_movil)
             ->selectRaw('ROUND(MAX(GB)+5) as max_gb, ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(GB)-5) as min_gb, ROUND(MIN(precio)-5) as min_precio, moneda')
             ->where('pais',$idioma->id)
@@ -35,11 +34,10 @@ class FilterController extends Controller
 
     public function getValuesFilterFibraMovilList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         return DB::table($this->tabla_movil_fibra)
             ->selectRaw('ROUND(MAX(GB)+5) as max_gb, ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(GB)-5) as min_gb, ROUND(MIN(precio)-5) as min_precio, moneda')
             ->where('pais',$idioma->id)
@@ -48,11 +46,10 @@ class FilterController extends Controller
 
     public function getValuesFilterFibraMovilTvList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         return DB::table($this->tabla_movil_fibra_tv)
             ->selectRaw('ROUND(MAX(GB)+5) as max_gb, ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(GB)-5) as min_gb, ROUND(MIN(precio)-5) as min_precio, moneda')
             ->where('pais',$idioma->id)
@@ -61,11 +58,10 @@ class FilterController extends Controller
 
     public function getValuesFilterFibraList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         return DB::table($this->tabla_fibra)
             ->selectRaw('ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(precio)-5) as min_precio, moneda')
             ->where('pais',$idioma->id)
@@ -74,11 +70,10 @@ class FilterController extends Controller
     
     public function getValuesFilterPlanCelularList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         return DB::table($this->tabla_movil)
             ->selectRaw('ROUND(MAX(precio)+5) as max_precio, ROUND(MIN(precio)-5) as min_precio, moneda')
             ->where('pais', '=', $idioma->id)
@@ -87,11 +82,10 @@ class FilterController extends Controller
     
     public function getValuesFilterVehiculosList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         return DB::table($this->tabla_vehiculo)
             ->selectRaw('ROUND(MAX(price)+1000) as max_precio, 
             ROUND(MIN(price)-1000) as min_precio,
@@ -107,11 +101,10 @@ class FilterController extends Controller
 
     public function getValuesFilterVehiculosChassisList($lang = 'es')
     {
-        $validacionPais = Paises::where('codigo', $lang)->count();
-        if ($validacionPais == 0) {
-            return [];
-        }
         $idioma = Paises::where('codigo', $lang)->first();
+if (!$idioma) {
+    return [];
+}
         return DB::table($this->tabla_vehiculo)
             ->selectRaw('distinct chassis')
             ->where('pais',$idioma->id)

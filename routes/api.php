@@ -33,7 +33,7 @@ Route::middleware('api')->group(function () {
     Route::get('getOperadorasFibraMovil/{lang?}', [ApiController::class, 'getOperadorasFibraMovilList']);
     Route::get('getOperadorasFibraMovilTv/{lang?}', [ApiController::class, 'getOperadorasFibraMovilTvList']);
     Route::get('getMarcasVehiculos/{lang?}', [ApiController::class, 'getMarcasVehiculosList']);
-    Route::get('getComerciosCupones/{lang?}', [ApiController::class, 'getComerciosCuponesList']);
+    Route::get('getComerciosCupones/{lang?}/{categoria?}', [ApiController::class, 'getComerciosCuponesList']);
     Route::get('getCategoriasCupones/{lang?}', [ApiController::class, 'getCategoriasCuponesList']);
     Route::get('getTipoCupones/{lang?}/{categoria?}', [ApiController::class, 'getTipoCuponesList']);
     Route::get('getMetaDataSEO/{lang?}', [ApiController::class, 'getMetaSeoList']);
@@ -116,6 +116,7 @@ Route::middleware('api')->group(function () {
     Route::post('LeadRegister', [LeadController::class, 'LeadRegisterInfo']);
     Route::post('contactanosRegister', [LeadController::class, 'FormContactanosRegister']);
     Route::post('NewsletterRegister', [LeadController::class, 'FormNewsletterRegister']);
+    Route::get('emailConfirmacion/{token}', [UtilsController::class, 'getEmailconfirmation']);
 
     /* Zapier */
     Route::post('facebookZapierCpl', [ZapierController::class, 'facebookZapierCpl']);

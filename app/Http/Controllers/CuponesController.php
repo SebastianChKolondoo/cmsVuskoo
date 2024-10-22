@@ -61,7 +61,7 @@ class CuponesController extends Controller
             'descripcion' => trim($request->descripcion),
             'label' => $request->label,
             'CodigoCupon' => trim($request->CodigoCupon),
-            'featured' => $request->featured,
+            /* 'featured' => $request->featured, */
             /* 'source' => $request->source,
             'deeplink' => $request->deeplink,
             'affiliate_link' => $request->affiliate_link,

@@ -8,7 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"
+        type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/ui/trumbowyg.min.css">
 
     <link
@@ -25,6 +26,8 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/trumbowyg.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/plugins/table/trumbowyg.table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/plugins/upload/trumbowyg.upload.min.js"></script>
 
 </head>
 
@@ -53,39 +56,32 @@
                 minHeight: 200,
                 plugins: {
                     // Habilitar plugins
-                    table: {
-                        multiRows: true,
-                        adjustTable: true
-                    },
-                    font: {
-                        fonts: {
-                            'Arial': 'Arial, Helvetica, sans-serif',
-                            'Times New Roman': 'Times New Roman',
-                            'Courier': 'Courier New, Courier, monospace'
-                        }
-                    },
-                    color: {
-                        colors: ['#ff0000', '#00ff00', '#0000ff']
+                    table: true,
+                    upload: {
+                        serverPath: '/ruta/de/subida', // Ruta de tu backend
+                        fileFieldName: 'image', // Nombre del campo de la imagen
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Token CSRF si es necesario
+                        },
+                        urlPropertyName: 'file', // Nombre de la propiedad con la URL de la imagen
                     }
                 },
-                lang: 'es',
-                semantic: true,
+                lang: 'es', // Idioma
+                semantic: true, // Uso semántico del HTML
 
                 // Configuración de la barra de herramientas
                 btns: [
                     ['viewHTML'],
                     ['bold', 'italic', 'underline'],
-                    ['font', 'size'],
-                    ['color'],
                     ['alignLeft', 'alignCenter', 'alignRight'],
+                    ['upload'], // Botón para subir imágenes
                     ['unorderedList', 'orderedList'],
-                    ['link'],
-                    ['image'],
-                    ['table'],
+                    ['image'], // Botón para insertar imágenes
+                    ['table'], // Botón para insertar tablas
                     ['removeformat'],
-                    ['fullscreen']
                 ],
             });
+
             $('table').DataTable({
                 "language": {
                     "sProcessing": "Procesando...",
@@ -115,6 +111,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>

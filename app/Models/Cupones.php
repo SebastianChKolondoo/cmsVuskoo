@@ -16,7 +16,7 @@ class Cupones extends Model
         'descripcion',
         'label',
         'CodigoCupon',
-        'featured',
+        /* 'featured', */
         'source',
         'deeplink',
         'affiliate_link',

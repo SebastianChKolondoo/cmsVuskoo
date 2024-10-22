@@ -16,13 +16,13 @@
                     @endif
                     {!! Form::model($user, ['route' => ['user.update', $user], 'method' => 'put']) !!}
                     <div class="row">
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('numberDocument', 'Contraseña', ['class' => 'form-label']) !!}
-                            {!! Form::text('numberDocument', null, [
+                        {{-- <div class="form-group col-12 col-md-4">
+                            {!! Form::label('password', 'Contraseña', ['class' => 'form-label']) !!}
+                            {!! Form::text('password', null, [
                                 'class' => 'form-control',
-                                'required' => 'required',
+                                'required' => 'required'
                             ]) !!}
-                        </div>
+                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('name', 'Nombres', ['class' => 'form-label']) !!}
                             {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nombres', 'required' => 'required']) !!}
@@ -56,6 +56,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row my-4">
+        <div class="col-12">
+            <a href="{{ route('user.index') }}" class="btn btn-dark">Volver</a>
         </div>
     </div>
 @endsection

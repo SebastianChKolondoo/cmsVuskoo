@@ -21,6 +21,8 @@ class Blog extends Model
         'url_amigable',
         'categoria',
         'pais',
+        'estado',
+        'destacada',
         'estado'
     ];
 

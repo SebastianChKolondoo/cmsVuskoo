@@ -44,49 +44,50 @@
         <div class="sidebar-heading">
             Clientes
         </div>
-        @can('operadoras.view')
-            <li class="nav-item active">
-                <a class="nav-link" href="/operadoras">
-                    <i class="fa fa-phone-square" aria-hidden="true"></i>
-                    <span>Operadoras</span></a>
-            </li>
-        @endcan
-        @can('comercializadoras.view')
-            <li class="nav-item active">
-                <a class="nav-link" href="/comercializadoras">
-                    <i class="fa fa-bolt" aria-hidden="true"></i>
-                    <span>Comercializadoras</span></a>
-            </li>
-        @endcan
-        @can('comercios.view')
-            <li class="nav-item active">
-                <a class="nav-link" href="/comercios">
-                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
-                    <span>Comercios</span></a>
-            </li>
-        @endcan
-        @can('proveedores.view')
-            <li class="nav-item active">
-                <a class="nav-link" href="/proveedores">
-                    <i class="fa fa-bullseye" aria-hidden="true"></i>
-                    <span>Proveedores</span></a>
-            </li>
-        @endcan
-        @can('proveedores.view')
-            <li class="nav-item active">
-                <a class="nav-link" href="/bancos">
-                    <i class="fa fa-university" aria-hidden="true"></i>
-                    <span>Bancos</span></a>
-            </li>
-        @endcan
-        @can('paises.view')
-            <li class="nav-item active">
-                <a class="nav-link" href="/paises">
-                    <i class="fa fa-globe" aria-hidden="true"></i>
-                    <span>Paises</span></a>
-            </li>
-        @endcan
     @endcan
+    @can('operadoras.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/operadoras">
+                <i class="fa fa-phone-square" aria-hidden="true"></i>
+                <span>Operadoras</span></a>
+        </li>
+    @endcan
+    @can('comercializadoras.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/comercializadoras">
+                <i class="fa fa-bolt" aria-hidden="true"></i>
+                <span>Comercializadoras</span></a>
+        </li>
+    @endcan
+    @can('comercios.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/comercios">
+                <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                <span>Comercios</span></a>
+        </li>
+    @endcan
+    @can('proveedores.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/proveedores">
+                <i class="fa fa-bullseye" aria-hidden="true"></i>
+                <span>Proveedores</span></a>
+        </li>
+    @endcan
+    @can('bancos.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/bancos">
+                <i class="fa fa-university" aria-hidden="true"></i>
+                <span>Bancos</span></a>
+        </li>
+    @endcan
+    @can('paises.view')
+        <li class="nav-item active">
+            <a class="nav-link" href="/paises">
+                <i class="fa fa-globe" aria-hidden="true"></i>
+                <span>Paises</span></a>
+        </li>
+    @endcan
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <div class="sidebar-heading">
@@ -164,41 +165,44 @@
                 <span>Streaming</span></a>
         </li>
     @endcan
-
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBanca"
-            aria-expanded="true" aria-controls="collapseBanca">
-            <i class="fa fa-university" aria-hidden="true"></i>
-            <span>Finanzas</span>
-        </a>
-        <div id="collapseBanca" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                {{-- @can('zonabancos.view') --}}
-                {{-- @endcan
-                    @can('prestamos.view') --}}
-                <a class="collapse-item" href="{{ route('prestamos.index') }}">Tarifas Colombia</a>
-                <a class="collapse-item" href="{{ route('prestamos.index') }}">Tarifas España</a>
-                {{-- @endcan --}}
+    @can('finanzas.view')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBanca"
+                aria-expanded="true" aria-controls="collapseBanca">
+                <i class="fa fa-university" aria-hidden="true"></i>
+                <span>Finanzas</span>
+            </a>
+            <div id="collapseBanca" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    @can('finanzas.view.colombia')
+                        <a class="collapse-item" href="{{ route('prestamos.index') }}">Tarifas Colombia</a>
+                    @endcan
+                    @can('finanzas.view.espana')
+                        <a class="collapse-item" href="{{ route('prestamos.index') }}">Tarifas España</a>
+                    @endcan
+                </div>
             </div>
-        </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAlarma"
-            aria-expanded="true" aria-controls="collapseAlarma">
-            <i class="fa fa-bullseye" aria-hidden="true"></i>
-            <span>Seguros</span>
-        </a>
-        <div id="collapseAlarma" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                {{-- @can('zonabancos.view') --}}
-                <a class="collapse-item" href="{{ route('alarmas.index') }}">Alarmas</a>
-                <a class="collapse-item" href="{{ route('segurossalud.index') }}">Seguros de salud</a>
-                {{-- <a class="collapse-item" href="{{ route('unificadoras.index') }}">Unificadoras</a>
-                <a class="collapse-item" href="{{ route('microcreditos.index') }}">Microcreditos</a> --}}
-                {{-- @endcan  --}}
+        </li>
+    @endcan
+    @can('seguros.view')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAlarma"
+                aria-expanded="true" aria-controls="collapseAlarma">
+                <i class="fa fa-bullseye" aria-hidden="true"></i>
+                <span>Seguros</span>
+            </a>
+            <div id="collapseAlarma" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    @can('seguros.view.alarmas')
+                        <a class="collapse-item" href="{{ route('alarmas.index') }}">Alarmas</a>
+                    @endcan
+                    @can('seguros.view.salud')
+                        <a class="collapse-item" href="{{ route('segurossalud.index') }}">Seguros de salud</a>
+                    @endcan
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    @endcan
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <div class="sidebar-heading">

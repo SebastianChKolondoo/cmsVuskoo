@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Events;
+use App\Models\NewsLetter;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
@@ -29,6 +30,23 @@ class UtilsController extends Controller
 
         return $phone;
     }
+
+    function getEmailConfirmation($token)
+    {
+        $count = NewsLetter::where('token', $token)->where('verificacion_email', 2)->count();
+
+        if ($count == 1) {
+            $data = NewsLetter::where('token', $token)->where('verificacion_email', 2)->first();
+            $data->verificacion_email = 1;
+            $data->token = true;
+            $data->fecha_verificacion_email = now();
+            $data->save();
+            return ['status' => 'ok', 'message' => 'Usuario registrado con exito', 'code' => 201];
+        } else {
+            return ['status' => 'ko', 'message' => 'Usuario no registrado con exito', 'code' => 501];
+        }
+    }
+
 
     //Para evitar entrar en bucle en funciones y no saturar/consumir las llamadas a IpAPI, tenemos los parámetros $country_code (recogido a partir de checkingGuestLocationApi()) y $decideCountry (que viene de la función homologa) recibidos en la función cuando se quieran registrar. En cualquier caso, guarda laIP.
     /**
@@ -189,7 +207,7 @@ class UtilsController extends Controller
         return $resultado;
     }
 
-    public static function EmailNewsletter($mail)
+    /* public static function EmailNewsletter($mail)
     {
         // URL de la API
         $url = 'https://hapi.crm-hermes.com/api/Notification/SendEmails';
@@ -199,6 +217,71 @@ class UtilsController extends Controller
         $idruta = 126;
         $emailList = ["dmalagon@arkeero.com", "netadv@outlook.es", $mail];
         $htmlContent = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Confirmación de suscripción a vuskoo.com</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"></head><body style="background-color: #f4f4f4;"><div class="container my-5"><div class="row justify-content-center"><div class="col-12 col-md-8"><div class="card shadow-lg"><div class="card-header text-center bg-white"><img src="https://www.vuskoo.com/img/logos/logo.svg" alt="Vuskoo" class="img-fluid" style="max-width: 150px;"></div><div class="card-body text-center"><h1 class="card-title">¡Gracias por suscribirte!</h1><p class="card-text">Hola,</p><p class="card-text">Estamos encantados de que te hayas suscrito a nuestro boletín de noticias. A partir de ahora, recibirás nuestras actualizaciones y las últimas novedades directamente en tu bandeja de entrada.</p></div><div class="card-footer text-center bg-light"><p class="mb-0">Si no realizaste esta solicitud, puedes ignorar este correo.</p><p class="text-muted mb-0">© 2024 Vuskoo. Todos los derechos reservados.</p></div></div></div></div></div><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script></body></html>';
+        $subject = 'Confirmación a newsLetter';
+        $fromName = 'Confirmación a newsLetter';
+        $presender = 'notification';
+
+        // Cuerpo de la solicitud
+        $body = [
+            'token' => $token,
+            'idruta' => $idruta,
+            'emailList' => $emailList,
+            'html' => $htmlContent,
+            'asunto' => $subject,
+            'fromname' => $fromName,
+            'presender' => $presender
+        ];
+
+        // Envío de la solicitud POST
+        $response = Http::post($url, $body);
+
+        // Manejo de la respuesta
+        if ($response->successful()) {
+            return $response->json(); // Respuesta exitosa
+        } else {
+            return [
+                'error' => true,
+                'message' => 'Error al enviar el correo electrónico',
+                'status_code' => $response->status()
+            ];
+        }
+    } */
+
+    public static function EmailNewsletter($mail, $token_email)
+    {
+        // URL de la API
+        $url = 'https://hapi.crm-hermes.com/api/Notification/SendEmails';
+
+        // Token para autenticación
+        $token = 'a8086d4d-1313-4286-8fb3-424ceafd2c29';
+        $idruta = 126;
+        $emailList = ["dmalagon@arkeero.com", "netadv@outlook.es", $mail];
+
+        // HTML con estilos en línea
+        $htmlContent = '<!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Verificación de Cuenta</title>
+    </head>
+    <body style="background-color: #f4f4f4; font-family: Arial, sans-serif; margin: 0; padding: 0;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <img src="https://www.vuskoo.com/img/logos/logo.svg" alt="Vuskoo" style="max-width: 150px;">
+                </div>
+                <h2 style="color: #333333; text-align: center;">¡Estás a un paso de suscribirte!</h2>
+                <p style="color: #666666; text-align: center;">Antes de que puedas empezar a recibir nuestras actualizaciones y las últimas novedades directamente en tu bandeja de entrada, por favor verifica tu cuenta haciendo clic en el siguiente enlace:</p>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="https://www.vuskoo.com/verificacion-de-cuenta/' . $token_email . '" style="background-color: #007bff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verificar cuenta</a>
+                </div>
+            </div>
+            <p style="text-align: center; color: #999999; margin-top: 20px;">Si no realizaste esta solicitud, puedes ignorar este correo.<br>© 2024 Vuskoo. Todos los derechos reservados.</p>
+        </div>
+    </body>
+    </html>';
+
         $subject = 'Confirmación a newsLetter';
         $fromName = 'Confirmación a newsLetter';
         $presender = 'notification';
