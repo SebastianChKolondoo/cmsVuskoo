@@ -9,6 +9,8 @@ use App\Models\States;
 use App\Models\TipoCupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 
 class ComerciosController extends Controller
 {
@@ -36,7 +38,7 @@ class ComerciosController extends Controller
         $estados = States::all();
         $categorias = Categorias::all();
         $tipoCupon = TipoCupon::all();
-        return view('clientes.comercios.create', compact('estados', 'paises','categorias','tipoCupon'));
+        return view('clientes.comercios.create', compact('estados', 'paises', 'categorias', 'tipoCupon'));
     }
 
     /**
@@ -49,22 +51,21 @@ class ComerciosController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '.' . $extension;
-            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
-            $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
+            $nombreArchivo = str_replace(['-', '.', ' ' . '  '], '_', strtolower(Str::slug($request->nombre))) . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
+            $urlLogo = 'https://cms.vuskoo.com/storage/logos/' . $nombreArchivo;
         }
-
         if ($request->hasFile('logo_negativo')) {
             $file = $request->file('logo_negativo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '_negativo.' . $extension;
-            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
-            $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
+            $nombreArchivo = str_replace(['-', '.', ' ' . '  '], '_', strtolower(Str::slug($request->nombre))) . '_negativo.' . $extension;
+            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
+            $logo_negativo = 'https://cms.vuskoo.com/storage/logos/' . $nombreArchivo;
         }
 
-        $comercios = Comercios::create([
+        return $comercios = Comercios::create([
             'nombre' => ($request->nombre),
-            'nombre_slug' => $request->nombre_slug,
+            'nombre_slug' => Str::slug($request->nombre),
             'idPerseo' => $request->idPerseo,
             'url_comercio' => $request->url_comercio,
             'logo' => $urlLogo,
@@ -97,7 +98,7 @@ class ComerciosController extends Controller
         $estados = States::all();
         $categorias = Categorias::all();
         $tipoCupon = TipoCupon::all();
-        return view('clientes.comercios.edit', compact('tipoCupon','comercio', 'estados', 'paises', 'categorias'));
+        return view('clientes.comercios.edit', compact('tipoCupon', 'comercio', 'estados', 'paises', 'categorias'));
     }
 
     /**
@@ -112,21 +113,23 @@ class ComerciosController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '.' . $extension;
+            $nombreArchivo = str_replace(['-', '.', ' ' . '  '], '_', strtolower(Str::slug($request->nombre))) . '.' . $extension;
             $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
-            $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
+            $urlLogo = 'https://cms.vuskoo.com/storage/logos/' . $nombreArchivo;
         }
 
         if ($request->hasFile('logo_negativo')) {
             $file = $request->file('logo_negativo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '_negativo.' . $extension;
+            $nombreArchivo = str_replace(['-', '.', ' ' . '  '], '_', strtolower(Str::slug($request->nombre))) . '_negativo.' . $extension;
             $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
-            $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
+            $logo_negativo = 'https://cms.vuskoo.com/storage/logos/' . $nombreArchivo;
         }
 
         // Crear un array de datos a actualizar
         $data = $request->all();
+
+        $data['nombre_slug'] = Str::slug($request->nombre);
         if ($urlLogo) {
             $data['logo'] = $urlLogo;
         }

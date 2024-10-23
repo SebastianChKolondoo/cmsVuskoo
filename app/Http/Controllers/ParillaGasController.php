@@ -7,6 +7,7 @@ use App\Models\Paises;
 use App\Models\ParillaGas;
 use App\Models\States;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ParillaGasController extends Controller
 {
@@ -76,7 +77,7 @@ class ParillaGasController extends Controller
             'fecha_expiracion' => $request->fecha_expiracion,
             'fecha_registro' => $request->fecha_registro,
             'moneda' =>  $moneda->moneda,
-            'slug_tarifa' => $request->slug_tarifa,
+            'slug_tarifa' => Str::slug($request->slug_tarifa),
             'pais' => $request->pais,
             'textoAdicional' => $request->textoAdicional,
             'tituloSeo' => $request->tituloSeo,

@@ -7,6 +7,7 @@ use App\Models\Paises;
 use App\Models\States;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class OperadorasController extends Controller
 {
@@ -45,7 +46,7 @@ class OperadorasController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower(Str::slug($request->nombre))) . '.' . $extension;
             $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
             //$urlLogo = Storage::disk('public')->url($path);
             $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
@@ -53,7 +54,7 @@ class OperadorasController extends Controller
         if ($request->hasFile('logo_negativo')) {
             $file = $request->file('logo_negativo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '_negativo.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower(Str::slug($request->nombre))) . '_negativo.' . $extension;
             $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
             //$logo_negativo = Storage::disk('public')->url($path);
             $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
@@ -62,7 +63,7 @@ class OperadorasController extends Controller
 
         Operadoras::create([
             'nombre' => $request->nombre,
-            'nombre_slug' => $request->nombre_slug,
+            'nombre_slug' => Str::slug($request->nombre),
             'tipo_conversion' => $request->tipo_conversion,
             'logo' => $urlLogo,
             'logo_negativo' => $logo_negativo,
@@ -108,7 +109,7 @@ class OperadorasController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower(Str::slug($request->nombre))) . '.' . $extension;
             $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
             $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
@@ -116,13 +117,14 @@ class OperadorasController extends Controller
         if ($request->hasFile('logo_negativo')) {
             $file = $request->file('logo_negativo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower($request->nombre_slug)) . '_negativo.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower(Str::slug($request->nombre))) . '_negativo.' . $extension;
             $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
             $logo_negativo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
 
         // Crear un array de datos a actualizar
         $data = $request->all();
+        $data['nombre_slug'] = Str::slug($request->nombre);
         if ($urlLogo) {
             $data['logo'] = $urlLogo;
         }

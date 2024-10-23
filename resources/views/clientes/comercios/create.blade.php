@@ -12,19 +12,13 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::open(['route' => 'comercios.store']) !!}
+                    {!! Form::open(['route' => 'comercios.store', 'enctype' => 'multipart/form-data']) !!}
                     <div class="row">
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('nombre', 'Nombre', ['class' => 'form-label']) !!}
                             {!! Form::text('nombre', null, [
                                 'class' => 'form-control',
                                 'required' => 'required',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('nombre_slug', 'Slug', ['class' => 'form-label']) !!}
-                            {!! Form::text('nombre_slug', null, [
-                                'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">

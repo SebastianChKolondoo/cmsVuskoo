@@ -90,9 +90,9 @@ class LeadController extends Controller
         $email = $request->input('email');
         $envio = UtilsController::class;
 
-        $validacion = NewsLetter::where('email',$email)->count();
+        $validacion = NewsLetter::where('email', $email)->count();
 
-        if($validacion !== 0){
+        if ($validacion !== 0) {
             return response()->json([
                 'message' => 'Este email ya se encuentra registrado',
                 'status' => 503
@@ -248,7 +248,7 @@ class LeadController extends Controller
         }
     }
 
-    public function apiMasMovil($lead, $idLead)
+    /* public function apiMasMovil($lead, $idLead)
     {
         $apiUrl = 'https://api.byside.com/1.0/call/createCall';
         $authHeader = 'Basic Qzk4NTdFNkIxOTpUZU9ZR0l6eUxVdXlOYW8wRm5wZUlWN0ow';
@@ -309,7 +309,7 @@ class LeadController extends Controller
             'message' => isset($data['message']['status_msg']) ? $data['message']['status_msg'] : $data['message']['id'],
             'status' => $codigo
         ], 200);
-    }
+    } */
 
     public function apiMasMovilNew($lead, $idLead)
     {
@@ -342,35 +342,40 @@ class LeadController extends Controller
 
         $data = $response->json();
 
-        if (isset($data['message']['id'])) {
+        // Verificar si el 'message' existe y asignar variables
+        $response_id = $data['message']['id'] ?? null;
+        $response_status = $data['message']['status'] ?? null;
+        $response_msg = $data['message']['status_msg'] ?? null;
+
+        if ($response_id != null) {
             $message = "ok: Registrado el numero " . $requestData['phone'] . " con id = " . $data['message']['id'] . ", «lead» de *mas movil - " . ($lead['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($data);
             $this->utilsController->registroDeErrores(16, 'Lead saved mas movil', $message, $lead['urlOffer'], $this->visitorIp);
             $codigo = 201;
 
-            $leadValidation = Lead::find($idLead);
-            if ($leadValidation) {
-                $leadValidation->idResponse = $data['message']['id'];
-                $leadValidation->save();
-            } else {
-                $message = "-0: Fallo al registrar el numero " . $requestData['phone'] . ", «lead» de *mas movil - " . ($lead['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $data['message']['status_msg'] . " - Datos recibidos del «lead» en la función: " . json_encode($data);
-                $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
-            }
+            // Guardar el ID de respuesta en el lead
+            $lead = Lead::find($idLead);
+            $lead->idResponse = $response_id;
+            $lead->save();
+
+            // Retornar respuesta exitosa
+            return response()->json([
+                'content' => 'ok',
+                'call_response' => 'ok',
+                'message' => $response_msg ?? $response_id,
+                'status' => 201
+            ], 201);
         } else {
-            switch (isset($data['message']['status'])) {
-                case '-5':
-                case '-4':
-                case '-2':
-                case '-3':
-                    $message = $data['message']['status'] . ": Fallo al registrar el numero " . $requestData['phone'] . ", «lead» de *mas movil - " . ($lead['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $data['message']['status_msg'] . " - Datos recibidos del «lead» en la función: " . json_encode($data);
-                    $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
-                    $codigo = 502;
-                    break;
+            if (in_array($response_status, ['-8', '-5', '-4', '-2', '-3'])) {
+                $message = $data['message']['status'] . ": Fallo al registrar el numero " . $requestData['phone'] . ", «lead» de *mas movil - " . ($lead['company']) . "* en función apiMasMovil(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $data['message']['status_msg'] . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+                $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
+                return response()->json([
+                    'content' => 'ko',
+                    'call_response' => 'ko',
+                    'message' => $response_msg ?? 'Error desconocido',
+                    'status' => 502
+                ], 502);
             }
         }
-        return response()->json([
-            'message' => isset($data['message']['status_msg']) ? $data['message']['status_msg'] : $data['message']['id'],
-            'status' => $codigo
-        ], 200);
     }
 
     public function apiSilbo($lead, $idLead)

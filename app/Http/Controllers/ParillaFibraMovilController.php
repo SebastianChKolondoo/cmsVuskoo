@@ -7,6 +7,7 @@ use App\Models\Paises;
 use App\Models\ParillaFibraMovil;
 use App\Models\States;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ParillaFibraMovilController extends Controller
 {
@@ -82,7 +83,7 @@ class ParillaFibraMovilController extends Controller
             'num_minutos_gratis' => $request->num_minutos_gratis,
             'fecha_expiracion' => $request->fecha_expiracion,
             'moneda' =>  $moneda->moneda,
-            'slug_tarifa' =>  $request->slug_tarifa,
+            'slug_tarifa' =>  Str::slug($request->slug_tarifa),
             'pais' => $pais,
             'landingLead' => $landingLead,
             'textoAdicional' => $request->textoAdicional,

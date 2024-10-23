@@ -7,6 +7,7 @@ use App\Models\Paises;
 use App\Models\ParillaFibra;
 use App\Models\States;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ParillaFibraController extends Controller
 {
@@ -94,7 +95,7 @@ class ParillaFibraController extends Controller
             'pais' => $pais,
             'landingLead' => $landingLead,
             'duracionContrato' => $request->duracionContrato,
-            'slug_tarifa' => $request->slug_tarifa,
+            'slug_tarifa' => Str::slug($request->slug_tarifa),
         ]);
 
         return redirect()->route('ParillaFibra.index')->with('info', 'Tarifa creada correctamente.');
@@ -128,6 +129,7 @@ class ParillaFibraController extends Controller
      */
     public function update(Request $request, $parillaFibra)
     {
+        return $request;
         $empresa = Operadoras::find($request->operadora);
         $pais = $empresa->pais;
         $moneda = Paises::where('id', $pais)->select('moneda')->first();

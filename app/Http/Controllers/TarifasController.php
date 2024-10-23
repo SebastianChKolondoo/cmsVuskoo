@@ -45,9 +45,9 @@ class TarifasController extends Controller
     public function getTarifasMovilList($lang = 'es')
     {
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
         $data = DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
@@ -73,9 +73,9 @@ if (!$idioma) {
     public function getTarifasFibraList($lang = 'es')
     {
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
         $data = DB::table($this->tabla_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_fibra . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
@@ -99,9 +99,9 @@ if (!$idioma) {
     public function getTarifasLuzList($lang = 'es')
     {
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
         $data = DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
@@ -125,13 +125,13 @@ if (!$idioma) {
     public function getTarifasGasList($lang = 'es')
     {
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
         $data = DB::table($this->tabla_gas)
             ->join('1_comercializadoras',  '1_comercializadoras.id', '=', $this->tabla_gas . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', 'paises.decimales','1_comercializadoras.telefono')
+            ->select($this->tabla_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', 'paises.decimales', '1_comercializadoras.telefono')
             ->where($this->tabla_gas . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
             ->where('1_comercializadoras.pais', '=', $idioma->id)
@@ -153,9 +153,9 @@ if (!$idioma) {
     public function getTarifasGasLuzList($lang = 'es')
     {
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
         $data =  DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
@@ -182,9 +182,9 @@ if (!$idioma) {
     public function getTarifasFibraMovilList($lang = 'es')
     {
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
         $data = DB::table($this->tabla_movil_fibra)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
@@ -209,9 +209,9 @@ if (!$idioma) {
     public function getTarifasFibraMovilTvList($lang = 'es')
     {
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
         $query = DB::table($this->tabla_movil_fibra_tv)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil_fibra_tv . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
@@ -241,9 +241,9 @@ if (!$idioma) {
     public function getTarifasVehiculosList($lang = 'mx')
     {
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
         $query = DB::table($this->tabla_vehiculo)
             ->join('1_vehiculos', '1_vehiculos.id', '=', $this->tabla_vehiculo . '.vehiculo')
             ->join('paises', 'paises.id', '=', '1_vehiculos.pais')
@@ -265,9 +265,9 @@ if (!$idioma) {
     public function getTarifasCuponesDestacadosList($lang)
     {
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
 
         $data = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
@@ -303,9 +303,9 @@ if (!$idioma) {
     {
         $idCategoriaConsulta = 0;
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
 
         if ($idCategoria != null && $idCategoria != 'null') {
             $categoria = Categorias::where('nombre', $idCategoria)->count();
@@ -332,10 +332,11 @@ if (!$idioma) {
                 DB::raw('DATEDIFF(' . $this->tabla_cupones . '.fecha_final, CURRENT_DATE) AS dias_restantes'),
                 '1_comercios.nombre as nombre_comercio',
                 '1_comercios.logo',
+                '1_comercios.idPerseo',
                 'paises.nombre as pais',
                 'TipoCupon.nombre as cupon',
                 'categorias_comercios.nombre as categoriaItem',
-                'traduccion_categorias.nombre as traduccion'
+                'traduccion_categorias.nombre as traduccion',
             )
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
@@ -362,7 +363,7 @@ if (!$idioma) {
         $query = DB::table($this->tabla_cupones)
             ->join('1_comercios', '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
             ->join('paises', 'paises.id', $this->tabla_cupones . '.pais')
-            ->select('paises.decimales', $this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_final, "%d-%m-%Y") as fecha_final'), DB::raw('DATEDIFF(fecha_final, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo', 'paises.nombre as pais', 'TipoCupon.nombre as cupon')
+            ->select('1_comercios.idPerseo', 'paises.decimales', $this->tabla_cupones . '.*', DB::raw('DATE_FORMAT(fecha_final, "%d-%m-%Y") as fecha_final'), DB::raw('DATEDIFF(fecha_final, CURRENT_DATE) AS dias_restantes'), '1_comercios.nombre as nombre_comercio', '1_comercios.logo', 'paises.nombre as pais', 'TipoCupon.nombre as cupon')
             ->join('TipoCupon', 'TipoCupon.id', '=', $this->tabla_cupones . '.tipoCupon')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
@@ -375,9 +376,9 @@ if (!$idioma) {
     public function getTarifasStreamingList($lang = 'es')
     {
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
         $query = DB::table($this->tabla_streaming)
             ->select('*', 'paises.decimales')
             ->join('paises', 'paises.id', $this->tabla_streaming . '.pais')
@@ -430,7 +431,7 @@ if (!$idioma) {
         $data =  DB::table($this->tabla_luz)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales','1_comercializadoras.telefono')
+            ->select($this->tabla_luz . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales', '1_comercializadoras.telefono')
             ->where($this->tabla_luz . '.id', '=', $id)
             ->first();
 
@@ -486,7 +487,7 @@ if (!$idioma) {
         $data = DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales','1_comercializadoras.telenofo')
+            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales', '1_comercializadoras.telenofo')
             ->where($this->tabla_luz_gas . '.id', '=', $id)
             ->first();
 
@@ -578,9 +579,9 @@ if (!$idioma) {
             return [];
         }
         $idioma = Paises::where('codigo', $lang)->first();
-if (!$idioma) {
-    return [];
-}
+        if (!$idioma) {
+            return [];
+        }
         return DB::table($this->tabla_movil)
             ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
@@ -646,7 +647,7 @@ if (!$idioma) {
     {
         $query = DB::table($this->tabla_prestamos)
             ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
-            ->join('paises', 'paises.id', '=', '1_comercios.pais')
+            ->join('paises', 'paises.id', '=', '1_banca.pais')
             ->select($this->tabla_prestamos . '.*', '1_banca.nombre', '1_banca.logo', 'paises.decimales')
             ->where($this->tabla_prestamos . '.estado', '=', '1')
             ->orderBy('destacada', 'asc');

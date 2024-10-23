@@ -1239,25 +1239,21 @@ class ZapierController extends Controller
         $lead_id = $this->leadRegister($request);
 
         $apiUrl = 'https://api.byside.com/1.0/call/createCall';
-        $auth_user = "C9857E6B19";
-        $auth_password = "TeOYGIzyLUuyNao0FnpeIV7J0";
-        $base64Credentials = base64_encode("$auth_user:$auth_password");
-        $uuid = time() + rand();
-        $phone = $this->utilsController->formatTelephone($request->dataToSend['tel_usuario']);
+        $authHeader = 'Basic Qzk4NTdFNkIxOTpUZU9ZR0l6eUxVdXlOYW8wRm5wZUlWN0ow';
 
         $requestData = [
-            'phone' => '34' . $phone,
+            'phone' => '34' . $this->utilsController->formatTelephone($request->dataToSend['tel_usuario']),
             'schedule_datetime' => 'NOW',
             'channel' => 'proveedores',
             'branch_id' => '26970',
             'lang' => 'es',
-            'uuid' => $uuid,
+            'uuid' => time(),
             'is_uid_authenticated' => false,
             'user_ip' => $this->visitorIp,
             'url' => $request->dataToSend['producto'],
             'info' => [
-                'mm_external_campaign_900' => '900696243',
-                'proveedor_id' => 'HMG',
+                'proveedor_id' => 'Arkeero',
+                'mm_external_campaign_900' => '900696940'
             ],
         ];
 
@@ -1265,7 +1261,7 @@ class ZapierController extends Controller
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
             'charset' => 'utf-8',
-            'Authorization' => 'Basic ' . $base64Credentials,
+            'Authorization' => $authHeader,
         ])->post($apiUrl, $requestData);
 
         $data = $response->json();
