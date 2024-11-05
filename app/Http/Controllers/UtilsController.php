@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 
 class UtilsController extends Controller
 {
-    function formatTelephone(string $phone): string
+    function formatTelephone($phone)
     {
         // Elimina espacios y el símbolo '+' si está presente
         $phone = str_replace([" ", "+"], "", $phone);

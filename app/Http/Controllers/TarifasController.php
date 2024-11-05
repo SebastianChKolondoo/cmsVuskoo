@@ -332,6 +332,7 @@ class TarifasController extends Controller
                 DB::raw('DATEDIFF(' . $this->tabla_cupones . '.fecha_final, CURRENT_DATE) AS dias_restantes'),
                 '1_comercios.nombre as nombre_comercio',
                 '1_comercios.logo',
+                '1_comercios.categoria',
                 '1_comercios.idPerseo',
                 'paises.nombre as pais',
                 'TipoCupon.nombre as cupon',

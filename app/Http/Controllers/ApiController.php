@@ -9,6 +9,8 @@ use App\Models\Lead;
 use App\Models\Menu;
 use App\Models\PaginaWebFooter;
 use App\Models\Paises;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Mockery\Undefined;
 use Psy\Readline\Hoa\Console;
 
@@ -140,6 +142,30 @@ class ApiController extends Controller
                             [
                                 "name" => "Luz y gas",
                                 "url" => "/energia/comparador-tarifas-luz-y-gas"
+                            ]
+                        ]
+                    ],
+                    [
+                        "title" => "Finanzas",
+                        "titleUrl" => "/finanzas",
+                        "children" => [
+                            [
+                                "name" => "Microcréditos",
+                                "url" => "/finanzas/comparador-finanzas/microcreditos"
+                            ],
+                            [
+                                "name" => "Soluciones de deuda",
+                                "url" => "/finanzas/comparador-finanzas/soluciones-de-deuda"
+                            ]
+                        ]
+                    ],
+                    [
+                        "title" => "Cupones",
+                        "titleUrl" => "/cupones",
+                        "children" => [
+                            [
+                                "name" => "Cupones",
+                                "url" => "/cupones"
                             ]
                         ]
                     ],
@@ -314,15 +340,15 @@ class ApiController extends Controller
 
 
         $query = DB::table('1_comercios')
-            ->select('categorias_comercios.nombre')
+            ->select('traduccion_categorias.nombre as nombreCategoria', 'traduccion_categorias.categoria as idCategoria')
             ->where('1_comercios.estado', '=', 1)
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)
             ->join($this->tabla_cupones, '1_comercios.id', '=', $this->tabla_cupones . '.comercio')
             ->join('categorias_comercios', '1_comercios.categoria', '=', 'categorias_comercios.id')
-
             ->whereDate($this->tabla_cupones . '.fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
             ->whereDate($this->tabla_cupones . '.fecha_final', '>=', DB::raw('CURRENT_DATE'))
+            ->join('traduccion_categorias', 'traduccion_categorias.categoria', 'categorias_comercios.id')
             ->groupBy('1_comercios.categoria');
 
         return $query->get();
@@ -558,5 +584,48 @@ class ApiController extends Controller
         }
         $validacionPais = Paises::where('codigo', $lang)->first();
         return PaginaWebFooter::where('pais', $validacionPais->id)->first();
+    }
+
+    public function getPricesByMonth()
+    {
+        $url = 'https://www.apaga-luz.com/data/group_prices_by_month.json';
+
+        try {
+            // Realizar la solicitud a la API externa
+            $response = Http::withHeaders([
+                'X-API-Key' => 'We0OfoTOgg46ISK', // Agregar el encabezado de autenticación si es necesario
+                'Content-Type' => 'application/json',
+            ])->get($url);
+
+            // Retornar la respuesta al frontend
+            return response($response->body(), $response->status())
+                ->header('Content-Type', 'application/json')
+                ->header('Access-Control-Allow-Origin', '*'); // Esto permite solicitudes desde cualquier origen
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'No se pudo obtener los datos'], 500);
+        }
+    }
+
+    public function getPricesByNow()
+    {
+        // Obtener la fecha actual
+        $fecha = Carbon::now();
+        $año = $fecha->year;
+        $mes = $fecha->month;
+        $dia = $fecha->day;
+
+        // Formatear la fecha
+        $actual = "{$año}-{$mes}-{$dia}";
+
+        try {
+            // Realizar la solicitud a la API externa
+            $url = "https://apidatos.ree.es/es/datos/mercados/precios-mercados-tiempo-real";
+            $response = Http::get("{$url}?start_date={$actual}T00:00&end_date={$actual}T23:00&time_trunc=hour");
+
+            // Retornar la respuesta al frontend
+            return response()->json($response->json());
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'No se pudo obtener los datos'], 500);
+        }
     }
 }

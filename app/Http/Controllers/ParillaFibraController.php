@@ -129,7 +129,6 @@ class ParillaFibraController extends Controller
      */
     public function update(Request $request, $parillaFibra)
     {
-        return $request;
         $empresa = Operadoras::find($request->operadora);
         $pais = $empresa->pais;
         $moneda = Paises::where('id', $pais)->select('moneda')->first();

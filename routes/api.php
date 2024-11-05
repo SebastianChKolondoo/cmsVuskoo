@@ -15,10 +15,15 @@ use App\Http\Controllers\UtilsController;
 use App\Http\Controllers\ZapierController;
 use App\Models\Comercios;
 use App\Models\Cupones;
+use Illuminate\Support\Facades\Http;
 
 Route::get('/', function () {
     return 'welcome to Vuskoo!';
 });
+
+/* herramienta luz */
+Route::get('groupPricesByMonth', [ApiController::class, 'getPricesByMonth']);
+Route::get('pricesByNow', [ApiController::class, 'getPricesByNow']);
 
 Route::get('emailtest', [EmailController::class, 'sendMail'])->name('emailtest');
 Route::get('getBlogPreview/{id}', [BlogController::class, 'getBlogPreviewList']);
@@ -119,9 +124,10 @@ Route::middleware('api')->group(function () {
     Route::get('emailConfirmacion/{token}', [UtilsController::class, 'getEmailconfirmation']);
 
     /* Zapier */
-    Route::post('facebookZapierCpl', [ZapierController::class, 'facebookZapierCpl']);
-    Route::post('redesSocialesZapier', [ZapierController::class, 'redesSocialesZapier']);
-    Route::post('redesSocialesEnergyZapier', [ZapierController::class, 'redesSocialesEnergyZapier']);
+    Route::post('facebookZapierCpl', [LeadController::class, 'LeadRegisterInfo']);
+    //Route::post('facebookZapierCpl', [LeadController::class, 'facebookZapierCpl']);
+    /* Route::post('redesSocialesZapier', [ZapierController::class, 'redesSocialesZapier']);
+    Route::post('redesSocialesEnergyZapier', [ZapierController::class, 'redesSocialesEnergyZapier']); */
 
     /* registrar error en plataforma */
     Route::post('addError', [UtilsController::class, 'addError']);

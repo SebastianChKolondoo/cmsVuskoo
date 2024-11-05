@@ -31,15 +31,19 @@ class FormularioLeads extends Model
         'created_at'
     ];
 
-    /* public function companies()
+    public function operadoras()
     {
-        return $this->belongsTo(Operadoras::class, 'company', 'id');
+        return $this->belongsTo(operadoras::class, 'company', 'id');
+    }
+    public function comercializadoras()
+    {
+        return $this->belongsTo(Comercializadoras::class, 'company', 'id');
     }
 
     public function paises()
     {
         return $this->belongsTo(Paises::class, 'pais', 'id');
-    } */
+    }
 
     public function politicaPrivacidad()
     {

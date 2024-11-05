@@ -145,6 +145,12 @@
                             {!! Form::text('gas_precio_energia', null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('luz_indexada', 'Luz indexada', ['class' => 'form-label']) !!}
+                            {!! Form::select('luz_indexada', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('pais', 'Visible en', ['class' => 'form-label']) !!}
                             {!! Form::select('pais', $paises->pluck('nombre', 'id'), null, [
                                 'class' => 'form-control',

@@ -7,6 +7,7 @@ use App\Models\ParrillaStreaming;
 use App\Models\States;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ParrillaStreamingController extends Controller
 {
@@ -51,9 +52,9 @@ class ParrillaStreamingController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower(str_replace([' ', '+'], ['_', ''], $request->nombre_tarifa)) . '.' . $extension;
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower(Str::slug($request->nombre_tarifa))) . '.' . $extension;
             $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
-            $urlLogo = Storage::disk('public')->url($path);
+            $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
 
         $tarifa = ParrillaStreaming::create([
@@ -88,7 +89,7 @@ class ParrillaStreamingController extends Controller
             'moneda' => trim($moneda->moneda),
             'pais' => trim($request->pais),
             'landingLead' => trim($request->landingLead),
-            'slug_tarifa' => strtolower(str_replace([' ', '+'], ['_', ''], $request->nombre_tarifa)),
+            'slug_tarifa' => Str::slug($request->nombre_tarifa),
             'tituloSeo' => $request->tituloSeo,
             'descripcionSeo' => $request->descripcionSeo,
         ]);
@@ -119,26 +120,15 @@ class ParrillaStreamingController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->nombre_tarifa) . '.' . $extension;
-            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
-            $urlLogo = Storage::disk('public')->url($path);
+            $nombreArchivo = str_replace(['-', '.',' '.'  '], '_', strtolower(Str::slug($request->nombre_tarifa))) . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('logos', $file, $nombreArchivo);
+            $urlLogo = 'https://cms.vuskoo.com/storage/logos/'.$nombreArchivo;
         }
 
-        if ($request->hasFile('logo_negativo')) {
-            $file = $request->file('logo_negativo');
-            $extension = $file->getClientOriginalExtension();
-            $nombreArchivo = strtolower($request->nombre_tarifa) . '_negativo.' . $extension;
-            $path = Storage::disk('public')->putFileAs('/logos', $file, $nombreArchivo);
-            $logo_negativo = Storage::disk('public')->url($path);
-            $urlLogo = Storage::disk('public')->url($path);
-        }
         // Crear un array de datos a actualizar
         $data = $request->all();
         if ($urlLogo) {
             $data['logo'] = $urlLogo;
-        }
-        if ($logo_negativo) {
-            $data['logo_negativo'] = $logo_negativo;
         }
 
         // Actualizar el modelo
@@ -150,7 +140,7 @@ class ParrillaStreamingController extends Controller
         $data['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $data['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $data['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
-        $data['slug_tarifa'] = strtolower(str_replace([' ', '+'], ['_', ''], $request->nombre_tarifa));
+        $data['slug_tarifa'] = Str::slug($request->nombre_tarifa);
         $data['moneda'] = $moneda->moneda;
         $tarifa->update($data);
         //$tarifa->update($request->all());

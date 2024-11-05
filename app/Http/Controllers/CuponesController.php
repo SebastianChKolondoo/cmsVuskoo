@@ -152,14 +152,14 @@ class CuponesController extends Controller
             ->groupBy('pais')
             ->get();
     }
-    
+
     public function getCuponesComercioList($id)
     {
         return Cupones::where('estado', 1)
             ->select('*')
             ->whereDate('fecha_inicial', '<=', DB::raw('CURRENT_DATE'))
             ->whereDate('.fecha_final', '>=', DB::raw('CURRENT_DATE'))
-            ->where('comercio',$id)
+            ->where('comercio', $id)
             ->get();
     }
 }

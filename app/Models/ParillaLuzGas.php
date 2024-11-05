@@ -54,7 +54,8 @@ class ParillaLuzGas extends Model
         'pais',
         'textoAdicional',
         'tituloSeo',
-        'descripcionSeo'
+        'descripcionSeo',
+        'luz_indexada'
     ];
 
     public function state()

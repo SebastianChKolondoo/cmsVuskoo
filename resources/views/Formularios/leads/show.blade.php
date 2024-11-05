@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="row justify-content-center my-4">
         <div class="col-12 mb-3">
@@ -12,86 +13,48 @@
                             {{ session('info') }}
                         </div>
                     @endif
-                    {!! Form::model($data, ['route' => ['formularioleads.update', $data]]) !!}
                     <div class="row">
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('landing', 'Landing', ['class' => 'form-label']) !!}
-                            {!! Form::text('landing', null, [
-                                'class' => 'form-control',
-                                'disabled' => 'true',
-                            ]) !!}
+                        <div class="col-12 col-md-4 mb-3">
+                            <p class="form-label"><b>Fecha:</b> {{ $data->created_at->format('d \d\e F \d\e Y ') }}</p>
                         </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('urlOffer', 'Url Oferta', ['class' => 'form-label']) !!}
-                            {!! Form::email('urlOffer', null, [
-                                'class' => 'form-control',
-                                'disabled' => 'true',
-                            ]) !!}
+                        <div class="col-12 col-md-4 mb-3">
+                            <p class="form-label"><b>Landing:</b> {{ $data->landing }}</p>
                         </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('company', 'Compañia', ['class' => 'form-label']) !!}
-                            {!! Form::text('company', null, [
-                                'class' => 'form-control',
-                                'disabled' => 'true',
-                            ]) !!}
+                        <div class="col-12 col-md-12 mb-3">
+                            <p class="form-label"><b>Url Oferta:</b> {{ $data->urlOffer }}</p>
                         </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('idOferta', 'ID de oferta', ['class' => 'form-label']) !!}
-                            {!! Form::text('idOferta', null, [
-                                'class' => 'form-control',
-                                'disabled' => 'true',
-                            ]) !!}
+                        <div class="col-12 col-md-4 mb-3">
+                            @if ($data->operadoras)
+                                <p class="form-label"><b>Compañia:</b> {{ optional($data->operadoras)->nombre }}</p>
+                            @endif
+                            @if ($data->comercializadoras)
+                                <p class="form-label"><b>Compañia:</b> {{ optional($data->comercializadoras)->nombre }}</p>
+                            @endif
                         </div>
-                        @if ($data->ip != '')
-                            <div class="form-group col-12 col-md-4">
-                                {!! Form::label('ip', 'IP', ['class' => 'form-label']) !!}
-                                {!! Form::text('ip', null, [
-                                    'class' => 'form-control',
-                                    'disabled' => 'true',
-                                ]) !!}
-                            </div>
-                        @endif
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('phone', 'Teléfono', ['class' => 'form-label']) !!}
-                            {!! Form::text('phone', null, [
-                                'class' => 'form-control',
-                                'disabled' => 'true',
-                            ]) !!}
+                        <div class="col-12 col-md-4 mb-3">
+                            <p class="form-label"><b>ID de oferta:</b> {{ $data->idOferta }}</p>
                         </div>
-                        @if ($data->idResponse != '')
-                            <div class="form-group col-12 col-md-4">
-                                {!! Form::label('idResponse', 'Respuesta', ['class' => 'form-label']) !!}
-                                {!! Form::text('idResponse', null, [
-                                    'class' => 'form-control',
-                                    'disabled' => 'true',
-                                ]) !!}
-                            </div>
-                        @endif
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('acepta_politica_privacidad', 'Acepta política de privacidad', ['class' => 'form-label']) !!}
-                            {!! Form::text('acepta_politica_privacidad', $data->politicaPrivacidad->name, [
-                                'class' => 'form-control',
-                                'disabled' => 'true',
-                            ]) !!}
+                        <div class="col-12 col-md-4 mb-3">
+                            <p class="form-label"><b>IP:</b> {{ $data->ip }}</p>
                         </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('acepta_cesion_datos_a_proveedor', 'acepta cesión de datos', ['class' => 'form-label']) !!}
-                            {!! Form::text('acepta_cesion_datos_a_proveedor', $data->cesionDatos->name, [
-                                'class' => 'form-control',
-                                'disabled' => 'true',
-                            ]) !!}
+                        <div class="col-12 col-md-4 mb-3">
+                            <p class="form-label"><b>Teléfono:</b> {{ $data->phone }}</p>
                         </div>
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('acepta_comunicaciones_comerciales', 'acepta comunicación comercial', ['class' => 'form-label']) !!}
-                            {!! Form::text('acepta_comunicaciones_comerciales', $data->comunicacionesComerciales->name, [
-                                'class' => 'form-control',
-                                'disabled' => 'true',
-                            ]) !!}
+                        <div class="col-12 col-md-4 mb-3">
+                            <p class="form-label"><b>Respuesta:</b> {{ $data->idResponse }}</p>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            {{ Form::close() }}
+                        <div class="col-12 col-md-4 mb-3">
+                            <p class="form-label"><b>Acepta política de privacidad:</b>
+                                {{ optional($data->politicaPrivacidad)->name ?? 'No' }}</p>
+                        </div>
+                        <div class="col-12 col-md-4 mb-3">
+                            <p class="form-label"><b>Acepta cesión de datos:</b>
+                                {{ optional($data->cesionDatos)->name ?? 'No' }}
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-4 mb-3">
+                            <p class="form-label"><b>Acepta comunicación comercial:</b>
+                                {{ optional($data->comunicacionesComerciales)->name ?? 'No' }}</p>
                         </div>
                     </div>
                 </div>
