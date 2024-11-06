@@ -23,6 +23,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
+                            {!! Form::label('tarifa_empresarial', '¿Tarifa empresarial?', ['class' => 'form-label']) !!}
+                            {!! Form::select('tarifa_empresarial', $states->pluck('name', 'id'), null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
                             {!! Form::select('estado', $states->pluck('name', 'id'), null, [
                                 'class' => 'form-control',
@@ -98,7 +104,6 @@
                             {!! Form::selectRange('meses_permanencia', 0, 12, null, [
                                 'class' => 'form-control',
                             ]) !!}
-
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('precio', 'Precio', ['class' => 'form-label']) !!}

@@ -618,6 +618,7 @@ class LeadController extends Controller
     public function apiMasMovil($lead, $idLead)
     {
         $apiUrl = 'https://api.byside.com/1.0/call/createCall';
+        //$apiUrl = 'https://apiwe1.engagement.coremedia.cloud/1.0/call/createCall';
         $authHeader = 'Basic Qzk4NTdFNkIxOTpUZU9ZR0l6eUxVdXlOYW8wRm5wZUlWN0ow';
 
         $requestData = [
@@ -893,66 +894,93 @@ class LeadController extends Controller
     }
 
     public function apiFrank($lead, $idLead)
-{
-    try {
-        $apiKey = "xyz-leads-api-123";
-        $signingKey = "xyz-leads-signing-123";
-        $baseApiUrl = "https://preview.frank-api.nl/admin/webhooks/lead";
-        //$baseApiUrl = "https://frank-api.nl/admin/webhooks/lead"; /* prod */
+    {
+        try {
+            /* $apiKey = "xyz-leads-api-123";
+            $signingKey = "xyz-leads-signing-123";
+            $baseApiUrl = "https://preview.frank-api.nl/admin/webhooks/lead";
+            //$baseApiUrl = "https://frank-api.nl/admin/webhooks/lead"; /* prod *
 
-        // Datos del lead a enviar
-        $leadData = [
-            'firstName' => "Arkeero",
-            'lastName' => "Vuskoo",
-            'lastName2' => null,
-            'phoneNumber' => $this->utilsController->formatTelephone($lead['phone']),
-            'emailAddress' => "",
-            'country' => "ES",
-            'leadReference' => time(),
-            'originOfLead' => $lead['landing'],
-        ];
+            // Datos del lead a enviar
+            $leadData = [
+                'firstName' => "Arkeero",
+                'lastName' => "Vuskoo",
+                'lastName2' => null,
+                'phoneNumber' => $this->utilsController->formatTelephone($lead['phone']),
+                'emailAddress' => "",
+                'country' => "ES",
+                'leadReference' => time(),
+                'originOfLead' => $lead['landing'],
+            ]; */
 
-        $timestamp = round(microtime(true) * 1000);
-        $signature = hash_hmac('sha256', $timestamp.json_encode($leadData), $signingKey);
+            $apiKey = "xyz-leads-api-123";
+            $signingKey = "xyz-leads-signing-123";
+            $baseApiUrl = "https://preview.frank-api.nl/admin/webhooks/lead";
 
-        return $response = Http::withHeaders([
-            'ApiKey' => $apiKey,
-            'Content-Type' => 'application/json',
-            'X-Signature' => "t=$timestamp,v1=$signature"
-        ])->post($baseApiUrl, $leadData);
+            $leadData = [
+                'firstName' => "Arkeero",
+                'lastName' => "Vuskoo",
+                'lastName2' => "",
+                'phoneNumber' => '+34'.$this->utilsController->formatTelephone($lead['phone']),
+                'emailAddress' => "vuskoo@arkeero.com",
+                'country' => "ES",
+                'leadReference' => "123",
+                'originOfLead' => $lead['landing'],
+            ];
 
-        $responseObj = json_decode($response);
+            $timestamp = round(microtime(true) * 1000);
 
-        if (isset($responseObj->status) && $responseObj->status === "success") {
-            $leadValidation = Lead::find($idLead);
-            if ($leadValidation) {
-                $leadValidation->idResponse = $responseObj->id;
-                $leadValidation->save();
+            $payload = json_encode([$leadData]);
+            $signature = hash_hmac('sha256', $timestamp . '.' . $payload, $signingKey);
+
+            $headers = [
+                "ApiKey: $apiKey",
+                "Content-Type: application/json",
+                "X-Signature: t=$timestamp,v1=$signature"
+            ];
+
+            $ch = curl_init($baseApiUrl);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            $response = curl_exec($ch);
+            $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($httpStatus === 200) {
+                $leadValidation = Lead::find($idLead);
+                if ($leadValidation) {
+                    $leadValidation->idResponse = $httpStatus;
+                    $leadValidation->save();
+                }
+
+                $message = "ok: Registrado el numero " . $lead['phone'] . " con id = " . $idLead . ", «lead» de *Frank - " . ($lead['company']) . "* en función apiFrank(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($response);
+                $this->utilsController->registroDeErrores(16, 'Lead saved Frank', $message, $lead['urlOffer'], $this->visitorIp);
+            } else {
+                $message = "Fallo al registrar el numero " . $lead['phone'] . ", «lead» de *Frank - " . ($lead['company']) . "* en función apiFrank(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . json_encode($response);
+                $this->utilsController->registroDeErrores(10, 'ajaxApiFrank', $message);
             }
 
-            $message = "ok: Registrado el numero " . $lead['phone'] . " con id = " . $idLead . ", «lead» de *Plenitude - " . ($lead['company']) . "* en función apiPlenitude(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($responseObj);
-            $this->utilsController->registroDeErrores(16, 'Lead saved Plenitude', $message, $lead['urlOffer'], $this->visitorIp);
-            $responseObj->code = 201;
-        } else {
-            $message = "Fallo al registrar el numero " . $lead['phone'] . ", «lead» de *Plenitude - " . ($lead['company']) . "* en función apiPlenitude(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . json_encode($responseObj);
-            $this->utilsController->registroDeErrores(10, 'ajaxApiPlenitude', $message);
-            $responseObj->code = 502;
-        }
+            return response()->json([
+                'content' => 'ok',
+                'call_response' => 'ok',
+                'message' => 'Ok',
+                'status' => 201
+            ], 200);
+        } catch (ConnectionException $e) {
+            $message = "Fallo de IpAPI ajaxApiV3 falla al enviar el «lead» desde IP: " . $this->visitorIp . ' -> ERROR: ' . $e->getMessage();
+            $this->utilsController->registroDeErrores(10, 'ajaxApiV3', $message);
 
-        return response()->json([
-            'message' => $responseObj->status,
-            'status' => $responseObj->code
-        ], 200);
-    } catch (ConnectionException $e) {
-        $message = "Fallo de IpAPI ajaxApiV3 falla al enviar el «lead» desde IP: " . $this->visitorIp . ' -> ERROR: ' . $e->getMessage();
-        $this->utilsController->registroDeErrores(10, 'ajaxApiV3', $message);
-        
-        return response()->json([
-            'message' => 'Connection failed',
-            'status' => 500
-        ], 500);
+            return response()->json([
+                'content' => 'ko',
+                'call_response' => 'ko',
+                'message' => $response,
+                'status' => 502
+            ], 500);
+        }
     }
-}
 
 
     public function apiGanaEnergia($lead, $idLead)

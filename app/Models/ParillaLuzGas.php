@@ -55,7 +55,8 @@ class ParillaLuzGas extends Model
         'textoAdicional',
         'tituloSeo',
         'descripcionSeo',
-        'luz_indexada'
+        'luz_indexada',
+        'tarifa_empresarial'
     ];
 
     public function state()

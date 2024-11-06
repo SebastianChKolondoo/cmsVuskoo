@@ -83,6 +83,7 @@ class ParillaLuzController extends Controller
             'textoAdicional' => $request->textoAdicional,
             'tituloSeo' => $request->tituloSeo,
             'descripcionSeo' => $request->descripcionSeo,
+            'tarifa_empresarial' => $request->tarifa_empresarial
         ]);
 
         return redirect()->route('parrillaluz.index')->with('info', 'Tarifa creada correctamente.');

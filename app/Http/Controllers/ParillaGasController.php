@@ -82,6 +82,7 @@ class ParillaGasController extends Controller
             'textoAdicional' => $request->textoAdicional,
             'tituloSeo' => $request->tituloSeo,
             'descripcionSeo' => $request->descripcionSeo,
+            'tarifa_empresarial' => $request->tarifa_empresarial
         ]);
 
         return redirect()->route('parrillagas.index')->with('info', 'Tarifa creada correctamente.');
@@ -122,7 +123,6 @@ class ParillaGasController extends Controller
         $tarifa = ParillaGas::find($parillaGas);
         $tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');
-        //return redirect()->route('parrillagas.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     /**
