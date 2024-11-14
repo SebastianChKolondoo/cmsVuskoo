@@ -12,7 +12,7 @@ class Comercios extends Model
     protected $fillable = [
         'nombre',
         'idPerseo',
-        'nombre_slug',
+        'slug_tarifa',
         'logo',
         'logo_negativo',
         'politica_privacidad',

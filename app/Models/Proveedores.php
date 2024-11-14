@@ -12,7 +12,7 @@ class Proveedores extends Model
 
     protected $fillable = [
         'nombre',
-        'nombre_slug',
+        'slug_tarifa',
         'tipo_conversion',
         'logo',
         'logo_negativo',

@@ -134,8 +134,6 @@ class ParrillaStreamingController extends Controller
         // Actualizar el modelo
 
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
-        //$slug = strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug));
-        //$slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->parrilla_bloque_1)) . ' ' . trim(str_replace('  ', ' ', $request->parrilla_bloque_2)) . ' ' . $empresa->nombre_slug)));
         $data['parrilla_bloque_1'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_1));
         $data['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $data['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
@@ -143,9 +141,7 @@ class ParrillaStreamingController extends Controller
         $data['slug_tarifa'] = Str::slug($request->nombre_tarifa);
         $data['moneda'] = $moneda->moneda;
         $tarifa->update($data);
-        //$tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');
-        //return redirect()->route('streaming.index')->with('info', 'Oferta editada correctamente.');
     }
 
     /**

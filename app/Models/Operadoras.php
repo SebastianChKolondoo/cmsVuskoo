@@ -11,7 +11,7 @@ class Operadoras extends Model
     protected $table = '1_operadoras';
     protected $fillable = [
         'nombre',
-        'nombre_slug',
+        'slug_tarifa',
         'logo',
         'logo_negativo',
         'politica_privacidad',

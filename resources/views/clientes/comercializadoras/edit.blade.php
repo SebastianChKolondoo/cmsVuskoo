@@ -26,26 +26,14 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('nombre_slug', 'Slug', ['class' => 'form-label']) !!}
-                            {!! Form::text('nombre_slug', null, [
+                            {!! Form::label('slug_tarifa', 'Slug de la tarifa', ['class' => 'form-label']) !!}
+                            {!! Form::text('slug_tarifa', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('telefono', 'Teléfono', ['class' => 'form-label']) !!}
                             {!! Form::text('telefono', null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        {{-- <div class="form-group col-12 col-md-4">
-                            {!! Form::label('funcion_api', 'Función api', ['class' => 'form-label']) !!}
-                            {!! Form::text('funcion_api', null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div> --}}
-                        <div class="form-group col-12 col-md-4">
-                            {!! Form::label('tipo_conversion', 'Tipo de conversión', ['class' => 'form-label']) !!}
-                            {!! Form::text('tipo_conversion', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
@@ -70,7 +58,7 @@
                             {{ Form::file('logo_negativo', ['class' => 'form-control']) }}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
+                            {!! Form::label('estado', 'Activo', ['class' => 'form-label']) !!}
                             {!! Form::select('estado', $estados->pluck('name', 'id'), null, [
                                 'class' => 'form-control',
                             ]) !!}

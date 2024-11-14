@@ -45,9 +45,7 @@ class CuponesController extends Controller
      */
     public function store(Request $request)
     {
-        //$moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Comercios::find($request->comercio);
-        /* $slug = $this->utilsController->quitarTildes(strtolower(str_replace(['  ', 'datos', '--', ' ', '--'], [' ', '', '-', '-', '-'], trim(str_replace('  ', ' ', $request->nombre_tarifa)) . ' ' . $empresa->nombre_slug))); */
         $fecha_inicial = $request->fecha_inicial;
         $fecha_final = $request->fecha_final;
         if ($request['TiempoCupon'] == 2) {

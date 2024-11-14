@@ -52,7 +52,7 @@ class ProveedoresController extends Controller
 
         Proveedores::create([
             'nombre' => $request->nombre,
-            'nombre_slug' => Str::slug($request->nombre),
+            'slug_tarifa' => Str::slug($request->slug_tarifa),
             'tipo_conversion' => $request->tipo_conversion,
             'logo' => $urlLogo,
             'logo_negativo' => $logo_negativo,
@@ -113,7 +113,7 @@ class ProveedoresController extends Controller
 
         // Crear un array de datos a actualizar
         $data = $request->all();
-        $data['nombre_slug'] = Str::slug($request->nombre);
+        $data['slug_tarifa'] = Str::slug($request->slug_tarifa);
         if ($urlLogo) {
             $data['logo'] = $urlLogo;
         }
