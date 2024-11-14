@@ -11,12 +11,10 @@ class ParillaFibra extends Model
     protected $table = 'WEB_3_TARIFAS_TELCO_FIBRA';
 
     protected $fillable = [
-        'id_producto',
         'estado',
         'destacada',
         'operadora',
         'landing_link',
-        'funcion',
         'nombre_tarifa',
         'slug_tarifa',
         'parrilla_bloque_1',
@@ -45,7 +43,8 @@ class ParillaFibra extends Model
         'textoAdicional',
         'duracionContrato',
         'tituloSeo',
-        'descripcionSeo'
+        'descripcionSeo',
+        'informacionLegal'
     ];
 
     public function state()

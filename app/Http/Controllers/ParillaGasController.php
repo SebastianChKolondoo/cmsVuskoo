@@ -82,7 +82,8 @@ class ParillaGasController extends Controller
             'textoAdicional' => $request->textoAdicional,
             'tituloSeo' => $request->tituloSeo,
             'descripcionSeo' => $request->descripcionSeo,
-            'tarifa_empresarial' => $request->tarifa_empresarial
+            'informacionLegal' => $request->informacionLegal,
+            /* 'tarifa_empresarial' => $request->tarifa_empresarial */
         ]);
 
         return redirect()->route('parrillagas.index')->with('info', 'Tarifa creada correctamente.');
@@ -120,6 +121,7 @@ class ParillaGasController extends Controller
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['moneda'] = $moneda->moneda;
+        $request['slug_tarifa'] = Str::slug($request->slug_tarifa);
         $tarifa = ParillaGas::find($parillaGas);
         $tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');

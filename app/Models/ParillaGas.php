@@ -11,11 +11,9 @@ class ParillaGas extends Model
     protected $table = 'WEB_3_TARIFAS_ENERGIA_GAS';
 
     protected $fillable = [
-        'id_producto',
         'comercializadora',
         'destacada',
         'landing_link',
-        'funcion',
         'nombre_tarifa',
         'parrilla_bloque_1',
         'parrilla_bloque_2',
@@ -49,7 +47,8 @@ class ParillaGas extends Model
         'tituloSeo',
         'descripcionSeo',
         'luz_indexada',
-        'tarifa_empresarial'
+        'informacionLegal'
+        /* 'tarifa_empresarial' */
     ];
 
     public function state()

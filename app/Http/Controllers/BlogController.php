@@ -205,22 +205,6 @@ class BlogController extends Controller
         return DB::table('SEO_BLOG')->select('SEO_BLOG.metatitulo as seo_titulo', 'SEO_BLOG.metadescripcion as seo_descripcion', 'blog.*', 'categorias.*', 'blog.entradilla as entrada')->leftJoin('blog', 'blog.SEO_id', 'SEO_BLOG.id')->leftJoin('categorias', 'blog.categoria_id', 'categorias.id')->where('SEO_BLOG.url_amigable', '=', $id)->get();
     }
 
-    public function getGestionList($funcion, $id = null)
-    {
-        $query = DB::table('SEO_GESTIONES')
-            ->select('SEO_GESTIONES.*', 'gestiones.atributo_imagen_principal as alt_img', 'gestiones.titulo as titulo', 'gestiones.imagen_principal_escritorio as imagen', 'gestiones.cuerpo as contenido', 'gestiones.propietario as autor', 'gestiones.fecha_publicacion')
-            ->leftJoin('gestiones', 'gestiones.SEO_id', '=', 'SEO_GESTIONES.id')
-            ->leftJoin('categorias_gestiones', 'gestiones.categoria_id', '=', 'categorias_gestiones.id')
-            ->where('SEO_GESTIONES.funcion', $funcion);
-
-        if ($id !== null) {
-            $query->select('SEO_GESTIONES.*', 'gestiones.atributo_imagen_principal as alt_img', 'gestiones.titulo as titulo', 'gestiones.imagen_principal_escritorio as imagen', 'gestiones.cuerpo as contenido', 'gestiones.propietario as autor', 'gestiones.fecha_publicacion');
-            $query->where('SEO_GESTIONES.url_amigable', $id);
-        }
-
-        return $query->get();
-    }
-
 
     /* Nuevo blog */
 

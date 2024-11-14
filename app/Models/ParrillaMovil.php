@@ -11,14 +11,11 @@ class parrillamovil extends Model
     protected $table = 'WEB_3_TARIFAS_TELCO_MOVIL';
 
     protected $fillable = [
-        'id',
-        'id_producto',
         'destacada',
         'operadora',
         'estado',
         'landing_link',
         'permanencia',
-        'funcion',
         'nombre_tarifa',
         'parrilla_bloque_1',
         'parrilla_bloque_2',
@@ -59,7 +56,8 @@ class parrillamovil extends Model
         'tinder',
         'lolamusic',
         'tituloSeo',
-        'descripcionSeo'
+        'descripcionSeo',
+        'informacionLegal'
     ];
 
     public function state()

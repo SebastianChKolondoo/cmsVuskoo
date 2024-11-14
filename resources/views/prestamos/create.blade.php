@@ -26,6 +26,12 @@
                                 ]) !!}
                             </div>
                             <div class="form-group col-12 col-md-4">
+                                {!! Form::label('slug_tarifa', 'Slug de tarifa', ['class' => 'form-label']) !!}
+                                {!! Form::text('slug_tarifa', null, [
+                                    'class' => 'form-control',
+                                ]) !!}
+                            </div>
+                            <div class="form-group col-12 col-md-4">
                                 {!! Form::label('titulo', 'Titulo', ['class' => 'form-label']) !!}
                                 {!! Form::text('titulo', null, [
                                     'class' => 'form-control',

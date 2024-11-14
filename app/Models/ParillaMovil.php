@@ -10,13 +10,11 @@ class ParillaMovil extends Model
     use HasFactory;
     protected $table = 'WEB_3_TARIFAS_TELCO_MOVIL';
     protected $fillable = [
-        'id_producto',
         'operadora',
         'destacada',
         'estado',
         'landing_link',
         'permanencia',
-        'funcion',
         'nombre_tarifa',
         'parrilla_bloque_1',
         'parrilla_bloque_2',
@@ -58,7 +56,8 @@ class ParillaMovil extends Model
         'tinder',
         'lolamusic',
         'tituloSeo',
-        'descripcionSeo'
+        'descripcionSeo',
+        'informacionLegal'
     ];
 
     public function state()

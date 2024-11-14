@@ -10,12 +10,10 @@ class ParillaLuzGas extends Model
     use HasFactory;
     protected $table = 'WEB_3_TARIFAS_ENERGIA_LUZ_GAS';
     protected $fillable = [
-        'id_producto',
         'estado',
         'destacada',
         'comercializadora',
         'landing_link',
-        'funcion',
         'nombre_tarifa',
         'parrilla_bloque_1',
         'parrilla_bloque_2',
@@ -56,7 +54,8 @@ class ParillaLuzGas extends Model
         'tituloSeo',
         'descripcionSeo',
         'luz_indexada',
-        'tarifa_empresarial'
+        'informacionLegal'
+        /* 'tarifa_empresarial' */
     ];
 
     public function state()

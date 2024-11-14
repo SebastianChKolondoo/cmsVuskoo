@@ -154,6 +154,9 @@
                     @can('luzygas.view')
                         <a class="collapse-item" href="{{ route('parrillaluzgas.index') }}">Luz y gas</a>
                     @endcan
+                    @can('autoconsumo.view')
+                        <a class="collapse-item" href="{{ route('parrillaautoconsumo.index') }}">Autoconsumo</a>
+                    @endcan
                 </div>
             </div>
         </li>

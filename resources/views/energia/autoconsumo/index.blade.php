@@ -7,14 +7,14 @@
                     {{ session('info') }}
                 </div>
             @endif
-            @can('parrillafibra.view.btn-create')
-                <a href="{{ route('parrillafibra.create') }}" class="btn btn-primary">Nueva Oferta</a>
+            @can('operadoras.view.btn-create')
+                <a href="{{ route('parrillaautoconsumo.create') }}" class="btn btn-primary">Nueva Oferta</a>
             @endcan
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <h4>Listado de fibra</h4>
+            <h4>Listado de autoconsumo</h4>
         </div>
     </div>
     <ul class="nav nav-tabs" id="myTabs" role="tablist">
@@ -38,10 +38,10 @@
                     <tr>
                         <th>id</th>
                         <th>Activo</th>
-                        <th>Operadora</th>
+                        <th>comercializadora</th>
                         <th>Oferta</th>
                         <th>Visible en</th>
-                        @can('fibra.view.btn-edit')
+                        @can('autoconsumo.view.btn-edit')
                             <th></th>
                         @endcan
                     </tr>
@@ -51,17 +51,17 @@
                         <tr>
                             <td class="align-middle">{{ $tarifa->id }}</td>
                             <td class="align-middle">{{ $tarifa->state->name ?? 'Not Available' }}</td>
-                            <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
+                            <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}
+                            </td>
                             <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
                             <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                             <td>
-                                @can('fibra.view.btn-edit')
-                                    <a href="{{ route('parrillafibra.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                @can('autoconsumo.view.btn-edit')
+                                    <a href="{{ route('parrillaautoconsumo.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                 @endcan
-                                @can('fibra.view.btn-duplicate')
-                                    <a href="{{ route('parrillafibraDuplicate', $tarifa) }}"
-                                        class="btn btn-warning">Duplicar</a>
-                                @endcan
+                                {{-- @can('autoconsumo.view.btn-duplicate')
+                                    <a href="{{ route('parrillaluzDuplicate', $tarifa) }}" class="btn btn-warning">Duplicar</a>
+                                @endcan --}}
                             </td>
                         </tr>
                     @endforeach
@@ -73,10 +73,10 @@
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
-                        <th>Operadora</th>
+                        <th>comercializadora</th>
                         <th>Oferta</th>
                         <th>Visible en</th>
-                        @can('fibra.view.btn-edit')
+                        @can('autoconsumo.view.btn-edit')
                             <th></th>
                         @endcan
                     </tr>
@@ -86,15 +86,16 @@
                         @if ($tarifa->estado == 1)
                             <tr>
                                 <td class="align-middle">{{ $tarifa->id }}</td>
-                                <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
+                                <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}
+                                </td>
                                 <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
                                 <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                                 <td>
-                                    @can('fibra.view.btn-edit')
-                                        <a href="{{ route('parrillafibra.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                    @can('autoconsumo.view.btn-edit')
+                                        <a href="{{ route('parrillaluz.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     @endcan
-                                    @can('fibra.view.btn-duplicate')
-                                        <a href="{{ route('parrillafibraDuplicate', $tarifa) }}"
+                                    @can('autoconsumo.view.btn-duplicate')
+                                        <a href="{{ route('parrillaluzDuplicate', $tarifa) }}"
                                             class="btn btn-warning">Duplicar</a>
                                     @endcan
                                 </td>
@@ -109,10 +110,10 @@
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
-                        <th>Operadora</th>
+                        <th>comercializadora</th>
                         <th>Oferta</th>
                         <th>Visible en</th>
-                        @can('fibra.view.btn-edit')
+                        @can('autoconsumo.view.btn-edit')
                             <th></th>
                         @endcan
                     </tr>
@@ -122,15 +123,16 @@
                         @if ($tarifa->estado == 2)
                             <tr>
                                 <td class="align-middle">{{ $tarifa->id }}</td>
-                                <td class="align-middle">{{ $tarifa->operadoras->nombre ?? 'Not Available' }}</td>
+                                <td class="align-middle">{{ $tarifa->comercializadoras->nombre ?? 'Not Available' }}
+                                </td>
                                 <td class="align-middle">{{ $tarifa->nombre_tarifa }}</td>
                                 <td class="align-middle">{{ optional($tarifa->paises)->nombre }}</td>
                                 <td>
-                                    @can('fibra.view.btn-edit')
-                                        <a href="{{ route('parrillafibra.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
+                                    @can('autoconsumo.view.btn-edit')
+                                        <a href="{{ route('parrillaluz.edit', $tarifa) }}" class="btn btn-primary">Editar</a>
                                     @endcan
-                                    @can('fibra.view.btn-duplicate')
-                                        <a href="{{ route('parrillafibraDuplicate', $tarifa) }}"
+                                    @can('autoconsumo.view.btn-duplicate')
+                                        <a href="{{ route('parrillaluzDuplicate', $tarifa) }}"
                                             class="btn btn-warning">Duplicar</a>
                                     @endcan
                                 </td>

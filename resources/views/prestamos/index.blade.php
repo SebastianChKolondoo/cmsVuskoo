@@ -10,7 +10,7 @@
             @endif
             @can('prestamo.view.btn-create')
                 <a href="{{ route('prestamos.create') }}" class="btn btn-primary">Nueva tarifa Colombia</a>
-                <a href="{{ route('unificadoras.create') }}" class="btn btn-primary">Nueva tarifa Unificadora</a>
+                <a href="{{ route('unificadoras.create') }}" class="btn btn-primary">Nueva tarifa Soluciones de deuda</a>
                 <a href="{{ route('microcreditos.create') }}" class="btn btn-primary">Nueva tarifa Microcredito</a>
             @endcan
         </div>
@@ -33,7 +33,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" id="tabUnificadoras-tab" data-toggle="tab" href="#tabUnificadoras" role="tab"
-                aria-controls="tabUnificadoras" aria-selected="false">Unificadoras</a>
+                aria-controls="tabUnificadoras" aria-selected="false">Soluciones de deuda</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="tabMicrocreditos-tab" data-toggle="tab" href="#tabMicrocreditos" role="tab"

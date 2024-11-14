@@ -61,12 +61,6 @@
                                 'required' => 'required',
                             ]) !!}
                         </div>
-                        {{-- <div class="form-group col-12 col-md-4">
-                            {!! Form::label('landing_link', 'Landing link', ['class' => 'form-label']) !!}
-                            {!! Form::text('landing_link', null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                             {!! Form::textarea('parrilla_bloque_1', null, [
@@ -246,8 +240,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-12">
-                            {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
+                            {!! Form::label('textoAdicional', 'Texto Cabecera de Landing', ['class' => 'form-label']) !!}
                             {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-12">
+                            {!! Form::label('informacionLegal', 'Información Legal (Pie de pagina)', ['class' => 'form-label']) !!}
+                            {!! Form::textarea('informacionLegal', null, ['class' => 'form-control editor','rows' => 2]) !!}
                         </div>
                         <div class="form-group col-12 col-md-12 mt-3">
                             <h2>Información para Seo</h2>

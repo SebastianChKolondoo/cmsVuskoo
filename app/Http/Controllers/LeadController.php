@@ -204,7 +204,6 @@ class LeadController extends Controller
         $request->validate([
             'phone' => 'required',
             'landing' => 'required',
-            'company' => 'required',
         ]);
 
         // Crear una nueva instancia del modelo Lead con los datos del formulario
@@ -411,7 +410,10 @@ class LeadController extends Controller
             case 15:    /*Frank Energy*/
                 return $this->apiFrank($lead, $idLead);
                 break;
-            case 16:    /*Frank Energy*/
+            case 16:    /*Endesa*/
+                return $this->apiEndesa($lead, $idLead);
+                break;
+            case 17:    /*gana Energy*/
                 return $this->apiGanaEnergia($lead, $idLead);
                 break;
             default:
@@ -921,7 +923,7 @@ class LeadController extends Controller
                 'firstName' => "Arkeero",
                 'lastName' => "Vuskoo",
                 'lastName2' => "",
-                'phoneNumber' => '+34'.$this->utilsController->formatTelephone($lead['phone']),
+                'phoneNumber' => '+34' . $this->utilsController->formatTelephone($lead['phone']),
                 'emailAddress' => "vuskoo@arkeero.com",
                 'country' => "ES",
                 'leadReference' => "123",
@@ -1044,6 +1046,99 @@ class LeadController extends Controller
                 'content' => 'ko',
                 'call_response' => 'ko',
                 'message' => $message . ' - ' . $msg,
+                'status' => 502
+            ], 502);
+        }
+    }
+
+    public function apiEndesa($lead, $idLead)
+    {
+        $response = null;
+        $campana = '29842f94d414949bf95fb2e6109142cfef1fb2a78114c2c536a36bf5a65b953a97c504a3b38b6c6f213d71b7809a24376b2b7c857e3b7cbca01c77587ca154a8b7f649113b8250d8f8fb460c16f3815ce033ad7186a7deca2e52fd60dda53f2dd912ca747c9d19fa6eb5376eeab6237b';
+        $base_api_url = "https://ws.walmeric.com/provision/wsclient/client_addlead.html";
+
+        // Construir la URL con los parámetros en la cadena de consulta
+        $queryParams = http_build_query([
+            'format' => 'json',
+            'idTag' => $campana,
+            'verifyLeadId' => 'NO',
+            'ete_998' => '2',
+            'phone' => intval($this->utilsController->formatTelephone($lead['phone'])),
+            'forceLandingLabels' => 'true',
+            'email' => 'test@test.com',
+            'name' => 'test',
+            'surname' => 'test test',
+            'ELanding' => json_encode([
+                "site" => "1",
+                "campaign" => "formidable-cash",
+                "medium" => "afl",
+                "source" => "kolondoo",
+                "term" => "afl",
+                "content" => "eees"
+            ]),
+            'forceLandingLabels' => 'true',
+            'EVisit' => json_encode([
+                ["id" => 1, "value" => "c2c"],
+                ["id" => 2, "value" => "kolondoo"],
+                ["id" => 21, "value" => "eng"],
+                ["id" => 22, "value" => "afl"],
+                ["id" => 23, "value" => "cpl"],
+                ["id" => 24, "value" => "pf"],
+                ["id" => 25, "value" => "pr"],
+                ["id" => 26, "value" => "pr"],
+                ["id" => 27, "value" => "open"],
+                ["id" => 28, "value" => "ctc"],
+                ["id" => 29, "value" => "one"],
+                ["id" => 30, "value" => "dual"],
+                ["id" => 32, "value" => "post"],
+                ["id" => 33, "value" => "na"],
+                ["id" => 42, "value" => "afl"],
+                ["id" => 43, "value" => "kolondoo"],
+                ["id" => 44, "value" => "formidable-cash"],
+                ["id" => 45, "value" => "afl"],
+                ["id" => 46, "value" => "eees"]
+            ])
+        ]);
+
+        $response = Http::get($base_api_url, $queryParams);
+        $responseData = $response->json();
+
+        print_r($queryParams);
+        echo '......';
+        echo time();
+        echo '......';
+        print_r($responseData);
+
+
+        $message = '';
+        $data = $responseData['result'];
+        $statusCode = $responseData['code'];
+        $recordId = $responseData['leadId'];
+
+        if (isset($data) == 'OK') {
+            $message = "ok: Registrado el numero " . $lead['phone'] . " con id = " . $recordId . ", «lead» de *gana endesa - " . ($lead['company']) . "* en función apiEndesa(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($response);
+            $this->utilsController->registroDeErrores(16, 'Lead saved endesa', $message, $lead['urlOffer'], $this->visitorIp);
+            $codigo = 201;
+
+            $lead = Lead::find($idLead);
+            $lead->idResponse = $recordId;
+            $lead->save();
+
+            // Retornar respuesta exitosa
+            return response()->json([
+                'content' => 'ok',
+                'call_response' => 'ok',
+                'message' => $recordId,
+                'status' => $statusCode
+            ], 201);
+        } else {
+
+            $message = $data['message']['status'] . ": Fallo al registrar el numero " . $data['phone'] . ", «lead» de *gana Energia - " . ($lead['company']) . "* en función ganaEnergia(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $responseData["data"] . " - Datos recibidos del «lead» en la función: " . json_encode($responseData);
+            $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
+            return response()->json([
+                'content' => 'ko',
+                'call_response' => 'ko',
+                'message' => $message,
                 'status' => 502
             ], 502);
         }

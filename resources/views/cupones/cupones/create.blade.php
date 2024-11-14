@@ -112,8 +112,8 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-12">
-                            {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
-                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor', 'rows' => 2]) !!}
+                            {!! Form::label('textoAdicional', 'Texto Cabecera de Landing', ['class' => 'form-label']) !!}
+                            {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
                         </div>
                     </div>
                     <div class="row">

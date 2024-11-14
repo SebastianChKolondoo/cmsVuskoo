@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('WEB_3_TARIFAS_TELCO_MOVIL', function (Blueprint $table) {
             $table->id();
-            $table->string('id_producto');
             $table->string('operadora');
             $table->string('estado');
             $table->string('landing_link');
             $table->string('permanencia');
-            $table->string('funcion');
             $table->string('nombre_tarifa');
             $table->string('parrilla_bloque_1');
             $table->string('parrilla_bloque_2');

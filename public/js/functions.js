@@ -1,13 +1,16 @@
 $(document).ready(function () {
-
 	$('#additemmenu').on('click', () => {
 		$('#addItemMenu').removeClass('d-none');
 		agregarItemSumenu();
 	});
 
+	const bateria_virtual = document.getElementById('bateria_virtual');
+	const precio_autoconsumo_bateria_virtual = document.getElementById('div_precio_bateria_virtual');
+
 	const tiempoCupon = document.getElementById('TiempoCupon');
 	const fechaExpiracionInicial = document.getElementById('field_fecha_inicial');
 	const fechaExpiracionFinal = document.getElementById('field_fecha_final');
+
 
 	function toggleFechaExpiracion() {
 		if (tiempoCupon.value == '2') {
@@ -18,11 +21,21 @@ $(document).ready(function () {
 			fechaExpiracionFinal.classList.remove('d-none');
 		}
 	}
+
+	function toggleBateriaVirtual() {
+		if (bateria_virtual.value == '2') {
+			precio_autoconsumo_bateria_virtual.classList.add('d-none');
+		} else {
+			precio_autoconsumo_bateria_virtual.classList.remove('d-none');
+		}
+	}
 	// Escucha el cambio en el select
-	tiempoCupon.addEventListener('change', toggleFechaExpiracion);
+	//tiempoCupon.addEventListener('change', toggleFechaExpiracion);
+	bateria_virtual.addEventListener('change', toggleBateriaVirtual);
 
 	// Inicializa el estado correcto cuando la página se carga
 	toggleFechaExpiracion();
+	toggleBateriaVirtual();
 
 	const tipoCupon = document.getElementById('tipoCupon');
 	const codigoCupon = document.getElementById('field_codigo_cupon');
@@ -55,14 +68,14 @@ $(document).ready(function () {
 		};
 	});
 
-	$('#TiempoCupon').change(function () {
+	/* $('#TiempoCupon').change(function () {
 		if ($(this).val() == 1) {
 			$('#field_fecha_expiracion').removeClass('d-none');
 		}
 		else {
 			$('#field_fecha_expiracion').addClass('d-none');
 		}
-	});
+	}); */
 
 	$('#tipoCupon').change(function () {
 		if ($(this).val() == 1) {
@@ -72,12 +85,6 @@ $(document).ready(function () {
 			$('#field_codigo_cupon').addClass('d-none');
 		}
 	});
-
-	/* $('#comercio').change(function () {
-		cargarPaisesComercio($(this).val());
-	}); */
-
-
 });
 
 let collapseContainers = false;
@@ -148,12 +155,12 @@ function cargarPaisesCategorias(id) {
 	});
 }
 
-function eliminarItemMenu(id){
-	$('#itemSubmenu_'+id).remove();
+function eliminarItemMenu(id) {
+	$('#itemSubmenu_' + id).remove();
 	var elementos = document.querySelectorAll('.nuevoSubmenu');
 	var cantidad = elementos.length;
 
-	if(cantidad == 0){
+	if (cantidad == 0) {
 		$('#addItemMenu').addClass('d-none');
 	}
 }
@@ -165,19 +172,19 @@ function agregarItemSumenu() {
 	<div class="row nuevoSubmenu" id="itemSubmenu_${cantidad}">
 		<div class="col-12 col-md-5">
 			<div class="form-group">
-				<label for="nombresubmenu_${cantidad}" class="form-label">Nombre SubMenú ${cantidad+1}</label>
+				<label for="nombresubmenu_${cantidad}" class="form-label">Nombre SubMenú ${cantidad + 1}</label>
 				<input type="text" name="nombresubmenu_${cantidad}" class="form-control" required="required">
 			</div>
 		</div>
 		<div class="col-12 col-md-5">
 			<div class="form-group">
-				<label for="urlsubmenu_${cantidad}" class="form-label">Url SubMenú ${cantidad+1}</label>
+				<label for="urlsubmenu_${cantidad}" class="form-label">Url SubMenú ${cantidad + 1}</label>
 				<input type="text" name="urlsubmenu_${cantidad}" class="form-control" required="required">
 			</div>
 		</div>
 		<div class="col-12 col-md-1">
 			<div class="form-group">
-				<label for="ordensubmenu_${cantidad}" class="form-label">Orden ${cantidad+1}</label>
+				<label for="ordensubmenu_${cantidad}" class="form-label">Orden ${cantidad + 1}</label>
 				<select type="text" value="${cantidad}" name="ordensubmenu_${cantidad}" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
 			</div>
 		</div>
@@ -187,7 +194,5 @@ function agregarItemSumenu() {
 		</div>
 	</div>`;
 	$('#contenedorItemSubmenu').append(nuevoItem);
-
-
 }
 

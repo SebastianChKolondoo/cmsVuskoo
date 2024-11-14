@@ -96,6 +96,7 @@ class ParillaFibraController extends Controller
             'landingLead' => $landingLead,
             'duracionContrato' => $request->duracionContrato,
             'slug_tarifa' => Str::slug($request->slug_tarifa),
+            'informacionLegal' => $request->informacionLegal,
         ]);
 
         return redirect()->route('ParillaFibra.index')->with('info', 'Tarifa creada correctamente.');
@@ -150,6 +151,7 @@ class ParillaFibraController extends Controller
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
+        $request['slug_tarifa'] = Str::slug($request->slug_tarifa);
         $tarifa = ParillaFibra::find($parillaFibra);
         $tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');

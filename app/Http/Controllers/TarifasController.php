@@ -14,6 +14,7 @@ class TarifasController extends Controller
     protected $tabla_luz = 'WEB_3_TARIFAS_ENERGIA_LUZ';
     protected $tabla_gas = 'WEB_3_TARIFAS_ENERGIA_GAS';
     protected $tabla_luz_gas = 'WEB_3_TARIFAS_ENERGIA_LUZ_GAS';
+    protected $tabla_autoconsumo = 'WEB_3_TARIFAS_ENERGIA_AUTOCONSUMO';
     protected $tabla_movil = 'WEB_3_TARIFAS_TELCO_MOVIL';
     protected $tabla_fibra = 'WEB_3_TARIFAS_TELCO_FIBRA';
     protected $tabla_tv = 'WEB_3_TARIFAS_TELCO_TV';
@@ -161,6 +162,35 @@ class TarifasController extends Controller
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
             ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', 'paises.decimales', '1_comercializadoras.telefono')
             ->where($this->tabla_luz_gas . '.estado', '=', '1')
+            ->where('1_comercializadoras.estado', '=', '1')
+            ->where('1_comercializadoras.pais', '=', $idioma->id)
+            ->orderBy('destacada', 'asc')
+            ->orderBy('precio', 'asc')
+            ->get();
+
+        foreach ($data as $item) {
+            // Formatear los números y luego convertirlos de nuevo a numérico
+            $item->precio = $this->conversorValor($item->precio, $item->decimales, $item->pais);
+            $item->precio_final = $this->conversorValor($item->precio_final, $item->decimales, $item->pais);
+            $item->coste_mantenimiento = $this->conversorValor($item->coste_mantenimiento, $item->decimales, $item->pais);
+            $item->coste_de_gestion = $this->conversorValor($item->coste_de_gestion, $item->decimales, $item->pais);
+            $item->gas_precio_termino_fijo = $this->conversorValor($item->gas_precio_termino_fijo, $item->decimales, $item->pais);
+            $item->gas_precio_energia = $this->conversorValor($item->gas_precio_energia, $item->decimales, $item->pais);
+        }
+        return $data;
+    }
+    
+    public function getTarifasAutoconsumoList($lang = 'es')
+    {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
+            return [];
+        }
+        $data =  DB::table($this->tabla_autoconsumo)
+            ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_autoconsumo . '.comercializadora')
+            ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
+            ->select($this->tabla_autoconsumo . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', 'paises.decimales', '1_comercializadoras.telefono')
+            ->where($this->tabla_autoconsumo . '.estado', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
             ->where('1_comercializadoras.pais', '=', $idioma->id)
             ->orderBy('destacada', 'asc')
@@ -427,6 +457,26 @@ class TarifasController extends Controller
         return $data;
     }
 
+    public function getDetailOfferFinanzasList($id)
+    {
+        $data = DB::table($this->tabla_prestamos)
+            ->join('1_banca', '1_banca.id', '=', $this->tabla_prestamos . '.banca')
+            ->join('paises', 'paises.id', '=', '1_banca.pais')
+            ->select($this->tabla_prestamos . '.*', '1_banca.nombre', '1_banca.logo', 'paises.decimales')
+            ->where($this->tabla_prestamos . '.id', '=', $id)
+            ->first();
+
+        if (isset($data->precio)) {
+            $data->precio = number_format($data->precio, $data->decimales, ',', '.');
+        }
+
+        if (isset($data->precio_final)) {
+            $data->precio_final = number_format($data->precio_final, $data->decimales, ',', '.');
+        }
+
+        return $data;
+    }
+
     public function getDetailOfferLuzList($id)
     {
         $data =  DB::table($this->tabla_luz)
@@ -490,6 +540,34 @@ class TarifasController extends Controller
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
             ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales', '1_comercializadoras.telenofo')
             ->where($this->tabla_luz_gas . '.id', '=', $id)
+            ->first();
+
+        if (isset($data->precio)) {
+            $data->precio = $this->conversorValor($data->precio, $data->decimales, $data->pais);
+        }
+
+        if (isset($data->precio_final)) {
+            $data->precio_final = $this->conversorValor($data->precio_final, $data->decimales, $data->pais);
+        }
+
+        if (isset($data->coste_mantenimiento)) {
+            $data->coste_mantenimiento = $this->conversorValor($data->coste_mantenimiento, $data->decimales, $data->pais);
+        }
+
+        if (isset($data->coste_de_gestion)) {
+            $data->coste_de_gestion = $this->conversorValor($data->coste_de_gestion, $data->decimales, $data->pais);
+        }
+
+        return $data;
+    }
+    
+    public function getDetailOfferAutoconsumoList($id)
+    {
+        $data = DB::table($this->tabla_autoconsumo)
+            ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_autoconsumo . '.comercializadora')
+            ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
+            ->select($this->tabla_autoconsumo . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_autoconsumo . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales', '1_comercializadoras.telenofo')
+            ->where($this->tabla_autoconsumo . '.id', '=', $id)
             ->first();
 
         if (isset($data->precio)) {

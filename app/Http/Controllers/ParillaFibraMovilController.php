@@ -100,6 +100,7 @@ class ParillaFibraMovilController extends Controller
             'lolamusic' => $request->lolamusic,
             'tituloSeo' => $request->tituloSeo,
             'descripcionSeo' => $request->descripcionSeo,
+            'informacionLegal' => $request->informacionLegal,
         ]);
 
         return redirect()->route('parrillafibramovil.index')->with('info', 'Tarifa creada correctamente.');
@@ -154,6 +155,7 @@ class ParillaFibraMovilController extends Controller
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
+        $request['slug_tarifa'] = Str::slug($request->slug_tarifa);
     
         $tarifa = ParillaFibraMovil::find($parillaMovil);
         $tarifa->update($request->all());

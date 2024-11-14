@@ -14,7 +14,6 @@ class ParrillaStreaming extends Model
         'id',
         'landing_link',
         'permanencia',
-        'funcion',
         'nombre_tarifa',
         'detalles_tarifa',
         'categoria',

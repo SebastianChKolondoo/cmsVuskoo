@@ -9,6 +9,7 @@ use App\Models\Paises;
 use App\Models\Prestamos;
 use App\Models\States;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PrestamosController extends Controller
 {
@@ -77,6 +78,7 @@ class PrestamosController extends Controller
             'avance_cajero' => $request->avance_cajero,
             'avance_oficina' => $request->avance_oficina,
             'reposicion_tarjeta' => $request->reposicion_tarjeta,
+            'slug_tarifa' => Str::slug($request->slug_tarifa),
         ]);
         return redirect()->route('prestamos.index')->with('info', 'Tarifa creada correctamente.');
     }
@@ -126,9 +128,8 @@ class PrestamosController extends Controller
     {
         $empresa = Banca::find($request->banca);
         $pais = $empresa->pais;
-
         $request['pais'] = $pais;
-
+        $request['slug_tarifa'] = Str::slug($request->slug_tarifa);
         $tarifa = Prestamos::find($id);
         $tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');

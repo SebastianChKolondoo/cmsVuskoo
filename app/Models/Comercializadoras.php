@@ -12,7 +12,6 @@ class Comercializadoras extends Model
     protected $fillable = [
         'nombre',
         'nombre_slug',
-        'tipo_conversion',
         'logo',
         'logo_negativo',
         'politica_privacidad',

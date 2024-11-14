@@ -13,7 +13,6 @@ class MenuItem extends Model
         'idMenu',
         'nombre',
         'url',
-        'logo',
         'pais',
         'orden'
     ];

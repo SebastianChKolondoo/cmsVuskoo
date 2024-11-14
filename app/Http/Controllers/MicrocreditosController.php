@@ -9,6 +9,7 @@ use App\Models\Microcreditos;
 use App\Models\Prestamos;
 use App\Models\States;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class MicrocreditosController extends Controller
 {
@@ -60,6 +61,7 @@ class MicrocreditosController extends Controller
             'interes_mensual' => $request->interes_mensual,
             'inteses_anual' => $request->inteses_anual,
             'ingresos_minimos' => $request->ingresos_minimos,
+            'slug_tarifa' => Str::slug($request->slug_tarifa),
         ]);
         return redirect()->route('prestamos.index')->with('info', 'Tarifa creada correctamente.');
     }
@@ -98,9 +100,10 @@ class MicrocreditosController extends Controller
 
         $request['pais'] = $pais;
         $request['categoria'] = 5;
-
+        $request['slug_tarifa'] = Str::slug($request->slug_tarifa);
         $tarifa = Prestamos::find($id);
         $tarifa->update($request->all());
+
         return back()->with('info', 'Información actualizada correctamente.');
     }
 

@@ -10,6 +10,7 @@ class ExtraOfferController extends Controller
     protected $tabla_luz = 'WEB_3_TARIFAS_ENERGIA_LUZ';
     protected $tabla_gas = 'WEB_3_TARIFAS_ENERGIA_GAS';
     protected $tabla_luz_gas = 'WEB_3_TARIFAS_ENERGIA_LUZ_GAS';
+    protected $tabla_autoconsumo = 'WEB_3_TARIFAS_ENERGIA_AUTOCONSUMO';
     protected $tabla_movil = 'WEB_3_TARIFAS_TELCO_MOVIL';
     protected $tabla_fibra = 'WEB_3_TARIFAS_TELCO_FIBRA';
     protected $tabla_tv = 'WEB_3_TARIFAS_TELCO_TV';
@@ -75,6 +76,19 @@ class ExtraOfferController extends Controller
             ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', '1_comercializadoras.telefono')
             ->where($this->tabla_luz_gas . '.estado', '=', '1')
             ->where($this->tabla_luz_gas . '.pais', '=', '1')
+            ->where('1_comercializadoras.estado', '=', '1')
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
+    }
+    
+    public function getExtraOfferAutoconsumoList()
+    {
+        return DB::table($this->tabla_autoconsumo)
+            ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_autoconsumo . '.comercializadora')
+            ->select($this->tabla_autoconsumo . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', '1_comercializadoras.telefono')
+            ->where($this->tabla_autoconsumo . '.estado', '=', '1')
+            ->where($this->tabla_autoconsumo . '.pais', '=', '1')
             ->where('1_comercializadoras.estado', '=', '1')
             ->inRandomOrder()
             ->take(3)

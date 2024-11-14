@@ -43,6 +43,7 @@ class Prestamos extends Model
         'avance_cajero',
         'avance_oficina',
         'reposicion_tarjeta',
+        'slug_tarifa'
     ];
 
     public function state()

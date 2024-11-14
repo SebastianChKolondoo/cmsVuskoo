@@ -21,12 +21,6 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
-                            {!! Form::label('tarifa_empresarial', '¿Tarifa empresarial?', ['class' => 'form-label']) !!}
-                            {!! Form::select('tarifa_empresarial', $states->pluck('name', 'id'), null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div>
-                        <div class="form-group col-12 col-md-4">
                             {!! Form::label('estado', 'Estado', ['class' => 'form-label']) !!}
                             {!! Form::select('estado', $states->pluck('name', 'id'), null, [
                                 'class' => 'form-control',
@@ -52,12 +46,6 @@
                                 'required' => 'required',
                             ]) !!}
                         </div>
-                        {{-- <div class="form-group col-12 col-md-4">
-                            {!! Form::label('landing_link', 'Landing link', ['class' => 'form-label']) !!}
-                            {!! Form::text('landing_link', null, [
-                                'class' => 'form-control',
-                            ]) !!}
-                        </div> --}}
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('parrilla_bloque_1', 'característica #1', ['class' => 'form-label']) !!}
                             {!! Form::textarea('parrilla_bloque_1', null, [
@@ -163,8 +151,12 @@
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-12">
-                            {!! Form::label('textoAdicional', 'Texto adicional', ['class' => 'form-label']) !!}
+                            {!! Form::label('textoAdicional', 'Texto Cabecera de Landing', ['class' => 'form-label']) !!}
                             {!! Form::textarea('textoAdicional', null, ['class' => 'form-control editor','rows' => 2]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-12">
+                            {!! Form::label('informacionLegal', 'Información Legal (Pie de pagina)', ['class' => 'form-label']) !!}
+                            {!! Form::textarea('informacionLegal', null, ['class' => 'form-control editor','rows' => 2]) !!}
                         </div>
                         <div class="form-group col-12 col-md-12 mt-3">
                             <h2>Información para Seo</h2>
@@ -183,6 +175,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="col-12">
+                <a href="{{ route('parrillagas.index') }}" class="btn btn-dark">Volver</a>
             </div>
         </div>
     </div>

@@ -11,5 +11,6 @@ class CategoriasPrestamos extends Model
     protected $table = 'categorias_prestamos';
     protected $fillable = [
         'nombre',
+        
     ];
 }

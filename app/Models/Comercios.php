@@ -10,12 +10,9 @@ class Comercios extends Model
     use HasFactory;
     protected $table = "1_comercios";
     protected $fillable = [
-        'funcion_api',
         'nombre',
         'idPerseo',
         'nombre_slug',
-        'TipoCupon',
-        'tipo_conversion',
         'logo',
         'logo_negativo',
         'politica_privacidad',

@@ -37,7 +37,7 @@
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
-                        <th>Estado</th>
+                        <th>Activo</th>
                         <th>Operadora</th>
                         <th>Oferta</th>
                         <th>Visible en</th>

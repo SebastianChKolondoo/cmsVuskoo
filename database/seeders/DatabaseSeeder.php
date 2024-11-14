@@ -27,7 +27,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Sebastián',
             'lastname' => 'Chaparro',
-            'numberDocument' => '1022399551',
             'idState' => 1,
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin'),
@@ -36,7 +35,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Daniel',
             'lastname' => 'Aguilar',
-            'numberDocument' => '12345',
             'idState' => 1,
             'email' => 'daniel.aguilar@kolondoo.com',
             'password' => bcrypt('12345'),

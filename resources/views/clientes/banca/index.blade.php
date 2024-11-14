@@ -30,7 +30,7 @@
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
-                        <th>Estado</th>
+                        <th>Activo</th>
                         <th>Nombre</th>
                         <th>pais</th>
                         {{-- @can('banca.view.btn-edit') --}}

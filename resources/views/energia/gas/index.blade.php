@@ -37,7 +37,7 @@
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
-                        <th>Estado</th>
+                        <th>Activo</th>
                         <th>comercializadora</th>
                         <th>Oferta</th>
                         <th>Precio</th>

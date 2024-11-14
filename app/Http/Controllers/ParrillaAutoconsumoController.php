@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Comercializadoras;
 use App\Models\Paises;
-use App\Models\ParillaLuz;
+use App\Models\ParrillaAutoconsumo;
 use App\Models\States;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class ParillaLuzController extends Controller
+class ParrillaAutoconsumoController extends Controller
 {
     protected $utilsController;
     protected $quitarTildes;
@@ -26,8 +26,8 @@ class ParillaLuzController extends Controller
      */
     public function index()
     {
-        $tarifas = ParillaLuz::all();
-        return view('energia.luz.index', compact('tarifas'));
+        $tarifas = ParrillaAutoconsumo::all();
+        return view('energia.autoconsumo.index', compact('tarifas'));
     }
 
     /**
@@ -38,7 +38,7 @@ class ParillaLuzController extends Controller
         $states = States::all();
         $paises = Paises::all();
         $comercializadoras = Comercializadoras::where('estado', '1')->get();
-        return view('energia.luz.create', compact('states', 'comercializadoras', 'paises'));
+        return view('energia.autoconsumo.create', compact('states', 'comercializadoras', 'paises'));
     }
 
     /**
@@ -48,7 +48,7 @@ class ParillaLuzController extends Controller
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
         $empresa = Comercializadoras::find($request->comercializadora);
-        $tarifa = ParillaLuz::create([
+        $tarifa = ParrillaAutoconsumo::create([
             'comercializadora' => $request->comercializadora,
             'estado' => $request->estado,
             'nombre_tarifa' => $request->nombre_tarifa,
@@ -84,16 +84,18 @@ class ParillaLuzController extends Controller
             'tituloSeo' => $request->tituloSeo,
             'descripcionSeo' => $request->descripcionSeo,
             'informacionLegal' => $request->informacionLegal,
-            /* 'tarifa_empresarial' => $request->tarifa_empresarial */
+            'excedente' => $request->excedente,
+            'bateria_virtual' => $request->bateria_virtual,
+            'precio_bateria_virtual' => $request->precio_bateria_virtual,
         ]);
 
-        return redirect()->route('parrillaluz.index')->with('info', 'Tarifa creada correctamente.');
+        return redirect()->route('parrillaautoconsumo.index')->with('info', 'Tarifa creada correctamente.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ParillaLuz $parillaLuz)
+    public function show(ParrillaAutoconsumo $ParrillaAutoconsumo)
     {
         //
     }
@@ -101,13 +103,13 @@ class ParillaLuzController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($parillaLuz)
+    public function edit($ParrillaAutoconsumo)
     {
-        $tarifa = ParillaLuz::find($parillaLuz);
+        $tarifa = ParrillaAutoconsumo::find($ParrillaAutoconsumo);
         $paises = Paises::all();
         $states = States::all();
         $comercializadoras = Comercializadoras::all();
-        return view('energia.luz.edit', compact('tarifa', 'states', 'comercializadoras', 'paises'));
+        return view('energia.autoconsumo.edit', compact('tarifa', 'states', 'comercializadoras', 'paises'));
     }
 
     /**
@@ -122,18 +124,17 @@ class ParillaLuzController extends Controller
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
         $request['moneda'] = $moneda->moneda;
         $request['slug_tarifa'] = Str::slug($request->slug_tarifa);
-        $tarifa = ParillaLuz::find($id);
+        $tarifa = ParrillaAutoconsumo::find($id);
         $tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');
-        //return redirect()->route('parrillaluz.index')->with('info', 'Tarifa editada correctamente.');
     }
 
     public function duplicateOffer($id)
     {
-        $tarifaBase = ParillaLuz::find($id);
+        $tarifaBase = ParrillaAutoconsumo::find($id);
         $duplica = $tarifaBase->replicate();
         $duplica->save();
-        $tarifa = ParillaLuz::find($duplica->id);
-        return redirect()->route('parrillaluz.edit', ['parrillaluz' => $duplica->id]);
+        $tarifa = ParrillaAutoconsumo::find($duplica->id);
+        return redirect()->route('parrillaautoconsumo.edit', ['parrillaautoconsumo' => $duplica->id]);
     }
 }

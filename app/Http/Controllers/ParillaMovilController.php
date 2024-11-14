@@ -101,6 +101,7 @@ class ParillaMovilController extends Controller
             'red5g' => $request->red5g,
             'tinder' => $request->tinder,
             'lolamusic' => $request->lolamusic,
+            'informacionLegal' => $request->informacionLegal,
         ]);
 
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa creada correctamente.');
@@ -156,6 +157,7 @@ class ParillaMovilController extends Controller
         $request['parrilla_bloque_2'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_2));
         $request['parrilla_bloque_3'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_3));
         $request['parrilla_bloque_4'] = trim(str_replace('  ', ' ', $request->parrilla_bloque_4));
+        $request['slug_tarifa'] = Str::slug($request->slug_tarifa);
         $tarifa = ParillaMovil::find($parillaMovil);
         $tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');

@@ -14,7 +14,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <h4>Listado de Unificadoras</h4>
+            <h4>Listado de Soluciones de deuda</h4>
         </div>
     </div>
     <ul class="nav nav-tabs" id="myTabs" role="tablist">

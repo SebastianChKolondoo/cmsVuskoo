@@ -1,6 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\BlogController;
@@ -9,13 +7,10 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ExtraOfferController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\LeadController;
-use App\Http\Controllers\HelperController;
 use App\Http\Controllers\TarifasController;
 use App\Http\Controllers\UtilsController;
-use App\Http\Controllers\ZapierController;
 use App\Models\Comercios;
 use App\Models\Cupones;
-use Illuminate\Support\Facades\Http;
 
 Route::get('/', function () {
     return 'welcome to Vuskoo!';
@@ -54,6 +49,10 @@ Route::middleware('api')->group(function () {
     Route::get('getTarifasGasLuz/{lang?}', [TarifasController::class, 'getTarifasGasLuzList']);
     Route::get('getExtraOfferluzygas/{lang?}', [ExtraOfferController::class, 'getExtraOfferGasLuzList']);
     Route::get('getDetailOffercomparadortarifasluzygas/{id}', [TarifasController::class, 'getDetailOfferGasLuzList']);
+    /* Luz Autoconsumo */
+    Route::get('getTarifasAutoconsumo/{lang?}', [TarifasController::class, 'getTarifasAutoconsumoList']);
+    Route::get('getExtraOfferautoconsumo/{lang?}', [ExtraOfferController::class, 'getExtraOfferAutoconsumoList']);
+    Route::get('getDetailOffercomparadortarifasautoconsumo/{id}', [TarifasController::class, 'getDetailOfferAutoconsumoList']);
     /* movil */
     Route::get('getTarifasMovil/{lang?}', [TarifasController::class, 'getTarifasMovilList']);
     Route::get('filterMovil/{lang?}', [FilterController::class, 'getValuesFilterMovilList']);
@@ -112,8 +111,6 @@ Route::middleware('api')->group(function () {
     /* Cobertura fibra */
     Route::get('getCoberturaFibra/{lang?}', [BlogController::class, 'getCoberturaFibraList']);
     Route::get('getCoberturaFibraById/{id}', [BlogController::class, 'getCoberturaFibraList']);
-    /* optimizacion */
-    Route::get('getGestion/{funcion}/{id?}', [BlogController::class, 'getGestionList']);
     /* Obtener data de localizacion por Ip */
     Route::get('getDataLocation', [UtilsController::class, 'checkingGuestLocationApi']);
     Route::get('getDataIp', [UtilsController::class, 'obtencionIpRealVisitante']);
@@ -122,13 +119,8 @@ Route::middleware('api')->group(function () {
     Route::post('contactanosRegister', [LeadController::class, 'FormContactanosRegister']);
     Route::post('NewsletterRegister', [LeadController::class, 'FormNewsletterRegister']);
     Route::get('emailConfirmacion/{token}', [UtilsController::class, 'getEmailconfirmation']);
-
     /* Zapier */
     Route::post('facebookZapierCpl', [LeadController::class, 'LeadRegisterInfo']);
-    //Route::post('facebookZapierCpl', [LeadController::class, 'facebookZapierCpl']);
-    /* Route::post('redesSocialesZapier', [ZapierController::class, 'redesSocialesZapier']);
-    Route::post('redesSocialesEnergyZapier', [ZapierController::class, 'redesSocialesEnergyZapier']); */
-
     /* registrar error en plataforma */
     Route::post('addError', [UtilsController::class, 'addError']);
 
@@ -149,9 +141,7 @@ Route::middleware('api')->group(function () {
     Route::get('getTarifasCupones/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasCuponesList']);
     Route::get('getTarifasCuponesDestacados/{lang?}', [TarifasController::class, 'getTarifasCuponesDestacadosList']);
     Route::get('getTarifaCupon/{id}', [TarifasController::class, 'getTarifaCuponList']);
-
     Route::get('getPaisesCupon', [CuponesController::class, 'getPaisesCuponList']);
-
     Route::get('getCuponesComercio/{id}', [CuponesController::class, 'getCuponesComercioList']);
 
     /*  */
@@ -169,6 +159,7 @@ Route::middleware('api')->group(function () {
     Route::get('getTarifasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasPrestamosList']);
     Route::get('getBancasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getBancasPrestamosList']);
     Route::get('getTarifaPrestamo/{id}', [TarifasController::class, 'getTarifaPrestamoList']);
+    Route::get('getDetailOffercomparadorfinanzas/{id}', [TarifasController::class, 'getDetailOfferFinanzasList']);
 
     /* Administracion pagina web */
     /* Menu */
@@ -179,9 +170,6 @@ Route::middleware('api')->group(function () {
 
     
     /* mail */
-    
-
-
     route::get('/cambioNombreIdComerciosCupones', function () {
         $data = Cupones::limit(200)->orderBy('store', 'desc')->get();
         foreach ($data as $item) {

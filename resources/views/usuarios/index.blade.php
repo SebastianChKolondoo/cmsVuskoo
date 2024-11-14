@@ -22,7 +22,6 @@
                         <thead class="bg-primary text-white">
                             <tr>
                                 <th>id</th>
-                                <th>Cédula</th>
                                 <th>Nombre</th>
                                 <th>Correo</th>
                                 <th>Perfil</th>
@@ -34,8 +33,6 @@
                         <tbody>
                             @foreach ($usuarios as $user)
                                 <td class="align-middle">{{ $user->id }}</td>
-                                <td class="align-middle">
-                                    ******{{ substr($user->numberDocument, strlen($user->numberDocument) - 4) }}</td>
                                 <td class="align-middle">{{ $user->name }} {{ $user->lastname }}</td>
                                 <td class="align-middle">{{ $user->email }}</td>
                                 <td class="align-middle">{{ $user->rol_usuario }}</td>

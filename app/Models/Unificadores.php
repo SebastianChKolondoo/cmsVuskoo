@@ -27,5 +27,6 @@ class Unificadores extends Model
         'interes_mensual',
         'inteses_anual',
         'ingresos_minimos',
+        'slug_tarifa'
     ];
 }

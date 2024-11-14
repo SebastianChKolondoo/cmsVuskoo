@@ -38,7 +38,7 @@
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>id</th>
-                        <th>Estado</th>
+                        <th>Activo</th>
                         <th>Nombre</th>
                         <th>Pais</th>
                         @can('comercializadoras.view.btn-edit')

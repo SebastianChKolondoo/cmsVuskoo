@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ParillaLuz extends Model
+class ParrillaAutoconsumo extends Model
 {
     use HasFactory;
-    protected $table = 'WEB_3_TARIFAS_ENERGIA_LUZ';
+    protected $table = 'WEB_3_TARIFAS_ENERGIA_AUTOCONSUMO';
     protected $fillable = [
         'estado',
         'destacada',
@@ -50,8 +50,10 @@ class ParillaLuz extends Model
         'tituloSeo',
         'descripcionSeo',
         'luz_indexada',
-        'informacionLegal'
-        /* 'tarifa_empresarial', */
+        'informacionLegal',
+        'excedente',
+        'bateria_virtual',
+        'precio_bateria_virtual'
     ];
 
     public function state()

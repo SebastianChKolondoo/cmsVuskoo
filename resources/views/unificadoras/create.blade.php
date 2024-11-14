@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2>Registrar oferta de Unificadora</h2>
+                    <h2>Registrar oferta de Solución de deuda</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))
@@ -21,6 +21,12 @@
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('banca', 'Banco', ['class' => 'form-label']) !!}
                             {!! Form::select('banca', $operadorasList, null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
+                        <div class="form-group col-12 col-md-4">
+                            {!! Form::label('slug_tarifa', 'Slug de tarifa', ['class' => 'form-label']) !!}
+                            {!! Form::text('slug_tarifa', null, [
                                 'class' => 'form-control',
                             ]) !!}
                         </div>

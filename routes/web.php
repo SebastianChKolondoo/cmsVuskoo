@@ -27,6 +27,7 @@ use App\Http\Controllers\ParillaGasController;
 use App\Http\Controllers\ParillaLuzController;
 use App\Http\Controllers\ParillaLuzGasController;
 use App\Http\Controllers\ParillaMovilController;
+use App\Http\Controllers\ParrillaAutoconsumoController;
 use App\Http\Controllers\ParrillaStreamingController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\PrestamosController;
@@ -37,6 +38,7 @@ use App\Http\Controllers\TipoCuponController;
 use App\Http\Controllers\TraduccionCategoriasController;
 use App\Http\Controllers\UnificadoresController;
 use App\Http\Controllers\UserController;
+use App\Models\ParrillaAutoconsumo;
 use App\Models\SegurosSalud;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -95,9 +97,9 @@ Route::resource('parrillaluz', ParillaLuzController::class)->names('parrillaluz'
 Route::get('parrillaluzDuplicate/{id}', [ParillaLuzController::class, 'duplicateOffer'])->name('parrillaluzDuplicate')->middleware(['auth']);
 Route::resource('parrillaluzgas', ParillaLuzGasController::class)->names('parrillaluzgas')->middleware(['auth']);
 Route::get('parrillaluzgasDuplicate/{id}', [ParillaLuzGasController::class, 'duplicateOffer'])->name('parrillaluzgasDuplicate')->middleware(['auth']);
+Route::resource('parrillaautoconsumo', ParrillaAutoconsumoController::class)->names('parrillaautoconsumo')->middleware(['auth']);
 
 Route::resource('streaming', ParrillaStreamingController::class)->names('streaming')->middleware(['auth']);
-Route::get('parrillagasDuplicate/{id}', [ParillaGasController::class, 'duplicateOffer'])->name('parrillagasDuplicate')->middleware(['auth']);
 
 Route::get('Contenidomarcacreatecomercializadora/{id}', [ContenidoMarcaController::class, 'createContent'])->name('Contenidomarcacreatecomercializadora')->middleware(['auth']);
 Route::get('Contenidomarcacreateoperadora/{id}', [ContenidoMarcaController::class, 'createContent'])->name('Contenidomarcacreateoperadora')->middleware(['auth']);
