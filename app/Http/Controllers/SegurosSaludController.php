@@ -7,6 +7,7 @@ use App\Models\Proveedores;
 use App\Models\SegurosSalud;
 use App\Models\States;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SegurosSaludController extends Controller
 {
@@ -53,7 +54,9 @@ class SegurosSaludController extends Controller
             'detector_magnetico' => $request->detector_magnetico,
             'llaves_tags' => $request->llaves_tags,
             'extras' => $request->extras,
-            'copago' => $request->copago
+            'copago' => $request->copago,
+            'slug_tarifa' => Str::slug($request->slug_tarifa),
+            
 
         ]);
 
@@ -85,6 +88,7 @@ class SegurosSaludController extends Controller
      */
     public function update(Request $request,  $alarma)
     {
+        $request['slug_tarifa'] = Str::slug($request->slug_tarifa);
         $alarma = SegurosSalud::find($alarma);
         $alarma->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');

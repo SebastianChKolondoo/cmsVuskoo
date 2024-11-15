@@ -34,6 +34,7 @@ class Alarmas extends Model
         'detector_magnetico',
         'llaves_tags',
         'extras',
+        'slug_tarifa'
     ];
 
     public function proveedores()

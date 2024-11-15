@@ -42,7 +42,7 @@
                             {!! Form::label('slug_tarifa', 'Slug de la tarifa', ['class' => 'form-label']) !!}
                             {!! Form::text('slug_tarifa', null, [
                                 'class' => 'form-control',
-                                'required' => 'required',
+                               
                             ]) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">

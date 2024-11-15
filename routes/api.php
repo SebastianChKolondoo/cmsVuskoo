@@ -79,32 +79,20 @@ Route::middleware('api')->group(function () {
     /* seguros salud */
     Route::get('getTarifasSegurosSalud/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasSeguroSaludList']);
     Route::get('getTarifasComparadorSegurosSalud/{lang?}', [TarifasController::class, 'getTarifasComparadorSaludList']);
-    /* fibra movil tv */
-    Route::get('filterMovilFibraTv/{lang?}', [FilterController::class, 'getValuesFilterFibraMovilTvList']);
-    Route::get('getExtraOffercomparadorfibramoviltv/{lang?}', [ExtraOfferController::class, 'getExtraOfferFibraMovilTvList']);
-    Route::get('getDetailOffercomparadorfibramoviltv/{id}', [TarifasController::class, 'getDetailOfferFibraMovilTvList']);
+    Route::get('getDetailOffercomparadortarifassegurossalud/{id}', [TarifasController::class, 'getDetailOfferSaludList']);
     /* Streaming */
     Route::get('getTarifasStreaming/{lang?}', [TarifasController::class, 'getTarifasStreamingList']);
     /* blog */
-   /*  Route::get('getBlog/{lang?}', [BlogController::class, 'getBlogList']);
-    Route::get('getBlogHome/{lang?}', [BlogController::class, 'getBlogHomeList']);
-    Route::get('getBlog/{categoria}/{id?}', [BlogController::class, 'getBlogList']);
-    Route::get('getMenuBlog/{lang?}', [BlogController::class, 'getMenuBlogList']); */
-
     Route::get('getBlog/{lang?}', [BlogController::class, 'getBlogNewList']);
-    Route::get('getBlog/{lang?}/{categoria?}/{amigable?}', [BlogController::class, 'getBlogItemList']); 
-    /* Route::get('getBlog/{lang}/{categoria?}/{amigable?}', [BlogController::class, 'getBlogItemList']); 
-    /* Route::get('getBlogCategoria/{lang}/{categoria?}', [BlogController::class, 'getBlogInfoCategoriaList']);  */
+    Route::get('getBlog/{lang?}/{categoria?}/{amigable?}', [BlogController::class, 'getBlogItemList']);
     Route::get('getBlogHome/{lang?}', [BlogController::class, 'getBlogInfoHomeList']); 
     Route::get('getMenuBlog/{lang?}', [BlogController::class, 'getMenuInfoBlogList']); 
-
-
     /* Suministros */
     Route::get('getSuministros/{lang?}', [BlogController::class, 'getSuministrosList']);
     Route::get('getSuministrosById/{id}', [BlogController::class, 'getSuministrosList']);
     /* Seguros */
-    Route::get('getSeguros/{lang?}', [BlogController::class, 'getSegurosList']);
-    Route::get('getSegurosById/{id}', [BlogController::class, 'getSegurosList']);
+    /* Route::get('getSeguros/{lang?}', [BlogController::class, 'getSegurosList']);
+    Route::get('getSegurosById/{id}', [BlogController::class, 'getSegurosList']); */
     /* Cobertura movil */
     Route::get('getCoberturaMovil/{lang?}', [BlogController::class, 'getCoberturaMovilList']);
     Route::get('getCoberturaMovilById/{id}', [BlogController::class, 'getCoberturaMovilList']);

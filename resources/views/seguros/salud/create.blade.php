@@ -20,7 +20,12 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="offset-md-8"></div>
+                        <div class="form-group col-12 col-md-8">
+                            {!! Form::label('slug_tarifa', 'Slug de la tarifa', ['class' => 'form-label']) !!}
+                            {!! Form::text('slug_tarifa', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('selector_1', 'Tiempo', ['class' => 'form-label']) !!}
                             {!! Form::text('selector_1', null, [

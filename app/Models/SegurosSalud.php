@@ -12,6 +12,7 @@ class SegurosSalud extends Model
 
     protected $fillable = [
         'proveedor',
+        'slug_tarifa',
         'selector_1',
         'precio_1',
         'divisa_1',

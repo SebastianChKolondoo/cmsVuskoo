@@ -224,6 +224,7 @@ class LeadController extends Controller
                 case 'comparador-movil':
                     return $this->leadMovil($lead, $lead->id);
                 case 'comparador-tarifas-luz':
+                case 'comparador-tarifas-luz-gas':
                     return $this->leadLuz($lead, $lead->id);
                 default:
                     return $this->leadMovil($lead, $lead->id);
@@ -898,36 +899,20 @@ class LeadController extends Controller
     public function apiFrank($lead, $idLead)
     {
         try {
-            /* $apiKey = "xyz-leads-api-123";
-            $signingKey = "xyz-leads-signing-123";
-            $baseApiUrl = "https://preview.frank-api.nl/admin/webhooks/lead";
-            //$baseApiUrl = "https://frank-api.nl/admin/webhooks/lead"; /* prod *
-
-            // Datos del lead a enviar
-            $leadData = [
-                'firstName' => "Arkeero",
-                'lastName' => "Vuskoo",
-                'lastName2' => null,
-                'phoneNumber' => $this->utilsController->formatTelephone($lead['phone']),
-                'emailAddress' => "",
-                'country' => "ES",
-                'leadReference' => time(),
-                'originOfLead' => $lead['landing'],
-            ]; */
-
-            $apiKey = "xyz-leads-api-123";
-            $signingKey = "xyz-leads-signing-123";
-            $baseApiUrl = "https://preview.frank-api.nl/admin/webhooks/lead";
+            $apiKey = "b440caaf421024d175f5af4826d113185ed4d7bfd308afbe87413e6ed4ebad33";
+            $signingKey = "325463f8e205162a01914ae041f15639a9556be17b8cabfa6449a603946e3d4b";
+            //$baseApiUrl = "https://preview.frank-api.nl/admin/webhooks/lead";
+            $baseApiUrl = "https://frank-api.nl/admin/webhooks/lead";
 
             $leadData = [
-                'firstName' => "Arkeero",
-                'lastName' => "Vuskoo",
+                'firstName' => "nombre",
+                'lastName' => "apellidos",
                 'lastName2' => "",
                 'phoneNumber' => '+34' . $this->utilsController->formatTelephone($lead['phone']),
                 'emailAddress' => "vuskoo@arkeero.com",
                 'country' => "ES",
                 'leadReference' => "123",
-                'originOfLead' => $lead['landing'],
+                'originOfLead' => 'arkeroo',
             ];
 
             $timestamp = round(microtime(true) * 1000);

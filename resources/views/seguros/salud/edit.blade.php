@@ -12,6 +12,7 @@
                             {{ session('info') }}
                         </div>
                     @endif
+                    <a class="btn btn-warning mb-3" target="_blank" href="{{ url('https://www.vuskoo.com/'.$oferta->paises->codigo.'/seguros/comparador-tarifas-seguros-salud/' . $oferta->slug_tarifa . '-' . $oferta->id) }}">Ver oferta en vuskoo.com</a>
                     {!! Form::model($oferta, [
                         'route' => ['segurossalud.update', $oferta],
                         'method' => 'put',
@@ -24,7 +25,12 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        <div class="offset-md-8"></div>
+                        <div class="form-group col-12 col-md-8">
+                            {!! Form::label('slug_tarifa', 'Slug de la tarifa', ['class' => 'form-label']) !!}
+                            {!! Form::text('slug_tarifa', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('selector_1', 'Tiempo', ['class' => 'form-label']) !!}
                             {!! Form::text('selector_1', null, [

@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorias;
 use App\Models\Paises;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use function PHPUnit\Framework\returnSelf;
 
 class TarifasController extends Controller
 {
@@ -533,12 +530,12 @@ class TarifasController extends Controller
         return $data;
     }
 
-    public function getDetailOfferGasLuzList($id)
+    /* public function getDetailOfferGasLuzList($id)
     {
         $data = DB::table($this->tabla_luz_gas)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales', '1_comercializadoras.telenofo')
+            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales', '1_comercializadoras.telefono')
             ->where($this->tabla_luz_gas . '.id', '=', $id)
             ->first();
 
@@ -557,6 +554,34 @@ class TarifasController extends Controller
         if (isset($data->coste_de_gestion)) {
             $data->coste_de_gestion = $this->conversorValor($data->coste_de_gestion, $data->decimales, $data->pais);
         }
+
+        return $data;
+    } */
+
+    public function getDetailOfferGasLuzList($id)
+    {
+        $data =  DB::table($this->tabla_luz_gas)
+            ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_luz_gas . '.comercializadora')
+            ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
+            ->select($this->tabla_luz_gas . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_luz_gas . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales', '1_comercializadoras.telefono')
+            ->where($this->tabla_luz_gas . '.id', '=', $id)
+            ->first();
+
+        /* if (isset($data->precio)) {
+            $data->precio = $this->conversorValor($data->precio, $data->decimales, $data->pais);
+        }
+
+        if (isset($data->precio_final)) {
+            $data->precio_final = $this->conversorValor($data->precio_final, $data->decimales, $data->pais);
+        }
+
+        if (isset($data->coste_mantenimiento)) {
+            $data->coste_mantenimiento = $this->conversorValor($data->coste_mantenimiento, $data->decimales, $data->pais);
+        }
+
+        if (isset($data->coste_de_gestion)) {
+            $data->coste_de_gestion = $this->conversorValor($data->coste_de_gestion, $data->decimales, $data->pais);
+        } */
 
         return $data;
     }
@@ -636,6 +661,27 @@ class TarifasController extends Controller
             ->join('paises', 'paises.id', '=', '1_operadoras.pais')
             ->select($this->tabla_movil_fibra_tv . '.*', '1_operadoras.nombre', '1_operadoras.logo', 'politica_privacidad', 'paises.decimales', '1_operadoras.telefono')
             ->where($this->tabla_movil_fibra_tv . '.id', '=', $id)
+            ->first();
+
+        if (isset($data->precio)) {
+            $data->precio = $this->conversorValor($data->precio, $data->decimales, $data->pais);
+        }
+
+        if (isset($data->precio_final)) {
+            $data->precio_final = $this->conversorValor($data->precio_final, $data->decimales, $data->pais);
+        }
+
+
+        return $data;
+    }
+
+    public function getDetailOfferSaludList($id)
+    {
+        $data = DB::table($this->tabla_seguro_salud)
+            ->join('1_proveedores', '1_proveedores.id', '=', $this->tabla_seguro_salud . '.proveedor')
+            ->join('paises', 'paises.id', '=', '1_proveedores.pais')
+            ->select($this->tabla_seguro_salud . '.*', '1_proveedores.nombre', '1_proveedores.logo', 'politica_privacidad', 'paises.decimales', '1_proveedores.telefono')
+            ->where($this->tabla_seguro_salud . '.id', '=', $id)
             ->first();
 
         if (isset($data->precio)) {

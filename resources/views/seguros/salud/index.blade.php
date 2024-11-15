@@ -56,7 +56,8 @@
                                 @can('parrillasalud.view.btn-edit')
                                     <a href="{{ route('segurossalud.edit', $item) }}" class="btn btn-primary">Editar</a>
                                 @endcan
-                               {{--  @can('segurossalud.view.btn-duplicate')
+                                <a class="btn btn-warning" target="_blank" href="{{ url('https://www.vuskoo.com/'.$item->paises->codigo.'/seguros/comparador-tarifas-seguros-salud/' . $item->slug_tarifa . '-' . $item->id) }}">Ver oferta en vuskoo.com</a>
+                                {{--  @can('segurossalud.view.btn-duplicate')
                                     <a href="{{ route('segurossaludDuplicate', $item) }}" class="btn btn-warning">Duplicar</a>
                                 @endcan --}}
                             </td>

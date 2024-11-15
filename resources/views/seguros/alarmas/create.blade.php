@@ -20,6 +20,12 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
+                        <div class="form-group col-12 col-md-8">
+                            {!! Form::label('slug_tarifa', 'Slug de la tarifa', ['class' => 'form-label']) !!}
+                            {!! Form::text('slug_tarifa', null, [
+                                'class' => 'form-control',
+                            ]) !!}
+                        </div>
                         <div class="col-12"><b>Cuota mensual</b></div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('selector_1', 'Tiempo', ['class' => 'form-label']) !!}
@@ -163,20 +169,20 @@
                                 'class' => 'form-control',
                             ]) !!}
                         </div>
-                        
+
                     </div>
 
                     {{ Form::submit('Registrar', ['class' => 'btn btn-primary']) }}
                     {{ Form::close() }}
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-        <div class="row my-4">
-            <div class="col-12">
-                <a href="{{ route('alarmas.index') }}" class="btn btn-dark">Volver</a>
-            </div>
+    </div>
+    </div>
+    <div class="row my-4">
+        <div class="col-12">
+            <a href="{{ route('alarmas.index') }}" class="btn btn-dark">Volver</a>
         </div>
+    </div>
     </div>
 @endsection
