@@ -24,23 +24,33 @@ Route::get('emailtest', [EmailController::class, 'sendMail'])->name('emailtest')
 Route::get('getBlogPreview/{id}', [BlogController::class, 'getBlogPreviewList']);
 
 Route::middleware('api')->group(function () {
-    Route::get('getOperadoras/{lang?}', [ApiController::class, 'getOperadorasMovilList']);
-    Route::get('getComercializadorasLuz/{lang?}', [ApiController::class, 'getComercializadorasLuzList']);
-    Route::get('getComercializadorasGas/{lang?}', [ApiController::class, 'getComercializadorasGasList']);
-    Route::get('getOperadorasFibra/{lang?}', [ApiController::class, 'getOperadorasFibraList']);
-    Route::get('getOperadorasPlanCelular/{lang?}', [ApiController::class, 'getOperadorasPlanCelularList']);
+    Route::get('getOperadorasAll/{lang?}', [ApiController::class, 'getOperadorasAllList']);
+    Route::get('getComercializadorasAll/{lang?}', [ApiController::class, 'getComercializadorasAllList']);
+    
+    /* NUEVA */
+    Route::get('getComercializadoras/{filtro}/{lang?}', [ApiController::class, 'getComercializadorasList']);
+    Route::get('getOperadoras/{filtro?}/{lang?}', [ApiController::class, 'getOperadorasList']);
+    Route::get('getMetaDataSEO/{lang?}', [ApiController::class, 'getMetaSeoList']);
+
     Route::get('getComercializadorasLuzGas/{lang?}', [ApiController::class, 'getComercializadorasLuzGasList']);
+    /* Route::get('getComercializadorasGas/{lang?}', [ApiController::class, 'getComercializadorasGasList']);
+    Route::get('getComercializadorasAutoconsumo/{lang?}', [ApiController::class, 'getComercializadoraAutoconsumoList']);
+    Route::get('getOperadorasFibra/{lang?}', [ApiController::class, 'getOperadorasFibraList']);
     Route::get('getOperadorasFibraMovil/{lang?}', [ApiController::class, 'getOperadorasFibraMovilList']);
     Route::get('getOperadorasFibraMovilTv/{lang?}', [ApiController::class, 'getOperadorasFibraMovilTvList']);
     Route::get('getMarcasVehiculos/{lang?}', [ApiController::class, 'getMarcasVehiculosList']);
+    /* Luz */
+    Route::get('getOperadorasPlanCelular/{lang?}', [ApiController::class, 'getOperadorasPlanCelularList']);
+
     Route::get('getComerciosCupones/{lang?}/{categoria?}', [ApiController::class, 'getComerciosCuponesList']);
     Route::get('getCategoriasCupones/{lang?}', [ApiController::class, 'getCategoriasCuponesList']);
     Route::get('getTipoCupones/{lang?}/{categoria?}', [ApiController::class, 'getTipoCuponesList']);
-    Route::get('getMetaDataSEO/{lang?}', [ApiController::class, 'getMetaSeoList']);
-    /* Luz */
+
+
     Route::get('getTarifasLuz/{lang?}', [TarifasController::class, 'getTarifasLuzList']);
     Route::get('getExtraOfferluz/{lang?}', [ExtraOfferController::class, 'getExtraOfferLuzList']);
     Route::get('getDetailOffercomparadortarifasluz/{id}', [TarifasController::class, 'getDetailOfferLuzList']);
+
     /* Gas */
     Route::get('getTarifasGas/{lang?}', [TarifasController::class, 'getTarifasGasList']);
     Route::get('getExtraOffergas/{lang?}', [ExtraOfferController::class, 'getExtraOfferGasList']);
@@ -51,26 +61,26 @@ Route::middleware('api')->group(function () {
     Route::get('getDetailOffercomparadortarifasluzygas/{id}', [TarifasController::class, 'getDetailOfferGasLuzList']);
     /* Luz Autoconsumo */
     Route::get('getTarifasAutoconsumo/{lang?}', [TarifasController::class, 'getTarifasAutoconsumoList']);
-    Route::get('getExtraOfferautoconsumo/{lang?}', [ExtraOfferController::class, 'getExtraOfferAutoconsumoList']);
+    Route::get('getExtraOffercomparadortarifasautoconsumo/{lang?}', [ExtraOfferController::class, 'getExtraOfferAutoconsumoList']);
     Route::get('getDetailOffercomparadortarifasautoconsumo/{id}', [TarifasController::class, 'getDetailOfferAutoconsumoList']);
     /* movil */
     Route::get('getTarifasMovil/{lang?}', [TarifasController::class, 'getTarifasMovilList']);
-    Route::get('filterMovil/{lang?}', [FilterController::class, 'getValuesFilterMovilList']);
+    Route::get('getfilterMovil/{lang?}', [FilterController::class, 'getValuesFilterMovilList']);
     Route::get('getExtraOffercomparadormovil/{lang?}', [ExtraOfferController::class, 'getExtraOfferMovilList']);
     Route::get('getDetailOffercomparadormovil/{id}', [TarifasController::class, 'getDetailOfferMovilList']);
     /* Fibra */
     Route::get('getTarifasFibra/{lang?}', [TarifasController::class, 'getTarifasFibraList']);
-    Route::get('filterFibra/{lang?}', [FilterController::class, 'getValuesFilterFibraList']);
+    Route::get('getfilterFibra/{lang?}', [FilterController::class, 'getValuesFilterFibraList']);
     Route::get('getExtraOffercomparadorfibra/{lang?}', [ExtraOfferController::class, 'getExtraOfferFibraList']);
     Route::get('getDetailOffercomparadorfibra/{id}', [TarifasController::class, 'getDetailOfferFibraList']);
     /* Fibra y Movil */
     Route::get('getTarifasFibraMovil/{lang?}', [TarifasController::class, 'getTarifasFibraMovilList']);
-    Route::get('filterMovilFibra/{lang?}', [FilterController::class, 'getValuesFilterFibraMovilList']);
+    Route::get('getfilterMovilFibra/{lang?}', [FilterController::class, 'getValuesFilterFibraMovilList']);
     Route::get('getExtraOffercomparadortarifasfibraymovil/{lang?}', [ExtraOfferController::class, 'getExtraOfferFibraMovilList']);
     Route::get('getDetailOffercomparadortarifasfibraymovil/{id}', [TarifasController::class, 'getDetailOfferFibraMovilList']);
     /* Fibra, Movil y TV */
     Route::get('getTarifasFibraMovilTv/{lang?}', [TarifasController::class, 'getTarifasFibraMovilTvList']);
-    Route::get('filterMovilFibraTv/{lang?}', [FilterController::class, 'getValuesFilterFibraMovilTvList']);
+    Route::get('getfilterMovilFibraTv/{lang?}', [FilterController::class, 'getValuesFilterFibraMovilTvList']);
     Route::get('getExtraOffercomparadorfibramoviltv/{lang?}', [ExtraOfferController::class, 'getExtraOfferFibraMovilTvList']);
     Route::get('getDetailOffercomparadorfibramoviltv/{id}', [TarifasController::class, 'getDetailOfferFibraMovilTvList']);
     /* Alarmas */
@@ -114,13 +124,13 @@ Route::middleware('api')->group(function () {
 
     /* Mexico */
     Route::get('getTarifasPlanCelular/{lang?}', [TarifasController::class, 'getTarifasPlanCelularList']);
-    Route::get('filterPlanCelular/{lang?}', [FilterController::class, 'getValuesFilterPlanCelularList']);
+    Route::get('getfilterPlanCelular/{lang?}', [FilterController::class, 'getValuesFilterPlanCelularList']);
     Route::get('getExtraOffercomparadorPlanCelular/{lang?}', [ExtraOfferController::class, 'getExtraOfferPlanCelularList']);
     Route::get('getDetailOffercomparadorplanescelular/{id}', [TarifasController::class, 'getDetailOfferPlanCelularList']);
 
     /* Vehiculos */
     Route::get('getTarifasVehiculos/{lang?}', [TarifasController::class, 'getTarifasVehiculosList']);
-    Route::get('filterVehiculos/{lang?}', [FilterController::class, 'getValuesFilterVehiculosList']);
+    Route::get('getfilterVehiculos/{lang?}', [FilterController::class, 'getValuesFilterVehiculosList']);
     Route::get('getValuesFilterVehiculosChassis/{lang?}', [FilterController::class, 'getValuesFilterVehiculosChassisList']);
     Route::get('getExtraOffercomparadorVehiculos/{lang?}', [ExtraOfferController::class, 'getExtraOfferVehiculosList']);
     Route::get('getDetailOffervehiculos/{id}', [TarifasController::class, 'getDetailOfferVehiculosList']);
@@ -151,7 +161,7 @@ Route::middleware('api')->group(function () {
 
     /* Administracion pagina web */
     /* Menu */
-    Route::get('getMenu/{lang?}', [ApiController::class, 'getMenuList']);
+    /* Route::get('getMenu/{lang?}', [ApiController::class, 'getMenuList']); */
     Route::get('getMenuApi/{lang?}', [ApiController::class, 'getMenuApi']);
     /* carga footer */
     Route::get('getFooter/{lang?}', [ApiController::class, 'getFooterList']);

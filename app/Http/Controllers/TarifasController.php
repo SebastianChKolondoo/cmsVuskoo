@@ -166,7 +166,6 @@ class TarifasController extends Controller
             ->get();
 
         foreach ($data as $item) {
-            // Formatear los números y luego convertirlos de nuevo a numérico
             $item->precio = $this->conversorValor($item->precio, $item->decimales, $item->pais);
             $item->precio_final = $this->conversorValor($item->precio_final, $item->decimales, $item->pais);
             $item->coste_mantenimiento = $this->conversorValor($item->coste_mantenimiento, $item->decimales, $item->pais);
@@ -183,6 +182,7 @@ class TarifasController extends Controller
         if (!$idioma) {
             return [];
         }
+        
         $data =  DB::table($this->tabla_autoconsumo)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_autoconsumo . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
@@ -195,13 +195,10 @@ class TarifasController extends Controller
             ->get();
 
         foreach ($data as $item) {
-            // Formatear los números y luego convertirlos de nuevo a numérico
             $item->precio = $this->conversorValor($item->precio, $item->decimales, $item->pais);
             $item->precio_final = $this->conversorValor($item->precio_final, $item->decimales, $item->pais);
             $item->coste_mantenimiento = $this->conversorValor($item->coste_mantenimiento, $item->decimales, $item->pais);
             $item->coste_de_gestion = $this->conversorValor($item->coste_de_gestion, $item->decimales, $item->pais);
-            $item->gas_precio_termino_fijo = $this->conversorValor($item->gas_precio_termino_fijo, $item->decimales, $item->pais);
-            $item->gas_precio_energia = $this->conversorValor($item->gas_precio_energia, $item->decimales, $item->pais);
         }
         return $data;
     }
@@ -256,7 +253,6 @@ class TarifasController extends Controller
         $data = $query->get();
 
         foreach ($data as $item) {
-            // Formatear los números y luego convertirlos de nuevo a numérico
             $item->precio = $this->conversorValor($item->precio, $item->decimales, $item->pais);
             $item->precio_final = $this->conversorValor($item->precio_final, $item->decimales, $item->pais);
             $item->coste_llamadas_minuto = $this->conversorValor($item->coste_llamadas_minuto, $item->decimales, $item->pais);
@@ -421,7 +417,6 @@ class TarifasController extends Controller
         $data = $query->get();
 
         foreach ($data as $item) {
-            // Formatear los números y luego convertirlos de nuevo a numérico
             $item->precio_relativo_1 = $this->conversorValor($item->precio_relativo_1, $item->decimales, $item->pais);
             $item->precio_relativo_2 = $this->conversorValor($item->precio_relativo_2, $item->decimales, $item->pais);
             $item->precio_relativo_3 = $this->conversorValor($item->precio_relativo_3, $item->decimales, $item->pais);
@@ -591,7 +586,7 @@ class TarifasController extends Controller
         $data = DB::table($this->tabla_autoconsumo)
             ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_autoconsumo . '.comercializadora')
             ->join('paises', 'paises.id', '=', '1_comercializadoras.pais')
-            ->select($this->tabla_autoconsumo . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_autoconsumo . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales', '1_comercializadoras.telenofo')
+            ->select($this->tabla_autoconsumo . '.*', '1_comercializadoras.nombre', '1_comercializadoras.logo', $this->tabla_autoconsumo . '.comercializadora as operadora', 'politica_privacidad', 'paises.decimales', '1_comercializadoras.telefono')
             ->where($this->tabla_autoconsumo . '.id', '=', $id)
             ->first();
 
@@ -827,7 +822,6 @@ class TarifasController extends Controller
             $data = $query->get();
 
             foreach ($data as $item) {
-                // Formatear los números y luego convertirlos de nuevo a numérico
                 $item->precio_1 = $this->conversorValor($item->precio_1, $item->decimales, $item->pais);
                 $item->precio_2 = $this->conversorValor($item->precio_2, $item->decimales, $item->pais);
             }
@@ -860,7 +854,6 @@ class TarifasController extends Controller
             $data = $query->get();
 
             foreach ($data as $item) {
-                // Formatear los números y luego convertirlos de nuevo a numérico
                 $item->precio_1 = $this->conversorValor($item->precio_1, $item->decimales, $item->pais);
                 $item->precio_2 = $this->conversorValor($item->precio_2, $item->decimales, $item->pais);
             }
@@ -890,7 +883,6 @@ class TarifasController extends Controller
             $data = $query->get();
 
             foreach ($data as $item) {
-                // Formatear los números y luego convertirlos de nuevo a numérico
                 $item->precio_1 = $this->conversorValor($item->precio_1, $item->decimales, $item->pais);
                 $item->precio_2 = $this->conversorValor($item->precio_2, $item->decimales, $item->pais);
             }
@@ -919,7 +911,6 @@ class TarifasController extends Controller
             $data = $query->get();
 
             foreach ($data as $item) {
-                // Formatear los números y luego convertirlos de nuevo a numérico
                 $item->precio_1 = $this->conversorValor($item->precio_1, $item->decimales, $item->pais);
                 $item->precio_2 = $this->conversorValor($item->precio_2, $item->decimales, $item->pais);
             }
@@ -949,7 +940,6 @@ class TarifasController extends Controller
             $data = $query->get();
 
             foreach ($data as $item) {
-                // Formatear los números y luego convertirlos de nuevo a numérico
                 $item->precio_1 = $this->conversorValor($item->precio_1, $item->decimales, $item->pais);
                 $item->precio_2 = $this->conversorValor($item->precio_2, $item->decimales, $item->pais);
             }

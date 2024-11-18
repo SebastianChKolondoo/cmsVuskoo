@@ -27,9 +27,14 @@ class ApiController extends Controller
     protected $tabla_vehiculos;
     protected $tabla_vehiculo;
     protected $tabla_cupones;
+    protected $tabla_autoconsumo;
+
+    protected $tablaMap;
+    protected $tablaPadre;
 
     public function __construct()
     {
+
         $this->tabla_luz = 'WEB_3_TARIFAS_ENERGIA_LUZ';
         $this->tabla_gas = 'WEB_3_TARIFAS_ENERGIA_GAS';
         $this->tabla_luz_gas = 'WEB_3_TARIFAS_ENERGIA_LUZ_GAS';
@@ -44,6 +49,30 @@ class ApiController extends Controller
         $this->tabla_vehiculos = '1_vehiculos';
 
         $this->tabla_cupones = 'WEB_3_TARIFAS_CUPONES';
+
+        $this->tabla_autoconsumo = 'WEB_3_TARIFAS_ENERGIA_AUTOCONSUMO';
+
+        // Inicializar mapeo de tablas
+        $this->tablaMap = [
+            'luz' => 'WEB_3_TARIFAS_ENERGIA_LUZ',
+            'gas' => 'WEB_3_TARIFAS_ENERGIA_GAS',
+            'luzgas' => 'WEB_3_TARIFAS_ENERGIA_LUZ_GAS',
+            'autoconsumo' => 'WEB_3_TARIFAS_ENERGIA_AUTOCONSUMO',
+            'movil' => 'WEB_3_TARIFAS_TELCO_MOVIL',
+            'movilfibra' => 'WEB_3_TARIFAS_TELCO_FIBRA_MOVIL',
+            'movilfibratv' => 'WEB_3_TARIFAS_TELCO_FIBRA_MOVIL_TV',
+            'fibra' => 'WEB_3_TARIFAS_TELCO_FIBRA',
+            'tv' => 'WEB_3_TARIFAS_TELCO_TV',
+            'vehiculos' => '1_vehiculos',
+            'vehiculo' => 'WEB_3_VEHICULOS',
+            'cupones' => 'WEB_3_TARIFAS_CUPONES',
+            'autoconsumo' => 'WEB_3_TARIFAS_ENERGIA_AUTOCONSUMO',
+        ];
+
+        $this->tablaPadre = [
+            'comercializadora' => '1_comercializadoras',
+            'operadora' => '1_operadoras',
+        ];
     }
 
     public function index()
@@ -89,7 +118,7 @@ class ApiController extends Controller
         // Retornar la estructura en formato JSON
         return response()->json($data, 200, [], JSON_PRETTY_PRINT);
     }
-    public function getMenuList($lang = 'es')
+    /* public function getMenuList($lang = 'es')
     {
         $data = [];
         switch ($lang) {
@@ -278,9 +307,61 @@ class ApiController extends Controller
         }
 
         return $data;
+    } */
+    /* NUEVA */
+    public function getComercializadorasList($filtro, $lang = 'es')
+    {
+        if (!isset($this->tablaMap[strtolower($filtro)])) {
+            return response()->json(['error' => 'Filtro inválido'], 400);
+        }
+
+        $tabla = $this->tablaMap[strtolower($filtro)];
+
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
+            return [];
+        }
+
+        $tablaPadre = '1_comercializadoras';
+        $filtroTablaPadre = 'comercializadora';
+
+        return DB::table($tabla)
+            ->join($tablaPadre, "{$tablaPadre}.id", '=', "{$tabla}.{$filtroTablaPadre}")
+            ->select("{$tablaPadre}.id", "{$tablaPadre}.nombre", "{$tablaPadre}.logo")
+            ->where("{$tablaPadre}.estado", '=', '1')
+            ->where("{$tablaPadre}.pais", '=', $idioma->id)
+            ->where("{$tabla}.estado", '=', '1')
+            ->groupBy("{$tabla}.{$filtroTablaPadre}")
+            ->get();
     }
 
-    /* funciones para consultar las ofertas comerciales */
+    public function getOperadorasList($filtro, $lang = 'es')
+    {
+        if (!isset($this->tablaMap[strtolower($filtro)])) {
+            return response()->json(['error' => 'Filtro inválido'], 400);
+        }
+
+        $tabla = $this->tablaMap[strtolower($filtro)];
+
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
+            return [];
+        }
+
+        $tablaPadre = '1_operadoras';
+        $filtroTablaPadre = 'operadora';
+
+        return DB::table($tabla)
+            ->join($tablaPadre, "{$tablaPadre}.id", '=', "{$tabla}.{$filtroTablaPadre}")
+            ->select("{$tablaPadre}.id", "{$tablaPadre}.nombre", "{$tablaPadre}.logo")
+            ->where("{$tablaPadre}.estado", '=', '1')
+            ->where("{$tablaPadre}.pais", '=', $idioma->id)
+            ->where("{$tabla}.estado", '=', '1')
+            ->groupBy("{$tabla}.{$filtroTablaPadre}")
+            ->get();
+    }
+
+
     public function getComercializadorasLuzList($lang = 'es')
     {
         $idioma = Paises::where('codigo', $lang)->first();
@@ -399,19 +480,45 @@ class ApiController extends Controller
             ->get();
     }
 
-    public function getOperadorasMovilList($lang = 'es')
+    public function getComercializadoraAutoconsumoList($lang = 'es')
     {
         $idioma = Paises::where('codigo', $lang)->first();
         if (!$idioma) {
             return [];
         }
-        return DB::table($this->tabla_movil)
-            ->join('1_operadoras', '1_operadoras.id', '=', $this->tabla_movil . '.operadora')
+        return DB::table($this->tabla_autoconsumo)
+            ->join('1_comercializadoras', '1_comercializadoras.id', '=', $this->tabla_autoconsumo . '.comercializadora')
+            ->select('1_comercializadoras.id', '1_comercializadoras.nombre', '1_comercializadoras.logo')
+            ->where('1_comercializadoras.estado', 1)
+            ->where('1_comercializadoras.pais', '=', $idioma->id)
+            ->where($this->tabla_autoconsumo . '.estado', '=', '1')
+            ->groupBy($this->tabla_autoconsumo . '.comercializadora')
+            ->get();
+    }
+
+    public function getOperadorasAllList($lang = 'es')
+    {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
+            return [];
+        }
+        return DB::table('1_operadoras')
             ->select('1_operadoras.id', '1_operadoras.nombre', '1_operadoras.logo')
             ->where('1_operadoras.pais', '=', $idioma->id)
             ->where('1_operadoras.estado', 1)
-            ->where($this->tabla_movil . '.estado', '=', '1')
-            ->groupBy('operadora')
+            ->get();
+    }
+    
+    public function getComercializadorasAllList($lang = 'es')
+    {
+        $idioma = Paises::where('codigo', $lang)->first();
+        if (!$idioma) {
+            return [];
+        }
+        return DB::table('1_comercializadoras')
+            ->select('1_comercializadoras.id', '1_comercializadoras.nombre', '1_comercializadoras.logo')
+            ->where('1_comercializadoras.pais', '=', $idioma->id)
+            ->where('1_comercializadoras.estado', 1)
             ->get();
     }
 
@@ -430,6 +537,7 @@ class ApiController extends Controller
             ->groupBy('operadora')
             ->get();
     }
+
 
     public function getComercializadorasLuzGasList($lang = 'es')
     {

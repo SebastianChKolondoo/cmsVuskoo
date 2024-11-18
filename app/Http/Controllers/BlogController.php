@@ -313,12 +313,20 @@ class BlogController extends Controller
     public function getBlogInfoHomeList($lang = 'es')
     {
         $pais = Paises::where('codigo', $lang)->first();
-        return Blog::select('blog.imagen','blog.url_amigable', 'blog.fecha_publicacion', 'blog.titulo', 'blog.contenido', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')->join('categorias_blog', 'categoria', 'categorias_blog.id')->where('pais', $pais->id)->orderBy('blog.fecha_publicacion', 'desc')->limit(3)->get();
+        return Blog::select('blog.imagen','blog.url_amigable', 'blog.fecha_publicacion', 'blog.titulo', 'blog.contenido', 'categorias_blog.nombre as categoria', 'categorias_blog.slug as categoria_slug')
+        ->join('categorias_blog', 'categoria', 'categorias_blog.id')
+        ->where('pais', $pais->id)
+        ->orderBy('blog.fecha_publicacion', 'desc')
+        ->limit(3)->get();
     }
 
     public function getMenuInfoBlogList($lang)
     {
         $pais = Paises::where('codigo', $lang)->first();
-        return $blog = Blog::select('categorias_blog.nombre','blog.url_amigable', 'categorias_blog.slug', 'blog.categoria')->groupBy('categoria')->where('pais', $pais->id)->join('categorias_blog', 'categorias_blog.id', 'blog.categoria')->get();
+        return $blog = Blog::select('categorias_blog.nombre','blog.url_amigable', 'categorias_blog.slug', 'blog.categoria')
+        ->groupBy('categoria')
+        ->where('pais', $pais->id)
+        ->join('categorias_blog', 'categorias_blog.id', 'blog.categoria')
+        ->get();
     }
 }
