@@ -41,11 +41,9 @@ Route::middleware('api')->group(function () {
     Route::get('getMarcasVehiculos/{lang?}', [ApiController::class, 'getMarcasVehiculosList']);
     /* Luz */
     Route::get('getOperadorasPlanCelular/{lang?}', [ApiController::class, 'getOperadorasPlanCelularList']);
-
     Route::get('getComerciosCupones/{lang?}/{categoria?}', [ApiController::class, 'getComerciosCuponesList']);
     Route::get('getCategoriasCupones/{lang?}', [ApiController::class, 'getCategoriasCuponesList']);
     Route::get('getTipoCupones/{lang?}/{categoria?}', [ApiController::class, 'getTipoCuponesList']);
-
 
     Route::get('getTarifasLuz/{lang?}', [TarifasController::class, 'getTarifasLuzList']);
     Route::get('getExtraOfferluz/{lang?}', [ExtraOfferController::class, 'getExtraOfferLuzList']);
