@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h2>Editar oferta de Microcredito</h2>
+                    <h2>Editar oferta de {{$tipo->tipo}}</h2>
                 </div>
                 <div class="card-body">
                     @if (session('info'))
@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="form-group col-12 col-md-4 d-none">
                             {!! Form::label('categoria', 'Categoria', ['class' => 'form-label']) !!}
-                            {!! Form::select('categoria', $categorias->pluck('nombre', 'id'), null, ['class' => 'form-control']) !!}
+                            {!! Form::text('categoria', null, null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-12 col-md-4">
                             {!! Form::label('banca', 'Banco', ['class' => 'form-label']) !!}
@@ -121,7 +121,7 @@
     </div>
     <div class="row justify-content-center mb-4">
         <div class="col-12">
-            <a href="{{ route('microcreditos.index') }}" class="btn btn-dark">Volver</a>
+            <a href="{{ route('prestamos.index') }}" class="btn btn-dark">Volver</a>
         </div>
     </div>
 @endsection

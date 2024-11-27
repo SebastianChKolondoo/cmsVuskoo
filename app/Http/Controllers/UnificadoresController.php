@@ -93,7 +93,7 @@ class UnificadoresController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    /* public function update(Request $request, $id)
     {
         $empresa = Banca::find($request->banca);
         $pais = $empresa->pais;
@@ -104,7 +104,7 @@ class UnificadoresController extends Controller
         $tarifa = Prestamos::find($id);
         $tarifa->update($request->all());
         return back()->with('info', 'Información actualizada correctamente.');
-    }
+    } */
 
     /**
      * Remove the specified resource from storage.

@@ -10,8 +10,11 @@
             @endif
             @can('prestamo.view.btn-create')
                 <a href="{{ route('prestamos.create') }}" class="btn btn-primary">Nueva tarifa Colombia</a>
-                <a href="{{ route('unificadoras.create') }}" class="btn btn-primary">Nueva tarifa Soluciones de deuda</a>
-                <a href="{{ route('microcreditos.create') }}" class="btn btn-primary">Nueva tarifa Microcredito</a>
+                {{-- <a href="{{ route('unificadoras.create') }}" class="btn btn-primary">Nueva tarifa Soluciones de deuda</a>
+                <a href="{{ route('microcreditos.create') }}" class="btn btn-primary">Nueva tarifa Microcredito</a> --}}
+                <a href="{{ route('tarifas.create', ['tipo' => 'soluciones_de_deuda']) }}" class="btn btn-primary">Nueva tarifa Soluciones de deuda</a>
+                <a href="{{ route('tarifas.create', ['tipo' => 'microcredito']) }}" class="btn btn-primary">Nueva tarifa Microcredito</a>
+                <a href="{{ route('tarifas.create', ['tipo' => 'prestamo']) }}" class="btn btn-primary">Nueva tarifa Préstamo</a>
             @endcan
         </div>
     </div>
@@ -38,6 +41,10 @@
         <li class="nav-item">
             <a class="nav-link" id="tabMicrocreditos-tab" data-toggle="tab" href="#tabMicrocreditos" role="tab"
                 aria-controls="tabMicrocreditos" aria-selected="false">Microcréditos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tabPrestamos-tab" data-toggle="tab" href="#tabPrestamos" role="tab"
+                aria-controls="tabPrestamos" aria-selected="false">Préstamos</a>
         </li>
     </ul>
 
@@ -136,7 +143,7 @@
                                 <td class="align-middle">{{ $item->paises->nombre }}</td>
                                 <td>
                                     @can('unificadoras.view.btn-edit')
-                                        <a href="{{ route('unificadoras.edit', $item) }}" class="btn btn-primary">Editar</a>
+                                        <a href="{{ route('microcreditos.edit', $item) }}" class="btn btn-primary">Editar</a>
                                     @endcan
                                 </td>
                             </tr>
@@ -163,6 +170,41 @@
                 <tbody>
                     @foreach ($tarifas as $item)
                         @if ($item->categoria == 5)
+                            <tr>
+                                <td class="align-middle">{{ $item->id }}</td>
+                                <td class="align-middle">{{ optional($item->banco)->nombre }}</td>
+                                <td class="align-middle">
+                                    {{ $item->titulo != null ? $item->titulo : $item->parrilla_1 }}</td>
+                                <td class="align-middle">{{ optional($item->categorias)->nombre }}</td>
+                                <td class="align-middle">{{ $item->paises->nombre }}</td>
+                                <td>
+                                    @can('microcreditos.view.btn-edit')
+                                        <a href="{{ route('microcreditos.edit', $item) }}" class="btn btn-primary">Editar</a>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="tabPrestamos" role="tabpanel">
+            <table id="PrestamosTable" class="table table-striped" style="width:100%">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>id</th>
+                        <th>Banca</th>
+                        <th>Titulo</th>
+                        <th>Categoria</th>
+                        <th>Pais</th>
+                        @can('prestamo.view.btn-edit')
+                            <th></th>
+                        @endcan
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tarifas as $item)
+                        @if ($item->categoria == 6)
                             <tr>
                                 <td class="align-middle">{{ $item->id }}</td>
                                 <td class="align-middle">{{ optional($item->banco)->nombre }}</td>

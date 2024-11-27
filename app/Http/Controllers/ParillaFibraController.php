@@ -97,6 +97,7 @@ class ParillaFibraController extends Controller
             'duracionContrato' => $request->duracionContrato,
             'slug_tarifa' => Str::slug($request->slug_tarifa),
             'informacionLegal' => $request->informacionLegal,
+            'tarifa_empresarial' => $request->tarifa_empresarial
         ]);
 
         return redirect()->route('ParillaFibra.index')->with('info', 'Tarifa creada correctamente.');

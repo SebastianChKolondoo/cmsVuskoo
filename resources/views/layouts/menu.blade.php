@@ -169,22 +169,10 @@
         </li>
     @endcan
     @can('finanzas.view')
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBanca"
-                aria-expanded="true" aria-controls="collapseBanca">
-                <i class="fa fa-university" aria-hidden="true"></i>
-                <span>Finanzas</span>
-            </a>
-            <div id="collapseBanca" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    @can('finanzas.view.colombia')
-                        <a class="collapse-item" href="{{ route('prestamos.index') }}">Tarifas Colombia</a>
-                    @endcan
-                    @can('finanzas.view.espana')
-                        <a class="collapse-item" href="{{ route('prestamos.index') }}">Tarifas España</a>
-                    @endcan
-                </div>
-            </div>
+        <li class="nav-item active">
+            <a class="nav-link" href="/prestamos">
+                <i class="fas fa-tv"></i>
+                <span>Finanzas</span></a>
         </li>
     @endcan
     @can('seguros.view')

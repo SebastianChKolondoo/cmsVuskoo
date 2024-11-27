@@ -10,22 +10,40 @@ use App\Models\Prestamos;
 use App\Models\States;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use PhpParser\Node\Stmt\Return_;
 
 class MicrocreditosController extends Controller
 {
+    public function createOffer($tipo)
+    {
+        $states = States::all();
+        $prestadoras = Banca::all();
+        $categorias = CategoriasPrestamos::whereIn('id', [5])->get();
+        $emisor = EmisorBanca::all();
+        $operadorasList = $prestadoras->mapWithKeys(function ($prestadoras) {
+            return [$prestadoras->id => $prestadoras->nombre . ' - ' . $prestadoras->paises->nombre];
+        });
+        $solicitud = match ($tipo) {
+            'soluciones_de_deuda' => 4,
+            'microcredito' => 5,
+            'prestamo' => 6,
+        };
+        return view('microcreditos.create', compact('states', 'operadorasList', 'categorias', 'prestadoras', 'emisor','tipo','solicitud'));
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $tarifas = Prestamos::whereIn('categoria',[5])->get();
+        $tarifas = Prestamos::whereIn('categoria', [5])->get();
         return view('microcreditos.index', compact('tarifas'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    /* public function create()
     {
         $states = States::all();
         $prestadoras = Banca::all();
@@ -35,7 +53,7 @@ class MicrocreditosController extends Controller
             return [$prestadoras->id => $prestadoras->nombre . ' - ' . $prestadoras->paises->nombre];
         });
         return view('microcreditos.create', compact('states', 'operadorasList', 'categorias', 'prestadoras', 'emisor'));
-    }
+    } */
 
     /**
      * Store a newly created resource in storage.
@@ -56,7 +74,7 @@ class MicrocreditosController extends Controller
             'url_redirct' => $request->url_redirct,
             'destacada' => $request->destacada,
             'estado' => $request->estado,
-            'categoria' => 5,
+            'categoria' => $request->categoria,
             'pais' => $pais,
             'interes_mensual' => $request->interes_mensual,
             'inteses_anual' => $request->inteses_anual,
@@ -82,12 +100,12 @@ class MicrocreditosController extends Controller
         $tarifa = Prestamos::find($id);
         $states = States::all();
         $prestadoras = Banca::all();
-        $categorias = CategoriasPrestamos::whereIn('id', [4])->get();
+        $tipo = CategoriasPrestamos::select('nombre as tipo')->where('id', $tarifa->categoria)->first();
         $emisor = EmisorBanca::all();
         $operadorasList = $prestadoras->mapWithKeys(function ($prestadoras) {
             return [$prestadoras->id => $prestadoras->nombre . ' - ' . $prestadoras->paises->nombre];
         });
-        return view('microcreditos.edit', compact('tarifa', 'categorias', 'operadorasList', 'states', 'prestadoras', 'emisor'));
+        return view('microcreditos.edit', compact('tarifa', 'operadorasList', 'states','tipo', 'prestadoras', 'emisor'));
     }
 
     /**
@@ -99,7 +117,6 @@ class MicrocreditosController extends Controller
         $pais = $empresa->pais;
 
         $request['pais'] = $pais;
-        $request['categoria'] = 5;
         $request['slug_tarifa'] = Str::slug($request->slug_tarifa);
         $tarifa = Prestamos::find($id);
         $tarifa->update($request->all());

@@ -47,7 +47,14 @@ class ParrillaAutoconsumoController extends Controller
     public function store(Request $request)
     {
         $moneda = Paises::where('id', $request->pais)->select('moneda')->first();
-        $empresa = Comercializadoras::find($request->comercializadora);
+        
+        /* $data = $request->all();
+        $data['slug_tarifa'] = Str::slug($request->slug_tarifa);
+        $data['moneda'] = $moneda->moneda;
+        $tarifa = new ParrillaAutoconsumo();
+        $tarifa->fill($data);
+        $tarifa->save(); */
+
         $tarifa = ParrillaAutoconsumo::create([
             'comercializadora' => $request->comercializadora,
             'estado' => $request->estado,
@@ -87,6 +94,7 @@ class ParrillaAutoconsumoController extends Controller
             'excedente' => $request->excedente,
             'bateria_virtual' => $request->bateria_virtual,
             'precio_bateria_virtual' => $request->precio_bateria_virtual,
+            'tarifa_empresarial' => $request->tarifa_empresarial
         ]);
 
         return redirect()->route('parrillaautoconsumo.index')->with('info', 'Tarifa creada correctamente.');

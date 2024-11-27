@@ -226,6 +226,8 @@ class LeadController extends Controller
                 case 'comparador-tarifas-luz':
                 case 'comparador-tarifas-luz-gas':
                     return $this->leadLuz($lead, $lead->id);
+                case 'comparador-finanzas':
+                    return $this->leadFinanzas($lead, $lead->id);
                 default:
                     return $this->leadMovil($lead, $lead->id);
             }
@@ -392,6 +394,20 @@ class LeadController extends Controller
                 return $this->apiMasMovil($lead, $idLead);
             case 34:    /*Silbo*/
                 return $this->apiSilbo($lead, $idLead);
+            default:
+                $this->utilsController->registroDeErrores(16, 'Lead saved', 'lead save sin operador ajax', $lead['company'], $this->visitorIp);
+                return response()->json([
+                    'message' => 'ok: Registrado el numero',
+                    'status' => 201
+                ], 200);
+        }
+    }
+
+    public function leadFinanzas($lead, $idLead)
+    {
+        switch ($lead['company']) {
+            case 9:
+                return $this->apiGoBravo($lead, $idLead);
             default:
                 $this->utilsController->registroDeErrores(16, 'Lead saved', 'lead save sin operador ajax', $lead['company'], $this->visitorIp);
                 return response()->json([
@@ -765,6 +781,83 @@ class LeadController extends Controller
             'message' => $respuestaLead,
             'status' => $codigo
         ], 200);
+    }
+
+    public function apiGoBravo($lead, $idLead)
+    {
+        $test = 'https://opportunitex.sandbox.resuelve.io';
+        $dominio = 'https://opportunitex.resuelve.io';
+        $apiUrl = $dominio . '/api/v2/records';
+
+        $requestData = [
+            "record" => [
+                "data" => [
+                    "system_id" => "4",
+                    "user" => [
+                        "names" => "prueba",
+                        "first_surname" => "prueba",
+                        "second_surname" => "prueba",
+                        "email" => "demo@gobravo.es",
+                        "phone" => $this->utilsController->formatTelephone($lead['phone']),
+                        "mobile" => $this->utilsController->formatTelephone($lead['phone']),
+                        "country" => "es",
+                        "postal_code" => "31213",
+                        "contact_by" => "EMAIL",
+                        "contact_by_wa" => true,
+                        "terms_conditions" => true,
+                    ],
+                    "debts" => [
+                        [
+                            "borrower_institute" => "BBVA",
+                            "debt_amount" => "6001",
+                            "months_behind" => "5",
+                        ],
+                    ],
+                    "mkt" => [
+                        "utm_source" => "pub22_es",
+                        "utm_campaign" => "arkeerobres",
+                        "utm_channel" => "api",
+                        "landing" => "vuskoo.com/es",
+                    ],
+                ],
+            ],
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'charset' => 'utf-8',
+        ])->post($apiUrl, $requestData);
+
+        $data = $response->json();
+
+        print_r($requestData);
+        print_r($data);
+
+        if ($response->status()) {
+            $message = "ok: Registrado el numero " . $lead['phone'] . " con id = " . $idLead . ", «lead» de *GoBravo - " . ($lead['company']) . "* en función apiGoBravo(). - Ip: " . $this->visitorIp . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+            $this->utilsController->registroDeErrores(16, 'Lead saved GoBravo', $message, $lead['urlOffer'], $this->visitorIp);
+
+            $leadValidation = Lead::find($idLead);
+            if ($leadValidation) {
+                $leadValidation->idResponse = $response['record']['id'];
+                $leadValidation->save();
+            } else {
+                $message = "-0: Fallo al registrar el numero " . $lead['phone'] . ", «lead» de *GoBravo - " . ($lead['company']) . "* en función apiGoBravo(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $data[0]['Detail'] . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+                $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
+            }
+            return response()->json([
+                'message' => 'OK. Lead insertado correctamente',
+                'status' => 201
+            ], 200);
+        } else {
+            $message = $data['message']['status'] . ": Fallo al registrar el numero " . $requestData['telephone'] . ", «lead» de *Silbo - " . ($lead['company']) . "* en función apiSilbo(). - Ip: " . $this->visitorIp . ' - Fallo ocurrido: ' . $respuestaLead . " - Datos recibidos del «lead» en la función: " . json_encode($data);
+            $this->utilsController->registroDeErrores(11, 'Lead ERROR', $message, $lead['urlOffer'], $this->visitorIp);
+            return response()->json([
+                'message' => 'Fallo al registrar teléfono en ApiGoBravo',
+                'status' => 400
+            ], 400);
+        }
     }
 
     public function apiButik($lead, $idLead)

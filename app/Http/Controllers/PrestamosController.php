@@ -29,7 +29,7 @@ class PrestamosController extends Controller
     {
         $states = States::all();
         $prestadoras = Banca::all();
-        $categorias = CategoriasPrestamos::whereIn('id', [1, 2, 3])->get();
+        $categorias = CategoriasPrestamos::all();
         $emisor = EmisorBanca::all();
         $Sino = States::all();
         $operadorasList = $prestadoras->mapWithKeys(function ($prestadoras) {

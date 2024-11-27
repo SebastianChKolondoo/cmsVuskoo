@@ -310,7 +310,7 @@ class TarifasController extends Controller
                 'TipoCupon.nombre as cupon',
                 'categorias_comercios.nombre as categoriaItem'
             )
-            ->where($this->tabla_cupones . '.destacada', '=', '2')
+            ->where($this->tabla_cupones . '.destacada', '=', '1')
             ->where($this->tabla_cupones . '.estado', '=', '1')
             ->where('1_comercios.estado', '=', '1')
             ->where($this->tabla_cupones . '.pais', '=', $idioma->id)

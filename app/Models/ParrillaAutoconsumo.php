@@ -53,7 +53,8 @@ class ParrillaAutoconsumo extends Model
         'informacionLegal',
         'excedente',
         'bateria_virtual',
-        'precio_bateria_virtual'
+        'precio_bateria_virtual',
+        'tarifa_empresarial'
     ];
 
     public function state()

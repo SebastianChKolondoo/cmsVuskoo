@@ -6,10 +6,8 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ComercializadorasController;
 use App\Http\Controllers\ComerciosController;
-use App\Http\Controllers\ContenidoMarcaController;
 use App\Http\Controllers\CuponesController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FormularioContactenosController;
 use App\Http\Controllers\FormularioLeadsController;
 use App\Http\Controllers\FormularioNewsletterController;
@@ -36,12 +34,9 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SegurosSaludController;
 use App\Http\Controllers\TipoCuponController;
 use App\Http\Controllers\TraduccionCategoriasController;
-use App\Http\Controllers\UnificadoresController;
+/* use App\Http\Controllers\UnificadoresController;*/
 use App\Http\Controllers\UserController;
-use App\Models\ParrillaAutoconsumo;
-use App\Models\SegurosSalud;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,77 +66,67 @@ Route::resource('tipoCupon', TipoCuponController::class)->names('tipoCupones')->
 /* Telefonia */
 Route::resource('parrillamovil', ParillaMovilController::class)->names('parrillamovil')->middleware(['auth']);
 Route::get('parrillamovilDuplicate/{id}', [ParillaMovilController::class, 'duplicateOffer'])->name('parrillamovilDuplicate')->middleware(['auth']);
-
+/* Fibra */
 Route::resource('parrillafibra', ParillaFibraController::class)->names('parrillafibra')->middleware(['auth']);
 Route::get('parrillafibraDuplicate/{id}', [ParillaFibraController::class, 'duplicateOffer'])->name('parrillafibraDuplicate')->middleware(['auth']);
-
 /* Seguros */
 Route::resource('alarmas', AlarmasController::class)->names('alarmas')->middleware(['auth']);
 Route::resource('segurossalud', SegurosSaludController::class)->names('segurossalud')->middleware(['auth']);
 Route::get('alarmasDuplicate/{id}', [ParillaFibraController::class, 'duplicateOffer'])->name('alarmasDuplicate')->middleware(['auth']);
-
 /* Finanzas españa */
-Route::resource('unificadoras', UnificadoresController::class)->names('unificadoras')->middleware(['auth']);
+/* Route::resource('unificadoras', UnificadoresController::class)->names('unificadoras')->middleware(['auth']);*/
 Route::resource('microcreditos', MicrocreditosController::class)->names('microcreditos')->middleware(['auth']);
-
-/* Parrillas */
+/* fibra movil */
 Route::resource('parrillafibramovil', ParillaFibraMovilController::class)->names('parrillafibramovil')->middleware(['auth']);
 Route::get('parrillafibramovilDuplicate/{id}', [ParillaFibraMovilController::class, 'duplicateOffer'])->name('parrillafibramovilDuplicate')->middleware(['auth']);
-
+/* fibra movil tv */
 Route::resource('parrillafibramoviltv', ParillaFibraMovilTvController::class)->names('parrillafibramoviltv')->middleware(['auth']);
 Route::get('parrillafibramoviltvDuplicate/{id}', [ParillaFibraMovilTvController::class, 'duplicateOffer'])->name('parrillafibramoviltvDuplicate')->middleware(['auth']);
-/* energia */
+/* gas */
 Route::resource('parrillagas', ParillaGasController::class)->names('parrillagas')->middleware(['auth']);
 Route::get('parrillagasDuplicate/{id}', [ParillaGasController::class, 'duplicateOffer'])->name('parrillagasDuplicate')->middleware(['auth']);
+/* luz */
 Route::resource('parrillaluz', ParillaLuzController::class)->names('parrillaluz')->middleware(['auth']);
 Route::get('parrillaluzDuplicate/{id}', [ParillaLuzController::class, 'duplicateOffer'])->name('parrillaluzDuplicate')->middleware(['auth']);
+/* luzgas */
 Route::resource('parrillaluzgas', ParillaLuzGasController::class)->names('parrillaluzgas')->middleware(['auth']);
 Route::get('parrillaluzgasDuplicate/{id}', [ParillaLuzGasController::class, 'duplicateOffer'])->name('parrillaluzgasDuplicate')->middleware(['auth']);
+/* autoconsumo */
 Route::resource('parrillaautoconsumo', ParrillaAutoconsumoController::class)->names('parrillaautoconsumo')->middleware(['auth']);
-
+/* streaming */
 Route::resource('streaming', ParrillaStreamingController::class)->names('streaming')->middleware(['auth']);
-
-Route::get('Contenidomarcacreatecomercializadora/{id}', [ContenidoMarcaController::class, 'createContent'])->name('Contenidomarcacreatecomercializadora')->middleware(['auth']);
+/*  */
+/* Route::get('Contenidomarcacreatecomercializadora/{id}', [ContenidoMarcaController::class, 'createContent'])->name('Contenidomarcacreatecomercializadora')->middleware(['auth']);
 Route::get('Contenidomarcacreateoperadora/{id}', [ContenidoMarcaController::class, 'createContent'])->name('Contenidomarcacreateoperadora')->middleware(['auth']);
-
-Route::get('contadorservicio/{serivicio}', [DashboardController::class, 'contadorServicio'])->middleware(['auth']);
-Route::get('contadorservicio', [DashboardController::class, 'contadorServicio'])->middleware(['auth']);
+ */
+Route::get('contadorservicio/{servicio}', [DashboardController::class, 'contadorServicio'])->middleware(['auth']);
+/* Route::get('contadorservicio', [DashboardController::class, 'contadorServicio'])->middleware(['auth']); */
 
 /* cupones */
 Route::resource('cupones', CuponesController::class)->names('cupones')->middleware(['auth']);
 Route::get('cuponesDuplicate/{id}', [CuponesController::class, 'duplicateOffer'])->name('cuponesDuplicate')->middleware(['auth']);
-
 /* prestamos */
 Route::resource('prestamos', PrestamosController::class)->names('prestamos')->middleware(['auth']);
 Route::get('prestamosDuplicate/{id}', [PrestamosController::class, 'duplicateOffer'])->name('prestamosDuplicate')->middleware(['auth']);
-
 /* Banca */
 Route::resource('bancos', BancaController::class)->names('bancos')->middleware(['auth']);
 Route::get('bancosDuplicate/{id}', [BancaController::class, 'duplicateOffer'])->name('bancosDuplicate')->middleware(['auth']);
-
 /* Pagina web */
 Route::resource('paginaweb', PaginaWebFooterController::class)->names('paginaweb')->middleware(['auth']);
-
 /* traducciones */
 Route::resource('traduccionCategorias', TraduccionCategoriasController::class)->names('traduccionCategorias')->middleware(['auth']);
-
 /* menu */
 Route::resource('paginawebmenu', MenuController::class)->names('paginawebmenu')->middleware(['auth']);
-
 Route::resource('paginawebsubmenu', MenuItemController::class)->names('paginawebsubmenu')->middleware(['auth']);
-/* Route::delete('paginawebsubmenu/{item}', [MenuItemController::class, 'destroy'])->name('paginawebsubmenu.destroy'); */
-
 Route::post('addStoreItemEdit/{id}', [MenuItemController::class, 'addStoreItemEdit'])->name('addStoreItemEdit')->middleware(['auth']);
-
-
 /* Formularios */
 Route::resource('formulariocontactenos', FormularioContactenosController::class)->names('formulariocontactenos')->middleware(['auth']);
 Route::resource('formularionews', FormularioNewsletterController::class)->names('formularionews')->middleware(['auth']);
 Route::resource('formularioleads', FormularioLeadsController::class)->names('formularioleads')->middleware(['auth']);
-
-
 /* Blog */
 Route::resource('blog', BlogController::class)->names('blog')->middleware(['auth']);
-
-
 Route::get('blogPreview/{id}', [BlogController::class, 'blogPreview'])->name('blogPreview')->middleware(['auth']);
+
+/* NUEVO */
+Route::get('/tarifas/create/{tipo}', [MicrocreditosController::class, 'createOffer'])->name('tarifas.create');
+

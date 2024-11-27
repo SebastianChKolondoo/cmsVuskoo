@@ -102,6 +102,7 @@ class ParillaMovilController extends Controller
             'tinder' => $request->tinder,
             'lolamusic' => $request->lolamusic,
             'informacionLegal' => $request->informacionLegal,
+            'tarifa_empresarial' => $request->tarifa_empresarial
         ]);
 
         return redirect()->route('parrillamovil.index')->with('info', 'Tarifa creada correctamente.');

@@ -50,8 +50,8 @@ class ParillaLuz extends Model
         'tituloSeo',
         'descripcionSeo',
         'luz_indexada',
-        'informacionLegal'
-        /* 'tarifa_empresarial', */
+        'informacionLegal',
+        'tarifa_empresarial',
     ];
 
     public function state()

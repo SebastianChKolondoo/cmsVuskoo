@@ -57,7 +57,8 @@ class parrillamovil extends Model
         'lolamusic',
         'tituloSeo',
         'descripcionSeo',
-        'informacionLegal'
+        'informacionLegal',
+        'tarifa_empresarial'
     ];
 
     public function state()

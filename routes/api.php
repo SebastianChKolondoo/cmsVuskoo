@@ -33,13 +33,7 @@ Route::middleware('api')->group(function () {
     Route::get('getMetaDataSEO/{lang?}', [ApiController::class, 'getMetaSeoList']);
 
     Route::get('getComercializadorasLuzGas/{lang?}', [ApiController::class, 'getComercializadorasLuzGasList']);
-    /* Route::get('getComercializadorasGas/{lang?}', [ApiController::class, 'getComercializadorasGasList']);
-    Route::get('getComercializadorasAutoconsumo/{lang?}', [ApiController::class, 'getComercializadoraAutoconsumoList']);
-    Route::get('getOperadorasFibra/{lang?}', [ApiController::class, 'getOperadorasFibraList']);
-    Route::get('getOperadorasFibraMovil/{lang?}', [ApiController::class, 'getOperadorasFibraMovilList']);
-    Route::get('getOperadorasFibraMovilTv/{lang?}', [ApiController::class, 'getOperadorasFibraMovilTvList']);
-    Route::get('getMarcasVehiculos/{lang?}', [ApiController::class, 'getMarcasVehiculosList']);
-    /* Luz */
+
     Route::get('getOperadorasPlanCelular/{lang?}', [ApiController::class, 'getOperadorasPlanCelularList']);
     Route::get('getComerciosCupones/{lang?}/{categoria?}', [ApiController::class, 'getComerciosCuponesList']);
     Route::get('getCategoriasCupones/{lang?}', [ApiController::class, 'getCategoriasCuponesList']);
@@ -48,7 +42,6 @@ Route::middleware('api')->group(function () {
     Route::get('getTarifasLuz/{lang?}', [TarifasController::class, 'getTarifasLuzList']);
     Route::get('getExtraOfferluz/{lang?}', [ExtraOfferController::class, 'getExtraOfferLuzList']);
     Route::get('getDetailOffercomparadortarifasluz/{id}', [TarifasController::class, 'getDetailOfferLuzList']);
-
     /* Gas */
     Route::get('getTarifasGas/{lang?}', [TarifasController::class, 'getTarifasGasList']);
     Route::get('getExtraOffergas/{lang?}', [ExtraOfferController::class, 'getExtraOfferGasList']);
