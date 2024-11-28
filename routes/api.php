@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\BlogController;
@@ -26,7 +27,7 @@ Route::get('getBlogPreview/{id}', [BlogController::class, 'getBlogPreviewList'])
 Route::middleware('api')->group(function () {
     Route::get('getOperadorasAll/{lang?}', [ApiController::class, 'getOperadorasAllList']);
     Route::get('getComercializadorasAll/{lang?}', [ApiController::class, 'getComercializadorasAllList']);
-    
+
     /* NUEVA */
     Route::get('getComercializadoras/{filtro}/{lang?}', [ApiController::class, 'getComercializadorasList']);
     Route::get('getOperadoras/{filtro?}/{lang?}', [ApiController::class, 'getOperadorasList']);
@@ -86,8 +87,8 @@ Route::middleware('api')->group(function () {
     /* blog */
     Route::get('getBlog/{lang?}', [BlogController::class, 'getBlogNewList']);
     Route::get('getBlog/{lang?}/{categoria?}/{amigable?}', [BlogController::class, 'getBlogItemList']);
-    Route::get('getBlogHome/{lang?}', [BlogController::class, 'getBlogInfoHomeList']); 
-    Route::get('getMenuBlog/{lang?}', [BlogController::class, 'getMenuInfoBlogList']); 
+    Route::get('getBlogHome/{lang?}', [BlogController::class, 'getBlogInfoHomeList']);
+    Route::get('getMenuBlog/{lang?}', [BlogController::class, 'getMenuInfoBlogList']);
     /* Suministros */
     Route::get('getSuministros/{lang?}', [BlogController::class, 'getSuministrosList']);
     Route::get('getSuministrosById/{id}', [BlogController::class, 'getSuministrosList']);
@@ -125,18 +126,16 @@ Route::middleware('api')->group(function () {
     Route::get('getValuesFilterVehiculosChassis/{lang?}', [FilterController::class, 'getValuesFilterVehiculosChassisList']);
     Route::get('getExtraOffercomparadorVehiculos/{lang?}', [ExtraOfferController::class, 'getExtraOfferVehiculosList']);
     Route::get('getDetailOffervehiculos/{id}', [TarifasController::class, 'getDetailOfferVehiculosList']);
-
     /* Cupones */
     Route::get('getTarifasCupones/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasCuponesList']);
     Route::get('getTarifasCuponesDestacados/{lang?}', [TarifasController::class, 'getTarifasCuponesDestacadosList']);
     Route::get('getTarifaCupon/{id}', [TarifasController::class, 'getTarifaCuponList']);
     Route::get('getPaisesCupon', [CuponesController::class, 'getPaisesCuponList']);
     Route::get('getCuponesComercio/{id}', [CuponesController::class, 'getCuponesComercioList']);
-
-    /*  */
-    Route::get('/cargarPaises/{id?}', [ApiController::class, 'cargarPaisesCupones']);
-    Route::get('/cargarCategoriaMarca/{id?}', [ApiController::class, 'cargarCategoriaMarca']);
-    Route::get('/cargarCategoriasPaises/{id?}', [ApiController::class, 'cargarCategoriasPaisesCupones']);
+    Route::get('/getInformacionMarca/{id?}', [ApiController::class, 'cargarPaisesCupones']);
+    Route::get('/getInformacionBuscadorCupon/{filtro?}', [ApiController::class, 'buscadorCuponesFiltro']);
+    /* Route::get('/cargarCategoriaMarca/{id?}', [ApiController::class, 'cargarCategoriaMarca']); */
+    Route::get('/getCategoriasPaises/{lang?}', [ApiController::class, 'cargarCategoriasPaisesCupones']);
 
     /* Prestamos */
     Route::get('getTarifasPrestamos/{lang?}/{categoria?}', [TarifasController::class, 'getTarifasPrestamosList']);
@@ -157,7 +156,7 @@ Route::middleware('api')->group(function () {
     /* carga footer */
     Route::get('getFooter/{lang?}', [ApiController::class, 'getFooterList']);
 
-    
+
     /* mail */
     route::get('/cambioNombreIdComerciosCupones', function () {
         $data = Cupones::limit(200)->orderBy('store', 'desc')->get();

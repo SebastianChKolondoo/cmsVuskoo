@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categorias;
-use Illuminate\Http\Request;
+use App\Models\Comercios;
+use App\Models\Cupones;
 use Illuminate\Support\Facades\DB;
-use App\Models\Lead;
-use App\Models\Menu;
 use App\Models\PaginaWebFooter;
 use App\Models\Paises;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
-use Mockery\Undefined;
-use Psy\Readline\Hoa\Console;
 
 class ApiController extends Controller
 {
@@ -118,196 +115,7 @@ class ApiController extends Controller
         // Retornar la estructura en formato JSON
         return response()->json($data, 200, [], JSON_PRETTY_PRINT);
     }
-    /* public function getMenuList($lang = 'es')
-    {
-        $data = [];
-        switch ($lang) {
-            case 'es':
-                $data = [
-                    [
-                        "title" => "Internet y Telefonía",
-                        "titleUrl" => "/internet-telefonia",
-                        "children" => [
-                            [
-                                "name" => "Fibra",
-                                "url" => "/internet-telefonia/comparador-fibra"
-                            ],
-                            [
-                                "name" => "Móvil",
-                                "url" => "/internet-telefonia/comparador-movil"
-                            ],
-                            [
-                                "name" => "Fibra y móvil",
-                                "url" => "/internet-telefonia/comparador-tarifas-fibra-y-movil"
-                            ],
-                            [
-                                "name" => "Fibra móvil y TV",
-                                "url" => "/internet-telefonia/comparador-fibra-movil-tv"
-                            ],
-                        ]
-                    ],
-                    [
-                        "title" => "TV y streaming",
-                        "titleUrl" => "/television-streaming",
-                        "children" => [
-                            [
-                                "name" => "Plataformas de streaming",
-                                "url" => "/television-streaming/comparador-plataformas-streaming"
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Energía",
-                        "titleUrl" => "/energia",
-                        "children" => [
-                            [
-                                "name" => "Luz",
-                                "url" => "/energia/comparador-tarifas-luz"
-                            ],
-                            [
-                                "name" => "Gas",
-                                "url" => "/energia/comparador-tarifas-gas"
-                            ],
-                            [
-                                "name" => "Luz y gas",
-                                "url" => "/energia/comparador-tarifas-luz-y-gas"
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Finanzas",
-                        "titleUrl" => "/finanzas",
-                        "children" => [
-                            [
-                                "name" => "Microcréditos",
-                                "url" => "/finanzas/comparador-finanzas/microcreditos"
-                            ],
-                            [
-                                "name" => "Soluciones de deuda",
-                                "url" => "/finanzas/comparador-finanzas/soluciones-de-deuda"
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Cupones",
-                        "titleUrl" => "/cupones",
-                        "children" => [
-                            [
-                                "name" => "Cupones",
-                                "url" => "/cupones"
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Herramientas",
-                        "titleUrl" => "/herramientas",
-                        "children" => [
-                            [
-                                "name" => "Precio de la luz hoy",
-                                "url" => "/herramientas/precio-de-la-luz-hoy"
-                            ],
-                            [
-                                "name" => "Test de velocidad",
-                                "url" => "/herramientas/test-de-velocidad"
-                            ]
-                        ]
-                    ]
-                ];
-                break;
-            case 'mx':
-                $data = [
-                    [
-                        "title" => "Planes celulares, telefonía, internet y TV",
-                        "titleUrl" => "/planes-celulares-telefonia-internet-y-tv",
-                        "children" => [
-                            [
-                                "name" => "Planes Celular",
-                                "url" => "/planes-celulares-telefonia-internet-y-tv/comparador-planes-celular"
-                            ],
-                            [
-                                "name" => "Planes Telefonía e Internet",
-                                "url" => "/planes-celulares-telefonia-internet-y-tv/comparador-movil"
-                            ],
-                            [
-                                "name" => "Planes Telefonía, Internet y TV",
-                                "url" => "/planes-celulares-telefonia-internet-y-tv/comparador-tarifas-fibra-y-movil"
-                            ],
-                            [
-                                "name" => "Planes Internet y TV",
-                                "url" => "/planes-celulares-telefonia-internet-y-tv/comparador-fibra-movil-tv"
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Servicios",
-                        "titleUrl" => "/mx",
-                        "children" => [
-                            [
-                                "name" => "Vehiculos",
-                                "url" => "/servicios/vehiculos"
-                            ]
-                        ]
-                    ],
-                ];
-                break;
-            case 'co':
-                $data = [
-                    [
-                        "title" => "Internet y móvil",
-                        "titleUrl" => "/internet-movil",
-                        "children" => [
-                            [
-                                "name" => "Fibra",
-                                "url" => "/internet-movil/comparador-fibra"
-                            ],
-                            [
-                                "name" => "Móvil",
-                                "url" => "/internet-movil/comparador-movil"
-                            ],
-                            [
-                                "name" => "Fibra y móvil",
-                                "url" => "/internet-movil/comparador-tarifas-fibra-y-movil"
-                            ],
-                            [
-                                "name" => "Fibra móvil y TV",
-                                "url" => "/internet-movil/comparador-fibra-movil-tv"
-                            ],
-                        ]
-                    ],
-                    [
-                        "title" => "Streaming",
-                        "titleUrl" => "/streaming",
-                        "children" => [
-                            [
-                                "name" => "Plataformas de streaming",
-                                "url" => "/streaming/comparador-plataformas-streaming"
-                            ]
-                        ]
-                    ],
-                    [
-                        "title" => "Finanzas",
-                        "titleUrl" => "/finanzas",
-                        "children" => [
-                            [
-                                "name" => "Cuenta de ahorro",
-                                "url" => "/finanzas/comparador-finanzas/cuenta-ahorro"
-                            ],
-                            [
-                                "name" => "Tarjeta de crédito",
-                                "url" => "/finanzas/comparador-finanzas/tarjeta-credito"
-                            ],
-                            [
-                                "name" => "Créditos",
-                                "url" => "/finanzas/comparador-finanzas/creditos"
-                            ]
-                        ]
-                    ]
-                ];
-                break;
-        }
-
-        return $data;
-    } */
+    
     /* NUEVA */
     public function getComercializadorasList($filtro, $lang = 'es')
     {
@@ -376,6 +184,16 @@ class ApiController extends Controller
             ->where($this->tabla_luz . '.estado', '=', '1')
             ->groupBy($this->tabla_luz . '.comercializadora')
             ->get();
+    }
+
+    function buscadorCuponesFiltro($filtro){
+        $comercios = Comercios::where('nombre', 'LIKE', '%'.$filtro.'%')->get();
+        $cupones = Cupones::where('titulo', 'LIKE', '%'.$filtro.'%')->orWhere('descripcion', 'LIKE', '%'.$filtro.'%')->get();
+
+        return [
+            'comercios' => $comercios,
+            'cupones' => $cupones
+        ];
     }
 
     public function getComerciosCuponesList($lang = null, $idCategoria = null)
@@ -629,18 +447,17 @@ class ApiController extends Controller
 
     public function cargarPaisesCupones($id)
     {
-        // Consulta la base de datos para obtener los valores de 'pais' y 'categoria'
         $data = DB::table('1_comercios')
             ->select('pais', 'categoria')
             ->where('1_comercios.id', '=', $id)
             ->orderBy('nombre', 'asc')
             ->first();
 
-        // Si $data es nulo, retorna un array vacío o maneja el error según sea necesario
         if (!$data) {
             return [
                 'paises' => ['nombre' => 'no disponible'],
                 'categoria' => ['nombre' => 'no disponible'],
+                'comercio' => ['nombre' => 'no disponible'],
             ];
         }
 
@@ -650,16 +467,27 @@ class ApiController extends Controller
             return [
                 'paises' => ['nombre' => 'no disponible'],
                 'categoria' => ['nombre' => 'no disponible'],
+                'comercio' => ['nombre' => 'no disponible'],
             ];
         }
 
         // Obtiene los países
         $paises = Paises::whereIn('id', is_array(json_decode($data->pais)) ? json_decode($data->pais) : [json_decode($data->pais)])->get();
 
+        $comercio = Comercios::where('id', $id)->first();
+        if (!$comercio->id) {
+            return [
+                'paises' => ['nombre' => 'no disponible'],
+                'categoria' => ['nombre' => 'no disponible'],
+                'comercio' => ['nombre' => 'no disponible'],
+            ];
+        }
+
         // Retorna ambos valores en un array asociativo
         return [
             'paises' => $paises,
             'categoria' => $categoria,
+            'comercio' => $comercio,
         ];
     }
 
@@ -675,12 +503,16 @@ class ApiController extends Controller
         return Paises::whereIn('id', is_array(json_decode($data->pais)) ? json_decode($data->pais) : [json_decode($data->pais)])->get();
     }
 
-    public function cargarCategoriasPaisesCupones($id)
+    public function cargarCategoriasPaisesCupones($lang)
     {
-        $idArray = explode(',', $id);
+        $idioma = Paises::where('codigo', $lang)->first();
+
         return DB::table('categorias_comercios')
-            ->whereIn('categorias_comercios.pais', $idArray)
-            ->orderBy('nombre', 'asc')
+            ->where('categorias_comercios.pais', $idioma->id)
+            ->where('traduccion_categorias.pais', $idioma->id)
+            ->select('traduccion_categorias.nombre as nombreCategoria', 'traduccion_categorias.categoria as idCategoria')
+            ->join('traduccion_categorias', 'traduccion_categorias.categoria', 'categorias_comercios.id')
+            ->orderBy('categorias_comercios.nombre', 'asc')
             ->get();
     }
 
@@ -736,4 +568,6 @@ class ApiController extends Controller
             return response()->json(['error' => 'No se pudo obtener los datos'], 500);
         }
     }
+
+
 }
