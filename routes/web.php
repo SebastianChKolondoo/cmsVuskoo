@@ -34,9 +34,10 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SegurosSaludController;
 use App\Http\Controllers\TipoCuponController;
 use App\Http\Controllers\TraduccionCategoriasController;
-/* use App\Http\Controllers\UnificadoresController;*/
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,3 +131,18 @@ Route::get('blogPreview/{id}', [BlogController::class, 'blogPreview'])->name('bl
 /* NUEVO */
 Route::get('/tarifas/create/{tipo}', [MicrocreditosController::class, 'createOffer'])->name('tarifas.create');
 
+Route::post('/upload-image', function (Request $request) {
+    if ($request->hasFile('image')) { // Clave correcta: 'image'
+        $file = $request->file('image'); // Accede al archivo con la clave correcta
+        $extension = $file->getClientOriginalExtension(); // Obtén la extensión del archivo
+        $nombreArchivo = 'imagen_' . time() . '.' . $extension; // Nombre único con timestamp
+        $path = Storage::disk('public')->putFileAs('imagenesBlog', $file, $nombreArchivo); // Guarda el archivo
+
+        if ($path) {
+            $urlImagen = 'https://cms.vuskoo.com/storage/imagenesBlog/' . $nombreArchivo; // URL completa
+            return response()->json(['success' => true, 'file' => $urlImagen]); // Devuelve la URL
+        }
+    }
+
+    return response()->json(['success' => false, 'message' => 'Error al subir la imagen.'], 400);
+});

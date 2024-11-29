@@ -53,31 +53,77 @@
     <script>
         $(document).ready(function() {
             $('.editor').trumbowyg({
+                btnsDef: {
+                    uploadImage: {
+                        fn: function() {
+                            const $input = $('<input type="file" accept="image/*">');
+                            $input.on('change', function(e) {
+                                const file = e.target.files[0];
+                                const formData = new FormData();
+                                formData.append('image', file);
+                                formData.append('_token', $('meta[name="csrf-token"]').attr(
+                                    'content'));
+
+                                $.ajax({
+                                    url: '/upload-image',
+                                    type: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(data) {
+                                        if (data.success) {
+                                            const url = data.file;
+                                            alert(`${url}`);
+                                            $('.editor').trumbowyg('execCmd', {
+                                                cmd: 'insertImage',
+                                                param: url,
+                                                forceCss: false
+                                            });
+                                        } else {
+                                            alert(data.message ||
+                                                'Error al subir la imagen.');
+                                        }
+                                    },
+                                    error: function() {
+                                        alert('Error al subir la imagen.');
+                                    }
+                                });
+                            });
+                            $input.trigger('click');
+                        },
+                        tag: 'button',
+                        title: 'Subir Imagen',
+                        text: 'Subir Imagen',
+                        hasIcon: false
+                    }
+                },
                 minHeight: 200,
                 plugins: {
-                    // Habilitar plugins
                     table: true,
                     upload: {
-                        serverPath: '/ruta/de/subida', // Ruta de tu backend
-                        fileFieldName: 'image', // Nombre del campo de la imagen
+                        serverPath: '/upload-image',
+                        fileFieldName: 'image',
                         headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Token CSRF si es necesario
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                         },
-                        urlPropertyName: 'file', // Nombre de la propiedad con la URL de la imagen
+                        urlPropertyName: 'file'
                     }
                 },
                 lang: 'es', // Idioma
                 semantic: true, // Uso semántico del HTML
-
+                imageWidthModalEdit: true,
                 // Configuración de la barra de herramientas
                 btns: [
                     ['viewHTML'],
-                    ['bold', 'italic', 'underline'],
-                    ['alignLeft', 'alignCenter', 'alignRight'],
-                    ['upload'], // Botón para subir imágenes
+                    ['buttonName'],
+                    ['formatting'],
+                    ['strong', 'em', 'del'],
+                    ['superscript', 'subscript'],
+                    ['link'],
+                    ['uploadImage'],
+                    ['insertImage'],
+                    ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
                     ['unorderedList', 'orderedList'],
-                    ['image'], // Botón para insertar imágenes
-                    ['table'], // Botón para insertar tablas
                     ['removeformat'],
                 ],
             });

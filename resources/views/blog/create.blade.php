@@ -93,7 +93,7 @@
                         <div class="form-group col-12 col-md-12">
                             {!! Form::label('entradilla', 'Entradilla', ['class' => 'form-label']) !!}
                             {!! Form::textarea('entradilla', null, [
-                                'class' => 'form-control editor',
+                                'class' => 'form-control',
                             ]) !!}
                         </div>
                     </div>
